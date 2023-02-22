@@ -3,19 +3,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import bannerImage from 'public/images/bg1.jpg'
+import { base64 } from '@/lib/helpers'
 //import { base64 } from '@/lib/helpers'
 
 const description = `
 Il circuito GOinUP ripartirà il 24 maggio 2023 da Regoledo di Cosio
 con la Larg-Up giunta alla sua quinta edizione.
 Fino al 15 maggio sarà possibile acquistare il carnet dell'intero circuito (11 gare) al costo di 110€
-Ricordiamo che il circuito ha scopo benefico`
+blablabla`
 
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default async function HomeBanner() {
-  //const ticket = await getItem(1001) // più evengante?
-  const ticket_id = 1001
+  const ticket = await getItem(1001) // più evengante?
+  //const ticket_id = 1001 // a tendere sarà così direi...
 
   return (
     <div className="mt-16 mx-auto px-16 sm:px-24 lg:px-48">
@@ -36,7 +37,7 @@ export default async function HomeBanner() {
             <h3 className="title">Carnet circuito goinup</h3>
             <p className="text-gray-600">{description}</p> {/* dangerouslySetInnerHTML={{__html: description}}*/}
         
-            <Link href={{ pathname: 'events/entry', query: { q: ticket_id /*base64.encode(ticket)*/ } }} className="flex items-baseline mt-3">
+            <Link href={{ pathname: 'events/entry', query: { q: base64.encode(ticket) } }} className="flex items-baseline mt-3">
               <span className="text-indigo-600 hover:text-indigo-900 focus:text-indigo-900">Iscriviti</span>
               <span className="text-xs ml-1">&#x279c;</span>
             </Link>

@@ -9,7 +9,7 @@ interface Props {
 }
 
 const navLinks = [
-  { name: "Classifiche", path: "rankings" },
+  //{ name: "Classifiche", path: "rankings" },
   { name: "Regolamento", path: "regulation" },
   //{ name: "Mission", path: "mission" },
   //{ name: "Accedi", path: "sign-in" },

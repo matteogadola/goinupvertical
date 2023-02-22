@@ -1,0 +1,48 @@
+import Link from 'next/link'
+import { Suspense } from 'react'
+import Spinner from './spinner'
+import { base64 } from '@/lib/helpers'
+import { Item } from '@/types/items'
+
+interface Props {
+  list: Item[] | Promise<Item[]>;
+}
+
+export default async function ItemsList({ list }: Props) {
+  const items = await list
+  console.log(items)
+
+  return (
+    <Suspense fallback={<Spinner />}>
+      <section className="text-gray-600 body-font overflow-hidden">
+        <div className="container">
+          <div className="divide-y-2 divide-gray-50">
+            {
+              items.map((item, index) => (
+                <div key={index}>
+                  <Link href={{ pathname: 'events/entry', query: { q: base64.encode(item) } }}>
+                    <div className="py-4 flex flex-wrap md:flex-nowrap">
+                      <div className="md:flex-grow">
+                        <h2 className="text-2xl text-gray-800 mb-2">{ item.name }</h2>
+                        <p className="leading-relaxed">{ item.description }</p>
+                        <button className="text-purple-600 inline-flex items-center">Iscriviti
+                          <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5l7 7-7 7"></path>
+                          </svg>
+                        </button>
+                      </div>
+                      <div className="md:mr-4 items-center flex">
+                        <span className="text-gray-800 text-xl uppercase">{item.price / 100}€</span>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    </Suspense>
+  )
+}

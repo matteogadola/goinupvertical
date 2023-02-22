@@ -3,16 +3,16 @@ import goinup from 'public/images/credits/goinup.png'
 
 export default function Footer() {
   return (
-    <footer className="mt-auto bg-gray-100 py-4">
+    <footer className="mt-auto">
 
-      <div className="gap-12 flex items-center justify-center">
+      <div className="mt-8 bg-gray-100 py-4 gap-12 flex items-center justify-center">
         <div className="">
           <Image src={goinup} height={60} alt="GOinUP" />
         </div>
 
         <div className="">
           <span className="text-sm">Contatti | Termini e Condizioni | Informativa sulla Privacy</span>
-          <span className="block text-xs text-slate-400">© 2023 GOinUP | via Fratelli Prova 42, Morbegno P.IVA 00000000000 </span>
+          <span className="block text-xs text-slate-400">© 2023 GOinUP | via Giuseppe Prova 41, Morbegno P.IVA 00000000000 </span>
           <span className="hidden text-xs text-slate-400">Realizzato da <a href="https://www.teeva.it" target="_blank" rel="noreferrer">Teeva</a></span>
         </div>
 
