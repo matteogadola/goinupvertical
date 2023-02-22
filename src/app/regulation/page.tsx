@@ -16,15 +16,15 @@ export default function RegulationPage() {
 
         <article>
           <h3 className="font-semibold">Art. 2</h3>
-          <p>GOinUP ha finalità benefica, con una quota degli introiti dalle iscrizioni e dalle donazioni volontarie, si pone come obbiettivo quello di donare delle attrezzature e/o servizi all'associazione: VALTELLINA ACCESSIBILE DAPPERTUTTO.</p>
+          <p>GOinUP ha finalità benefica, con una quota degli introiti dalle iscrizioni e dalle donazioni volontarie, si pone come obbiettivo quello di donare delle attrezzature e/o servizi all&apos;associazione: VALTELLINA ACCESSIBILE DAPPERTUTTO.</p>
         </article>
 
         <article>
           <h3 className="font-semibold">Art. 3</h3>
-          Le Manifestazione del Circuito per l'edizione 2022 saranno:
+          Le Manifestazione del Circuito per l&apos;edizione 2022 saranno:
           <ul>
             <li>- 25 Maggio 2022 - 4^ Larg-Up  (Cosio Valtellino/Regoledo - Sacco)</li>
-            <li>- 8 Giugno 2022 - 3^ LAVE'nsù  (Gerola Alta - Laveggiolo)</li>
+            <li>- 8 Giugno 2022 - 3^ LAVE&apos;nsù  (Gerola Alta - Laveggiolo)</li>
             <li>- 29 Giugno 2022 - 3^ Vertical Egùl  (Albaredo-Egolo)</li>
             <li>- 13 Luglio 2022 - 3° Kurt-Up  (Mellarolo  -Rif. La Corte)</li>
             <li>- 27 Luglio 2022 - 3° Vertical Lino (Ponte Bitto - Bema)</li>
@@ -42,15 +42,15 @@ export default function RegulationPage() {
 
         <article>
           <h3 className="font-semibold">Art. 5</h3>
-          <p>Le iscrizioni ad ogni prova andranno effettuate con tempi e modalità indicate da ogni organizzazione. La quota di iscrizione per ogni singola prova sarà di € 10,00 (di cui € 3,00 versati in beneficienza) e andrà obbligatoriamente versata all'atto dell'iscrizione, come specificato dai regolamenti di ogni prova. Sarà comunque possibile iscriversi anche al ritiro pettorale alla quota di € 15,00 (di cui € 8,00 versati in beneficienza).
-In caso di impossibilità a partecipare alla gara l'intera quota versata in pre-iscrizione andrà in beneficienza.
+          <p>Le iscrizioni ad ogni prova andranno effettuate con tempi e modalità indicate da ogni organizzazione. La quota di iscrizione per ogni singola prova sarà di € 10,00 (di cui € 3,00 versati in beneficienza) e andrà obbligatoriamente versata all&apos;atto dell&apos;iscrizione, come specificato dai regolamenti di ogni prova. Sarà comunque possibile iscriversi anche al ritiro pettorale alla quota di € 15,00 (di cui € 8,00 versati in beneficienza).
+In caso di impossibilità a partecipare alla gara l&apos;intera quota versata in pre-iscrizione andrà in beneficienza.
 In caso di rinvio, atleta iscritto e pagante che non può partecipare, la sua quota va in beneficienza.</p>
         </article>
 
         <article>
           <h3 className="font-semibold">Art. 6</h3>
           <p>Per la partecipazione al circuito è consigliata la visita medica sportiva sotto sforzo, ma non è obbligatoria. Anno di partecipazione minimo è il 2007.
-Per entrare a far parte della classifica finale gli atleti dovranno aver partecipato ad almeno 5 prove su 8, verranno considerati un massimo di 6 migliori risultati, mentre verranno scartati gli altri eventuali peggiori risultati. Saranno stilate classifiche uniche individuali per le categorie Femminile e Maschile, il punteggio assegnato sarà di 200 punti al 1° classificato di ogni prova, 199 punti al 2°, 198 al 3° e così via fino all'ultimo classificato. Vincerà il circuito chi avrà totalizzato il punteggio più alto. In caso di “ex aequo” verrà considerato il miglior risultato e successivamente verrà considerata la sommatoria dei tempi della gare considerate nella classifica finale.</p>
+Per entrare a far parte della classifica finale gli atleti dovranno aver partecipato ad almeno 5 prove su 8, verranno considerati un massimo di 6 migliori risultati, mentre verranno scartati gli altri eventuali peggiori risultati. Saranno stilate classifiche uniche individuali per le categorie Femminile e Maschile, il punteggio assegnato sarà di 200 punti al 1° classificato di ogni prova, 199 punti al 2°, 198 al 3° e così via fino all&apos;ultimo classificato. Vincerà il circuito chi avrà totalizzato il punteggio più alto. In caso di “ex aequo” verrà considerato il miglior risultato e successivamente verrà considerata la sommatoria dei tempi della gare considerate nella classifica finale.</p>
         </article>
 
         <article>
