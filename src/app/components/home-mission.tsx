@@ -2,7 +2,7 @@ import { getItem } from '@/lib/items'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import missionImage from 'public/images/mission-3.jpg'
+import missionImage from 'public/images/mission-3new.jpg'
 import { base64 } from '@/lib/helpers'
 //import { base64 } from '@/lib/helpers'
 
