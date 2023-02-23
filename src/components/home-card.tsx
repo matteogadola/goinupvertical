@@ -14,6 +14,7 @@ import distance from 'public/images/icons/distance-2.svg'
 import ph1 from 'public/images/ph-1.jpg'
 import ph2 from 'public/images/ph-2.jpg'
 import ph3 from 'public/images/ph-3.jpg'
+import classNames from 'classnames'
 
 const images = [ph1, ph2, ph3]
 
@@ -30,7 +31,10 @@ export default async function EventsList2() {
           <span className="title-accent uppercase">In arrivo</span>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20">
+        <div className={classNames("mt-10 grid grid-cols-1 gap-20 justify-items-center",
+          {"md:grid-cols-2 xl:grid-cols-3": events.length === 3},
+          {"xl:grid-cols-2": events.length === 2}
+        )}>
           { events.map((event, index) => 
             <Link href={`events/${event.id}`} key={index}>
               <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl hover:opacity-90">
@@ -58,7 +62,8 @@ export default async function EventsList2() {
           )}
         </div>
         <div className="flex mt-8 text-white">
-          <button className="text-purple-500 inline-flex items-center mt-2 ml-4">Vedi tutti
+          <div className=" w-3/4"></div>
+          <button className="text-purple-500 inline-flex items-center mt-2 right-20">Vedi tutti
             <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14"></path>
               <path d="M12 5l7 7-7 7"></path>

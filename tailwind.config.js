@@ -16,10 +16,11 @@ module.exports = {
         poppins: ['var(--font-poppins)'],
       },
       colors: {
-        'greenery': '#88B04B', // elimina
-        'olive': '#34568B', // elimina
-        'brown-50': '#FFFAEC', // elimina
-        'background': '#f5f9fc', // elimina
+        'primary': '',
+        'accent': '#7fb069',
+        'header': '',
+        'text': '',
+        'background': '#FFFDDA',
       }
     },
   },

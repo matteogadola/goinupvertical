@@ -2,22 +2,23 @@ import Image from 'next/image'
 import Link from 'next/link'
 import goinup from 'public/images/credits/goinup.png'
 
+// bg-gray-100
 export default function Footer() {
   return (
     <footer className="mt-auto">
 
-      <div className="mt-8 bg-gray-100 py-4 flex items-center justify-center gap-y-2 md:space-x-4 flex-col md:flex-row">
+      <div className="mt-8 py-4 flex items-center justify-center gap-y-2 md:space-x-4 flex-col md:flex-row">
         <div className="">
           <Image src={goinup} height={60} alt="GOinUP" />
         </div>
 
-        <div className="order-last md:order-none">
+        <div className="order-last md:order-none text-center">
           <span className="text-sm"><Link href={''}>Contatti</Link> | <Link href={''}>Termini e Condizioni</Link> | <Link href={''}>Informativa sulla Privacy</Link></span>
           <span className="block text-xs text-slate-400">© 2023 GOinUP | via Giuseppe Prova 41, Morbegno P.IVA 00000000000 </span>
           <span className="hidden text-xs text-slate-400">Realizzato da <a href="https://www.teeva.it" target="_blank" rel="noreferrer">Teeva</a></span>
         </div>
 
-        <div className="flex mt-2 gap-6">
+        <div className="flex mt-2 space-x-4">
           <a href="https://www.facebook.com/goinupvertical" className="text-gray-600">
             <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" className="w-3" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
               <path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path>

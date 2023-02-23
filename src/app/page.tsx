@@ -8,18 +8,19 @@ import Credits from '@/components/credits'
 
 import sectionOnePic from 'public/images/home-1.png'
 import EventsList2 from '@/components/home-card'
+import HomeMission from './components/home-mission'
 
 // export const revalidate = 5
 
 export default async function HomePage() {
-  const eventsData = getEvents({ fromDate: dt().format(), orderBy: 'date' })
+  //const eventsData = getEvents({ fromDate: dt().format(), orderBy: 'date' })
 
   // {/*deve esserci possibilità di cambiare peso!*/} |||||||||||||||||||||||||||||||||||||||||||||
   return (
     <>
       <section className="mt-20 grid grid-cols-1 md:grid-cols-2 justify-items-center">
         <div className="text-slate-800 font-unbounded">
-          <h1 className="text-4xl md:text-6xl">GO<span className="text-purple-500">in</span>UP</h1>
+          <h1 className="text-4xl md:text-6xl">GO<span className="text-accent">in</span>UP</h1>
           <h3 className="text-2xl md:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
         </div>
 
@@ -29,6 +30,11 @@ export default async function HomePage() {
             alt="Home 1"
           />
         </div>
+      </section>
+
+      <section className="mt-20">
+        {/* @ts-expect-error Server Component */}
+        <HomeMission />
       </section>
 
       <section className="mt-10">

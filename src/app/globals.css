@@ -5,7 +5,9 @@
 body {
   /*font-family: Poppins;
   font-weight: 300;*/
-  @apply text-slate-600;
+  @apply text-slate-600 ;
+  background: rgb(255,253,218);
+  background: linear-gradient(115deg, rgba(255,253,218,1) 65%, rgba(230,170,104,1) 100%);
 }
 
 .page {
