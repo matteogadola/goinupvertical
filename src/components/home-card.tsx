@@ -31,32 +31,31 @@ export default async function EventsList2() {
         </div>
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20">
-        { events.map((event, index) => 
-        <Link href={''} key={index}>
-        <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl hover:opacity-90">
-          <div className="relative text-white text-center">
-            <Image src={images[index]} className="" alt="Image" />
-            <div className="absolute inset-0 w-full h-full bg-indigo-800 opacity-50"></div>
-            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl md:text-4xl font-unbounded uppercase">{event.name}</span>
-            
+          { events.map((event, index) => 
+            <Link href={`events/${event.id}`} key={index}>
+              <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl hover:opacity-90">
+                <div className="relative text-white text-center">
+                  <Image src={images[index]} className="" alt="Image" />
+                  <div className="absolute inset-0 w-full h-full bg-indigo-800 opacity-50"></div>
+                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl md:text-4xl font-unbounded uppercase">{event.name}</span>
 
-            <div className="absolute bottom-1 font-semibold text-xs w-full px-4 flex flex-row justify-between">
-              <span className="uppercase">{ event.promoter_id !== 1 && event.promoter_id}</span> {/* va pigliato e stampato promoter_name */}
-              <div className="space-x-4">
-                <span className="text-green-400 opacity-90 ">{event.detail?.elevationGain}D+</span>
-                <span className="text-yellow-400 opacity-90 ">{event.detail?.distance}km</span>
+                  <div className="absolute bottom-1 font-semibold text-xs w-full px-4 flex flex-row justify-between">
+                    <span className="uppercase">{ event.promoter_id !== 1 && event.promoter_id}</span> {/* va pigliato e stampato promoter_name */}
+                    <div className="space-x-4">
+                      <span className="text-green-400 opacity-90 ">{event.detail?.elevationGain}D+</span>
+                      <span className="text-yellow-400 opacity-90 ">{event.detail?.distance}km</span>
+                    </div>
+                  </div>
+
+                </div>
+                <div className="px-6 py-4 min-h-[12rem]">
+                  <span className="title-accent">{ dt(event.date).format('ddd DD MMM').toUpperCase() }</span>
+                  <p className="text-gray-700 text-base mt-2">{event.summary}</p>
+                </div>
+
               </div>
-            </div>
-
-          </div>
-          <div className="px-6 py-4 min-h-[12rem]">
-            <span className="title-accent">{ dt(event.date).format('ddd DD MMM').toUpperCase() }</span>
-            <p className="text-gray-700 text-base mt-2">{event.summary}</p>
-          </div>
-
-        </div>
-        </Link>
-        )}
+            </Link>
+          )}
         </div>
         <div className="flex mt-8 text-white">
           <button className="text-purple-500 inline-flex items-center mt-2 ml-4">Vedi tutti
