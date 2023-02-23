@@ -10,7 +10,6 @@ interface Props {
 
 export default async function ItemsList({ list }: Props) {
   const items = await list
-  console.log(items)
 
   return (
     <Suspense fallback={<Spinner />}>

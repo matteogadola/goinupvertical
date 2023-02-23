@@ -9,7 +9,6 @@ interface GetTicketsProps {
 
 // da rivedere
 export async function getItems(props?: Partial<GetTicketsProps>) {
-  console.log(props?.event_id)
   const builder = supabase.from('items').select(props?.event_id ? '*, events_items!inner(event_id)' : '*')
 
   if (props?.event_id) {
