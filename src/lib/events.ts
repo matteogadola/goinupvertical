@@ -7,6 +7,7 @@ import { cache } from 'react'
 interface GetEventsProps {
   fromDate: string;
   orderBy: string;
+  limit: number;
 }
 
 export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
@@ -17,6 +18,9 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
   }
   if (props?.orderBy) {
     queryBuilder.order(props.orderBy, { ascending: true })
+  }
+  if (props?.limit) {
+    queryBuilder.limit(props.limit)
   }
 
   const { data } = await queryBuilder.returns<Event[]>()

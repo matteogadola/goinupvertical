@@ -4,7 +4,7 @@ export interface Event {
   name: string;
   edition: number;
   date: string;
-  promoter: string;
+  promoter_id: number;
   capacity: number;
   status: 'open' | 'close' | 'sold-out';
   detail: EventDetail | null;

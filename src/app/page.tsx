@@ -7,6 +7,7 @@ import HomeBanner from '@/components/home-banner'
 import Credits from '@/components/credits'
 
 import sectionOnePic from 'public/images/home-1.png'
+import EventsList2 from '@/components/home-card'
 
 // export const revalidate = 5
 
@@ -16,7 +17,7 @@ export default async function HomePage() {
   // {/*deve esserci possibilità di cambiare peso!*/} |||||||||||||||||||||||||||||||||||||||||||||
   return (
     <>
-      <section className="mt-8 grid grid-cols-1 md:grid-cols-2 justify-items-center">
+      <section className="mt-20 grid grid-cols-1 md:grid-cols-2 justify-items-center">
         <div className="text-slate-800 font-unbounded">
           <h1 className="text-4xl md:text-6xl">GO<span className="text-purple-500">in</span>UP</h1>
           <h3 className="text-2xl md:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
@@ -30,18 +31,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* @ts-expect-error Server Component */}
-      <HomeBanner />
+      <section className="mt-10">
+        {/* @ts-expect-error Server Component */}
+        <HomeBanner />
+      </section>
+
+      <section className="mt-20">
+        {/* @ts-expect-error Server Component */}
+        <EventsList2 />
+      </section>
         
-      <div className="md:mx-32">
+      {/*<div className="md:mx-32">
         <span className="title-accent">Eventi</span>
         <h1 className="title">In arrivo</h1>
-        {/* @ts-expect-error Server Component */}
         <EventsList list={eventsData} />
-      </div>
+      </div>*/}
 
-
-      <Credits />
+      <section className="mt-20">
+        <Credits />
+      </section>
+      
     </>
   )
 }

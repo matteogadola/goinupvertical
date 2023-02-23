@@ -30,6 +30,9 @@ export default function EntryPage() {
         <div className="col-span-1 md:col-span-3">
           <span className="title-accent">Biglietti</span>
           <h1 className="title">{item.name}</h1>
+          <p>
+            Qui può esserci una descrizione
+          </p>
           <EntryForm item={item} />
         </div>
         <div className="col-span-1 md:col-span-2 ml-16">
