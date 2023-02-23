@@ -2,6 +2,7 @@ import './globals.css'
 import { fonts } from '../lib/fonts'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
+import { AnalyticsWrapper } from '@/app/components/analytics'
 
 export default function RootLayout({
   children,
@@ -17,6 +18,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <AnalyticsWrapper />
       </body>
     </html>
   )
