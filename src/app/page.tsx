@@ -6,9 +6,10 @@ import EventsList from '@/components/events-list'
 import HomeBanner from '@/components/home-banner'
 import Credits from '@/components/credits'
 
+import HomeMission from '@/app/components/home-mission'
+
 import sectionOnePic from 'public/images/home-1.png'
 import EventsList2 from '@/components/home-card'
-import HomeMission from '@/components/home-mission'
 
 // export const revalidate = 5
 
