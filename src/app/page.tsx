@@ -4,11 +4,13 @@ import { dt } from '@/lib/date'
 import EventsList from '@/components/events-list'
 
 import HomeBanner from '@/components/home-banner'
+
 import Credits from '@/components/credits'
 
 import HomeMission from '@/app/components/home-mission'
+import HomeCarnet from '@/app/components/home-carnet'
 
-import sectionOnePic from 'public/images/home-1.png'
+import homeBrandImage from 'public/images/home-1.png'
 import EventsList2 from '@/components/home-card'
 
 // export const revalidate = 5
@@ -19,16 +21,16 @@ export default async function HomePage() {
   // {/*deve esserci possibilità di cambiare peso!*/} |||||||||||||||||||||||||||||||||||||||||||||
   return (
     <>
-      <section className="mt-20 grid grid-cols-1 md:grid-cols-2 justify-items-center">
-        <div className="text-slate-800 font-unbounded">
-          <h1 className="text-4xl md:text-6xl">GO<span className="text-accent">in</span>UP</h1>
-          <h3 className="text-2xl md:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
+      <section className="lg:mt-20 grid grid-cols-1 lg:grid-cols-2 justify-items-center">
+        <div className="text-title font-unbounded">
+          <h1 className="text-4xl lg:text-6xl">GO<span className="text-accent">in</span>UP</h1>
+          <h3 className="text-2xl lg:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
         </div>
 
-        <div className="hidden md:flex md:relative md:-left-64 md:-top-12 md:-scale-x-100">
+        <div className="hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100">
           <Image
-            src={sectionOnePic}
-            alt="Home 1"
+            src={homeBrandImage}
+            alt="Branding"
           />
         </div>
       </section>
@@ -38,26 +40,23 @@ export default async function HomePage() {
         <HomeMission />
       </section>
 
-      <section className="mt-10">
-        {/* @ts-expect-error Server Component */}
+      {/*<section className="mt-28">
         <HomeBanner />
+      </section>*/}
+
+      <section className="mt-28">
+        {/* @ts-expect-error Server Component */}
+        <HomeCarnet />
       </section>
 
-      <section className="mt-20">
+      <section className="mt-36">
         {/* @ts-expect-error Server Component */}
         <EventsList2 />
       </section>
-        
-      {/*<div className="md:mx-32">
-        <span className="title-accent">Eventi</span>
-        <h1 className="title">In arrivo</h1>
-        <EventsList list={eventsData} />
-      </div>*/}
 
       <section className="mt-20">
         <Credits />
       </section>
-      
     </>
   )
 }

@@ -16,10 +16,11 @@ module.exports = {
         poppins: ['var(--font-poppins)'],
       },
       colors: {
-        'primary': '',
+        /* https://coolors.co/7fb069-fffdda-e6aa68-ca3c25-262410 */
+        'primary': '#e6aa68',
         'accent': '#7fb069',
-        'header': '',
-        'text': '',
+        'title': '#262410',
+        'button': '#ca3c25',
         'background': '#FFFDDA',
       }
     },

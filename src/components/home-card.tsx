@@ -25,10 +25,10 @@ export default async function EventsList2() {
   
   return (
     <Suspense fallback={<Spinner />}>
-      <section className="mt-10 mx-20">
+      <section className="mx-20">
         <div className="text-center">
+          <h3 className="subtitle">Prossimi</h3>
           <h1 className="title">Eventi</h1>
-          <span className="title-accent uppercase">In arrivo</span>
         </div>
 
         <div className={classNames("mt-10 grid grid-cols-1 gap-20 justify-items-center",
@@ -37,11 +37,11 @@ export default async function EventsList2() {
         )}>
           { events.map((event, index) => 
             <Link href={`events/${event.id}`} key={index}>
-              <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl hover:opacity-90">
+              <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
                 <div className="relative text-white text-center">
                   <Image src={images[index]} className="" alt="Image" />
-                  <div className="absolute inset-0 w-full h-full bg-indigo-800 opacity-50"></div>
-                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl md:text-4xl font-unbounded uppercase">{event.name}</span>
+                  <div className="absolute inset-0 w-full h-full bg-primary opacity-30"></div>
+                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl lg:text-4xl font-unbounded uppercase">{event.name}</span>
 
                   <div className="absolute bottom-1 font-semibold text-xs w-full px-4 flex flex-row justify-between">
                     <span className="uppercase">{ event.promoter_id !== 1 && event.promoter_id}</span> {/* va pigliato e stampato promoter_name */}
@@ -53,7 +53,7 @@ export default async function EventsList2() {
 
                 </div>
                 <div className="px-6 py-4 min-h-[12rem]">
-                  <span className="title-accent">{ dt(event.date).format('ddd DD MMM').toUpperCase() }</span>
+                  <span className="subtitle">{ dt(event.date).format('ddd DD MMM') }</span>
                   <p className="text-gray-700 text-base mt-2">{event.summary}</p>
                 </div>
 
