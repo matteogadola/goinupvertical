@@ -31,10 +31,13 @@ jobs:
         id: tags
         run: |
           echo "LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)" >> $GITHUB_OUTPUT
+      - name: Version
+        id: version
+        run: |
           echo "APP_VERSION=$(node -p -e "require('./package.json').version)" >> $GITHUB_OUTPUT
       - name: Compare
-        if: steps.tags.outputs.LAST_TAG != "v${{ steps.tags.outputs.APP_VERSION }}"
-        run: echo "${{steps.tags.outputs.LAST_TAG}} != v${{ steps.tags.outputs.APP_VERSION }}"
+        if: steps.tags.outputs.LAST_TAG != "v${{ steps.version.outputs.APP_VERSION }}"
+        run: echo "${{steps.tags.outputs.LAST_TAG}} != v${{ steps.version.outputs.APP_VERSION }}"
 #          git describe
 
 #      - name: Last commit
