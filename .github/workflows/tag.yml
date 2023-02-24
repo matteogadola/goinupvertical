@@ -39,7 +39,8 @@ jobs:
         if: steps.version.outputs.LAST_TAG != "v${{ steps.version.outputs.APP_VERSION }}"
         run: |
           git tag -a v${{ steps.version.outputs.APP_VERSION }} -m "v${{ steps.version.outputs.APP_VERSION }}"
-
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #      - name: Last commit
 #        run: LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)
 #      - name: Version

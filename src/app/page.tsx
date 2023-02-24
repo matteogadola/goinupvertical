@@ -9,9 +9,9 @@ import Credits from '@/components/credits'
 
 import HomeMission from '@/app/components/home-mission'
 import HomeCarnet from '@/app/components/home-carnet'
+import HomeEvents from '@/app/components/home-events'
 
 import homeBrandImage from 'public/images/home-1.png'
-import EventsList2 from '@/components/home-card'
 
 // export const revalidate = 5
 
@@ -57,14 +57,12 @@ export default async function HomePage() {
           <HomeCarnet />
         </section>
 
-        <section className="mt-36">
-          {/* @ts-expect-error Server Component */}
-          <EventsList2 />
-        </section>
+        {/* @ts-expect-error Server Component */}
+        <HomeEvents className="mt-36" />
 
       </div>
 
-      <Credits className="mt-60" />
+      <Credits className="mt-40" />
     </>
   )
 }

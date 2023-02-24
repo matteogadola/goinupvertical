@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import Image from 'next/image'
 import { Event } from '@/types/events'
 import { getEvent, getEvents } from '@/lib/events'
@@ -58,10 +57,11 @@ export default async function EventPage({
   )
 }
 
-export async function generateStaticParams() {
+/*export async function generateStaticParams() {
   const events = await getEvents()
 
   return events.map((event) => ({
     id: event.id,
   }))
 }
+*/
