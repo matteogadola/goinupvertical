@@ -23,38 +23,41 @@ export default async function HomePage() {
   // hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100
   return (
     <>
-      <section className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="text-title font-unbounded">
-          <h1 className="text-4xl lg:text-6xl">GO<span className="text-accent">in</span>UP</h1>
-          <h3 className="text-2xl lg:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
-        </div>
+      <div className="page">
+        <section className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="text-title font-unbounded">
+            <h1 className="text-4xl lg:text-6xl">GO<span className="text-accent">in</span>UP</h1>
+            <h3 className="text-2xl lg:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
+          </div>
 
-        <div className="hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100">
-          <Image
-            src={homeBrandImage}
-            alt="Branding"
-          />
-        </div>
-      </section>
+          <div className="hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100">
+            <Image
+              src={homeBrandImage}
+              alt="Branding"
+            />
+          </div>
+        </section>
 
-      <section className="mt-20">
-        {/* @ts-expect-error Server Component */}
-        <HomeMission />
-      </section>
+        <section className="mt-20">
+          {/* @ts-expect-error Server Component */}
+          <HomeMission />
+        </section>
 
-      {/*<section className="mt-28">
-        <HomeBanner />
-      </section>*/}
+        {/*<section className="mt-28">
+          <HomeBanner />
+        </section>*/}
 
-      <section className="mt-28">
-        {/* @ts-expect-error Server Component */}
-        <HomeCarnet />
-      </section>
+        <section className="mt-28">
+          {/* @ts-expect-error Server Component */}
+          <HomeCarnet />
+        </section>
 
-      <section className="mt-36">
-        {/* @ts-expect-error Server Component */}
-        <EventsList2 />
-      </section>
+        <section className="mt-36">
+          {/* @ts-expect-error Server Component */}
+          <EventsList2 />
+        </section>
+
+      </div>
 
       <section className="mt-20">
         <Credits />
