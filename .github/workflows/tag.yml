@@ -28,12 +28,13 @@ jobs:
           git status
           git tag
           git describe
-      - name: Last commit
-        run: LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)
-      - name: Version
-        run: APP_VERSION=$(node -p -e "require('./package.json').version")
-      - name: Compare
-        run: echo $LAST_TAG; echo $APP_VERSION
-      - name: Tag
-        if: ${{LAST_TAG != APP_VERSION}}
-        run: echo "sono diverse";
+
+#      - name: Last commit
+#        run: LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)
+#      - name: Version
+#        run: APP_VERSION=$(node -p -e "require('./package.json').version")
+#      - name: Compare
+#        run: echo $LAST_TAG; echo $APP_VERSION
+#      - name: Tag
+#        if: ${{LAST_TAG != APP_VERSION}}
+#        run: echo "sono diverse";
