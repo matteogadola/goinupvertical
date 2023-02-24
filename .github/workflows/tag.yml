@@ -27,18 +27,18 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           git fetch --prune --tags
-      - name: Tags
-        id: tags
-        run: |
-          echo LAST_TAG=$(git tag -l --sort -version:refname | head -n 1) >> $GITHUB_OUTPUT
-      - name: Version
+      - name: Get versions
         id: version
         run: |
+          echo LAST_TAG=$(git tag -l --sort -version:refname | head -n 1) >> $GITHUB_OUTPUT
           echo APP_VERSION=$(node -p -e "require('./package.json').version") >> $GITHUB_OUTPUT
       - name: Compare
-        if: steps.tags.outputs.LAST_TAG != "v${{ steps.version.outputs.APP_VERSION }}"
-        run: echo "${{steps.tags.outputs.LAST_TAG}} != v${{ steps.version.outputs.APP_VERSION }}"
-#          git describe
+        if: steps.version.outputs.LAST_TAG != "v${{ steps.version.outputs.APP_VERSION }}"
+        run: echo "${{steps.version.outputs.LAST_TAG}} != v${{ steps.version.outputs.APP_VERSION }}"
+      - name: Tag
+        if: steps.version.outputs.LAST_TAG != "v${{ steps.version.outputs.APP_VERSION }}"
+        run: |
+          git tag -a "v${{ steps.version.outputs.APP_VERSION }}" -m "v${{ steps.version.outputs.APP_VERSION }}"
 
 #      - name: Last commit
 #        run: LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)
