@@ -15,7 +15,7 @@ export default async function EntryPage() {
 
 
 export default function EntryPage() {
-  const item = base64.decode<Item>(useSearchParams().get('q') ?? '')
+  const item = base64.decode<Item>(useSearchParams()?.get('q') ?? '')
 
   if (item === null) notFound()
 
