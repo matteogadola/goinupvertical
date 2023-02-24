@@ -27,7 +27,8 @@ jobs:
           git config user.email "<>"
           git status
           git tag
-          git describe
+
+#          git describe
 
 #      - name: Last commit
 #        run: LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)
