@@ -13,7 +13,7 @@ export default async function HomeMission() {
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-4">
-        <div className="flex lg:relative order-last lg:order-none">
+        <div className="flex lg:relative">
           <Image
             src={missionImage}
             alt="Mission"
