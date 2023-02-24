@@ -29,7 +29,7 @@ export default async function HomePage() {
           <h3 className="text-2xl lg:text-3xl">Circuito di 11 gare vertical<br />in montagna</h3>
         </div>
 
-        <div className="flex relative -top-12 -scale-x-100 lg:-left-64 lg:-top-12 ">
+        <div className="hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100">
           <Image
             src={homeBrandImage}
             alt="Branding"
