@@ -35,8 +35,6 @@ jobs:
           echo "LOLLE=$(ls -l | head -n 1)" >> $GITHUB_OUTPUT
       - name: Env
         run: echo "The selected color is ${{ steps.taaac.outputs.LOLLE }}"
-        with:
-          tag: ${{ steps.taaac.outputs.LAST_TAG }}
 #          git describe
 
 #      - name: Last commit
