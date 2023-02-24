@@ -30,9 +30,10 @@ jobs:
         run: git tag --list
       - name: Env
         run: |
-          echo "LAST_TAG=$(cat projectFile | grep -Po '(?<=Version>).*(?=</Version>)')" >> $GITHUB_OUTPUT
+          echo "LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)" >> $GITHUB_OUTPUT
+          echo "LOLLE=$(ls l | head -n 1)" >> $GITHUB_OUTPUT
       - name: Env
-        run: echo $LAST_TAG
+        run: echo $LOLLE
 #          git describe
 
 #      - name: Last commit
