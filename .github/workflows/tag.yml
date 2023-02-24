@@ -24,18 +24,17 @@ jobs:
       - name: Configuration
         run: |
           # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-          git --version
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           git fetch --prune --tags
       - name: Tags
-        run: git tag --list
-      - name: Env
-        id: taaac
+        id: tags
         run: |
           echo "LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)" >> $GITHUB_OUTPUT
-      - name: Env
-        run: echo "The selected color is ${{ steps.taaac.outputs.LAST_TAG }}"
+          echo "APP_VERSION=$(node -p -e "require('./package.json').version)" >> $GITHUB_OUTPUT
+      - name: Compare
+        if: steps.tags.outputs.LAST_TAG != "v${{ steps.tags.outputs.APP_VERSION }}"
+        run: echo "${{steps.tags.outputs.LAST_TAG}} != v${{ steps.tags.outputs.APP_VERSION }}"
 #          git describe
 
 #      - name: Last commit
