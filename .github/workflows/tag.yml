@@ -29,11 +29,9 @@ jobs:
       - name: Tags
         run: git tag --list
       - name: Env
-        run: env
-      - name: Env
         run: LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)
       - name: Env
-        run: env
+        run: echo $LAST_TAG
 #          git describe
 
 #      - name: Last commit
