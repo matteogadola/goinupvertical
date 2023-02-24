@@ -32,9 +32,8 @@ jobs:
         id: taaac
         run: |
           echo "LAST_TAG=$(git tag -l --sort -version:refname | head -n 1)" >> $GITHUB_OUTPUT
-          echo "LOLLE=$(ls -l | head -n 1)" >> $GITHUB_OUTPUT
       - name: Env
-        run: echo "The selected color is ${{ steps.taaac.outputs.LOLLE }}"
+        run: echo "The selected color is ${{ steps.taaac.outputs.LAST_TAG }}"
 #          git describe
 
 #      - name: Last commit
