@@ -24,7 +24,7 @@ export default async function HomeCarnet() {
           </Link>
         </div>
 
-        <div className="flex order-first lg-order-none">
+        <div className="flex order-first lg:order-none">
           <Image
             src={carnetImage}
             height={300}
