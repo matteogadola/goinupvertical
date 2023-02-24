@@ -15,6 +15,11 @@ import EventsList2 from '@/components/home-card'
 
 // export const revalidate = 5
 
+export const metadata = {
+  title: 'GOinUP',
+  description: 'Circuito di 11 gare vertical in montagna',
+}
+
 export default async function HomePage() {
   //const eventsData = getEvents({ fromDate: dt().format(), orderBy: 'date' })
 
@@ -59,9 +64,7 @@ export default async function HomePage() {
 
       </div>
 
-      <section className="mt-20">
-        <Credits />
-      </section>
+      <Credits className="mt-60" />
     </>
   )
 }

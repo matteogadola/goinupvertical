@@ -31,7 +31,7 @@ export default async function EventsList2() {
           <h1 className="title">Eventi</h1>
         </div>
 
-        <div className={classNames("mt-10 mx-8 grid grid-cols-1 gap-20 justify-items-center",
+        <div className={classNames("mt-10 grid grid-cols-1 gap-20 justify-items-center",
           {"md:grid-cols-2 xl:grid-cols-3": events.length === 3},
           {"xl:grid-cols-2": events.length === 2}
         )}>
