@@ -25,7 +25,7 @@ export default function Navbar({ cover }: Props) {
         <div className="flex justify-between items-center">
           {notHome && 
             <div className="text-lg md:text-xl font-unbounded text-slate-800 hover:opacity-70">
-              <Link href="/">GO<span className="text-purple-500">in</span>UP</Link>
+              <Link href="/">GO<span className="text-accent">in</span>UP</Link>
             </div>
           }
           <div className="flex md:hidden">
