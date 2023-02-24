@@ -34,7 +34,7 @@ jobs:
       - name: Version
         id: version
         run: |
-          echo "APP_VERSION=$(node -p -e \"require('./package.json').version\")" >> $GITHUB_OUTPUT
+          echo "APP_VERSION=$(node -p -e `require('./package.json').version`)" >> $GITHUB_OUTPUT
       - name: Compare
         if: steps.tags.outputs.LAST_TAG != "v${{ steps.version.outputs.APP_VERSION }}"
         run: echo "${{steps.tags.outputs.LAST_TAG}} != v${{ steps.version.outputs.APP_VERSION }}"
