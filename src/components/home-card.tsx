@@ -25,19 +25,19 @@ export default async function EventsList2() {
   
   return (
     <Suspense fallback={<Spinner />}>
-      <section className="mx-20">
+      <section className="">
         <div className="text-center">
           <h3 className="subtitle">Prossimi</h3>
           <h1 className="title">Eventi</h1>
         </div>
 
-        <div className={classNames("mt-10 grid grid-cols-1 gap-20 justify-items-center",
+        <div className={classNames("mt-10 mx-8 grid grid-cols-1 gap-20 justify-items-center",
           {"md:grid-cols-2 xl:grid-cols-3": events.length === 3},
           {"xl:grid-cols-2": events.length === 2}
         )}>
           { events.map((event, index) => 
             <Link href={`events/${event.id}`} key={index}>
-              <div className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
+              <div className="lg:max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
                 <div className="relative text-white text-center">
                   <Image src={images[index]} className="" alt="Image" />
                   <div className="absolute inset-0 w-full h-full bg-primary opacity-30"></div>

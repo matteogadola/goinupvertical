@@ -12,8 +12,8 @@ import { base64 } from '@/lib/helpers'
 export default async function HomeMission() {
 
   return (
-    <section className="mx-28 grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4">
-        <div className="flex md:relative ">
+    <section className="grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-4">
+        <div className="flex lg:relative order-last lg:order-none">
           <Image
             src={missionImage}
             alt="Mission"

@@ -12,7 +12,7 @@ import { base64 } from '@/lib/helpers'
 export default async function HomeCarnet() {
 
   return (
-      <section className="mx-40 grid grid-cols-1 md:grid-cols-2 justify-items-center">
+      <section className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
         
         <div className="mt-8">
           <h1 className="subtitle">Prevendita</h1>
