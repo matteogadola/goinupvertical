@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Tag
         uses: actions/setup-node@v3
         with:
@@ -25,7 +27,7 @@ jobs:
           git --version
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
-          git status
+          git fetch --prune --tags
       - name: Tags
         run: git tag --list
       - name: Env
