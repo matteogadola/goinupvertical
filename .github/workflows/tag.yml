@@ -26,8 +26,8 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           git status
-          git tag
-
+      - name: Tags
+        run: echo git tag --list
 #          git describe
 
 #      - name: Last commit
