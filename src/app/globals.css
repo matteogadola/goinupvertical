@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-  /*font-family: Poppins;
-  font-weight: 300;*/
-  @apply text-slate-600;
+  @apply text-slate-600 ;
+  background: rgb(255,253,218);
+  background: linear-gradient(115deg, rgba(255,253,218,1) 65%, rgba(230,170,104,1) 100%);
 }
 
 .page {
-  @apply mt-2 mx-4 md:mt-4 md:mx-8;
+  @apply mt-6 mx-12 lg:mt-12 lg:mx-24;
 }
 
 .bg-gradient {
@@ -17,7 +17,8 @@ body {
   background: linear-gradient(120deg, rgba(175,238,255,1) 0%, rgba(255,226,163,1) 100%);
 }
 
-.title {
+/* deprecated */
+.title-old {
   @apply font-poppins text-3xl text-slate-800 uppercase;
 }
 
@@ -25,7 +26,20 @@ body {
   @apply font-semibold text-purple-500
 }
 
+.title {
+  @apply font-unbounded text-xl md:text-4xl text-title uppercase
+}
+
+.subtitle {
+  @apply font-unbounded text-2xl md:text-xl text-accent uppercase
+}
+
 .text {
+  @apply font-unbounded text-title
+}
+
+/* deprecated */
+.text-old {
   @apply text-slate-500;
 }
 

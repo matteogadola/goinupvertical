@@ -19,10 +19,11 @@ import fotorunValtellina from 'public/images/credits/fotorun-valtellina.png'
 import speedtime from 'public/images/credits/speedtime.png'
 import centroValle from 'public/images/credits/centro-valle-netweek.webp'
 import laProvinciadiSondrio from 'public/images/credits/la-provincia-sondrio.svg'
+import classNames from 'classnames'
 
-export default function Credits() {
+export default function Credits({ className }: { className: string }) {
   return (
-    <section className="text-center mt-8">
+    <section className={classNames(className, "text-center")}>
       <div className="mx-6 py-4">
         <h3 className="text-lg font-semibold uppercase">Sponsor</h3>
         <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center items-center">

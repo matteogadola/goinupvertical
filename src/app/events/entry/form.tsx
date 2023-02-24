@@ -26,25 +26,31 @@ export default function EntryForm({ item }: { item: Item }) {
   const cartItems = useStore((state) => state.cartItems)
   const addCartItem = useStore((state) => state.addCartItem)
 
+  let defaultValues: any = {
+    privacy_policy: false,
+    country: 'ITA',
+  }
 
-  const { register, handleSubmit, control, getValues, setValue, reset, formState: { errors } } = useForm<EntryForm>({
-    defaultValues: {
+  if (process.env.NODE_ENV !== 'development') {
+    defaultValues = {
+      ...defaultValues,
       first_name: 'Matte',
       last_name: 'Gad',
       tin: 'GDLMTT88R21F712C',
       email: 'gado@asd.it',
       phone_number: '0342610000',
-      privacy_policy: false,
-      country: 'ITA',
     }
+  }
+
+  const { register, handleSubmit, control, getValues, setValue, setError, reset, formState: { errors } } = useForm<EntryForm>({
+    defaultValues
   })
 
   const onSubmit: SubmitHandler<EntryForm> = async data => {
     const duplicateIndex = cartItems.findIndex(item => item.entry?.tin === data.tin)
 
     if (duplicateIndex !== -1) {
-      // fai un setAlert('error', 'message')
-      setState({ ...state, error: 'C\'è un duplicato' }) // Alert messo in layout e globale che legga da store
+      setError('tin', { message: 'Codice fiscale già presente in carrello' })
       return
     }
 
