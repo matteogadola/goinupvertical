@@ -28,12 +28,12 @@ export default function EntryPage() {
     <section className="mt-4 md:mx-12">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div className="col-span-1 md:col-span-3">
-          <span className="title-accent">Biglietti</span>
+          <span className="subtitle">Biglietti</span>
           <h1 className="title">{item.name}</h1>
-          <p>
+          <p className="mt-8">
             Qui può esserci una descrizione
           </p>
-          <EntryForm item={item} />
+          <EntryForm item={item} className="mt-8" />
         </div>
         <div className="col-span-1 md:col-span-2 ml-16">
           <EntryCart />

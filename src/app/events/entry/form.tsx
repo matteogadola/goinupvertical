@@ -20,7 +20,7 @@ export interface EntryForm extends Entry {
   privacyPolicy: boolean;
 }
 
-export default function EntryForm({ item }: { item: Item }) {
+export default function EntryForm({ item, className }: { item: Item, className?: string }) {
   const router = useRouter()
 
   const cartItems = useStore((state) => state.cartItems)
@@ -89,10 +89,11 @@ export default function EntryForm({ item }: { item: Item }) {
   const [state, setState] = useState({ team: '', teams, countries, loading: false, error: '', isTinCalculatorOpened: false })
 
   return (
-    <>
+    <section className={classNames(className)}>
       {state.isTinCalculatorOpened && <EntryFormCfDialog getValues={getValues} onCalc={calcTin} onClose={closeTinCalculator} />}
 
       {/*state.error && <AlertError message={state.error} />*/}
+      <span className="subtitle">Iscrizione</span>
       <form className="p-4 " autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
@@ -208,6 +209,6 @@ export default function EntryForm({ item }: { item: Item }) {
           </button>
         </div>
       </form>
-    </>
+    </section>
   )
 }

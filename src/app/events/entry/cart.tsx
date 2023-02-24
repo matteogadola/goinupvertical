@@ -35,12 +35,12 @@ export default function EntryCart() {
 
   return (
     <section>
-      {cartItems.length > 0 && 
+      {cartItems.length >= 0 && 
         <div className="">
-          <div className="flex h-full flex-col bg-white">
+          <div className="flex h-full flex-col">
             <div className="flex-1 overflow-y-auto py-4 px-4 sm:px-6">
               <div className="">
-                <h2 className="title-accent" id="slide-over-title">Conferma</h2>
+                <h2 className="subtitle" id="slide-over-title">Conferma</h2>
                 <h2 className="title">Carrello</h2>
               </div>
 
