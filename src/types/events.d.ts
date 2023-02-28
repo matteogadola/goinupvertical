@@ -6,8 +6,8 @@ export interface Event {
   date: string;
   promoter_id: number;
   capacity: number;
-  status: 'internal' | 'published' | 'open' | 'close' | 'stockout';
-  detail: EventDetail | null; // Partial?
+  status: 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';
+  detail: Partial<EventDetail> | null;
   summary: string | null;
   description: string | null;
   body: string | null;
@@ -17,9 +17,10 @@ export interface Event {
 /**
  * internal - evento creato ma non visibile in alcun modo
  * published - evento visibile solo con link diretto
- * open - evento visibile anche da home page (events widget)
- * close - evento visibile ma con icona closed
- * stockout - evento visibile ma con icona sold-out
+ * scheduled - evento visibile anche da home page (events widget)
+ * cancelled
+ * postponed
+ * stockout
  */
 
 export interface EventDetail {

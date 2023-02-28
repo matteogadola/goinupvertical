@@ -27,7 +27,7 @@ export default function ConfirmPage() {
   const order = base64.decode<Order>(useSearchParams()?.get('q') ?? '')
 
   // NO - MOSTRA ERRORE
-  if (order === null || !order.items.length) redirect('/')
+  if (order?.items === undefined || !order.items.length) redirect('/')
   
   // se non ci sono params fai redirect a home
   //const order = base64.decode<Order>(encoded)

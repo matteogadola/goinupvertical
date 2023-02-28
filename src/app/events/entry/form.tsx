@@ -16,6 +16,7 @@ import EntryFormCfDialog from './form-cf-dialog'
 import { Entry } from '@/types/entries'
 import { Item } from '@/types/items'
 import EntryFormLocationsDialog from './form-locations-dialog'
+import Link from 'next/link'
 
 export interface EntryForm extends Entry {
   privacyPolicy: boolean;
@@ -195,7 +196,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             {errors.phone_number && <small className="validation-error">{errors.phone_number.message}</small>}
           </div>
 
-          <div className="">
+          <div className="lg:col-span-2">
             <div className="relative flex items-start">
               <div className="flex items-center h-5 mt-1">
                 <input
@@ -209,7 +210,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               </div>
               <label htmlFor="hs-checkbox-delete" className="ml-3">
                 <span className="block text-sm font-semibold text-gray-800 dark:text-gray-300">Privacy Policy</span>
-                <span id="hs-checkbox-delete-description" className="block text-xs text-gray-600 dark:text-gray-500">Accetto i <a href="" className="text-button">Termini e condizioni</a> e l&apos;<a href="" className="text-button">informativa sulla privacy</a> di Goinup</span>
+                <span id="hs-checkbox-delete-description" className="block text-xs text-gray-600 dark:text-gray-500">Accetto i <a href="/legal/terms" target="_blank" className="text-button" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="text-button" rel="noopener noreferrer">informativa sulla privacy</a> di Goinup</span>
                 {errors.privacy_policy && <small className="validation-error">{errors.privacy_policy.message}</small>}
               </label>
             </div>

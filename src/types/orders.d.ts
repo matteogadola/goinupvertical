@@ -1,7 +1,9 @@
 export interface Order {
   id: number;
   user_id: string | null;
+  user_email: string;
   date: string;
+  status: string;
   payment_id: string | null;
   payment_date: string | null;
   payment_method: string;
@@ -11,7 +13,6 @@ export interface Order {
 
 export interface OrderItem {
   id: number;
-  //item_id: number;
   name: string;
   quantity: number;
   price: number; //
