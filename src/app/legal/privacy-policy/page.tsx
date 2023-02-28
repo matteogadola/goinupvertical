@@ -1,30 +1,29 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 
 /*
 <script type="text/javascript">
-    var $body = $('body');
+    var $body = $(&apos;body&apos;);
 
     // Add `all-collapsed` class to body in order to have all the expandable panel collapsed at page load and:
     // 1. avoid the closing animation
     // 2. allow all browsers (Firefox had issue) to scroll to an anchor if provided in the URL (e.g. #manage_cookies)
     // 3. done via JS in order to not have panels collapsed for browsers with disabled JS
-    $body.addClass('all-collapsed')
-      .on('click', '.expand .expand-click', function () {
-        if ($body.hasClass('all-collapsed')) {
+    $body.addClass(&apos;all-collapsed&apos;)
+      .on(&apos;click&apos;, &apos;.expand .expand-click&apos;, function () {
+        if ($body.hasClass(&apos;all-collapsed&apos;)) {
           // Remove `all-collapsed` class from the body and set all panels collapsed so toggleClass behaves as expected
-          $('.expand-content').hide();
-          $('.expand').addClass('collapsed');
-          $body.removeClass('all-collapsed');
+          $(&apos;.expand-content&apos;).hide();
+          $(&apos;.expand&apos;).addClass(&apos;collapsed&apos;);
+          $body.removeClass(&apos;all-collapsed&apos;);
         }
 
         var $this = $(this);
-        $this.parents('.expand').toggleClass('collapsed').toggleClass('expanded')
-          .children('.expand-content').slideToggle('fast');
-        $this.parents('.expand-item').toggleClass('hover');
-        $this.children('.icon-17').toggleClass('icon-expand').toggleClass('icon-collapse');
+        $this.parents(&apos;.expand&apos;).toggleClass(&apos;collapsed&apos;).toggleClass(&apos;expanded&apos;)
+          .children(&apos;.expand-content&apos;).slideToggle(&apos;fast&apos;);
+        $this.parents(&apos;.expand-item&apos;).toggleClass(&apos;hover&apos;);
+        $this.children(&apos;.icon-17&apos;).toggleClass(&apos;icon-expand&apos;).toggleClass(&apos;icon-collapse&apos;);
       });
   </script>
 
@@ -33,7 +32,7 @@ import Link from 'next/link'
 
   <script type="text/javascript">
   window.tryFunc = function(fName,args){
-    if(typeof window[fName]==='function'){
+    if(typeof window[fName]===&apos;function&apos;){
       window[name](args);
     }else{
       if(args){
@@ -50,7 +49,7 @@ import Link from 'next/link'
   */
 
 export default function PrivacyPage() {
-  const legalName = 'Goinup'
+  const legalName = 'Goinup';
 
   return (
 <>
@@ -83,15 +82,15 @@ export default function PrivacyPage() {
 
             <p>
               Fra i Dati Personali raccolti da questa Applicazione, in modo autonomo o tramite terze parti, ci sono:
-              email; numero di telefono; codice fiscale; nome; cognome; Dati comunicati durante l'utilizzo del servizio.
+              email; numero di telefono; codice fiscale; nome; cognome; Dati comunicati durante l&apos;utilizzo del servizio.
             </p>
 
   <p>Dettagli completi su ciascuna tipologia di dati raccolti sono forniti nelle sezioni dedicate di questa privacy policy o mediante specifici testi informativi visualizzati prima della raccolta dei dati stessi.<br />
-I Dati Personali possono essere liberamente forniti dall'Utente o, nel caso di Dati di Utilizzo, raccolti automaticamente durante l'uso di questa Applicazione.<br />
+I Dati Personali possono essere liberamente forniti dall&apos;Utente o, nel caso di Dati di Utilizzo, raccolti automaticamente durante l&apos;uso di questa Applicazione.<br />
 Se non diversamente specificato, tutti i Dati richiesti da questa Applicazione sono obbligatori. Se l&apos;Utente rifiuta di comunicarli, potrebbe essere impossibile per questa Applicazione fornire il Servizio. Nei casi in cui questa Applicazione indichi alcuni Dati come facoltativi, gli Utenti sono liberi di astenersi dal comunicare tali Dati, senza che ciò abbia alcuna conseguenza sulla disponibilità del Servizio o sulla sua operatività.<br /> 
 Gli Utenti che dovessero avere dubbi su quali Dati siano obbligatori, sono incoraggiati a contattare il Titolare.<br />
-L&apos;eventuale utilizzo di Cookie - o di altri strumenti di tracciamento - da parte di questa Applicazione o dei titolari dei servizi terzi utilizzati da questa Applicazione, ove non diversamente precisato, ha la finalità di fornire il Servizio richiesto dall'Utente, oltre alle ulteriori finalità descritte nel presente documento e nella Cookie Policy, se disponibile.</p>
-  <p>L'Utente si assume la responsabilità dei Dati Personali di terzi ottenuti, pubblicati o condivisi mediante questa Applicazione e garantisce di avere il diritto di comunicarli o diffonderli, liberando il Titolare da qualsiasi responsabilità verso terzi.</p>
+L&apos;eventuale utilizzo di Cookie - o di altri strumenti di tracciamento - da parte di questa Applicazione o dei titolari dei servizi terzi utilizzati da questa Applicazione, ove non diversamente precisato, ha la finalità di fornire il Servizio richiesto dall&apos;Utente, oltre alle ulteriori finalità descritte nel presente documento e nella Cookie Policy, se disponibile.</p>
+  <p>L&apos;Utente si assume la responsabilità dei Dati Personali di terzi ottenuti, pubblicati o condivisi mediante questa Applicazione e garantisce di avere il diritto di comunicarli o diffonderli, liberando il Titolare da qualsiasi responsabilità verso terzi.</p>
 </div>
 
 
@@ -108,9 +107,9 @@ Il trattamento viene effettuato mediante strumenti informatici e/o telematici, c
   <p>Il Titolare tratta Dati Personali relativi all&apos;Utente in caso sussista una delle seguenti condizioni:</p>
   <ul>
     <li>l&apos;Utente ha prestato il consenso per una o più finalità specifiche; Nota: in alcuni ordinamenti il Titolare può essere autorizzato a trattare Dati Personali senza che debba sussistere il consenso dell&apos;Utente o un&apos;altra delle basi giuridiche specificate di seguito, fino a quando l&apos;Utente non si opponga (“opt-out”) a tale trattamento. Ciò non è tuttavia applicabile qualora il trattamento di Dati Personali sia regolato dalla legislazione europea in materia di protezione dei Dati Personali;</li>
-    <li>il trattamento è necessario all'esecuzione di un contratto con l&apos;Utente e/o all'esecuzione di misure precontrattuali;</li>
+    <li>il trattamento è necessario all&apos;esecuzione di un contratto con l&apos;Utente e/o all&apos;esecuzione di misure precontrattuali;</li>
     <li>il trattamento è necessario per adempiere un obbligo legale al quale è soggetto il Titolare;</li>
-    <li>il trattamento è necessario per l'esecuzione di un compito di interesse pubblico o per l'esercizio di pubblici poteri di cui è investito il Titolare;</li>
+    <li>il trattamento è necessario per l&apos;esecuzione di un compito di interesse pubblico o per l&apos;esercizio di pubblici poteri di cui è investito il Titolare;</li>
     <li>il trattamento è necessario per il perseguimento del legittimo interesse del Titolare o di terzi.</li>
   </ul>
   <p>È comunque sempre possibile richiedere al Titolare di chiarire la concreta base giuridica di ciascun trattamento ed in particolare di specificare se il trattamento sia basato sulla legge, previsto da un contratto o necessario per concludere un contratto.</p>
@@ -167,7 +166,7 @@ Al termine del periodo di conservazione i Dati Personali saranno cancellati. Per
               </h3>
               <div className="expand-content">
                 <p>Questo tipo di servizi consente di gestire un database di contatti email, contatti telefonici o contatti di qualunque altro tipo, utilizzati per comunicare con l&apos;Utente.<br/>
-Questi servizi potrebbero inoltre consentire di raccogliere dati relativi alla data e all&apos;ora di visualizzazione dei messaggi da parte dell&apos;Utente, così come all&apos;interazione dell'Utente con essi, come le informazioni sui click sui collegamenti inseriti nei messaggi.</p>
+Questi servizi potrebbero inoltre consentire di raccogliere dati relativi alla data e all&apos;ora di visualizzazione dei messaggi da parte dell&apos;Utente, così come all&apos;interazione dell&apos;Utente con essi, come le informazioni sui click sui collegamenti inseriti nei messaggi.</p>
 
 
                   <h4 className="iub-service iub-service-9228555">Mailjet (SAS Mailjet)</h4>
@@ -193,9 +192,9 @@ Questi servizi potrebbero inoltre consentire di raccogliere dati relativi alla d
                 Hosting ed infrastruttura backend
               </h3>
               <div className="expand-content">
-                <p>Questo tipo di servizi ha la funzione di ospitare Dati e file che permettono a questa Applicazione di funzionare, ne consentono la distribuzione e mettono a disposizione un'infrastruttura pronta all'uso per erogare specifiche funzionalità di questa Applicazione.</p>
+                <p>Questo tipo di servizi ha la funzione di ospitare Dati e file che permettono a questa Applicazione di funzionare, ne consentono la distribuzione e mettono a disposizione un&apos;infrastruttura pronta all&apos;uso per erogare specifiche funzionalità di questa Applicazione.</p>
 
-<p>Alcuni servizi tra quelli elencati di seguito, se presenti, possono funzionare su server geograficamente distribuiti, rendendo difficile determinare l'effettiva ubicazione in cui sono conservati i Dati Personali.</p>
+<p>Alcuni servizi tra quelli elencati di seguito, se presenti, possono funzionare su server geograficamente distribuiti, rendendo difficile determinare l&apos;effettiva ubicazione in cui sono conservati i Dati Personali.</p>
 
 
                   <h4 className="iub-service iub-service-9228535">Netlify (Netlify, Inc.)</h4>
@@ -294,12 +293,12 @@ Alcuni dei servizi di seguito indicati potrebbero raccogliere Dati Personali anc
   <h3 className="iub-subheading iub-subheading-legal-protection">
     Difesa in giudizio
   </h3>
-  <p>I Dati Personali dell&apos;Utente possono essere utilizzati da parte del Titolare in giudizio o nelle fasi preparatorie alla sua eventuale instaurazione per la difesa da abusi nell'utilizzo di questa Applicazione o dei Servizi connessi da parte dell&apos;Utente.<br />
+  <p>I Dati Personali dell&apos;Utente possono essere utilizzati da parte del Titolare in giudizio o nelle fasi preparatorie alla sua eventuale instaurazione per la difesa da abusi nell&apos;utilizzo di questa Applicazione o dei Servizi connessi da parte dell&apos;Utente.<br />
 L&apos;Utente dichiara di essere consapevole che il Titolare potrebbe essere obbligato a rivelare i Dati per ordine delle autorità pubbliche.</p>
   <h3 className="iub-subheading iub-subheading-legal-specific-info">
     Informative specifiche
   </h3>
-  <p>Su richiesta dell&apos;Utente, in aggiunta alle informazioni contenute in questa privacy policy, questa Applicazione potrebbe fornire all'Utente delle informative aggiuntive e contestuali riguardanti Servizi specifici, o la raccolta ed il trattamento di Dati Personali.</p>
+  <p>Su richiesta dell&apos;Utente, in aggiunta alle informazioni contenute in questa privacy policy, questa Applicazione potrebbe fornire all&apos;Utente delle informative aggiuntive e contestuali riguardanti Servizi specifici, o la raccolta ed il trattamento di Dati Personali.</p>
   <h3 className="iub-subheading iub-subheading-legal-maintenance">
     Log di sistema e manutenzione
   </h3>
@@ -313,7 +312,7 @@ L&apos;Utente dichiara di essere consapevole che il Titolare potrebbe essere obb
       Risposta alle richieste “Do Not Track”
     </h3>
     <p>Questa Applicazione non supporta le richieste “Do Not Track”.<br />
-Per scoprire se gli eventuali servizi di terze parti utilizzati le supportino, l'Utente è invitato a consultare le rispettive privacy policy.</p>
+Per scoprire se gli eventuali servizi di terze parti utilizzati le supportino, l&apos;Utente è invitato a consultare le rispettive privacy policy.</p>
 
   <h3 className="iub-subheading iub-subheading-legal-changes-to-this-privacy-policy">
     Modifiche a questa privacy policy
@@ -339,7 +338,7 @@ Per scoprire se gli eventuali servizi di terze parti utilizzati le supportino, l
       <p>Sono le informazioni raccolte automaticamente attraverso questa Applicazione (anche da applicazioni di parti terze integrate in questa Applicazione), tra cui: gli indirizzi IP o i nomi a dominio dei computer utilizzati dall&apos;Utente che si connette con questa Applicazione, gli indirizzi in notazione URI (Uniform Resource Identifier), l&apos;orario della richiesta, il metodo utilizzato nell&apos;inoltrare la richiesta al server, la dimensione del file ottenuto in risposta, il codice numerico indicante lo stato della risposta dal server (buon fine, errore, ecc.) il paese di provenienza, le caratteristiche del browser e del sistema operativo utilizzati dal visitatore, le varie connotazioni temporali della visita (ad esempio il tempo di permanenza su ciascuna pagina) e i dettagli relativi all&rsquo;itinerario seguito all&rsquo;interno dell&rsquo;Applicazione, con particolare riferimento alla sequenza delle pagine consultate, ai parametri relativi al sistema operativo e all&rsquo;ambiente informatico dell&rsquo;Utente.</p>
 
       <h4>Utente</h4>
-      <p>L'individuo che utilizza questa Applicazione che, salvo ove diversamente specificato, coincide con l'Interessato.</p>
+      <p>L&apos;individuo che utilizza questa Applicazione che, salvo ove diversamente specificato, coincide con l&apos;Interessato.</p>
 
       <h4>Interessato</h4>
       <p>La persona fisica cui si riferiscono i Dati Personali.</p>
@@ -348,7 +347,7 @@ Per scoprire se gli eventuali servizi di terze parti utilizzati le supportino, l
       <p>La persona fisica, giuridica, la pubblica amministrazione e qualsiasi altro ente che tratta dati personali per conto del Titolare, secondo quanto esposto nella presente privacy policy.</p>
 
       <h4>Titolare del Trattamento (o Titolare)</h4>
-      <p>La persona fisica o giuridica, l'autorità pubblica, il servizio o altro organismo che, singolarmente o insieme ad altri, determina le finalità e i mezzi del trattamento di dati personali e gli strumenti adottati, ivi comprese le misure di sicurezza relative al funzionamento ed alla fruizione di questa Applicazione. Il Titolare del Trattamento, salvo quanto diversamente specificato, è il titolare di questa Applicazione.</p>
+      <p>La persona fisica o giuridica, l&apos;autorità pubblica, il servizio o altro organismo che, singolarmente o insieme ad altri, determina le finalità e i mezzi del trattamento di dati personali e gli strumenti adottati, ivi comprese le misure di sicurezza relative al funzionamento ed alla fruizione di questa Applicazione. Il Titolare del Trattamento, salvo quanto diversamente specificato, è il titolare di questa Applicazione.</p>
 
       <h4>Questa Applicazione</h4>
       <p>Lo strumento hardware o software mediante il quale sono raccolti e trattati i Dati Personali degli Utenti.</p>

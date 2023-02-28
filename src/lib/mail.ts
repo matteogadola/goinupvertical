@@ -1,4 +1,6 @@
 import { Order } from '@/types/orders';
+import { dt } from './date';
+import { updateOrder } from './orders';
 
 interface Mail {
   to: string;
@@ -7,7 +9,7 @@ interface Mail {
 }
 
 export const sendMail = async (mail: Mail) => {
-  await fetch('https://api.useplunk.com/v1/send', {
+  return fetch('https://api.useplunk.com/v1/send', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +22,7 @@ export const sendMail = async (mail: Mail) => {
 export const sendConfirmationMail = async (order: Order) => {
   //const html = render(<Confirm order={order} />);
 
-  const detail = order.items.map(
+  const details = order.items.map(
     (item) => `
     <tr>
       <td style="padding: 0.5rem 0;">${item.name}</td>
@@ -32,7 +34,7 @@ export const sendConfirmationMail = async (order: Order) => {
 
   //const paymentDetail =
 
-  await sendMail({
+  const response = await sendMail({
     to: 'gadola.matteo@gmail.com',
     subject: `Conferma ordine GOinUP`,
     body: `
@@ -61,7 +63,7 @@ export const sendConfirmationMail = async (order: Order) => {
               </tr>
             </thead>
             <tbody>
-              ${detail}
+              ${details}
             </tbody>
           </table>
 
@@ -72,4 +74,13 @@ export const sendConfirmationMail = async (order: Order) => {
       </html>
       `,
   });
+
+  const body = await response.json();
+
+  await updateOrder(order.id, {
+    notification_date: dt().utc().format(),
+    notification_status: body.success === true ? 'success' : 'error',
+  });
+
+  return body.success;
 };

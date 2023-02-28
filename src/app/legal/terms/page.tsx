@@ -36,7 +36,7 @@ export default function TermsPage() {
             <li><b>Cliente</b>: indica il soggetto che, per effetto dei Servizi {legalName}, acquista il Titolo di Ingresso dall&apos;Organizzatore, a distanza - tramite il Sito, tramite l&apos;App o mediante vendita telefonica, ovvero non a distanza, presso i Punti Vendita {legalName}.</li>
             <li><b>Contratto</b>: indica il Contratto di Servizi {legalName} e il Contratto di Vendita.</li>
             <li><b>Evento</b>: indica la manifestazione, lo spettacolo o la rappresentazione a cui il Portatore del Titolo di Ingresso ha il diritto di accedere.</li>
-            <li><b>Luogo dell&apos;Evento</b>: indica l'insieme dei fabbricati e dei terreni che costituiscono i luoghi di svolgimento di uno specifico Evento.</li>
+            <li><b>Luogo dell&apos;Evento</b>: indica l&apos;insieme dei fabbricati e dei terreni che costituiscono i luoghi di svolgimento di uno specifico Evento.</li>
             
             <li><b>Codice del Consumo</b>: indica il D. Lgs. 6 settembre 2005, n. 206.</li>
             <li><b>Codice del Consumo</b>: indica il D. Lgs. 6 settembre 2005, n. 206.</li>

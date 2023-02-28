@@ -4,6 +4,7 @@ import { pool } from './pg';
 import { dt } from './date';
 import CodiceFiscale from 'codice-fiscale-js';
 import { Entry } from '@/types/entries';
+import supabase from './supabase';
 
 const createOrder = async (params: Partial<Order>) => {
   if (params?.items === undefined || params.items.length === 0) {
@@ -24,9 +25,9 @@ const createOrder = async (params: Partial<Order>) => {
       [
         params.user_email ?? params.items[0].entry.email,
         params.items.reduce((a, c) => a + c.price, 0),
-        dt().format(),
+        dt().utc().format(),
         params.payment_method,
-        ['sepa', 'cash'].includes(params?.payment_method ?? '') ? 'pending' : null,
+        params.payment_method === 'stripe' ? 'intent' : 'pending',
       ]
     );
     const order = orders[0];
@@ -113,4 +114,14 @@ const createOrder = async (params: Partial<Order>) => {
   }
 };
 
-export { createOrder };
+const updateOrder = async (id: number, params: Partial<Order>) => {
+  const { data, error } = await supabase.from('orders').update(params).eq('id', id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export { createOrder, updateOrder };
