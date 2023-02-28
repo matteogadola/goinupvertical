@@ -10,11 +10,16 @@ import visaLogo from 'public/images/logos/visa.svg'
 import amexLogo from 'public/images/logos/amex-old.svg'
 import sepaLogo from 'public/images/logos/sepa.svg'
 import { useState } from 'react'
+import EntryFormLocationsDialog from './form-locations-dialog'
+import { useRouter } from 'next/navigation'
+import { base64 } from '@/lib/helpers'
 
 export default function EntryCart() {
+  const { replace } = useRouter()
   const cartItems = useStore((state) => state.cartItems)
   const paymentMethod = useStore((state) => state.paymentMethod)
   const removeCartItem = useStore((state) => state.removeCartItem)
+  const clearCartItems = useStore((state) => state.clearCartItems)
   const setPaymentMethod = useStore((state) => state.setPaymentMethod)
   const [error, setError] = useState(null)
 
@@ -22,25 +27,38 @@ export default function EntryCart() {
 
   const checkout = async () => {
     try {
-      await createCheckout({
+      const order = await createCheckout({
         payment_method: paymentMethod,
         items: cartItems
       })
       setError(null)
+      clearCartItems()
+      replace(`/confirm?q=${base64.encode(order)}`)
     } catch (e: any) {
       console.log(JSON.stringify(e.message))
       setError(e.message)
     }
   }
 
+  const [state, setState] = useState({ error: '', isLocationsOpened: false })
+
+  const openLocations = () => {
+    setState({ ...state, isLocationsOpened: true })
+  }
+
+  const closeLocations = () => {
+    setState({ ...state, isLocationsOpened: false })
+  }
+
   return (
     <section>
+      {state.isLocationsOpened && <EntryFormLocationsDialog onClose={closeLocations} />}
       {cartItems.length > 0 && 
         <div className="">
           <div className="flex h-full flex-col">
-            <div className="flex-1 overflow-y-auto py-4 px-4 sm:px-6">
+            <div className="flex-1 overflow-y-auto px-4">
               <div className="">
-                <h2 className="subtitle" id="slide-over-title">Conferma</h2>
+                <h2 className="overtitle" id="slide-over-title">Conferma</h2>
                 <h2 className="title">Carrello</h2>
               </div>
 
@@ -59,7 +77,7 @@ export default function EntryCart() {
                             <div className="flex justify-between text-base text-gray-900">
                               <p className="mt-1 text-sm text-gray-500">{item.description}</p>
                               <div className="flex">
-                                <button type="button" className="text-sm text-indigo-600 hover:text-indigo-500" onClick={() => removeCartItem(index)}>Rimuovi</button>
+                                <button type="button" className="text-xs text-button hover:opacity-80" onClick={() => removeCartItem(index)}>Rimuovi</button>
                               </div>
                             </div>
                           </div>
@@ -70,7 +88,7 @@ export default function EntryCart() {
 
                   </ul>
 
-                  <div className="ml-2 flex justify-between text-base font-medium text-gray-900 mt-6">
+                  <div className="ml-2 flex justify-between text-base font-medium text-gray-900 my-4">
                     <p>Totale</p>
                     <p>{totalAmount / 100}€</p>
                   </div>
@@ -107,7 +125,7 @@ export default function EntryCart() {
                   <input type="radio" value="cash" id="payment-method-cash" checked={paymentMethod === 'cash'} onChange={e => setPaymentMethod('cash')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                   <label htmlFor="payment-method-cash" className={classNames("w-full ml-2 text-sm font-medium text-gray-900", {"py-2": paymentMethod === 'cash', "py-4": paymentMethod !== 'cash'} )}>
                     <span>Contanti</span>
-                    {paymentMethod === 'cash' && <span className="block font-normal text-xs">Sarà necessario recarsi presso uno degli <button className="text-purple-500">store abilitati</button></span>}
+                    {paymentMethod === 'cash' && <span className="block font-normal text-xs">Sarà necessario recarsi presso uno degli <button onClick={() => openLocations()} className="text-button">store abilitati</button></span>}
                   </label>
                 </div>
               </div>

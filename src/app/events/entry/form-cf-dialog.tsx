@@ -32,7 +32,9 @@ type Props = {
 }
 
 export default function EntryFormCfDialog({ className, getValues, onCalc, onClose }: Props) {
-  const { register, handleSubmit, control, setValue, reset, formState: { errors } } = useForm<FormDialogState>()
+  const { register, handleSubmit, control, setValue, setError, reset, formState: { errors } } = useForm<FormDialogState>({
+    mode: 'onTouched'
+  })
   
   const data = getValues()
   useEffect(() => {
@@ -41,6 +43,11 @@ export default function EntryFormCfDialog({ className, getValues, onCalc, onClos
   }, [data])
 
   const onSubmit: SubmitHandler<FormDialogState> = async data => {
+    if (!places.includes(data.birth_place)) {
+      setError('birth_place', { message: 'Seleziona un comune presente in lista' })
+      return
+    }
+
     const date = new Date(data.birth_date)
 
     const tin = new CodiceFiscale({
@@ -70,8 +77,8 @@ export default function EntryFormCfDialog({ className, getValues, onCalc, onClos
       <div className="relative w-auto my-6 mx-auto max-w-2xl">
         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
           <div className="p-5 border-b border-solid border-slate-200 rounded-t">
-            <h3 className="title-accent">Calcolo</h3>
-            <h2 className="title">Codice Fiscale</h2>
+            <h3 className="overtitle">Calcolo</h3>
+            <h1 className="title">Codice Fiscale</h1>
           </div>
 
           <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>

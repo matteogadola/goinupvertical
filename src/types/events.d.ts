@@ -1,18 +1,26 @@
 export interface Event {
   id: string;
-  type: 'race' | ''; // che può essere race/course, dinner, ... ? o meno specifico?
+  category: 'race' | 'food' | 'pass';
   name: string;
   edition: number;
   date: string;
   promoter_id: number;
   capacity: number;
-  status: 'open' | 'close' | 'sold-out';
-  detail: EventDetail | null;
+  status: 'internal' | 'published' | 'open' | 'close' | 'stockout';
+  detail: EventDetail | null; // Partial?
   summary: string | null;
   description: string | null;
   body: string | null;
-  banner: string | null;
+  flyer: string | null;
 }
+
+/**
+ * internal - evento creato ma non visibile in alcun modo
+ * published - evento visibile solo con link diretto
+ * open - evento visibile anche da home page (events widget)
+ * close - evento visibile ma con icona closed
+ * stockout - evento visibile ma con icona sold-out
+ */
 
 export interface EventDetail {
   distance: number;

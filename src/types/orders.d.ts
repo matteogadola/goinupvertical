@@ -1,8 +1,8 @@
 export interface Order {
-  id: number,
-  user_id: string | null,
-  date: string,
-  payment_id: string | null,
+  id: number;
+  user_id: string | null;
+  date: string;
+  payment_id: string | null;
   payment_date: string | null;
   payment_method: string;
   payment_status: string;
@@ -11,7 +11,9 @@ export interface Order {
 
 export interface OrderItem {
   id: number;
-  name: string; //
+  //item_id: number;
+  name: string;
+  quantity: number;
   price: number; //
   description?: string | null;
   entry?: Entry;

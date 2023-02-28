@@ -18,13 +18,13 @@ export default async function ItemsList({ list }: Props) {
           <div className="divide-y-2 divide-gray-50">
             {
               items.map((item, index) => (
-                <div key={index}>
+                <div key={index} className="lg:pr-24">
                   <Link href={{ pathname: 'events/entry', query: { q: base64.encode(item) } }}>
-                    <div className="py-4 flex flex-wrap md:flex-nowrap">
+                    <div className="py-4 flex flex-wrap md:flex-nowrap hover:opacity-80">
                       <div className="md:flex-grow">
-                        <h2 className="text-2xl text-gray-800 mb-2">{ item.name }</h2>
-                        <p className="leading-relaxed">{ item.description }</p>
-                        <button className="text-purple-600 inline-flex items-center">Iscriviti
+                        <h2 className="text-2xl text-gray-800">{ item.name }</h2>
+                        <p className="leading-relaxed">{ item.summary }</p>
+                        <button className="text-button inline-flex items-center mt-2">Iscriviti
                           <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M5 12h14"></path>
                             <path d="M12 5l7 7-7 7"></path>

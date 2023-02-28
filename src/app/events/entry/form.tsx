@@ -15,6 +15,7 @@ import { useStore } from '@/store/store'
 import EntryFormCfDialog from './form-cf-dialog'
 import { Entry } from '@/types/entries'
 import { Item } from '@/types/items'
+import EntryFormLocationsDialog from './form-locations-dialog'
 
 export interface EntryForm extends Entry {
   privacyPolicy: boolean;
@@ -31,7 +32,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
     country: 'ITA',
   }
 
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV === 'development') {
     defaultValues = {
       ...defaultValues,
       first_name: 'Matte',
@@ -42,8 +43,20 @@ export default function EntryForm({ item, className }: { item: Item, className?:
     }
   }
 
-  const { register, handleSubmit, control, getValues, setValue, setError, reset, formState: { errors } } = useForm<EntryForm>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    setValue,
+    setError,
+    clearErrors,
+    reset,
+    formState: { errors }
+  } = useForm<EntryForm>({
+    mode: 'onTouched',
     defaultValues
+    //defaultValues
   })
 
   const onSubmit: SubmitHandler<EntryForm> = async data => {
@@ -54,10 +67,13 @@ export default function EntryForm({ item, className }: { item: Item, className?:
       return
     }
 
+    data.tin = data.tin.toUpperCase()
+
     addCartItem({
       id: item.id,
       name: item.name,
       price: item.price,
+      quantity: 1,
       description: `${data.first_name} ${data.last_name}`,
       entry: data,
     })
@@ -71,6 +87,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
 
   const closeTinCalculator = () => {
     setState({ ...state, isTinCalculatorOpened: false })
+    clearErrors()
   }
 
   const calcTin = (data: any) => {
@@ -92,49 +109,47 @@ export default function EntryForm({ item, className }: { item: Item, className?:
     <section className={classNames(className)}>
       {state.isTinCalculatorOpened && <EntryFormCfDialog getValues={getValues} onCalc={calcTin} onClose={closeTinCalculator} />}
 
-      {/*state.error && <AlertError message={state.error} />*/}
-      <span className="subtitle">Iscrizione</span>
       <form className="p-4 " autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-          <div className="">
+          <div>
             <label className="label" htmlFor="first_name">Nome</label>
             <input
               type="text"
-              aria-invalid={errors.first_name ? "true" : "false"}
-              {...register("first_name", { required: true })}
-              className="field"
+              className={classNames("field", {"invalid": errors.first_name})}
+              {...register("first_name", { required: 'Campo obbligatorio' })}
             />
             {errors.first_name && <small className="validation-error">{errors.first_name.message}</small>}
           </div>
 
-          <div className="">
+          <div>
             <label className="label" htmlFor="last_name">Cognome</label>
             <input
               type="text"
-              aria-invalid={errors.last_name ? "true" : "false"}
-              {...register("last_name", { required: true })}
-              className="field"
+              className={classNames("field", {"invalid": errors.last_name})}
+              {...register("last_name", { required: 'Campo obbligatorio' })}
             />
             {errors.last_name && <small className="validation-error">{errors.last_name.message}</small>}
           </div>
 
-          <div className={classNames({ "hidden": state.isTinCalculatorOpened })}>
+          <div>
             <label className="label" htmlFor="tin">Codice Fiscale</label>
             <input
               type="text"
-              aria-invalid={errors.tin ? "true" : "false"}
+              className={classNames("field", {"invalid": errors.tin})}
               {...register("tin", {
-                required: 'Campo obbligatorio'
+                required: 'Campo obbligatorio',
+                pattern: {
+                  value: /^(?:[A-Z][AEIOU][AEIOUX]|[AEIOU]X{2}|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i,
+                  message: "Codice fiscale non valido"
+                },
               })}
-              className="field"
             />
-            {errors.tin ?
+            { errors.tin ?
               <small className="validation-error">{errors.tin.message}</small> :
               <small className="field-helper">Non lo ricordi? <button onClick={() => openTinCalculator()}>Calcolalo</button></small>
             }
           </div>
-
 
           <div className="">
             <Controller
@@ -153,10 +168,14 @@ export default function EntryForm({ item, className }: { item: Item, className?:
           <div className="">
             <label className="label" htmlFor="email">Email</label>
             <input
-              type="text"
+              type="email"
               aria-invalid={errors.email ? "true" : "false"}
               {...register("email", {
                 required: 'Campo obbligatorio',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Indirizzo mail non valido"
+                },
               })}
               className="field"
             />
@@ -181,8 +200,8 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               <div className="flex items-center h-5 mt-1">
                 <input
                   type="checkbox"
-                  aria-invalid={errors.privacyPolicy ? "true" : "false"}
-                  {...register("privacyPolicy", {
+                  aria-invalid={errors.privacy_policy ? "true" : "false"}
+                  {...register("privacy_policy", {
                     required: 'Campo obbligatorio',
                   })}
                   className=""
@@ -190,8 +209,8 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               </div>
               <label htmlFor="hs-checkbox-delete" className="ml-3">
                 <span className="block text-sm font-semibold text-gray-800 dark:text-gray-300">Privacy Policy</span>
-                <span id="hs-checkbox-delete-description" className="block text-xs text-gray-600 dark:text-gray-500">Accetto i <a href="" className="link">Termini e condizioni</a> e l&apos;<a href="" className="link">informativa sulla privacy</a> di Goinup</span>
-                {errors.privacyPolicy && <small className="validation-error">{errors.privacyPolicy.message}</small>}
+                <span id="hs-checkbox-delete-description" className="block text-xs text-gray-600 dark:text-gray-500">Accetto i <a href="" className="text-button">Termini e condizioni</a> e l&apos;<a href="" className="text-button">informativa sulla privacy</a> di Goinup</span>
+                {errors.privacy_policy && <small className="validation-error">{errors.privacy_policy.message}</small>}
               </label>
             </div>
           </div>

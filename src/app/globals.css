@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-  @apply text-slate-600 ;
-  background: rgb(255,253,218);
-  background: linear-gradient(115deg, rgba(255,253,218,1) 65%, rgba(230,170,104,1) 100%);
+  @apply font-poppins text-slate-800 bg-background;
+  /*background: rgb(255,253,218);
+  background: linear-gradient(115deg, rgba(255,253,218,1) 65%, rgba(230,170,104,1) 100%);*/
 }
 
 .page {
-  @apply mt-6 mx-12 lg:mt-12 lg:mx-24;
+  @apply mt-4 mx-8 lg:mt-12 lg:mx-24;
 }
 
 .bg-gradient {
@@ -17,25 +17,26 @@ body {
   background: linear-gradient(120deg, rgba(175,238,255,1) 0%, rgba(255,226,163,1) 100%);
 }
 
-/* deprecated */
-.title-old {
-  @apply font-poppins text-3xl text-slate-800 uppercase;
+.display {
+  @apply font-unbounded font-bold text-heading;
+}
+.display h1 {
+  @apply text-4xl md:text-6xl;
+}
+.display h3 {
+  @apply text-xl md:text-3xl;
 }
 
-.title-accent {
-  @apply font-semibold text-purple-500
+.overtitle {
+  @apply font-unbounded font-bold text-xl md:text-2xl text-accent uppercase
 }
 
 .title {
-  @apply font-unbounded text-xl md:text-4xl text-title uppercase
+  @apply font-unbounded font-bold text-4xl text-heading uppercase
 }
 
-.subtitle {
-  @apply font-unbounded text-2xl md:text-xl text-accent uppercase
-}
-
-.text {
-  @apply font-unbounded text-title
+.button {
+  @apply bg-button text-white rounded-lg px-4 py-2
 }
 
 /* deprecated */
@@ -74,20 +75,17 @@ form .field-helper {
   @apply text-slate-600 text-xs
 }
 
-form .field-helper > button {
-  @apply text-purple-500
-}
-
 form .field-error {
-  @apply text-red-500 text-xs
+  @apply text-red-400 text-xs
 }
 
-form .field-invalid {
-  @apply border-red-500
+form .invalid {
+  @apply border-red-400
 }
 
+form .field-helper > button,
 .link {
-  @apply text-blue-700 hover:text-blue-500
+  @apply text-button hover:opacity-80
 }
 
 .p-inputtext, .p-autocomplete, .p-dropdown, .p-calendar {
@@ -98,3 +96,15 @@ form .field-invalid {
 .validation-error {
   @apply text-red-500 text-xs
 }
+
+/*.bg-image {
+  background-image: url("/images/cover-1.jpg");
+
+  min-height: 380px;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  position: relative;
+}*/

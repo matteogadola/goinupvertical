@@ -21,9 +21,9 @@ export default async function HomeMission() {
         </div>
         
         <div className=" mt-8">
-          <h1 className="subtitle">Finalità Benefica</h1>
-          <h3 className="title">Chi siamo?</h3>
-          <p className="mt-8 max-w-md text">GOinUP è un&apos;associazione con finalità benefica.<br />Con una quota degli introiti dalle iscrizioni e dalle donazioni volontarie, si pone come obbiettivo quello di donare delle attrezzature e/o servizi all&apos;associazione <a href="https://www.dappertutto.org" target="_blank" rel="noreferrer">Valtellina Accessibile Dappertutto</a> che tra le altre cose promuove l&apos;abbattimento delle barriere architettoniche e offre soluzioni per poter rendere accessibile a tutti la montagna.</p>
+          <h3 className="overtitle">Finalità Benefica</h3>
+          <h1 className="title">Chi siamo?</h1>
+          <p className="mt-8 max-w-md">GOinUP è un&apos;associazione con finalità benefica.<br />Con una quota degli introiti dalle iscrizioni e dalle donazioni volontarie, si pone come obbiettivo quello di donare delle attrezzature e/o servizi all&apos;associazione <a href="https://www.dappertutto.org" target="_blank" rel="noreferrer">Valtellina Accessibile Dappertutto</a> che tra le altre cose promuove l&apos;abbattimento delle barriere architettoniche e offre soluzioni per poter rendere accessibile a tutti la montagna.</p>
         </div>
 
       </section>

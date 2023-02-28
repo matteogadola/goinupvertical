@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 import { Order } from '@/types/orders';
 import { pool } from '@/lib/pg';
-import { base64 } from '@/lib/helpers';
 
 // https://stripe.com/docs/api/versioning
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -11,26 +10,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 // https://stripe.com/docs/api/checkout/sessions/create
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+export async function POST(req: NextApiRequest) {
   const { method, headers, body } = req;
 
   try {
-    switch (method) {
-      case 'POST':
-        const { id } = await createCheckoutSession(headers, body);
+    const { id } = await createCheckoutSession(headers, body);
 
-        if (id) {
-          //createEntry(body.ticket)
-          //createUser(body.user)
-        }
-
-        res.json({ id });
-        break;
-      default:
-        return res.status(405).end();
+    if (id) {
+      //createEntry(body.ticket)
+      //createUser(body.user)
     }
+
+    return new Response(JSON.stringify({ id }), {
+      status: 200,
+    });
   } catch (e: any) {
-    return res.status(500).json({ error: e.message });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+    });
   }
 }
 
@@ -75,7 +72,7 @@ const createCheckoutSession = async (headers: any, body: Order) => {
   //if (!tinRegex.test(body.entrant_tin)) {
   //  throw new Error("")
   //}
-  const q = base64.encode(body);
+  const q = ''; // base64.encode({order_id: body.id})
 
   // bisogna ciclare su items mandati e creare nuovo line_items
 
@@ -84,7 +81,7 @@ const createCheckoutSession = async (headers: any, body: Order) => {
     submit_type: 'pay',
     payment_method_types: ['card'],
     currency: 'eur',
-    customer_email: body.items[0].entry?.email, //  [0]?.entry.email ?? null, // la prima dell'elenco !
+    customer_email: body.items[0].entry?.email,
     line_items,
     automatic_tax: {
       enabled: false,
