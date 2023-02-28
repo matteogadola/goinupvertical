@@ -13,13 +13,13 @@ export default async function EntryPage() {
   const ticket = await getTicket(ticketId)*/
 
 
-export default async function SignIn() {
+export default function SignIn() {
   const supabase = useStore((state) => state.supabase);
 
-  await supabase.auth.signInWithPassword({
+  /*await supabase.auth.signInWithPassword({
     email: 'jon@supabase.com',
     password: 'password',
-  })
+  })*/
   //const ticket = base64.decode<Ticket>(searchParams.q)
 
   // verifica se utente loggato...se si mostra campi compilati

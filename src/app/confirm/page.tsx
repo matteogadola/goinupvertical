@@ -43,7 +43,7 @@ export default function ConfirmPage() {
       <span className="overtitle">Conferma</span>
       <h1 className="title mt-3">Ordine n. { order.id }</h1>
       <div className="text mt-2">
-        <span>Grazie per aver completato l'ordine</span>
+        <span>Grazie per aver completato l&apos;ordine</span>
         <table className="border border-slate-400 mt-8">
           <thead>
             <tr className="bg-slate-200">
