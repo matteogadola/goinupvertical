@@ -38,6 +38,6 @@ next-env.d.ts
 # editor
 /.vscode
 
-# tmp
+# TEMP
 /.github/workflows/vercel-deploy.yml
 /.github/workflows/firebase-hosting-merge.yml
