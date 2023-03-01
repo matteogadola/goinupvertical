@@ -40,7 +40,7 @@ interface GetEntriesProps {
   eventId: string;
   eventAlias: string;
 }
-
+/*
 // chiaramente filtro su event_alias
 export const getEntries = async (props?: Partial<GetEntriesProps>) => {
   const { data } = await supabase
@@ -72,3 +72,4 @@ export async function updateEntry(id: string, params: Partial<Omit<Entry, 'id' |
 
   return data;
 }
+*/

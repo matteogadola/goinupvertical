@@ -1,4 +1,4 @@
-import { getItem } from '@/lib/items'
+//import { getItem } from '@/lib/items'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -33,7 +33,7 @@ export default async function HomeEvents({ className }: { className: string }) {
         </div>
 
         <div className={classNames("mt-10 grid grid-cols-1 gap-20 justify-items-center",
-          {"md:grid-cols-2 xl:grid-cols-3": events.length === 3},
+          {"md:grid-cols-2 xl:grid-cols-3": events.length >= 3},
           {"xl:grid-cols-2": events.length === 2}
         )}>
           { events.map((event, index) => 

@@ -1,6 +1,10 @@
 import { customAlphabet } from 'nanoid'
 
-const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 12)
+//const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 12)
+
+const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ-', 10)
+// 0123456789ABCDE-
+// 0123456789ABCDEFGHIJKLMNPQRSTUVWXYZ-
 
 export const id = () => {
   return nanoid()

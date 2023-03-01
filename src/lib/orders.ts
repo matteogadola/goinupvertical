@@ -5,6 +5,12 @@ import { dt } from './date';
 import CodiceFiscale from 'codice-fiscale-js';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
+import { db } from './firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { id } from './helpers';
+import { FieldPath } from '@google-cloud/firestore';
+import { Event } from '@/types/events';
+import { getEvent } from './events';
 
 const createOrder = async (params: Partial<Order>) => {
   if (params?.items === undefined || params.items.length === 0) {
@@ -16,7 +22,96 @@ const createOrder = async (params: Partial<Order>) => {
 
   // CONTROLLA PREZZI
 
+  //const orderRef = db.collection('orders').doc(id());
+
+  /*await orderRef.set({
+    userEmail: params.user_email ?? params.items![0].entry.email,
+    amount: params.items?.reduce((a, c) => a + c.price, 0),
+    date: dt().utc().unix(),
+    paymentMethod: params.payment_method,
+    paymentStatus: params.payment_method === 'stripe' ? 'intent' : 'pending',
+  });*/
+
   try {
+    await db.runTransaction(async (t) => {
+      // verifico se tutto ok
+      // verifico se non già presente
+      // creo order...
+
+      for (let orderItem of params.items ?? []) {
+        if (orderItem?.entry === undefined) {
+          continue; // corretta questa gestione ???
+        }
+
+        const cf = new CodiceFiscale(orderItem.entry.tin);
+
+        if (!cf.isValid()) {
+          throw new Error(`Codice fiscale ${orderItem.entry.tin} non valido`);
+        }
+
+        const checkTin = new CodiceFiscale({
+          name: orderItem.entry.first_name,
+          surname: orderItem.entry.last_name,
+          gender: cf.gender,
+          day: cf.day,
+          month: cf.month,
+          year: cf.year,
+          birthplace: cf.birthplace.nome,
+          birthplaceProvincia: '',
+        });
+
+        if (checkTin.toString() !== cf.cf) {
+          throw new Error(`Corrispondenza codice fiscale non valida`);
+        }
+
+        //console.log(orderItem);
+        const event = await getEvent(orderItem.eventId);
+
+        if (event === null) {
+          throw new Error('');
+        }
+
+        const item = event.items.find((item) => item.id === orderItem.id);
+
+        if (item === undefined) {
+          throw new Error('');
+        }
+
+        //console.log(item);
+
+        // fallo fuori da for direi...
+        //const entriesRef = await t.get(db.collection('events').doc(orderItem.eventId).collection('entries'));
+        //const entries = entriesRef.docs.reduce((a: any[], c) => a.push(c.data()) ,[])
+        //if ()
+
+        const entry = await t.get(
+          db.collection('events').doc(item.eventId).collection('entries').doc(orderItem.entry.tin)
+        );
+
+        if (entry.exists) {
+          throw new Error(`${item.entry.first_name} ${item.entry.last_name} risulta già iscritto`);
+        }
+      }
+
+      const orderId = id();
+      const orderData = {
+        userEmail: params.user_email ?? params.items![0].entry.email,
+        amount: params.items?.reduce((a, c) => a + c.price, 0),
+        date: dt().utc().unix(),
+        paymentMethod: params.payment_method,
+        paymentStatus: params.payment_method === 'stripe' ? 'intent' : 'pending',
+      };
+
+      t.set(db.collection('orders').doc(orderId), orderData);
+
+      for (let item of params.items ?? []) {
+        const entryData = item;
+        t.set(db.collection('events').doc(item.eventId).collection('entries').doc(item.entry.tin), entryData);
+      }
+    });
+
+    console.log('Transaction success!');
+    /*
     await client.query('BEGIN');
 
     const { rows: orders } = await client.query<Omit<Order, 'items'>>(
@@ -91,6 +186,7 @@ const createOrder = async (params: Partial<Order>) => {
     }
     await client.query('COMMIT');
     return { ...order, items };
+    */
   } catch (e: any) {
     await client.query('ROLLBACK');
 

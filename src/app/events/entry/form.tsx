@@ -72,6 +72,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
 
     addCartItem({
       id: item.id,
+      eventId: item.eventId,
       name: item.name,
       price: item.price,
       quantity: 1,

@@ -2,7 +2,7 @@
 
 import { notFound, useSearchParams } from 'next/navigation'
 import { Suspense, use } from 'react'
-import { getItem } from '@/lib/items'
+//import { getItem } from '@/lib/items'
 import EntryForm from './form'
 import EntryCart from './cart'
 import { base64 } from '@/lib/helpers'

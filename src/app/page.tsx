@@ -13,6 +13,7 @@ import HomeEvents from '@/app/components/home-events'
 
 import homeBrandImage from 'public/images/home-1.png'
 import { callback } from '@/lib/helpers'
+import { sarcazzo } from '@/lib/load-da-eliminare'
 
 // export const revalidate = 5
 
@@ -22,7 +23,7 @@ export const metadata = {
 }
 
 export default async function HomePage() {
-
+  //sarcazzo();
   /*const targets = document.querySelectorAll(".js-show-on-scroll");
 
   const observer = new IntersectionObserver(callback);

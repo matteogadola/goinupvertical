@@ -1,3 +1,19 @@
+/*export interface Event {
+  id: string;
+  category: 'race' | 'food' | 'pass';
+  name: string;
+  edition: number;
+  date: string;
+  promoter_id: number;
+  capacity: number;
+  status: EventStatus;
+  detail: Partial<EventDetail> | null;
+  summary: string | null;
+  description: string | null;
+  body: string | null;
+  flyer: string | null;
+}*/
+
 export interface Event {
   id: string;
   category: 'race' | 'food' | 'pass';
@@ -12,6 +28,7 @@ export interface Event {
   description: string | null;
   body: string | null;
   flyer: string | null;
+  items: EventItem[];
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';
@@ -30,4 +47,14 @@ export interface EventDetail {
   elevationGain: number;
   startLine: string;
   finishLine: string;
+}
+
+export interface EventItem {
+  id: number;
+  eventId: string;
+  name: string;
+  quantity: number;
+  price: number; //
+  description?: string | null;
+  entry?: Entry;
 }

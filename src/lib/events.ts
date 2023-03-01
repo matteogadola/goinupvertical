@@ -3,6 +3,8 @@ import supabase from './supabase';
 import { Event } from '@/types/events';
 import { dt } from './date';
 import { cache } from 'react';
+import { db } from './firebase';
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from 'firebase/firestore';
 
 interface GetEventsProps {
   fromDate: string;
@@ -11,7 +13,87 @@ interface GetEventsProps {
   notInternal: boolean;
 }
 
-export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
+export const getEvents = async (props?: Partial<GetEventsProps>) => {
+  const snapshot = await db
+    .collection('events')
+    .where('date', '>=', dt(props?.fromDate ?? '2023-03-01').unix())
+    .orderBy('date', 'asc')
+    .get();
+
+  let events: Event[] = [];
+  snapshot.forEach((doc) => {
+    events.push(doc.data() as Event);
+  });
+
+  // per fare cache questo fallo lato client! e metti in store???
+  if (props?.notInternal) {
+    events = events.filter((event) => event.status != 'internal');
+  }
+  if (props?.limit) {
+    events = events.slice(0, props.limit);
+  }
+
+  return events;
+
+  /*
+  const constraints = [];
+
+  console.log(props);
+  if (props?.fromDate) {
+    citiesRef.where('date', '>=', dt(props.fromDate).unix());
+  }
+  if (props?.notInternal) {
+    citiesRef.where('status', '==', 'internal');
+  }
+  if (props?.orderBy) {
+    console.log('order');
+    citiesRef.orderBy(props.orderBy, 'asc');
+  }
+  if (props?.limit) {
+    console.log('limit');
+    citiesRef.limit(props.limit);
+  }
+
+  const snapshot = await citiesRef.get();
+  if (snapshot.empty) {
+    return [];
+  }
+
+  //return [...snapshot].reduce((a, c) => a.push(c.data()), [])
+  const events: Event[] = [];
+  snapshot.forEach((doc) => {
+    events.push(doc.data() as Event);
+    //console.log(doc.id, '=>', doc.data());
+  });
+
+  return events;
+  */
+
+  /*
+  if (props?.fromDate) {
+    constraints.push(where('date', '>=', dt(props.fromDate).unix()));
+  }
+  if (props?.orderBy) {
+    constraints.push(orderBy(props.orderBy));
+  }
+
+  const q = query(collection(db, 'events'), ...constraints);
+
+  let events = await getDocs(q).then((querySnapshot) =>
+    querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Event))
+  );
+
+  if (props?.notInternal) {
+    events = events.filter((event) => event.status != 'internal');
+  }
+  if (props?.limit) {
+    events = events.slice(0, props.limit);
+  }
+
+  return events;
+  */
+
+  /*
   const queryBuilder = supabase.from('events').select().neq('status', 'internal');
 
   if (props?.fromDate) {
@@ -29,13 +111,33 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
 
   const { data } = await queryBuilder.returns<Event[]>();
   return data ?? [];
-});
+  */
+};
 
-export const getEvent = cache(async (id: string) => {
-  const { data } = await supabase.from('events').select().eq('id', id).returns<Event[]>().single();
+export const getEvent = async (id: string) => {
+  //const { data } = await supabase.from('events').select().eq('id', id).returns<Event[]>().single();
 
-  return data;
-});
+  //return data;
+
+  const snapshot = await db.collection('events').doc(id).get();
+
+  if (snapshot.data()) {
+    return snapshot.data() as Event;
+  }
+  return null;
+
+  /*snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data());
+  });
+
+  const docSnap = await getDoc(doc(db, 'events', id));
+
+  if (docSnap.exists()) {
+    return { ...docSnap.data(), id } as Event;
+  }
+
+  return null;*/
+};
 
 export async function createEvent(race: Omit<any, 'id'>) {
   /*  const normalizedName = race.name
