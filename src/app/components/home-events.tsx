@@ -21,13 +21,14 @@ const images = [ph1, ph2, ph3]
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default async function HomeEvents({ className }: { className: string }) {
-  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3 })
+  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, notInternal: true })
   
   return (
     <Suspense fallback={<Spinner />}>
+      { events.length > 0 &&
       <section className={classNames(className, "")}>
         <div className="text-center">
-          <h3 className="subtitle">Prossimi</h3>
+          <h3 className="overtitle">Prossimi</h3>
           <h1 className="title">Eventi</h1>
         </div>
 
@@ -41,7 +42,13 @@ export default async function HomeEvents({ className }: { className: string }) {
                 <div className="relative text-white text-center">
                   <Image src={images[index]} className="" alt="Image" />
                   <div className="absolute inset-0 w-full h-full bg-primary opacity-30"></div>
-                  <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl lg:text-4xl font-unbounded uppercase">{event.name}</span>
+                  <span className={
+                    classNames("absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-unbounded font-semibold uppercase", {
+                      "whitespace-nowrap": event.name.length <= 12
+                    })}
+                  >
+                    {event.name}
+                  </span>
 
                   <div className="absolute bottom-1 font-semibold text-xs w-full px-4 flex flex-row justify-between">
                     <span className="uppercase">{ event.promoter_id !== 1 && event.promoter_id}</span> {/* va pigliato e stampato promoter_name */}
@@ -53,7 +60,7 @@ export default async function HomeEvents({ className }: { className: string }) {
 
                 </div>
                 <div className="px-6 py-4 min-h-[12rem]">
-                  <span className="subtitle">{ dt(event.date).format('ddd DD MMM') }</span>
+                  <span className="font-unbounded font-semibold text-accent text-xl uppercase">{ dt(event.date).format('ddd DD MMM') }</span>
                   <p className="text-gray-700 text-base mt-2">{event.summary}</p>
                 </div>
 
@@ -63,7 +70,7 @@ export default async function HomeEvents({ className }: { className: string }) {
         </div>
         <div className="flex mt-8 text-white">
           <div className=" w-3/4"></div>
-          <button className="text-purple-500 inline-flex items-center mt-2 right-20">Vedi tutti
+          <button className="link inline-flex items-center mt-2 right-20">Vedi tutti
             <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14"></path>
               <path d="M12 5l7 7-7 7"></path>
@@ -71,6 +78,7 @@ export default async function HomeEvents({ className }: { className: string }) {
           </button>
         </div>
       </section>
+      }
     </Suspense>
   )
 }

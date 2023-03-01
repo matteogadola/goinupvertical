@@ -3,20 +3,47 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function RegulationPage() {
+export default function TermsPage() {
+  const legalName = 'Goinup'
+
   return (
     <div className="mt-4 mx-6">
-      <h1 className="title">Regolamento generale</h1>
+      <h1 className="title">Termini e Condizioni di acquisto</h1>
+      <span>Condizioni Generali di Contratto</span>
 
       <section className="grid grid-flow-row gap-4 mt-12">
         <article>
-          <h3 className="overtitle">Art. 1</h3>
-          <p className="mt-2">Insieme per Sacco, Pro Loco Bema, Pro Loco Gerola, Gruppo Alpini Albaredo, Tiro alla Fune Valtellina, Sport Race Valtellina, Team Valtellina, K2 Valtellina, Pro loco la Caurga, La voce di Daniele e la Sagra di San Bello, organizzano il 5° GOinUP, circuito di Vertical a finalità benefica.</p>
+          <h3 className="overtitle">1. Oggetto</h3>
+          <p className="mt-2">
+            Le presenti Condizioni Generali di Contratto (CGC) disciplinano la compravendita a distanza e, 
+            per quanto compatibili e non altrimenti derogate, la compravendita non a distanza, 
+            dei biglietti per eventi nazionali e internazionali di spettacolo e/o di intrattenimento culturale e sportivo, 
+            effettuata da {legalName} in nome e per conto dell&apos;organizzatore dell&apos;evento nonché il contratto di 
+            fornitura dei servizi, necessari e accessori alla compravendita di tali biglietti, prestati da {legalName}
+          </p>
         </article>
 
         <article>
-          <h3 className="overtitle">Art. 2</h3>
-          <p className="mt-2">GOinUP ha finalità benefica, con una quota degli introiti dalle iscrizioni e dalle donazioni volontarie, si pone come obbiettivo quello di donare delle attrezzature e/o servizi all&apos;associazioni benefiche del mandamento di Morbegno.</p>
+          <h3 className="overtitle">2. Definizioni</h3>
+          <div className="mt-2">
+          Alle presenti CGC si applicano le seguenti definizioni, restando inteso che le definizioni al plurale si 
+          applicheranno al relativo termine al singolare e viceversa: 
+          <ul className="mt-2 space-y-2">
+            <li><b>Codice del Consumo</b>: indica il D. Lgs. 6 settembre 2005, n. 206.</li>
+            <li><b>Consumatore</b>: indica il Cliente persona fisica che agisce per scopi estranei all&apos;attività imprenditoriale, commerciale, artigianale o professionale eventualmente svolta.</li>
+            <li><b>Contratto di Servizi {legalName}</b>: indica il contratto che si conclude tra {legalName} e il Cliente e che ha come oggetto la prestazione dei Servizi {legalName}, disciplinato dalle presenti CGC e dalle informazioni fornite sul Sito, prima della conclusione del contratto, anche ai sensi e per gli effetti di cui agli artt. 49 e ss. del Codice del Consumo.</li>
+            <li><b>Contratto di Vendita</b>: indica il contratto che si conclude, per effetto dei Servizi {legalName}, tra il Cliente e l&apos;Organizzatore e che ha come oggetto la compravendita del Titolo di Ingresso, disciplinato dalle presenti CGC e dalle informazioni fornite sul Sito, prima della conclusione del contratto, anche, ai sensi e per gli effetti di cui agli artt. 49 e ss. del Codice del Consumo.</li>
+            <li><b>Cliente</b>: indica il soggetto che, per effetto dei Servizi {legalName}, acquista il Titolo di Ingresso dall&apos;Organizzatore, a distanza - tramite il Sito, tramite l&apos;App o mediante vendita telefonica, ovvero non a distanza, presso i Punti Vendita {legalName}.</li>
+            <li><b>Contratto</b>: indica il Contratto di Servizi {legalName} e il Contratto di Vendita.</li>
+            <li><b>Evento</b>: indica la manifestazione, lo spettacolo o la rappresentazione a cui il Portatore del Titolo di Ingresso ha il diritto di accedere.</li>
+            <li><b>Luogo dell&apos;Evento</b>: indica l&apos;insieme dei fabbricati e dei terreni che costituiscono i luoghi di svolgimento di uno specifico Evento.</li>
+            
+            <li><b>Codice del Consumo</b>: indica il D. Lgs. 6 settembre 2005, n. 206.</li>
+            <li><b>Codice del Consumo</b>: indica il D. Lgs. 6 settembre 2005, n. 206.</li>
+            <li><b>Codice del Consumo</b>: indica il D. Lgs. 6 settembre 2005, n. 206.</li>
+
+          </ul>
+          </div>
         </article>
 
         <article>

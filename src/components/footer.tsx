@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto">
 
-      <div className="mt-8 py-4 flex items-center justify-center gap-y-2 md:space-x-4 flex-col md:flex-row">
+      <div className="mt-8 py-4 flex items-center justify-center gap-y-2 md:space-x-12 flex-col md:flex-row">
         <div className="">
           <Image src={goinup} height={60} alt="GOinUP" />
         </div>

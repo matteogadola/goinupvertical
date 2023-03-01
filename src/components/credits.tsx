@@ -7,9 +7,15 @@ import officinaFiorelli from 'public/images/credits/officina-fiorelli.png'
 import patagonia from 'public/images/credits/patagonia.png'
 import matFood from 'public/images/credits/mat-food.png'
 import birrificioValtellinese from 'public/images/credits/birrificio-valtellinese.png'
+import popso from 'public/images/credits/popso.png'
 
 const sponsors = [
   {
+    name: 'Popso',
+    logo: popso,
+    height: 50,
+    url: 'https://www.popso.it'
+  }, {
     name: 'Mat Food',
     logo: matFood,
     height: 70,
@@ -30,15 +36,15 @@ const sponsors = [
     height: 60,
     url: 'https://www.alamedicalspa.com'
   }, {
-    name: 'Patagonia',
-    logo: patagonia,
-    height: 60,
-    url: 'https://www.facebook.com/3passipatagonia'
-  }, {
     name: 'Officina Fiorelli',
     logo: officinaFiorelli,
     height: 50,
     url: 'https://www.facebook.com/people/Officina-Autorizzata-Ford-di-Fiorelli-Matteo/100066566109924'
+  }, {
+    name: 'Patagonia',
+    logo: patagonia,
+    height: 60,
+    url: 'https://www.facebook.com/3passipatagonia'
   },
 ]
 
@@ -138,10 +144,10 @@ export default function Credits({ className }: { className: string }) {
   return (
     <section className={classNames(className, "text-center mx-4 space-y-8")}>
       <div className="py-4">
-        <h3 className="subtitle">Sponsor</h3>
+        <h3 className="overtitle">Sponsor</h3>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center items-center mt-4 lg:mt-8">
           { sponsors.map((item, index) =>
-            <a href={item.url} key={index}>
+            <a href={item.url} key={index} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
               <Image src={item.logo} height={item.height} alt={item.name} />
             </a>
           )}
@@ -149,7 +155,7 @@ export default function Credits({ className }: { className: string }) {
       </div>
 
       <div className="py-4">
-        <h3 className="subtitle">Supporter</h3>
+        <h3 className="overtitle">Supporter</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center items-center mt-4 lg:mt-8">
           { supporters.map((item, index) =>
             <a href={item.url} key={index}>
@@ -160,7 +166,7 @@ export default function Credits({ className }: { className: string }) {
       </div>
 
       <div className="py-4">
-        <h3 className="subtitle">Media partner</h3>
+        <h3 className="overtitle">Media partner</h3>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center items-center mt-4 lg:mt-8">
           { partners.map((item, index) =>
             <a href={item.url} key={index}>

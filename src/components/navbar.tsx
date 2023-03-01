@@ -4,13 +4,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
+
+import coverImage from 'public/images/cover-1.jpg'
+
 interface Props {
   cover?: boolean | undefined;
 }
 
 const navLinks = [
   //{ name: "Classifiche", path: "rankings" },
-  { name: "Regolamento", path: "regulation" },
+  { name: "Regolamento", path: "/regulation" },
   //{ name: "Mission", path: "mission" },
   //{ name: "Accedi", path: "sign-in" },
 ]
@@ -19,12 +22,14 @@ export default function Navbar({ cover }: Props) {
   const notHome = usePathname() !== '/'
 
   return (
-    // sticky top-0 z-20 bg-white 
+    
+  <header>
+    {/*<header className={`w-full h-128 bg-cover-image bg-cover bg-center`}>*/}
     <nav>
       <div className="h-12 mx-8 md:flex md:items-center md:justify-between">
         <div className="flex justify-between items-center">
           {notHome && 
-            <div className="text-lg md:text-xl font-unbounded text-slate-800 hover:opacity-70">
+            <div className="text-lg md:text-xl font-unbounded font-bold hover:opacity-70">
               <Link href="/">GO<span className="text-accent">in</span>UP</Link>
             </div>
           }
@@ -48,5 +53,6 @@ export default function Navbar({ cover }: Props) {
         </div>
       </div>
     </nav>
+    </header>
   )
 }

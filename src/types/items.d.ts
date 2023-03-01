@@ -1,7 +1,8 @@
 export interface Item {
   id: number;
-  category: string;
+  event_id: string;
   name: string;
+  category: string;
   summary: string | null;
   description: string | null;
   detail: any;

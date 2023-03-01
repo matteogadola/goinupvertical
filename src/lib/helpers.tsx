@@ -30,3 +30,20 @@ function base64Decode<T = string> (input: string, toObj = true) {
     return toObj ? {} as T : ''
   }
 }
+
+
+export const callback = function(entries: any) {
+  entries.forEach((entry: any) => {
+
+    // Is the element in the viewport?
+    if (entry.isIntersecting) {
+
+      // Add the fadeIn class:
+      entry.target.classList.add("motion-safe:animate-fadeIn");
+    } else {
+
+      // Otherwise remove the fadein class
+      entry.target.classList.remove("motion-safe:animate-fadeIn");
+    }
+  });
+};

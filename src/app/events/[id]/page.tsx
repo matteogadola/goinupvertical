@@ -17,41 +17,38 @@ export default async function EventPage({
 }) {
   const event = await getEvent(params.id)
 
-  if (event === null) {
+  if (event === null || event.status === 'internal') {
     notFound()
   }
 
   const itemsData = getItems({ event_id: event.id })
 
   return (
-    <div className="page grid grid-cols-1 md:grid-cols-2 justify-items-center">
+    <div className="page grid grid-cols-1 lg:grid-cols-2">
       <div>
-        <span className="title-accent">{getReadableDate(event.date)}</span>
+        <span className="overtitle">{ event.date ? dt(event.date).format('ddd DD MMM') : 'Evento' }</span>
         <h1 className="title mt-3">{ event.edition }° { event.name }</h1>
-        <p className="text mt-2">
-          Prima gara blablabla<br />
-          Partenza dal campo di ... con arrivo al ...<br />
-          Panino mica panino rinfresco mica rinfresco ecc<br />
-          In questa specifica gara si potrà acquistare anche il carnet per tutte le gare che permette di ottenere la maglietta
-          ufficiale del circuito - 1° PROVA CIRCUTO GOinUP
-        </p>
+        <p className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? '' }} />
 
+        {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
         <div className="mt-8">
           {/* @ts-expect-error Server Component */}
           <ItemsList list={itemsData} />
         </div>
 
       </div>
-      <div>
-        <Image
-          className="sm:mt-4"
-          src="/images/poster.jpg"
-          alt="Picture of the author"
-          width={500}
-          height={500}
-        />
-      </div>
 
+      <div className="flex lg:justify-end">
+        {
+          event.flyer && <Image
+            className="mt-4 lg:mt-0"
+            src={`/images/flyers/${event.flyer}`}
+            alt="Flyer"
+            width={500}
+            height={500}
+          />
+        }
+      </div>
       
     </div>
   )

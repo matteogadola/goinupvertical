@@ -1,11 +1,10 @@
-import supabase from './supabase'
+import supabase from './supabase';
 
-import { Event } from '@/types/events'
-import { dt } from './date'
-import { Entry } from '@/types/entries'
-import Stripe from 'stripe'
-import { cache } from 'react'
-
+import { Event } from '@/types/events';
+import { dt } from './date';
+import { Entry } from '@/types/entries';
+import Stripe from 'stripe';
+import { cache } from 'react';
 
 interface GetEventsProps {
   eventId: string;
@@ -25,7 +24,9 @@ interface GetEventsProps {
   const { data } = await queryBuilder.returns<Event[]>()
   return data ?? []
 }*/
-type CreateEntryParams = Omit<Entry, 'id'
+type CreateEntryParams = Omit<
+  Entry,
+  | 'id'
   | 'entrant_birth_date'
   | 'entrant_gender'
   | 'entrant_country'
@@ -33,7 +34,7 @@ type CreateEntryParams = Omit<Entry, 'id'
   | 'bib_number'
   | 'payment_id'
   | 'payment_status'
->
+>;
 
 interface GetEntriesProps {
   eventId: string;
@@ -44,37 +45,30 @@ interface GetEntriesProps {
 export const getEntries = async (props?: Partial<GetEntriesProps>) => {
   const { data } = await supabase
     .from('entries')
-    .select(`
+    .select(
+      `
       *,
       tickets (event_alias)
-    `)
+    `
+    )
     .eq('tickets.event_alias', props?.eventAlias)
-    .returns<any[]>()
+    .returns<any[]>();
 
-  return data ?? []
-}
+  return data ?? [];
+};
 
 export const getEntry = async (id: string) => {
-  const { data } = await supabase
-    .from('entries')
-    .select()
-    .eq('id', id)
-    .returns<Entry[]>()
-    .single()
+  const { data } = await supabase.from('entries').select().eq('id', id).returns<Entry[]>().single();
 
-  return data
-}
+  return data;
+};
 
-export async function updateEntry(id: string, params: Partial<Omit<Entry, 'id' |'ticket_id'>>) {
-
-  const { data, error } = await supabase
-    .from('entries')
-    .update(params)
-    .eq('id', id)
+export async function updateEntry(id: string, params: Partial<Omit<Entry, 'id' | 'ticket_id'>>) {
+  const { data, error } = await supabase.from('entries').update(params).eq('id', id);
 
   if (error) {
-    throw new Error(error.message)
+    throw new Error(error.message);
   }
 
-  return data
+  return data;
 }
