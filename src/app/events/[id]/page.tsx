@@ -28,7 +28,7 @@ export default async function EventPage({
       <div>
         <span className="overtitle">{ event.date ? dt(event.date).format('ddd DD MMM') : 'Evento' }</span>
         <h1 className="title mt-3">{ event.edition }° { event.name }</h1>
-        <p className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? '' }} />
+        <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? '' }} />
 
         {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
         <div className="mt-8">

@@ -10,9 +10,9 @@ import { dt, getDate } from '@/lib/date'
 
 import elevation from 'public/images/icons/altitude-2.svg'
 import distance from 'public/images/icons/distance-2.svg'
-import ph1 from 'public/images/ph-1.jpg'
-import ph2 from 'public/images/ph-2.jpg'
-import ph3 from 'public/images/ph-3.jpg'
+import ph1 from 'public/images/widget-1.jpg'
+import ph2 from 'public/images/widget-2.jpg'
+import ph3 from 'public/images/widget-3.jpg'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 
@@ -41,7 +41,7 @@ export default async function HomeEvents({ className }: { className: string }) {
               <div className="lg:max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
                 <div className="relative text-white text-center">
                   <Image src={images[index]} className="" alt="Image" />
-                  <div className="absolute inset-0 w-full h-full bg-primary opacity-30"></div>
+                  <div className="absolute inset-0 w-full h-full bg-slate-800 opacity-40"></div>
                   <span className={
                     classNames("absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-unbounded font-semibold uppercase", {
                       "whitespace-nowrap": event.name.length <= 12
@@ -50,11 +50,11 @@ export default async function HomeEvents({ className }: { className: string }) {
                     {event.name}
                   </span>
 
-                  <div className="absolute bottom-1 font-semibold text-xs w-full px-4 flex flex-row justify-between">
+                  <div className="absolute bottom-2 font-semibold text-xs w-full px-2 flex flex-row justify-between">
                     <span className="uppercase">{ event.promoter_id !== 1 && event.promoter_id}</span> {/* va pigliato e stampato promoter_name */}
-                    <div className="space-x-4">
-                      <span className="text-green-400 opacity-90 ">{event.detail?.elevationGain}D+</span>
-                      <span className="text-yellow-400 opacity-90 ">{event.detail?.distance}km</span>
+                    <div className="space-x-2">
+                      {(event.detail?.elevationGain ?? 0) !== 0 && <span className=" bg-accent rounded-md py-0.5 px-1.5 bg-opacity-60">{event.detail?.elevationGain}D+</span>}
+                      {(event.detail?.distance ?? 0) !== 0 && <span className="bg-button rounded-md py-0.5 px-1.5 bg-opacity-60">{event.detail?.distance}km</span>}
                     </div>
                   </div>
 
@@ -68,7 +68,7 @@ export default async function HomeEvents({ className }: { className: string }) {
             </Link>
           )}
         </div>
-        <div className="flex mt-8 text-white">
+        {/*<div className="flex mt-8 text-white">
           <div className=" w-3/4"></div>
           <button className="link inline-flex items-center mt-2 right-20">Vedi tutti
             <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -76,7 +76,7 @@ export default async function HomeEvents({ className }: { className: string }) {
               <path d="M12 5l7 7-7 7"></path>
             </svg>
           </button>
-        </div>
+        </div>*/}
       </section>
       }
     </Suspense>
