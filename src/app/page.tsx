@@ -1,20 +1,12 @@
 import Image from 'next/image'
-import { getEvents } from '@/lib/events'
-import { dt } from '@/lib/date'
-import EventsList from '@/components/events-list'
-
-import HomeBanner from '@/components/home-banner'
-
-import Credits from '@/components/credits'
-
 import HomeMission from '@/app/components/home-mission'
 import HomeCarnet from '@/app/components/home-carnet'
 import HomeEvents from '@/app/components/home-events'
+import Credits from '@/components/credits'
 
 import homeBrandImage from 'public/images/home-1.png'
-import { callback } from '@/lib/helpers'
 
-// export const revalidate = 5
+// export const revalidate = 85000
 
 export const metadata = {
   title: 'GOinUP',

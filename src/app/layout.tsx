@@ -4,8 +4,6 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import classNames from 'classnames'
 
-// className={`${fonts.map(font => font.variable).join(' ')}`}>
-// className={classNames(unbounded.className, "font-bold")}
 export default function RootLayout({
   children,
 }: {

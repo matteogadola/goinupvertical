@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import missionImage from 'public/images/mission-3new.jpg'
+import missionImage from 'public/images/cover-1.jpg'
 
 export default async function HomeMission() {
 

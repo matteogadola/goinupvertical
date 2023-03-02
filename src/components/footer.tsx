@@ -14,7 +14,7 @@ export default function Footer() {
 
         <div className="order-last md:order-none text-center">
           <span className="text-sm"><Link href={''}>Contatti</Link> | <Link href={''}>Termini e Condizioni</Link> | <Link href={''}>Informativa sulla Privacy</Link></span>
-          <span className="block text-xs text-slate-400">© 2023 GOinUP | via Giuseppe Prova 41, Morbegno P.IVA 00000000000 </span>
+          <span className="block text-xs text-slate-400">© 2023 GOinUP{/* | via Don Guanella 24, Morbegno P.IVA 00891820144*/}</span>
           <span className="hidden text-xs text-slate-400">Realizzato da <a href="https://www.teeva.it" target="_blank" rel="noreferrer">Teeva</a></span>
         </div>
 
