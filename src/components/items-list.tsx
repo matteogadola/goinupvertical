@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default async function ItemsList({ list }: Props) {
-  const items = await list
+  const items = (await list).filter(item => item.status !== 'internal')
 
   return (
     <Suspense fallback={<Spinner />}>

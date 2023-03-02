@@ -18,13 +18,13 @@ body {
 }
 
 .display {
-  @apply font-unbounded font-bold text-heading;
+  @apply font-unbounded font-bold text-gray-200;
 }
 .display h1 {
-  @apply text-4xl md:text-6xl;
+  @apply text-5xl md:text-6xl lg:text-7xl;
 }
 .display h3 {
-  @apply text-xl md:text-3xl;
+  @apply text-2xl lg:text-3xl;
 }
 
 .overtitle {
