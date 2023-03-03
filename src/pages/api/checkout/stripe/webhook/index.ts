@@ -47,6 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       if (session.payment_intent && !isNaN(order_id)) {
         await updateOrder(order_id, {
+          status: 'confirmed',
           payment_id: session.payment_intent as string,
           payment_status: 'paid',
           payment_date: dt.unix(session.created).utc().format(),
