@@ -25,12 +25,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return;
   }
 
+  console.log(`Arrivato evento: ${event.type}`);
   // Handle the event - https://stripe.com/docs/api/events/types
   switch (event.type) {
     case 'payment_intent.payment_failed':
       const paymentIntentFailed = event.data.object as Stripe.PaymentIntent;
-      console.log('paymentIntentFailed');
-      console.log(paymentIntentFailed);
+      //console.log('paymentIntentFailed');
+      //console.log(paymentIntentFailed);
 
       //mandalo global...ma come???
 
@@ -43,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     case 'checkout.session.completed':
       const checkoutSessionCompleted = event.data.object as Stripe.Checkout.Session;
       const payment_intent = checkoutSessionCompleted.payment_intent as string;
-      console.log(checkoutSessionCompleted);
+      //console.log(checkoutSessionCompleted);
 
       /*if (checkoutSessionCompleted.payment_intent && checkoutSessionCompleted.metadata?.entry_id) {
         await updateEntry(checkoutSessionCompleted.metadata.entry_id, { payment_id: payment_intent, payment_status: 'succeeded' })
@@ -52,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       }*/
       break;
     default:
-      console.log(`Unhandled event type ${event.type}`);
+    //console.log(`Unhandled event type ${event.type}`);
   }
   // checkout.session.async_payment_failed
 

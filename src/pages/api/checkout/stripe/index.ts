@@ -40,22 +40,15 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   for (let item of body.items) {
-    const { rows } = await client.query<{ price: number }>('SELECT price FROM items WHERE id = $1', [item.id]);
-    const price = rows[0]?.price;
-
-    if (!price) {
-      throw new Error('');
-    }
-
     let metadata = {};
-    if (item?.entry) {
+    /*if (item?.entry) {
       metadata = {
         entryId: item.entry.id,
         tin: item.entry.tin,
         email: item.entry.email,
         phoneNumber: item.entry.phone_number,
       };
-    }
+    }*/
 
     line_items.push({
       price_data: {
@@ -65,7 +58,7 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
           description: item?.description ?? undefined,
           metadata,
         },
-        unit_amount: price,
+        unit_amount: item.price,
       },
       quantity: 1,
     });
@@ -78,19 +71,20 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
   const q = base64.encode(body);
 
   // bisogna ciclare su items mandati e creare nuovo line_items
+  console.log(body.user_email);
 
   const params: Stripe.Checkout.SessionCreateParams = {
     mode: 'payment',
     submit_type: 'pay',
     payment_method_types: ['card'],
     currency: 'eur',
-    customer_email: body.items[0].entry?.email, //  [0]?.entry.email ?? null, // la prima dell'elenco !
+    customer_email: body.user_email, //  body.items[0].entry?.email, // la prima dell'elenco !
     line_items,
     automatic_tax: {
       enabled: false,
     },
     success_url: `${headers.origin}/confirm?session_id={CHECKOUT_SESSION_ID}&q=${q}`,
-    //cancel_url: `${headers.origin}/events/${ticket.event_id}`,
+    //cancel_url: `${headers.origin}/events/${body.event_id}`,
   };
 
   // tariffe invoice
