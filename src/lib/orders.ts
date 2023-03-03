@@ -130,21 +130,14 @@ const createOrder = async (params: Partial<Order>) => {
     return { ...order, items: orderItems };
   } catch (e: any) {
     await client.query('ROLLBACK');
+    console.error(e.message);
 
     if (e.code === '23505') {
       if (e.constraint === 'entries_unique') {
         const lastEntry = orderItems.pop();
         throw new Error(`${lastEntry?.description} risulta già iscritto`);
-        //throw new Error(`Un partecipante risulta già iscritto`)
       }
-      //table: 'entries',
-      //column: undefined,
-      //dataType: undefined,
-      //constraint: 'entries_unique',
-      //detail: 'Key (item_id, tin)=(1002, GDLMTT88R21F712C) already exists.',
     }
-
-    console.error(e.message);
     throw e;
   } finally {
     client.release();
