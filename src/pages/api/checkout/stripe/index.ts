@@ -35,44 +35,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 }
 
 export const createCheckoutSession = async (headers: any, body: Order) => {
-  const client = await pool.connect();
-
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   for (let item of body.items) {
-    let metadata = {};
-    /*if (item?.entry) {
-      metadata = {
-        entryId: item.entry.id,
-        tin: item.entry.tin,
-        email: item.entry.email,
-        phoneNumber: item.entry.phone_number,
-      };
-    }*/
-
     line_items.push({
       price_data: {
         currency: 'eur',
         product_data: {
           name: item.name,
           description: item?.description ?? undefined,
-          metadata,
+          metadata: {
+            item_id: item.id,
+          },
         },
         unit_amount: item.price,
       },
-      quantity: 1,
+      quantity: item.quantity,
     });
   }
 
-  // QUESTA VERR° FATTA in CREATE ENTRY
-  //if (!tinRegex.test(body.entrant_tin)) {
-  //  throw new Error("")
-  //}
   const q = base64.encode(body);
-
-  // bisogna ciclare su items mandati e creare nuovo line_items
-  console.log(body.user_email);
-
   const params: Stripe.Checkout.SessionCreateParams = {
     mode: 'payment',
     submit_type: 'pay',
@@ -82,6 +64,9 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
     line_items,
     automatic_tax: {
       enabled: false,
+    },
+    metadata: {
+      order_id: body.id,
     },
     success_url: `${headers.origin}/confirm?session_id={CHECKOUT_SESSION_ID}&q=${q}`,
     //cancel_url: `${headers.origin}/events/${body.event_id}`,

@@ -2,6 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { buffer } from 'micro';
 import Stripe from 'stripe';
 import { updateEntry } from '@/lib/entries';
+import { updateOrder } from '@/lib/orders';
+import { dt } from '@/lib/date';
 
 // https://stripe.com/docs/api/versioning
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -19,44 +21,62 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   try {
     event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
   } catch (e: any) {
-    console.log('ERRORE');
     console.error(e.message);
-    res.status(400).send(`Webhook Error: ${e.message}`);
-    return;
+    return res.status(400).send(`Webhook Error: ${e.message}`);
   }
 
   console.log(`Arrivato evento: ${event.type}`);
+  let order_id: number;
   // Handle the event - https://stripe.com/docs/api/events/types
   switch (event.type) {
     case 'payment_intent.payment_failed':
-      const paymentIntentFailed = event.data.object as Stripe.PaymentIntent;
-      //console.log('paymentIntentFailed');
-      //console.log(paymentIntentFailed);
+      const payment = event.data.object as Stripe.PaymentIntent;
+      order_id = Number(payment.metadata?.order_id);
 
-      //mandalo global...ma come???
-
-      /*if (paymentIntentFailed.metadata?.entry_id) {
-        await updateEntry(paymentIntentFailed.metadata.entry_id, { payment_id: paymentIntentFailed.id, payment_status: 'failed' })
-      } else {
-        console.error('Mancano dati ')
-      }*/
+      if (payment.id && !isNaN(order_id)) {
+        await updateOrder(order_id, {
+          payment_id: payment.id,
+          payment_status: 'failed',
+          payment_date: dt.unix(payment.created).utc().format(),
+        });
+      }
       break;
     case 'checkout.session.completed':
-      const checkoutSessionCompleted = event.data.object as Stripe.Checkout.Session;
-      const payment_intent = checkoutSessionCompleted.payment_intent as string;
-      //console.log(checkoutSessionCompleted);
+      const session = event.data.object as Stripe.Checkout.Session;
+      order_id = Number(session.metadata?.order_id);
 
-      /*if (checkoutSessionCompleted.payment_intent && checkoutSessionCompleted.metadata?.entry_id) {
-        await updateEntry(checkoutSessionCompleted.metadata.entry_id, { payment_id: payment_intent, payment_status: 'succeeded' })
-      } else {
-        console.error('Mancano dati ')
-      }*/
+      if (session.payment_intent && !isNaN(order_id)) {
+        await updateOrder(order_id, {
+          status: 'confirmed',
+          payment_id: session.payment_intent as string,
+          payment_status: 'paid',
+          payment_date: dt.unix(session.created).utc().format(),
+        });
+      }
       break;
     default:
-    //console.log(`Unhandled event type ${event.type}`);
+      console.debug(`Unhandled event type ${event.type}`);
   }
-  // checkout.session.async_payment_failed
-
-  // Return a 200 response to acknowledge receipt of the event
   res.status(200).send('');
 }
+
+/*
+SE TUTTO VA BENE (4242 4242 4242 4242)
+Arrivato evento: charge.succeeded
+Arrivato evento: checkout.session.completed
+Arrivato evento: payment_intent.succeeded
+Arrivato evento: payment_intent.created
+
+CON SECURE CODE (4000 0000 0000 3220)
+Arrivato evento: payment_intent.created
+Arrivato evento: payment_intent.requires_action
+Arrivato evento: payment_intent.succeeded
+Arrivato evento: checkout.session.completed
+Arrivato evento: charge.succeeded
+
+SENZA FONDI (POVERO) (4000 0000 0000 9995)
+Arrivato evento: payment_intent.created
+Arrivato evento: payment_intent.payment_failed
+Arrivato evento: charge.failed (ma rimango sulla pagina di pagamento)
+poi esco, e dopo 11:05)
+*/

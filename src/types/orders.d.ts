@@ -15,7 +15,7 @@ export interface Order {
 
 export type OrderStatus = 'created' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'confirmed';
 
-export type PaymentStatus = 'intent' | 'pending' | 'success' | 'failed' | 'error';
+export type PaymentStatus = 'intent' | 'pending' | 'paid' | 'failed';
 
 export interface OrderItem {
   id: number;
