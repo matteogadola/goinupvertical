@@ -9,7 +9,7 @@ export default function HomeCarnet() {
   const eventId = 'circuito-goinup-5'
 
   return (
-      <section className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
+      <section className="grid-cols-1 md:grid-cols-2 lg:mx-20 grid justify-items-center">
         
         <div className="mt-8">
           <h1 className="overtitle">Prevendita</h1>

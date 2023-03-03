@@ -29,6 +29,7 @@ export default function EntryCart() {
     try {
       const order = await createCheckout({
         payment_method: paymentMethod,
+        user_email: cartItems[0].entry?.email,
         items: cartItems
       })
       setError(null)

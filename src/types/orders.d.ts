@@ -19,6 +19,7 @@ export type PaymentStatus = 'intent' | 'pending' | 'success' | 'failed' | 'error
 
 export interface OrderItem {
   id: number;
+  event_id?: string; // ???
   name: string;
   quantity: number;
   price: number; //

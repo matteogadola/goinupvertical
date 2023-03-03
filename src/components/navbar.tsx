@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 
-import coverImage from 'public/images/cover-1.jpg'
+import headerImage from 'public/images/header-4.jpg'
+import classNames from 'classnames'
 
 interface Props {
   cover?: boolean | undefined;
@@ -18,21 +19,31 @@ const navLinks = [
   //{ name: "Accedi", path: "sign-in" },
 ]
 
+// w-full h-256 bg-cover-image bg-cover bg-center
 export default function Navbar({ cover }: Props) {
-  const notHome = usePathname() !== '/'
+  const isHome = usePathname() === '/'
 
   return (
-    
-  <header>
-    {/*<header className={`w-full h-128 bg-cover-image bg-cover bg-center`}>*/}
+  <header className={classNames("w-full", {" relative bg-black h-screen": isHome })}>
+    { isHome && <div><Image
+      className="opacity-60"
+      src={headerImage}
+      alt="Header image"
+      fill
+      style={{objectFit: "cover", objectPosition: "center"}}
+    /><div className="display absolute top-20 left-10 lg:top-40 lg:left-20 w-36 md:w-96 lg:w-auto">
+    <h1>GO<span className="text-accent">in</span>UP</h1>
+    <h3>Circuito di 11 gare vertical<br /><span className="whitespace-nowrap">in montagna</span></h3>
+  </div></div> }
     <nav>
       <div className="h-12 mx-8 md:flex md:items-center md:justify-between">
         <div className="flex justify-between items-center">
-          {notHome && 
+          {!isHome && 
             <div className="text-lg md:text-xl font-unbounded font-bold hover:opacity-70">
               <Link href="/">GO<span className="text-accent">in</span>UP</Link>
             </div>
           }
+          
           <div className="flex md:hidden">
             <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu">
               <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
@@ -42,7 +53,7 @@ export default function Navbar({ cover }: Props) {
           </div>
         </div>
 
-        <div className="hidden md:flex md:items-center md:gap-4">
+        <div className={classNames("hidden md:flex md:items-center md:gap-4", {" text-white": isHome })}>
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>

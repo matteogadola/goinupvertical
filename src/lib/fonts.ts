@@ -3,7 +3,6 @@ import { Unbounded, Inter, Roboto_Mono, Poppins } from 'next/font/google';
 export const unbounded = Unbounded({
   variable: '--font-unbounded',
   subsets: ['latin'],
-  //weight: ['200', '600', '700'],
 });
 
 const poppins = Poppins({

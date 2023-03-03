@@ -17,9 +17,10 @@ module.exports = {
       },
       height: {
         128: '32rem',
+        256: '64rem',
       },
       backgroundImage: {
-        'cover-image': "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('/images/cover-1.jpg')", // elimina
+        'cover-image': "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('/images/header.jpg')", // elimina
         'hero-pattern': "url('/img/hero-pattern.svg')",
         'footer-texture': "url('/img/footer-texture.png')",
       },
@@ -36,6 +37,7 @@ module.exports = {
         'background': '#FFFDDA',*/
         primary: '#e6aa68',
         accent: '#6FB06A',
+        'accent-dark': '#649960',
         heading: '#2B1505',
         link: '#1C000B',
         button: '#2292a4',

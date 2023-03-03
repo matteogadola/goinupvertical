@@ -1,20 +1,12 @@
 import Image from 'next/image'
-import { getEvents } from '@/lib/events'
-import { dt } from '@/lib/date'
-import EventsList from '@/components/events-list'
-
-import HomeBanner from '@/components/home-banner'
-
-import Credits from '@/components/credits'
-
 import HomeMission from '@/app/components/home-mission'
 import HomeCarnet from '@/app/components/home-carnet'
 import HomeEvents from '@/app/components/home-events'
+import Credits from '@/components/credits'
 
 import homeBrandImage from 'public/images/home-1.png'
-import { callback } from '@/lib/helpers'
-
-// export const revalidate = 5
+import headerImage from 'public/images/header.jpg'
+// export const revalidate = 85000
 
 export const metadata = {
   title: 'GOinUP',
@@ -42,21 +34,8 @@ export default async function HomePage() {
   // hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100
   return (
     <>
-      <div className="page">
-        <section className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="display">
-            <h1>GO<span className="text-accent">in</span>UP</h1>
-            <h3>Circuito di 11 gare vertical<br />in montagna</h3>
-          </div>
 
-          <div className="hidden lg:flex lg:relative lg:-left-64 lg:-top-12 lg:-scale-x-100">
-            <Image
-              src={homeBrandImage}
-              alt="Branding"
-              className="opacity-90"
-            />
-          </div>
-        </section>
+      <div className="page">
 
         <section className="mt-20">
           {/* @ts-expect-error Server Component */}

@@ -4,7 +4,7 @@ import { Order, OrderItem } from '@/types/orders';
 
 // https://supabase.github.io/wrappers/stripe/
 
-export async function createCheckout(orderData: Pick<Order, 'payment_method' | 'items'>) {
+export async function createCheckout(orderData: Pick<Order, 'user_email' | 'payment_method' | 'items'>) {
   const response = await fetch('/api/checkout', {
     method: 'POST',
     body: JSON.stringify(orderData),
@@ -20,6 +20,7 @@ export async function createCheckout(orderData: Pick<Order, 'payment_method' | '
   }
 
   if (body.payment_method === 'stripe') {
+    console.log('son stripe eh!!! ' + body.checkoutSessionId);
     //const session: Stripe.Checkout.Session = body.session;
     const stripe = await getStripe();
 

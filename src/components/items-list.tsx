@@ -9,16 +9,16 @@ interface Props {
 }
 
 export default async function ItemsList({ list }: Props) {
-  const items = await list
+  const items = (await list).filter(item => item.status !== 'internal')
 
   return (
     <Suspense fallback={<Spinner />}>
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container">
-          <div className="divide-y-2 divide-gray-50">
+          <div className="divide-y-2 divide-gray-50 lg:pr-24">
             {
               items.map((item, index) => (
-                <div key={index} className="lg:pr-24">
+                <div key={index} className="border shadow-md hover:shadow-lg pl-2">
                   <Link href={{ pathname: 'events/entry', query: { q: base64.encode(item) } }}>
                     <div className="py-4 flex flex-wrap md:flex-nowrap hover:opacity-80">
                       <div className="md:flex-grow">
