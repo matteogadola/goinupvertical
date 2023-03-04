@@ -28,7 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   console.debug(`Arrivato evento: ${event.type}`);
   let order_id: number;
   switch (event.type) {
+    case 'payment_intent.canceled':
     case 'payment_intent.payment_failed':
+      // if diverso da paid???
       const payment = event.data.object as Stripe.PaymentIntent;
       order_id = Number(payment.metadata?.order_id);
 
@@ -38,6 +40,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           payment_status: 'failed',
           payment_date: dt.unix(payment.created).utc().format(),
         });
+
+        /*await deleteEntries(order_id, {
+          payment_id: payment.id,
+          payment_status: 'failed',
+          payment_date: dt.unix(payment.created).utc().format(),
+        });*/
       }
       break;
     case 'checkout.session.completed':

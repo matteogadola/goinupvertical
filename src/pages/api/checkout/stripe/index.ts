@@ -45,6 +45,7 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
           name: item.name,
           description: item?.description ?? undefined,
           metadata: {
+            order_item_id: item.id,
             item_id: item.id,
           },
         },

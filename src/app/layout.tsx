@@ -1,8 +1,7 @@
 import './globals.css'
 import { fonts } from '../lib/fonts'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
-import classNames from 'classnames'
+import Footer from '@/app/components/footer'
 
 export default function RootLayout({
   children,

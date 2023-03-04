@@ -72,3 +72,19 @@ export async function updateEntry(id: string, params: Partial<Omit<Entry, 'id' |
 
   return data;
 }
+
+export async function deleteEntries(props: Partial<Pick<Entry, 'order_item_id'>>) {
+  const queryBuilder = supabase.from('entries').delete();
+
+  if (props?.order_item_id) {
+    queryBuilder.eq('order_item_id', props.order_item_id);
+  }
+
+  const { data, error } = await queryBuilder;
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
