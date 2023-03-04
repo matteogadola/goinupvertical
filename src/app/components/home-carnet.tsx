@@ -27,7 +27,7 @@ export default function HomeCarnet({ className }: { className?: string }) {
           <h3 className="title">Carnet 11 gare</h3>
           <p className="mt-4 text-gray-600">Acquista il carnet per tutte e 11 le gare del circuito GOinUP.</p>
           <div className="flex items-baseline mt-3">
-            <span className="text-button hover:opacity-70">Acquista</span>
+            <span className="text-button hover:opacity-70">Maggiori informazioni</span>
             <span className="text-xs ml-1">&#x279c;</span>
           </div>
         </div>
