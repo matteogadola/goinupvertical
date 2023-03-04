@@ -22,13 +22,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   try {
     const order = await createOrder(body);
-    if (['sepa', 'cash'].includes(order.payment_method)) {
+    if (order.payment_method === 'cash') {
       await sendConfirmationMail(order);
       return res.json(order);
     } else if (order.payment_method === 'stripe') {
-      console.log('qui');
       const { id } = await createCheckoutSession(headers, order);
-      console.log('qui due');
       return res.json({ ...order, checkoutSessionId: id });
     } else {
       throw new Error('Metodo di pagamento non supportato');

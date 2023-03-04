@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { buffer } from 'micro';
 import Stripe from 'stripe';
-import { updateEntry } from '@/lib/entries';
 import { updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
 
 // https://stripe.com/docs/api/versioning
+// Handle the event - https://stripe.com/docs/api/events/types
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2022-11-15',
 });
@@ -25,9 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(400).send(`Webhook Error: ${e.message}`);
   }
 
-  console.log(`Arrivato evento: ${event.type}`);
+  console.debug(`Arrivato evento: ${event.type}`);
   let order_id: number;
-  // Handle the event - https://stripe.com/docs/api/events/types
   switch (event.type) {
     case 'payment_intent.payment_failed':
       const payment = event.data.object as Stripe.PaymentIntent;
@@ -54,8 +53,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         });
       }
       break;
-    default:
-      console.debug(`Unhandled event type ${event.type}`);
   }
   res.status(200).send('');
 }

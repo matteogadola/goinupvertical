@@ -32,7 +32,12 @@ export const sendConfirmationMail = async (order: Order) => {
     </tr>`
   );
 
-  //const paymentDetail =
+  const paymentDetail =
+    order.payment_method === 'cash'
+      ? `
+  Per confermare la prenotazione è necessario completare il pagamento presso:<br />
+  <b>3Passi Patagonia Morbegno</b> Piazza 3 Novembre, 15`
+      : '';
 
   const response = await sendMail({
     to: 'gadola.matteo@gmail.com',
@@ -67,9 +72,11 @@ export const sendConfirmationMail = async (order: Order) => {
             </tbody>
           </table>
 
-          <div>
+          <div style="margin-top: 1rem;">
+            ${paymentDetail}
           </div>
 
+          <span style=""margin-top: 2rem;"">Grazie, GOinUP</span>
         </body>
       </html>
       `,

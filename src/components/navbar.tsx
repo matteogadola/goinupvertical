@@ -53,7 +53,7 @@ export default function Navbar({ cover }: Props) {
           </div>
         </div>
 
-        <div className={classNames("hidden md:flex md:items-center md:gap-4", {" text-white": isHome })}>
+        <div className={classNames("hidden md:flex md:items-center md:gap-4 z-10", {" text-white": isHome })}>
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>
