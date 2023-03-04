@@ -12,7 +12,7 @@ export default function HomeCarnet({ className }: { className?: string }) {
   return (
     <section className={classNames("mx-auto px-4 lg:px-48", className)}>
     <Link href={`events/${eventId}`}>
-    <div className="relative rounded-lg block md:flex items-center bg-gray-100 shadow-xl hover:shadow-2xl min-h-10 -top-14">
+    <div className="relative rounded-lg block md:flex items-center bg-white shadow-xl hover:shadow-2xl min-h-10 -top-14">
       <div className ="hidden lg:flex relative w-full md:w-2/5 h-full overflow-hidden rounded-l-lg min-h-10">
         <Image
           src={carnet}
@@ -21,7 +21,7 @@ export default function HomeCarnet({ className }: { className?: string }) {
         />
         <div className="absolute inset-0 w-full h-full bg-slate-600 opacity-30"></div>
       </div>
-      <div className="w-full md:w-3/5 h-full flex items-center bg-gray-100 rounded-lg">
+      <div className="w-full md:w-3/5 h-full flex items-center bg-white rounded-lg">
         <div className="p-12 md:pr-24 md:pl-16 md:py-12">
           <h1 className="overtitle">Prevendita</h1>
           <h3 className="title">Carnet 11 gare</h3>
@@ -31,7 +31,7 @@ export default function HomeCarnet({ className }: { className?: string }) {
             <span className="text-xs ml-1">&#x279c;</span>
           </div>
         </div>
-        <svg className="hidden md:block absolute inset-y-0 h-full w-24 fill-current text-gray-100 -ml-12" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg className="hidden md:block absolute inset-y-0 h-full w-24 fill-current text-white -ml-12" viewBox="0 0 100 100" preserveAspectRatio="none">
           <polygon points="50,0 100,0 50,100 0,100" />
         </svg>
       </div>
