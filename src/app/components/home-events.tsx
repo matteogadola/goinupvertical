@@ -8,11 +8,13 @@ import { getEvents } from '@/lib/events'
 import { dt, getDate } from '@/lib/date'
 //import { base64 } from '@/lib/helpers'
 
+import goinup from 'public/images/credits/goinup.png'
+
 import elevation from 'public/images/icons/altitude-2.svg'
 import distance from 'public/images/icons/distance-2.svg'
-import ph1 from 'public/images/widget-1.jpg'
-import ph2 from 'public/images/widget-2.jpg'
-import ph3 from 'public/images/widget-3.jpg'
+import ph1 from 'public/images/dalle-8.png'
+import ph2 from 'public/images/dalle-5.png'
+import ph3 from 'public/images/dalle-6.png'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 
@@ -40,7 +42,7 @@ export default async function HomeEvents({ className }: { className: string }) {
             <Link href={`events/${event.id}`} key={index}>
               <div className="lg:max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
                 <div className="relative text-white text-center">
-                  <Image src={images[index]} className="" alt="Image" />
+                  <Image src={images[index]} className="object-cover h-48" alt="Image" />
                   <div className="absolute inset-0 w-full h-full bg-slate-800 opacity-40"></div>
                   <span className={
                     classNames("absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl font-unbounded font-semibold uppercase", {

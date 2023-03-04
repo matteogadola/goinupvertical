@@ -8,13 +8,14 @@ export interface Order {
   notification_status: string;
   payment_id: string | null;
   payment_date: string | null;
-  payment_method: string;
+  payment_method: PaymentMethod;
   payment_status: PaymentStatus;
   items: OrderItem[];
 }
 
 export type OrderStatus = 'created' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'confirmed';
 
+export type PaymentMethod = 'stripe' | 'cash';
 export type PaymentStatus = 'intent' | 'pending' | 'paid' | 'failed';
 
 export interface OrderItem {

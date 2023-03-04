@@ -6,6 +6,7 @@ import CodiceFiscale from 'codice-fiscale-js';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { verifyTin } from './helpers';
+import { db } from './firebase';
 
 const createOrder = async (params: Partial<Order>) => {
   if (params?.items === undefined || params.items.length === 0) {
@@ -14,6 +15,7 @@ const createOrder = async (params: Partial<Order>) => {
 
   const client = await pool.connect();
   const orderItems: OrderItem[] = [];
+  const entries: any[] = [];
 
   // CONTROLLA PREZZI
 
@@ -80,6 +82,23 @@ const createOrder = async (params: Partial<Order>) => {
         );
 
         //orderItems[count - 1].entry = entrieRows[0]; // SERVE???
+        entries.push({
+          order_id: order.id,
+          item_id: item.id,
+          event_id: item.event_id,
+          first_name: item.entry.first_name,
+          last_name: item.entry.last_name,
+          birth_date:
+            item.entry.birth_date ??
+            `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
+          birth_place: item.entry.birth_place ?? cf.birthplace.nome,
+          gender: item.entry.gender ?? cf.gender,
+          country: item.entry.country,
+          team: item.entry.team,
+          email: item.entry.email,
+          phone_number: item.entry.phone_number,
+          tin: item.entry.tin,
+        });
       }
 
       // tarrozzata !
@@ -123,9 +142,35 @@ const createOrder = async (params: Partial<Order>) => {
           );
 
           //orderItems[count - 1].entry = entrieRows[0];
+          entries.push({
+            order_id: order.id,
+            item_id: item.id,
+            event_id: item.event_id,
+            first_name: item.entry.first_name,
+            last_name: item.entry.last_name,
+            birth_date:
+              item.entry.birth_date ??
+              `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
+            birth_place: item.entry.birth_place ?? cf.birthplace.nome,
+            gender: item.entry.gender ?? cf.gender,
+            country: item.entry.country,
+            team: item.entry.team,
+            email: item.entry.email,
+            phone_number: item.entry.phone_number,
+            tin: item.entry.tin,
+          });
         }
       }
     }
+
+    await db.runTransaction(async (t) => {
+      t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
+
+      for (let item of entries) {
+        t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
+      }
+    });
+
     await client.query('COMMIT');
     return { ...order, items: orderItems };
   } catch (e: any) {
@@ -146,6 +191,9 @@ const createOrder = async (params: Partial<Order>) => {
 
 const updateOrder = async (id: number, params: Partial<Order>) => {
   const { data, error } = await supabase.from('orders').update(params).eq('id', id);
+
+  const orderRef = db.collection('orders').doc(id.toString());
+  await orderRef.update(params);
 
   if (error) {
     throw new Error(error.message);
