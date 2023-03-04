@@ -15,7 +15,7 @@ export interface Order {
 
 export type OrderStatus = 'created' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'confirmed';
 
-export type PaymentMethod = 'stripe' | 'cash';
+export type PaymentMethod = 'stripe' | 'sepa' | 'cash';
 export type PaymentStatus = 'intent' | 'pending' | 'paid' | 'failed';
 
 export interface OrderItem {
