@@ -2,6 +2,7 @@ import Image from 'next/image'
 import HomeMission from '@/app/components/home-mission'
 import HomeCarnet from '@/app/components/home-carnet'
 import HomeEvents from '@/app/components/home-events'
+import HomeGoinupCalendar from '@/app/components/home-goinup-calendar'
 import Credits from '@/components/credits'
 
 import homeBrandImage from 'public/images/home-1.png'
@@ -46,9 +47,10 @@ export default async function HomePage() {
           <HomeBanner />
         </section>*/}
 
-        <section className="mt-28">
-          <HomeCarnet />
-        </section>
+        <HomeCarnet className="mt-36" />
+
+        {/* @ts-expect-error Server Component */}
+        <HomeGoinupCalendar className="mt-32" />
 
         {/* @ts-expect-error Server Component */}
         <HomeEvents className="mt-36" />

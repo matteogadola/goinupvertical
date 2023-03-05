@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 
-import headerImage from 'public/images/header-4.jpg'
+import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
 
 interface Props {

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { getEvents } from '@/lib/events'
 import { dt } from '@/lib/date'
 import EventsList from '@/components/events-list'
-import Footer from '@/components/footer'
+import Footer from '@/app/components/footer'
 import { useState } from 'react'
 import classNames from 'classnames'
 

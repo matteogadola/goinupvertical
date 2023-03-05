@@ -9,13 +9,17 @@ interface GetEventsProps {
   orderBy: string;
   limit: number;
   notInternal: boolean;
+  promoterId: number;
 }
 
 export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
-  const queryBuilder = supabase.from('events').select().neq('status', 'internal');
+  const queryBuilder = supabase.from('events').select();
 
   if (props?.fromDate) {
     queryBuilder.gte('date', props.fromDate);
+  }
+  if (props?.promoterId) {
+    queryBuilder.eq('promoter_id', props.promoterId);
   }
   if (props?.notInternal) {
     queryBuilder.neq('status', 'internal');

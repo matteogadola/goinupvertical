@@ -1,5 +1,8 @@
 export interface Entry {
-  id: number,
+  id: number;
+  order_item_id: number;
+  item_id: number;
+  event_id: Text;
   first_name: string;
   last_name: string;
   tin: string;
@@ -10,5 +13,6 @@ export interface Entry {
   birth_place: string | null;
   birth_date: string;
   gender: 'M' | 'F';
-  privacy_policy?: boolean;
+  bib_number: smallint;
+  //privacy_policy?: boolean;
 }

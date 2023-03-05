@@ -1,6 +1,6 @@
 export interface Event {
   id: string;
-  category: 'race' | 'food' | 'pass';
+  category: 'race' | 'food' | 'carnet' | 'award-ceremony';
   name: string;
   edition: number;
   date: string;
@@ -30,4 +30,5 @@ export interface EventDetail {
   elevationGain: number;
   startLine: string;
   finishLine: string;
+  location?: string;
 }
