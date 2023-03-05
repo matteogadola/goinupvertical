@@ -19,7 +19,7 @@ export default function HomeCarnet({ className }: { className?: string }) {
           alt="carnet"
           style={{objectFit: "cover", objectPosition: "center"}}
         />
-        <div className="absolute inset-0 w-full h-full bg-slate-600 opacity-30"></div>
+        <div className="absolute inset-0 w-full h-full bg-slate-500 opacity-20"></div>
       </div>
       <div className="w-full md:w-3/5 h-full flex items-center bg-white rounded-lg">
         <div className="p-12 md:pr-24 md:pl-16 md:py-12">

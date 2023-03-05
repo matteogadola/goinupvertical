@@ -34,7 +34,6 @@
     "zustand": "^4.3.5"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.29.5-appdir.0",
     "@types/node": "18.14.5",
     "@types/pg": "^8.6.6",
     "@types/react": "18.0.28",
