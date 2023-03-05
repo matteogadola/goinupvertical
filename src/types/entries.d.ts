@@ -14,5 +14,4 @@ export interface Entry {
   birth_date: string;
   gender: 'M' | 'F';
   bib_number: smallint;
-  //privacy_policy?: boolean;
 }
