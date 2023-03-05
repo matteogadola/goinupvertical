@@ -2,7 +2,7 @@ export interface Entry {
   id: number;
   order_item_id: number;
   item_id: number;
-  event_id: Text;
+  event_id: string;
   first_name: string;
   last_name: string;
   tin: string;
@@ -14,5 +14,4 @@ export interface Entry {
   birth_date: string;
   gender: 'M' | 'F';
   bib_number: smallint;
-  //privacy_policy?: boolean;
 }
