@@ -68,7 +68,6 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
     },
     metadata: {
       order_id: body.id,
-      q,
     },
     success_url: `${headers.origin}/confirm?session_id={CHECKOUT_SESSION_ID}&q=${q}`,
     //cancel_url: `${headers.origin}/events/${body.event_id}`,
