@@ -19,7 +19,7 @@ import EntryFormLocationsDialog from './form-locations-dialog'
 import Link from 'next/link'
 
 export interface EntryForm extends Entry {
-  privacyPolicy: boolean;
+  privacy_policy: boolean;
 }
 
 export default function EntryForm({ item, className }: { item: Item, className?: string }) {

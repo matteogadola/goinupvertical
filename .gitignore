@@ -41,3 +41,5 @@ next-env.d.ts
 # TEMP
 /.github/workflows/vercel-deploy.yml
 /.github/workflows/firebase-hosting-merge.yml
+
+/public/images/old

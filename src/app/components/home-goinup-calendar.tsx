@@ -2,32 +2,31 @@ import { getItem } from '@/lib/items'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { base64 } from '@/lib/helpers'
 import { Suspense } from 'react'
 import { getEvents } from '@/lib/events'
 import { dt, getDate } from '@/lib/date'
-//import { base64 } from '@/lib/helpers'
-
-import goinup from 'public/images/credits/goinup.png'
-
-import elevation from 'public/images/icons/altitude-2.svg'
-import distance from 'public/images/icons/distance-2.svg'
-import ph1 from 'public/images/dalle-8.png'
-import ph2 from 'public/images/dalle-5.png'
-import ph3 from 'public/images/dalle-6.png'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 
-const images = [ph1, ph2, ph3]
+import flyer from 'public/images/flyers/goinup-5.webp'
 
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default async function HomeGoinupCalendar({ className }: { className?: string }) {
+  const showFlyer = true;
   const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', promoterId: 1 })
   
   return (
     <Suspense fallback={<Spinner />}>
-      { events.length > 0 &&
+      {showFlyer && <div className="mt-20 w-full flex justify-center justify-items-center">
+        <Image
+          src={flyer}
+          alt="Locandina"
+          width={800}
+        />
+      </div>}
+
+      {(!showFlyer && events.length > 0) &&
       <section className={classNames(className, "")}>
         <div className="text-center">
           <h3 className="overtitle">Calendario</h3>
