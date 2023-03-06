@@ -2,11 +2,16 @@
 import { Order, OrderItem } from '@/types/orders';
 import { pool } from './pg';
 import { dt } from './date';
-import CodiceFiscale from 'codice-fiscale-js';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { verifyTin } from './helpers';
 import { db } from './firebase';
+
+export const getOrder = async (id: string) => {
+  const { data } = await supabase.from('orders').select().eq('id', id).returns<Order[]>().single();
+
+  return data;
+};
 
 const createOrder = async (params: Partial<Order>) => {
   if (params?.items === undefined || params.items.length === 0) {
@@ -167,6 +172,7 @@ const createOrder = async (params: Partial<Order>) => {
       t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
 
       for (let item of entries) {
+        console.log(JSON.stringify(item));
         t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
       }
     });

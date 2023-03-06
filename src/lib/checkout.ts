@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import getStripe from './stripe';
 import { Order, OrderItem } from '@/types/orders';
+import { sendConfirmationMail } from './mail';
 
 // https://supabase.github.io/wrappers/stripe/
 
@@ -32,14 +33,6 @@ export async function createCheckout(orderData: Pick<Order, 'user_email' | 'paym
       console.log('non dovrei comunque arrivare qui...');
       console.log(e.message);
     }
-
-    // browser or network error
-    /*if (error) {
-      console.log('SONO in ERR?');
-      console.log(error.message);
-      // update order! con errore
-      throw error;
-    }*/
   } else {
     return body;
   }

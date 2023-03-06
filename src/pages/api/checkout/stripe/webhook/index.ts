@@ -3,6 +3,7 @@ import { buffer } from 'micro';
 import Stripe from 'stripe';
 import { updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
+import { sendConfirmationMail } from '@/lib/mail';
 
 // https://stripe.com/docs/api/versioning
 // Handle the event - https://stripe.com/docs/api/events/types
@@ -52,6 +53,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const session = event.data.object as Stripe.Checkout.Session;
       order_id = Number(session.metadata?.order_id);
 
+      console.log(JSON.stringify(session));
+
       if (session.payment_intent && !isNaN(order_id)) {
         await updateOrder(order_id, {
           status: 'confirmed',
@@ -59,6 +62,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           payment_status: 'paid',
           payment_date: dt.unix(session.created).utc().format(),
         });
+        /*await sendConfirmationMail({
+          items: []
+        });*/
       }
       break;
   }
