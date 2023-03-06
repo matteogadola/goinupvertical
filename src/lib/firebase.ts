@@ -12,4 +12,5 @@ export const db = new Firestore({
     private_key: JSON.parse(process.env.GOOGLE_PRIVATE_KEY!),
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
   },
+  ignoreUndefinedProperties: true,
 });
