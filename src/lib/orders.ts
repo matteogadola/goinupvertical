@@ -172,6 +172,7 @@ const createOrder = async (params: Partial<Order>) => {
       t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
 
       for (let item of entries) {
+        console.log(JSON.stringify(item));
         t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
       }
     });

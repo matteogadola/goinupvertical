@@ -53,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const session = event.data.object as Stripe.Checkout.Session;
       order_id = Number(session.metadata?.order_id);
 
-      console.log(session);
+      console.log(JSON.stringify(session));
 
       if (session.payment_intent && !isNaN(order_id)) {
         await updateOrder(order_id, {
