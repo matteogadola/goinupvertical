@@ -9,7 +9,7 @@ import { Firestore } from '@google-cloud/firestore';
 export const db = new Firestore({
   projectId: process.env.GOOGLE_PROJECTID,
   credentials: {
-    private_key: process.env.GOOGLE_PRIVATE_KEY,
+    private_key: JSON.parse(process.env.GOOGLE_PRIVATE_KEY!),
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
   },
 });
