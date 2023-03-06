@@ -4,7 +4,7 @@ import { pool } from './pg';
 import { dt } from './date';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
-import { verifyTin } from './helpers';
+import { capitalize, verifyTin } from './helpers';
 import { db } from './firebase';
 
 export const getOrder = async (id: string) => {
@@ -63,6 +63,9 @@ const createOrder = async (params: Partial<Order>) => {
 
       // tarrozzata, poi rimarrà questa senza la seconda clausola
       if (item?.entry && item.id !== 1001) {
+        item.entry.first_name = capitalize(item.entry.first_name);
+        item.entry.last_name = capitalize(item.entry.last_name);
+
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
         const { rows: entrieRows } = await client.query<Entry>(
           `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
@@ -108,6 +111,8 @@ const createOrder = async (params: Partial<Order>) => {
 
       // tarrozzata !
       if (item?.entry && item.id === 1001) {
+        item.entry.first_name = capitalize(item.entry.first_name);
+        item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
         const lista = [
           { id: 1002, event_id: 'cech-vertical-2' },
@@ -148,9 +153,9 @@ const createOrder = async (params: Partial<Order>) => {
 
           //orderItems[count - 1].entry = entrieRows[0];
           entries.push({
-            order_id: order.id,
-            item_id: item.id,
-            event_id: item.event_id,
+            order_item_id: orderItem.id,
+            item_id: row.id,
+            event_id: row.event_id,
             first_name: item.entry.first_name,
             last_name: item.entry.last_name,
             birth_date:
@@ -172,7 +177,6 @@ const createOrder = async (params: Partial<Order>) => {
       t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
 
       for (let item of entries) {
-        console.log(JSON.stringify(item));
         t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
       }
     });

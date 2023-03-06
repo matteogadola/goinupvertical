@@ -40,7 +40,7 @@ export const sendConfirmationMail = async (order: Order) => {
       : '';
 
   const response = await sendMail({
-    to: 'gadola.matteo@gmail.com',
+    to: order.user_email,
     subject: `Conferma ordine GOinUP`,
     body: `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -76,7 +76,7 @@ export const sendConfirmationMail = async (order: Order) => {
             ${paymentDetail}
           </div>
 
-          <span style=""margin-top: 2rem;"">Grazie, GOinUP</span>
+          <span style=""margin-top: 2rem;"">GOinUP</span>
         </body>
       </html>
       `,

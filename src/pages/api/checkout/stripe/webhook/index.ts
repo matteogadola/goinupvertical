@@ -4,6 +4,8 @@ import Stripe from 'stripe';
 import { updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
 import { sendConfirmationMail } from '@/lib/mail';
+import { base64 } from '@/lib/helpers';
+import { Order } from '@/types/orders';
 
 // https://stripe.com/docs/api/versioning
 // Handle the event - https://stripe.com/docs/api/events/types
@@ -51,20 +53,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       break;
     case 'checkout.session.completed':
       const session = event.data.object as Stripe.Checkout.Session;
-      order_id = Number(session.metadata?.order_id);
+      //order_id = Number(session.metadata?.order_id);
+      //const items = JSON.parse(base64.encode(session.metadata?.items));
+      const order = JSON.parse(base64.encode(session.metadata?.q)) as Order;
 
-      console.log(JSON.stringify(session));
-
-      if (session.payment_intent && !isNaN(order_id)) {
-        await updateOrder(order_id, {
+      if (session.payment_intent && order.id) {
+        await updateOrder(order.id, {
           status: 'confirmed',
           payment_id: session.payment_intent as string,
           payment_status: 'paid',
           payment_date: dt.unix(session.created).utc().format(),
         });
-        /*await sendConfirmationMail({
-          items: []
-        });*/
+        await sendConfirmationMail(order);
+      } else {
+        console.error('Errore in checkout.session.completed');
+        console.error(order);
       }
       break;
   }
