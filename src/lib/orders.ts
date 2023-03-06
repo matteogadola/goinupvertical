@@ -4,7 +4,7 @@ import { pool } from './pg';
 import { dt } from './date';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
-import { verifyTin } from './helpers';
+import { capitalize, verifyTin } from './helpers';
 import { db } from './firebase';
 
 export const getOrder = async (id: string) => {
@@ -63,6 +63,9 @@ const createOrder = async (params: Partial<Order>) => {
 
       // tarrozzata, poi rimarrà questa senza la seconda clausola
       if (item?.entry && item.id !== 1001) {
+        item.entry.first_name = capitalize(item.entry.first_name);
+        item.entry.last_name = capitalize(item.entry.last_name);
+
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
         const { rows: entrieRows } = await client.query<Entry>(
           `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
@@ -108,6 +111,8 @@ const createOrder = async (params: Partial<Order>) => {
 
       // tarrozzata !
       if (item?.entry && item.id === 1001) {
+        item.entry.first_name = capitalize(item.entry.first_name);
+        item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
         const lista = [
           { id: 1002, event_id: 'cech-vertical-2' },

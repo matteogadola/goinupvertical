@@ -1,3 +1,5 @@
+import type { Entry } from './entries';
+
 export interface Order {
   id: number;
   user_id: string | null;
