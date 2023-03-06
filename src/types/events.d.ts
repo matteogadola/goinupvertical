@@ -9,6 +9,7 @@ export interface Event {
   status: EventStatus;
   detail: Partial<EventDetail> | null;
   summary: string | null;
+  summary_image: string | null;
   description: string | null;
   body: string | null;
   flyer: string | null;

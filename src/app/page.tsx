@@ -49,6 +49,19 @@ export default async function HomePage() {
 
         <HomeCarnet className="mt-36" />
 
+        {/*<section>
+          <div className="text-center">
+            <h3 className="overtitle">Calendario</h3>
+            <h1 className="title">Circuito</h1>
+          </div>
+          <div className="w-full flex justify-center justify-items-center">
+            <Image
+              src={calendar}
+              alt="Goinup Calendar"
+            />
+          </div>
+        </section>*/}
+
         {/* @ts-expect-error Server Component */}
         <HomeGoinupCalendar className="mt-32" />
 
