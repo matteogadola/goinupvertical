@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { buffer } from 'micro';
 import Stripe from 'stripe';
-import { updateOrder } from '@/lib/orders';
+import { getOrder, updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
 import { sendConfirmationMail } from '@/lib/mail';
 import { base64 } from '@/lib/helpers';
@@ -53,12 +53,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       break;
     case 'checkout.session.completed':
       const session = event.data.object as Stripe.Checkout.Session;
-      //order_id = Number(session.metadata?.order_id);
+      order_id = Number(session.metadata?.order_id);
       //const items = JSON.parse(base64.encode(session.metadata?.items));
-      const order = JSON.parse(base64.encode(session.metadata?.q)) as Order;
+      //const order = JSON.parse(base64.encode(session.metadata?.q)) as Order;
 
-      if (session.payment_intent && order.id) {
-        await updateOrder(order.id, {
+      if (session.payment_intent && !isNaN(order_id)) {
+        const order = await getOrder(order_id);
+
+        if (order === null) {
+          console.error("Errore in checkout.session.completed nel recupero dell'ordine");
+          console.error(JSON.stringify(session));
+          return res.status(500).send('');
+        }
+
+        await updateOrder(order_id, {
           status: 'confirmed',
           payment_id: session.payment_intent as string,
           payment_status: 'paid',
@@ -67,7 +75,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         await sendConfirmationMail(order);
       } else {
         console.error('Errore in checkout.session.completed');
-        console.error(order);
+        console.error(JSON.stringify(session));
       }
       break;
   }

@@ -7,8 +7,13 @@ import supabase from './supabase';
 import { capitalize, verifyTin } from './helpers';
 import { db } from './firebase';
 
-export const getOrder = async (id: string) => {
+export const getOrder = async (id: number) => {
   const { data } = await supabase.from('orders').select().eq('id', id).returns<Order[]>().single();
+
+  if (data !== null) {
+    const { data: items } = await supabase.from('order_items').select().eq('order_id', id).returns<OrderItem[]>();
+    data.items = items ?? [];
+  }
 
   return data;
 };
