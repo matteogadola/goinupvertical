@@ -148,9 +148,9 @@ const createOrder = async (params: Partial<Order>) => {
 
           //orderItems[count - 1].entry = entrieRows[0];
           entries.push({
-            order_id: order.id,
-            item_id: item.id,
-            event_id: item.event_id,
+            order_item_id: orderItem.id,
+            item_id: row.id,
+            event_id: row.event_id,
             first_name: item.entry.first_name,
             last_name: item.entry.last_name,
             birth_date:
@@ -172,7 +172,6 @@ const createOrder = async (params: Partial<Order>) => {
       t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
 
       for (let item of entries) {
-        console.log(JSON.stringify(item));
         t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
       }
     });
