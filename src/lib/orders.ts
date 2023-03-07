@@ -72,27 +72,77 @@ const createOrder = async (params: Partial<Order>) => {
         item.entry.last_name = capitalize(item.entry.last_name);
 
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
-        const { rows: entrieRows } = await client.query<Entry>(
-          `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
-            gender, country, team, email, phone_number, tin)
-          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
-          [
-            orderItem.id,
-            item.id,
-            item.event_id,
-            item.entry.first_name,
-            item.entry.last_name,
-            item.entry.birth_date ??
-              `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
-            item.entry.birth_place ?? cf.birthplace.nome,
-            item.entry.gender ?? cf.gender,
-            item.entry.country,
-            item.entry.team,
-            item.entry.email,
-            item.entry.phone_number,
-            item.entry.tin,
-          ]
-        );
+
+        try {
+          const { rows: entrieRows } = await client.query<Entry>(
+            `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
+              gender, country, team, email, phone_number, tin)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+            [
+              orderItem.id,
+              item.id,
+              item.event_id,
+              item.entry.first_name,
+              item.entry.last_name,
+              item.entry.birth_date ??
+                `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
+              item.entry.birth_place ?? cf.birthplace.nome,
+              item.entry.gender ?? cf.gender,
+              item.entry.country,
+              item.entry.team,
+              item.entry.email,
+              item.entry.phone_number,
+              item.entry.tin,
+            ]
+          );
+        } catch (e: any) {
+          if (e.code === '23505' && e.constraint === 'entries_unique') {
+            const { rows } = await client.query(
+              `SELECT orders.id
+              FROM entries
+              INNER JOIN order_items ON entries.order_item_id = order_items.id
+              INNER JOIN orders ON order_items.order_id = orders.id
+              WHERE payment_method = 'stripe' AND payment_status <> 'paid'
+              AND event_id = $1 AND tin = $2`,
+              [item.entry.event_id, item.entry.tin]
+            );
+
+            if (rows.length > 0) {
+              await client.query(
+                `UPDATE entries
+                SET order_item_id = $3, item_id = $4, first_name = $5, last_name = $6,
+                birth_date = $7, birth_place = $8, gender = $9, country = $10, team = $11, email = $12, phone_number = $13
+                FROM order_items INNER JOIN orders ON order_items.order_id = orders.id
+                WHERE entries.order_item_id = order_items.id AND payment_method = 'stripe' AND payment_status <> 'paid
+                AND event_id = $1 AND tin = $2`,
+                [
+                  item.event_id,
+                  item.entry.tin,
+                  orderItem.id,
+                  item.id,
+                  item.entry.first_name,
+                  item.entry.last_name,
+                  item.entry.birth_date ??
+                    `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
+                  item.entry.birth_place ?? cf.birthplace.nome,
+                  item.entry.gender ?? cf.gender,
+                  item.entry.country,
+                  item.entry.team,
+                  item.entry.email,
+                  item.entry.phone_number,
+                ]
+              );
+            } else {
+              throw new Error(
+                `${item.entry.first_name} ${item.entry.last_name} risulta già ${
+                  item.entry.gender === 'F' ? 'iscritta' : 'iscritto'
+                }`
+              );
+            }
+          }
+
+          throw e;
+        }
 
         //orderItems[count - 1].entry = entrieRows[0]; // SERVE???
         entries.push({
@@ -134,6 +184,11 @@ const createOrder = async (params: Partial<Order>) => {
         ];
 
         for (let row of lista) {
+          /*
+            ON CONFLICT ON CONSTRAINT entries_unique
+            DO UPDATE SET order_item_id = $1, item_id = $2, first_name = $4, last_name = $5,
+            birth_date = $6, birth_place = $7, gender = $8, country = $9, team = $10, email = $11, phone_number = $12
+            WHERE entries.event_id = $3 AND entries.tin = $13*/
           const { rows: entrieRows } = await client.query<Entry>(
             `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
             gender, country, team, email, phone_number, tin)
@@ -178,13 +233,15 @@ const createOrder = async (params: Partial<Order>) => {
       }
     }
 
-    await db.runTransaction(async (t) => {
-      t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
+    if (process.env.NODE_ENV === 'production') {
+      await db.runTransaction(async (t) => {
+        t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
 
-      for (let item of entries) {
-        t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
-      }
-    });
+        for (let item of entries) {
+          t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
+        }
+      });
+    }
 
     await client.query('COMMIT');
     return { ...order, items: orderItems };
@@ -195,7 +252,7 @@ const createOrder = async (params: Partial<Order>) => {
     if (e.code === '23505') {
       if (e.constraint === 'entries_unique') {
         const lastEntry = orderItems.pop();
-        throw new Error(`${lastEntry?.description} risulta già iscritto`);
+        throw new Error(`${lastEntry?.description} risulta già iscritto (OLD)`);
       }
     }
     throw e;
@@ -205,16 +262,25 @@ const createOrder = async (params: Partial<Order>) => {
 };
 
 const updateOrder = async (id: number, params: Partial<Order>) => {
-  const { data, error } = await supabase.from('orders').update(params).eq('id', id);
+  try {
+    const { data, error } = await supabase.from('orders').update(params).eq('id', id);
 
-  const orderRef = db.collection('orders').doc(id.toString());
-  await orderRef.update(params);
+    if (process.env.NODE_ENV === 'production') {
+      const orderRef = db.collection('orders').doc(id.toString());
+      await orderRef.update(params);
+    }
 
-  if (error) {
-    throw new Error(error.message);
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (e: any) {
+    console.error('Errore in update');
+    console.error(e.message);
+
+    throw e;
   }
-
-  return data;
 };
 
 export { createOrder, updateOrder };
