@@ -11,9 +11,9 @@ export default async function HomeMission({ className }: { className?: string })
         <h3 className="overtitle">Finalità Benefica</h3>
         <h1 className="title">Chi siamo?</h1>
         <p className="mt-8 max-w-md">
-          GOinUP è un&apos;associazione con finalità benefica che coordina e promuove l&apos;omonimo circuito di gare di montagna.
-          Il nostro obbiettivo è quello di riuscire a donare il maggior numero di attrezzature e servizi
-          a diverse associazioni identificate nel mandamento di Morbegno.
+          GOinUP è un gruppo di associazioni che coordina e promuove l&apos;omonimo circuito di gare di montagna.
+          Il nostro obbiettivo è quello di riuscire a donare il maggior numero di attrezzature e servizi a
+          diverse associazioni benefiche nel mandamento di Morbegno.
         </p>
       </div>
       <div className="flex lg:relative bg-slate-600 opacity-80">
