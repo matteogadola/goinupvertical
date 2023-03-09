@@ -28,7 +28,7 @@ export default function EntryPage() {
   // se no mostra pulsante per accedere (poi la registrazione si potrà selezionare da sign-in)
   
   return (
-    <section className="mt-4 md:mx-12">
+    <section className="page">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div className="col-span-1 md:col-span-3">
           <span className="overtitle">Iscrizione</span>
