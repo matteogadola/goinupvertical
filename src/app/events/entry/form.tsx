@@ -111,7 +111,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
     <section className={classNames(className)}>
       {state.isTinCalculatorOpened && <EntryFormCfDialog getValues={getValues} onCalc={calcTin} onClose={closeTinCalculator} />}
 
-      <form className="p-4 " autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+      <form className="py-4" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
           <div>

@@ -9,7 +9,7 @@ body {
 }
 
 .page {
-  @apply mt-4 mx-8 lg:mt-12 lg:mx-24;
+  @apply mt-4 mx-4 lg:mt-10 lg:mx-16;
 }
 
 .bg-gradient {
