@@ -39,7 +39,7 @@ export default function ConfirmPage() {
   }*/
 
   return (
-    <div className="page">
+    <section className="page">
       <span className="overtitle">Conferma</span>
       <h1 className="title mt-3">Ordine n. { order.id }</h1>
       <div className="text mt-2">
@@ -74,7 +74,7 @@ export default function ConfirmPage() {
         }
         .</p>
       </div>
-    </div>
+    </section>
   )
 }
 

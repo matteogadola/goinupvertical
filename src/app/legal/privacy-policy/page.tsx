@@ -53,7 +53,7 @@ export default function PrivacyPage() {
 
   return (
   <>
-    <section className="mt-4 md:mx-12">
+    <section className="page">
       <h1 className="text-4xl font-semibold">Privacy Policy di goinupvertical.it</h1>
 
       <div className="mt-4">

@@ -12,7 +12,7 @@ export default function HomeCarnet({ className }: { className?: string }) {
   return (
     <section className={classNames("mx-auto px-4 lg:px-48", className)}>
     <Link href={`events/${eventId}`}>
-    <div className="relative rounded-lg block md:flex items-center bg-white shadow-xl hover:shadow-2xl min-h-10 -top-14">
+    <div className="relative rounded-lg block md:flex items-center bg-white shadow-xl hover:shadow-2xl min-h-10">
       <div className ="hidden lg:flex relative w-full md:w-2/5 h-full overflow-hidden rounded-l-lg min-h-10">
         <Image
           src={carnet}

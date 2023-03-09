@@ -1,6 +1,6 @@
 import './globals.css'
 import { fonts } from '../lib/fonts'
-import Navbar from '@/components/navbar'
+import Navbar from '@/app/components/navbar'
 import Footer from '@/app/components/footer'
 
 export default function RootLayout({

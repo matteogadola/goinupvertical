@@ -7,11 +7,11 @@ export default function TermsPage() {
   const legalName = 'Goinup'
 
   return (
-    <div className="mt-4 mx-6">
+    <section className="page">
       <h1 className="title">Termini e Condizioni di acquisto</h1>
       <span>Condizioni Generali di Contratto</span>
 
-      <section className="grid grid-flow-row gap-4 mt-12">
+      <div className="grid grid-flow-row gap-4 mt-12">
         <article>
           <h3 className="overtitle">1. Oggetto</h3>
           <p className="mt-2">
@@ -106,7 +106,7 @@ Per entrare a far parte della classifica finale gli atleti dovranno aver parteci
           <h3 className="overtitle">Art. 8</h3>
           <p className="mt-2">Oltre al presente regolamento, ogni prova ne avrà uno proprio.</p>
         </article>
-      </section>
-    </div>
+      </div>
+    </section>
   )
 }
