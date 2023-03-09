@@ -63,7 +63,7 @@ import insiemePerSacco from 'public/images/credits/insieme-per-sacco.webp'
 import k2v from 'public/images/credits/k2v.png'
 import tiroAllaFuneValtellina from 'public/images/credits/tiro-alla-fune-valtellina.webp'
 import voceDiDaniele from 'public/images/credits/voce-di-daniele.png'
-import sanBello from 'public/images/credits/san bello-1.png'
+import sanBello from 'public/images/credits/san-bello-1.png'
 import caurga from 'public/images/credits/caurga-1.png'
 
 const supporters = [
@@ -116,12 +116,12 @@ const supporters = [
     name: 'San Bello',
     logo: sanBello,
     height: 80,
-    url: ''
+    url: 'http://www.sagradisanbello.it'
   }, {
     name: 'Caurga',
     logo: caurga,
     height: 80,
-    url: ''
+    url: 'https://www.facebook.com/prolocoforcola'
   },
 ]
 
