@@ -138,7 +138,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             <label className="label" htmlFor="tin">Codice Fiscale</label>
             <input
               type="text"
-              className={classNames("field", {"invalid": errors.tin})}
+              className={classNames("field uppercase", {"invalid": errors.tin})}
               {...register("tin", {
                 required: 'Campo obbligatorio',
                 pattern: {
@@ -147,10 +147,8 @@ export default function EntryForm({ item, className }: { item: Item, className?:
                 },
               })}
             />
-            { errors.tin ?
-              <small className="validation-error">{errors.tin.message}</small> :
-              <small className="field-helper">Non lo ricordi? <button onClick={() => openTinCalculator()}>Calcolalo</button></small>
-            }
+            <small className="field-helper">Non lo ricordi? <button onClick={() => openTinCalculator()}>Calcolalo</button></small>
+            { errors.tin && <small className="validation-error block">{errors.tin.message}</small> }
           </div>
 
           <div className="">

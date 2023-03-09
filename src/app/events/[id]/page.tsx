@@ -5,6 +5,7 @@ import { getItems } from '@/lib/items'
 import ItemsList from '@/components/items-list'
 import { dt, getReadableDate } from '@/lib/date'
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 
 interface Params {
   id: string;
@@ -30,6 +31,12 @@ export default async function EventPage({
           <span className="overtitle">{ event.date ? dt(event.date).format('ddd DD MMM') : 'Evento' }</span>
           <h1 className="title mt-3">{ event.edition }° { event.name }</h1>
           <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? '' }} />
+
+          <div className="mt-8">
+            <Link href="/regulation">
+              <span className="text-button hover:opacity-80">Consulta il regolamento</span>
+            </Link>
+          </div>
 
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
           <div className="mt-8">

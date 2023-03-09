@@ -37,6 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const payment = event.data.object as Stripe.PaymentIntent;
       order_id = Number(payment.metadata?.order_id);
 
+      console.warn(`Pagamento fallito per ${order_id}`);
+
       if (payment.id && !isNaN(order_id)) {
         await updateOrder(order_id, {
           payment_id: payment.id,
@@ -54,6 +56,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     case 'checkout.session.completed':
       const session = event.data.object as Stripe.Checkout.Session;
       order_id = Number(session.metadata?.order_id);
+
+      console.info(`Checkout completed per ${order_id}`);
       //const items = JSON.parse(base64.encode(session.metadata?.items));
       //const order = JSON.parse(base64.encode(session.metadata?.q)) as Order;
 
@@ -61,8 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const order = await getOrder(order_id);
 
         if (order === null) {
-          console.error("Errore in checkout.session.completed nel recupero dell'ordine");
-          console.error(JSON.stringify(session));
+          console.error(`Checkout completed in errore durante il recupero dell'ordine: ${JSON.stringify(session)}`);
           return res.status(500).send('');
         }
 
@@ -74,8 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         });
         await sendConfirmationMail(order);
       } else {
-        console.error('Errore in checkout.session.completed');
-        console.error(JSON.stringify(session));
+        console.error(`Checkout completed terminato in errore: ${JSON.stringify(session)}`);
       }
       break;
   }
