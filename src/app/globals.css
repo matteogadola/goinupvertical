@@ -68,7 +68,7 @@ form .label {
 }
 
 form .field {
-  @apply appearance-none bg-transparent block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:border-purple-300;
+  @apply appearance-none bg-transparent block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:border-button;
 }
 
 form .field-helper {
