@@ -3,7 +3,7 @@ import HomeMission from '@/app/components/home-mission'
 import HomeCarnet from '@/app/components/home-carnet'
 import HomeEvents from '@/app/components/home-events'
 import HomeGoinupCalendar from '@/app/components/home-goinup-calendar'
-import Credits from '@/components/credits'
+import Credits from '@/app/components/credits'
 
 import homeBrandImage from 'public/images/home-1.png'
 import headerImage from 'public/images/header.jpg'
@@ -11,7 +11,7 @@ import headerImage from 'public/images/header.jpg'
 
 export const metadata = {
   title: 'GOinUP',
-  description: 'Circuito di 11 gare vertical in montagna',
+  description: 'Circuito di gare vertical a scopo benefico',
 }
 
 export default async function HomePage() {

@@ -190,11 +190,12 @@ const createOrder = async (params: Partial<Order>) => {
             birth_date = $6, birth_place = $7, gender = $8, country = $9, team = $10, email = $11, phone_number = $12
             WHERE entries.event_id = $3 AND entries.tin = $13*/
           const { rows: entrieRows } = await client.query<Entry>(
-            `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
+            `INSERT INTO entries (order_item_id, order_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
             gender, country, team, email, phone_number, tin)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
             [
               orderItem.id,
+              order.id,
               row.id,
               row.event_id,
               item.entry.first_name,
@@ -214,6 +215,7 @@ const createOrder = async (params: Partial<Order>) => {
           //orderItems[count - 1].entry = entrieRows[0];
           entries.push({
             order_item_id: orderItem.id,
+            order_id: order.id,
             item_id: row.id,
             event_id: row.event_id,
             first_name: item.entry.first_name,

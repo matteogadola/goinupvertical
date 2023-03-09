@@ -191,6 +191,10 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               aria-invalid={errors.phone_number ? "true" : "false"}
               {...register("phone_number", {
                 required: 'Campo obbligatorio',
+                pattern: {
+                  value: /^((00|\+)39)??(3\d{2}|0\d{1,3})\d{6,7}$/,
+                  message: "Numero di telefono non valido"
+                },
               })}
               className="field"
             />

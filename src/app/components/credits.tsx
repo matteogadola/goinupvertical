@@ -8,6 +8,7 @@ import patagonia from 'public/images/credits/patagonia-1.png'
 import matFood from 'public/images/credits/mat-food.png'
 import birrificioValtellinese from 'public/images/credits/birrificio-valtellinese.png'
 import popso from 'public/images/credits/popso.png'
+import avis from 'public/images/credits/avis.png'
 
 const sponsors = [
   {
@@ -45,6 +46,11 @@ const sponsors = [
     logo: patagonia,
     height: 80,
     url: 'https://www.facebook.com/3passipatagonia'
+  }, {
+    name: 'Avis',
+    logo: avis,
+    height: 70,
+    url: 'https://www.avis.it/it'
   },
 ]
 
@@ -101,11 +107,7 @@ const supporters = [
     logo: tiroAllaFuneValtellina,
     height: 100,
     url: 'https://www.facebook.com/tiroallafuneValtellina'
-  }, 
-]
-
-const supporters2 = [
-  {
+  }, {
     name: 'La voce di Daniele',
     logo: voceDiDaniele,
     height: 70,
@@ -145,11 +147,7 @@ const partners = [
     logo: speedtime,
     height: 70,
     url: 'https://www.facebook.com/speedtimeproduction'
-  },
-]
-
-const media = [
-  {
+  }, {
     name: 'Centrovalle',
     logo: centroValle,
     height: 70,
@@ -167,6 +165,45 @@ export default function Credits({ className }: { className: string }) {
     <section className={classNames(className, "text-center mx-4 space-y-8")}>
       <div className="py-4">
         <h3 className="overtitle">Sponsor</h3>
+        <div className="flex flex-wrap space-y-8">
+          { sponsors.map((item, index) =>
+            <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center">
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
+                <Image src={item.logo} height={item.height} alt={item.name} />
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="py-4">
+        <h3 className="overtitle">Supporter</h3>
+        <div className="flex flex-wrap space-y-8">
+          { supporters.map((item, index) =>
+            <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center">
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
+                <Image src={item.logo} height={item.height} alt={item.name} />
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="py-4">
+        <h3 className="overtitle">Media partner</h3>
+        <div className="flex flex-wrap space-y-8">
+          { partners.map((item, index) =>
+            <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center">
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
+                <Image src={item.logo} height={item.height} alt={item.name} />
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/*<div className="py-4">
+      <h3 className="overtitle">Sponsor</h3>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center items-center mt-4 lg:mt-8">
           { sponsors.map((item, index) =>
             <a href={item.url} key={index} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
@@ -210,7 +247,7 @@ export default function Credits({ className }: { className: string }) {
             </a>
           )}
         </div>
-      </div>
+      </div>*/}
     </section>
   )
 }
