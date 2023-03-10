@@ -21,7 +21,6 @@ export async function createCheckout(orderData: Pick<Order, 'user_email' | 'paym
   }
 
   if (body.payment_method === 'stripe') {
-    console.log('son stripe eh!!! ' + body.checkoutSessionId);
     //const session: Stripe.Checkout.Session = body.session;
     const stripe = await getStripe();
 
@@ -30,8 +29,7 @@ export async function createCheckout(orderData: Pick<Order, 'user_email' | 'paym
         sessionId: body.checkoutSessionId,
       });
     } catch (e: any) {
-      console.log('non dovrei comunque arrivare qui...');
-      console.log(e.message);
+      console.error(e.message);
     }
   } else {
     return body;

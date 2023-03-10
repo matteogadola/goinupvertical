@@ -21,7 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
+    console.debug(`[checkout] body: ${JSON.stringify(body)}`);
     const order = await createOrder(body);
+    console.debug(`[checkout] order: ${JSON.stringify(order)}`);
     if (order.payment_method === 'cash') {
       await sendConfirmationMail(order);
       return res.json(order);
@@ -32,6 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       throw new Error('Metodo di pagamento non supportato');
     }
   } catch (e: any) {
+    console.error(`[checkout] error: ${e.message}`);
     return res.status(500).json({ error: e.message });
   }
 }

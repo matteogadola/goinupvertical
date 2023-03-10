@@ -52,6 +52,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         });*/
       }
       break;
+    case 'checkout.session.expired':
+      const sessionExp = event.data.object as Stripe.Checkout.Session;
+      order_id = Number(sessionExp.metadata?.order_id);
+
+      console.info(`Checkout expired per ${order_id}`);
+
+      if (sessionExp.payment_intent && !isNaN(order_id)) {
+        await updateOrder(order_id, {
+          payment_id: sessionExp.payment_intent as string,
+          payment_status: 'failed',
+          payment_date: dt.unix(sessionExp.created).utc().format(),
+        });
+      }
+      break;
     case 'checkout.session.completed':
       const session = event.data.object as Stripe.Checkout.Session;
       order_id = Number(session.metadata?.order_id);

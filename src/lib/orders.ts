@@ -27,8 +27,6 @@ const createOrder = async (params: Partial<Order>) => {
   const orderItems: OrderItem[] = [];
   const entries: any[] = [];
 
-  // CONTROLLA PREZZI
-
   try {
     await client.query('BEGIN');
 
@@ -55,6 +53,7 @@ const createOrder = async (params: Partial<Order>) => {
       ]
     );
     const order = orders[0];
+    console.debug(`[createOrder] order: ${JSON.stringify(order)}`);
 
     for (let item of params.items) {
       if (item?.description) {
@@ -70,7 +69,7 @@ const createOrder = async (params: Partial<Order>) => {
       //orderItems.push(orderItem);
 
       // tarrozzata, poi rimarrà questa senza la seconda clausola
-      if (item?.entry && item.id !== 1001) {
+      /*if (item?.entry && item.id !== 1001) {
         item.entry.first_name = capitalize(item.entry.first_name);
         item.entry.last_name = capitalize(item.entry.last_name);
 
@@ -165,7 +164,7 @@ const createOrder = async (params: Partial<Order>) => {
           phone_number: item.entry.phone_number,
           tin: item.entry.tin,
         });
-      }
+      }*/
 
       // tarrozzata !
       if (item?.entry && item.id === 1001) {
@@ -252,12 +251,13 @@ const createOrder = async (params: Partial<Order>) => {
     return { ...order, items: orderItems };
   } catch (e: any) {
     await client.query('ROLLBACK');
-    console.error(e.message);
+    console.warn(`[createOrder] errore: ${JSON.stringify(e.message)}`);
 
     if (e.code === '23505') {
       if (e.constraint === 'entries_unique') {
+        console.warn(`[createOrder] non dovrebbe più capitare: ${JSON.stringify(e.message)}`);
         const lastEntry = orderItems.pop();
-        throw new Error(`${lastEntry?.description} risulta già iscritto (OLD)`);
+        throw new Error(`${lastEntry?.description} risulta già iscritto`);
       }
     }
     throw e;
@@ -276,14 +276,13 @@ const updateOrder = async (id: number, params: Partial<Order>) => {
     }
 
     if (error) {
+      console.warn(`[updateOrder] error: ${error.message}`);
       throw new Error(error.message);
     }
 
     return data;
   } catch (e: any) {
-    console.error('Errore in update');
-    console.error(e.message);
-
+    console.warn(`[updateOrder] exception: ${e.message}`);
     throw e;
   }
 };
