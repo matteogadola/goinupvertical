@@ -28,7 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(400).send(`Webhook Error: ${e.message}`);
   }
 
-  console.debug(`Arrivato evento: ${event.type}`);
   let order_id: number;
   switch (event.type) {
     case 'payment_intent.canceled':
@@ -69,6 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           return res.status(500).send('');
         }
 
+        // verifica che session.payment_status === 'paid' ? 'paid' : 'awaiting',
         await updateOrder(order_id, {
           status: 'confirmed',
           payment_id: session.payment_intent as string,
@@ -79,6 +79,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       } else {
         console.error(`Checkout completed terminato in errore: ${JSON.stringify(session)}`);
       }
+      break;
+    default:
+      console.debug(`Arrivato evento non gestito: ${event.type}`);
       break;
   }
   res.status(200).send('');
