@@ -57,7 +57,7 @@ export default function Navbar({ cover }: Props) {
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>
-                <span className="block mt-2 md:mt-0 text-sm hover:text-gray-500">{link.name}</span>
+                <span className="block mt-2 md:mt-0 hover:text-gray-500">{link.name}</span>
               </Link>
             ))
           }
