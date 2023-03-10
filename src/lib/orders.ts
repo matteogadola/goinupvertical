@@ -23,22 +23,58 @@ const createOrder = async (params: Partial<Order>) => {
     throw new Error('Il carrello non può essere vuoto');
   }
 
+  const carnetItems = [
+    { id: 1002, event_id: 'cech-vertical-2' },
+    { id: 1003, event_id: 'riscio-up-1' },
+    { id: 1004, event_id: 'larg-up-5' },
+    { id: 1005, event_id: 'lave-nsu-4' },
+    { id: 1006, event_id: 'vertical-egul-4' },
+    { id: 1007, event_id: 'vertical-lino-4' },
+    { id: 1008, event_id: 'kurt-up-4' },
+    { id: 1009, event_id: 'sostila-vertical-1' },
+    { id: 1010, event_id: 'colmen-vertical-9' },
+    { id: 1011, event_id: 'san-giorgio-vertical-2' },
+    { id: 1012, event_id: 'arz-up-7' },
+  ];
+
   const client = await pool.connect();
   const orderItems: OrderItem[] = [];
   const entries: any[] = [];
 
   try {
-    await client.query('BEGIN');
-
     // "verifico" il prezzo lato server
-    for (const [key, item] of params.items.entries()) {
-      const { rows } = await client.query<{ price: number }>('SELECT price FROM items WHERE id = $1', [item.id]);
-      const price = rows[0]?.price;
+    for (let item of params.items) {
+      const { rows: items } = await client.query<{ name: string; price: number }>(
+        'SELECT name, price FROM items WHERE id = $1',
+        [item.id]
+      );
 
-      if (price !== params.items[key].price) {
+      if (items.length === 0 || items[0]?.price !== item.price || items[0]?.name !== item.name) {
+        console.warn(`[createOrder] errore nella richiesta: ${JSON.stringify(params.items)}`);
         throw new Error('Errore nella richiesta');
       }
+
+      /*if (item?.entry) {
+        if (item.item_id === 1001) {
+          // for
+        } else {
+          const { rows } = await client.query<{ name: string; price: number }>(
+            `SELECT *
+            FROM entries
+            INNER JOIN orders ON entries.order_id = orders.id
+            WHERE orders.payment_method = 'stripe' AND orders.payment_status <> 'paid'
+            AND entries.event_id = NEW.event_id AND tin = NEW.tin
+            INTO item;
+            
+            
+            SELECT id FROM entries WHERE tin = $1 AND event_id = $2`,
+            [item.id, item.event_id]
+          );
+        }
+      }*/
     }
+
+    await client.query('BEGIN');
 
     const { rows: orders } = await client.query<Omit<Order, 'items'>>(
       `INSERT INTO orders (user_id, user_email, amount, date, payment_method, payment_status)
@@ -171,21 +207,8 @@ const createOrder = async (params: Partial<Order>) => {
         item.entry.first_name = capitalize(item.entry.first_name);
         item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
-        const lista = [
-          { id: 1002, event_id: 'cech-vertical-2' },
-          { id: 1003, event_id: 'risc-up-1' },
-          { id: 1004, event_id: 'larg-up-5' },
-          { id: 1005, event_id: 'lave-nsu-4' },
-          { id: 1006, event_id: 'vertical-egul-4' },
-          { id: 1007, event_id: 'vertical-lino-4' },
-          { id: 1008, event_id: 'kurt-up-4' },
-          { id: 1009, event_id: 'sostila-vertical-1' },
-          { id: 1010, event_id: 'colmen-vertical-9' },
-          { id: 1011, event_id: 'san-giorgio-vertical-2' },
-          { id: 1012, event_id: 'arz-up-7' },
-        ];
 
-        for (let row of lista) {
+        for (let row of carnetItems) {
           /*
             ON CONFLICT ON CONSTRAINT entries_unique
             DO UPDATE SET order_item_id = $1, item_id = $2, first_name = $4, last_name = $5,
@@ -194,7 +217,13 @@ const createOrder = async (params: Partial<Order>) => {
           const { rows: entrieRows } = await client.query<Entry>(
             `INSERT INTO entries (order_item_id, order_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
             gender, country, team, email, phone_number, tin)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+            ON CONFLICT ON CONSTRAINT entries_unique
+            DO UPDATE SET order_item_id = excluded.order_item_id, order_id = excluded.order_id, item_id = excluded.item_id,
+            first_name = excluded.first_name, last_name = excluded.last_name, birth_date = excluded.birth_date,
+            birth_place = excluded.birth_place, gender = excluded.gender, country = excluded.country, team = excluded.team,
+            email = excluded.email, phone_number = excluded.phone_number
+            WHERE entries.event_id = excluded.event_id AND entries.tin = excluded.tin`,
             [
               orderItem.id,
               order.id,
@@ -260,7 +289,7 @@ const createOrder = async (params: Partial<Order>) => {
         throw new Error(`${lastEntry?.description} risulta già iscritto`);
       }
     }
-    throw e;
+    throw new Error(`Errore interno ${e.code}`);
   } finally {
     client.release();
   }
