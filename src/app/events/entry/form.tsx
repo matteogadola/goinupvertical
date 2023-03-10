@@ -227,7 +227,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             Indietro
           </button>
 
-          <button type="submit" className="bg-gray-200 hover:bg-gray-100 font-bold py-2 px-4 rounded">
+          <button type="submit" className="bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded">
             Iscrivi partecipante
           </button>
         </div>
