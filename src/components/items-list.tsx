@@ -19,7 +19,7 @@ export default async function ItemsList({ list }: Props) {
             {
               items.map((item, index) => (
                 <div key={index} className="border shadow-md hover:shadow-lg pl-2">
-                  <Link href={{ pathname: 'events/entry', query: { q: base64.encode(item) } }}>
+                  <Link href={{ pathname: '/events/entry', query: { q: base64.encode(item) } }}>
                     <div className="py-4 flex flex-wrap md:flex-nowrap hover:opacity-80">
                       <div className="md:flex-grow">
                         <h2 className="text-2xl text-gray-800">{ item.name }</h2>

@@ -18,7 +18,7 @@ export interface Order {
 export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
 
 export type PaymentMethod = 'stripe' | 'sepa' | 'cash';
-export type PaymentStatus = 'intent' | 'pending' | 'paid' | 'failed';
+export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed';
 
 export interface OrderItem {
   id: number;
