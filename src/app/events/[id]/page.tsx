@@ -30,7 +30,7 @@ export default async function EventPage({
         <div>
           <span className="overtitle">{ event.date ? dt(event.date).format('ddd DD MMM') : 'Evento' }</span>
           <h1 className="title mt-3">{ event.edition }° { event.name }</h1>
-          <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? '' }} />
+          <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
           <div className="mt-8">
             <Link href="/regulation">
