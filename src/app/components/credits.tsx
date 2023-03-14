@@ -8,7 +8,7 @@ import patagonia from 'public/images/credits/patagonia-1.png'
 import matFood from 'public/images/credits/mat-food.png'
 import birrificioValtellinese from 'public/images/credits/birrificio-valtellinese.png'
 import popso from 'public/images/credits/popso.png'
-import avis from 'public/images/credits/avis.png'
+import avis from 'public/images/credits/avis.webp'
 
 const sponsors = [
   {
@@ -49,7 +49,7 @@ const sponsors = [
   }, {
     name: 'Avis',
     logo: avis,
-    height: 70,
+    height: 80,
     url: 'https://www.avis.it/it'
   },
 ]
