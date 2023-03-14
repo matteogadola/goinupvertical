@@ -25,7 +25,7 @@ export default function RegulationPage() {
           Le manifestazioni del Circuito per l&apos;edizione 2023 saranno:
           <ul>
             <li>- 19 Aprile 2023 - 2^ Cech Vertical Race (Traona - San Bernardo)</li>
-            <li>- 10 Maggio 2023 - 1^ Risc-Up (Villapinta - Buglio in Monte)</li>
+            <li>- 10 Maggio 2023 - 1^ Risciö-Up (Villapinta - Buglio in Monte)</li>
             <li>- 24 Maggio 2023 - 5^ Larg-Up  (Cosio Valtellino/Regoledo - Sacco)</li>
             <li>- 7 Giugno 2023 - 4^ LAVE&apos;nsù  (Gerola Alta - Laveggiolo)</li>
             <li>- 21 Giugno 2023  - 4^ Vertical Egùl  (Albaredo - Egolo)</li>
