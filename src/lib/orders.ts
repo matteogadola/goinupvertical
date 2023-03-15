@@ -6,6 +6,31 @@ import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { capitalize, verifyTin } from './helpers';
 import { db } from './firebase';
+import { createClient } from './supabase-auth-server';
+import { cache } from 'react';
+
+export const getOrders = cache(async () => {
+  //const supabase = createClient();
+  const { data } = await supabase.from('orders').select();
+  return data;
+
+  /*const client = await pool.connect();
+
+  try {
+    const { rows: orders } = await client.query<Order>(`
+      SELECT orders.*, array_to_json(array_agg(order_items)) AS items
+      FROM orders
+      INNER JOIN order_items ON orders.id = order_items.order_id
+      GROUP BY orders.id`);
+
+    return orders;
+  } catch (e: any) {
+    console.warn(`[getOrders] errore: ${JSON.stringify(e.message)}`);
+    throw new Error(`Errore interno ${e.code}`);
+  } finally {
+    client.release();
+  }*/
+});
 
 export const getOrder = async (id: number) => {
   const { data } = await supabase.from('orders').select().eq('id', id).returns<Order[]>().single();
@@ -18,7 +43,7 @@ export const getOrder = async (id: number) => {
   return data;
 };
 
-const createOrder = async (params: Partial<Order>) => {
+export const createOrder = async (params: Partial<Order>) => {
   if (params?.items === undefined || params.items.length === 0) {
     throw new Error('Il carrello non può essere vuoto');
   }
@@ -295,7 +320,7 @@ const createOrder = async (params: Partial<Order>) => {
   }
 };
 
-const updateOrder = async (id: number, params: Partial<Order>) => {
+export const updateOrder = async (id: number, params: Partial<Order>) => {
   try {
     const { data, error } = await supabase.from('orders').update(params).eq('id', id);
 
@@ -315,5 +340,3 @@ const updateOrder = async (id: number, params: Partial<Order>) => {
     throw e;
   }
 };
-
-export { createOrder, updateOrder };

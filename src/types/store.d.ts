@@ -1,6 +1,14 @@
+import type { Session, SupabaseClient, User } from '@supabase/auth-helpers-nextjs';
+import type { Database } from './supabase';
+import type { Auth } from './app';
+
 export interface Store {
   appError: AppError | null;
-  supabase: SupabaseClient<any, 'public', any> | undefined;
+  //supabase: SupabaseClient<Database>;
+  auth: Auth;
+  //user: User | undefined;
+  //setUser: (user: User | undefined) => void;
+  setAuthSession: (session: Session | null) => void;
   cartItems: OrderItem[];
   paymentMethod: PaymentMethod;
   setAppError: (error: AppError | null) => void;

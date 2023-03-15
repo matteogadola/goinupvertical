@@ -7,6 +7,9 @@ import { usePathname } from 'next/navigation'
 
 import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
+import { useSupabase } from './supabase-provider'
+import NavbarUserBadge from './navbar-user-badge'
+import { useStore } from '@/store/store'
 
 interface Props {
   cover?: boolean | undefined;
@@ -22,6 +25,14 @@ const navLinks = [
 // w-full h-256 bg-cover-image bg-cover bg-center
 export default function Navbar({ cover }: Props) {
   const isHome = usePathname() === '/'
+
+  //const { supabase } = useSupabase();
+  //let user;
+  
+  //supabase.auth.getSession().then(res => user = res.data.session?.user).catch(e => console.error(e));
+  //supabase.auth.update({password: "password"})
+
+  
 
   return (
   <header className={classNames("w-full", {" relative bg-black h-screen": isHome })}>
@@ -62,6 +73,7 @@ export default function Navbar({ cover }: Props) {
             ))
           }
         </div>
+        <NavbarUserBadge />
       </div>
     </nav>
     </header>

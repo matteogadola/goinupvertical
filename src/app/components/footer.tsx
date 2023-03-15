@@ -11,9 +11,9 @@ export default function Footer() {
         </div>
 
         <div className="order-last md:order-none text-center">
-          <span className="text-sm"><Link href="/contact" className="hover:opacity-60">Contatti</Link> | <Link href="/legal/terms" className="hover:opacity-60">Termini e Condizioni</Link> | <Link href="/legal/privacy-policy" className="hover:opacity-60">Informativa sulla Privacy</Link></span>
-          <span className="block text-xs text-slate-400">© 2023 GOinUP{/* | via Don Guanella 24, Morbegno P.IVA 00891820144*/}</span>
-          <span className="hidden text-xs text-slate-400">Realizzato da <a href="https://www.teeva.it" target="_blank" rel="noreferrer">Teeva</a></span>
+          <p className="text-sm"><Link href="/contact" className="hover:opacity-60">Contatti</Link> | <Link href="/legal/terms" className="hover:opacity-60">Termini e Condizioni</Link> | <Link href="/legal/privacy-policy" className="hover:opacity-60">Informativa sulla Privacy</Link></p>
+          <p className="block text-xs text-slate-400">© 2023 GOinUP{/* | via Don Guanella 24, Morbegno P.IVA 00891820144*/}</p>
+          <p className="hidden text-xs text-slate-400">Realizzato da <a href="https://www.teeva.it" target="_blank" rel="noreferrer">Teeva</a></p>
         </div>
 
         <div className="flex mt-2 space-x-4">
