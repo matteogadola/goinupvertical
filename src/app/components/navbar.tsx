@@ -9,7 +9,6 @@ import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
 import { useSupabase } from './supabase-provider'
 import NavbarUserBadge from './navbar-user-badge'
-import { useStore } from '@/store/store'
 
 interface Props {
   cover?: boolean | undefined;
@@ -72,8 +71,8 @@ export default function Navbar({ cover }: Props) {
               </Link>
             ))
           }
+          <NavbarUserBadge />
         </div>
-        <NavbarUserBadge />
       </div>
     </nav>
     </header>

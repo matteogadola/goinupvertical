@@ -26,13 +26,10 @@ export interface SignUpForm {
 
 export default function SignIn() {
   const router = useRouter();
-  //const { supabase } = useSupabase()
-  const supabase = createClient()
+  const { supabase } = useSupabase()
 
   useEffect(() => {
-    // ENTRA QUI OGNI VOLTA CHE SPOSTO FOCUS
     supabase.auth.getSession().then(res => {
-    
       console.log("getSession", res.data.session)
       if (res.data.session) {
         router.replace('/admin');
@@ -52,77 +49,37 @@ export default function SignIn() {
 
   //console.log(supabase.auth)
 
-  const handleEmailLogin = async (auth: any) => {
-    console.log("dentro3")
+  const signIn = async (formData: any) => {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: 'gadola.matteo@gmail.com',
-      password: 'password',
+      email: formData.email,
+      password: formData.password,
     })
 
     if (error) {
-      setError(error.message)
+      throw new Error(error.message);
     }
 
-    console.log("dentro4")
-    console.log(data)
-
+    return data;
   }
 
-  const signUp = async () => {
+  const signUp = async (formData: any) => {
     const { data, error } = await supabase.auth.signUp({
-      email: 'gadola.matteo@gmail.com',
-      password: 'password',
+      email: formData.email,
+      password: formData.password,
       options: {
         data: {
-          first_name: 'John',
-          last_name: '',
+          first_name: formData.first_name,
+          last_name: formData.last_name,
         }
       }
     })
 
     if (error) {
-      setError(error.message)
+      throw new Error(error.message);
     }
 
-    console.log(data)
-    /*
-    {
-    "id": "2850ce01-c98c-48ea-aff5-14e041a5855b",
-    "aud": "authenticated",
-    "role": "authenticated",
-    "email": "gadola.matteo@gmail.com",
-    "phone": "",
-    "confirmation_sent_at": "2023-03-14T15:52:13.376063818Z",
-    "app_metadata": {
-        "provider": "email",
-        "providers": [
-            "email"
-        ]
-    },
-    "user_metadata": {},
-    "identities": [
-        {
-            "id": "2850ce01-c98c-48ea-aff5-14e041a5855b",
-            "user_id": "2850ce01-c98c-48ea-aff5-14e041a5855b",
-            "identity_data": {
-                "email": "gadola.matteo@gmail.com",
-                "sub": "2850ce01-c98c-48ea-aff5-14e041a5855b"
-            },
-            "provider": "email",
-            "last_sign_in_at": "2023-03-14T15:52:13.374186326Z",
-            "created_at": "2023-03-14T15:52:13.374225Z",
-            "updated_at": "2023-03-14T15:52:13.374225Z"
-        }
-    ],
-    "created_at": "2023-03-14T15:52:13.369364Z",
-    "updated_at": "2023-03-14T15:52:14.807617Z"
-    }*/
+    return data;
   }
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut()
-  }
-
 
   const {
     register,
@@ -138,12 +95,20 @@ export default function SignIn() {
   })
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
-    console.log("dentro")
-    if (state.mode === 'sign-in') {
-      console.log("dentro2")
-      handleEmailLogin(data);
+    try {
+      if (state.mode === 'sign-in') {
+        await signIn(data);
+      } else if (state.mode === 'sign-up') {
+        await signUp(data);
+      } else {
+        throw new Error('Operazione non gestita');
+      }
+      // router.refresh();
+    } catch (e: any) {
+      setError(e.message);
+      return;
     }
-    reset()
+    // reset();
   }
 
   const toggle = () => {
@@ -151,15 +116,6 @@ export default function SignIn() {
     setState({ ...state, mode })
   }
 
-  /*await supabase.auth.signInWithPassword({
-    email: 'jon@supabase.com',
-    password: 'password',
-  })*/
-  //const ticket = base64.decode<Ticket>(searchParams.q)
-
-  // verifica se utente loggato...se si mostra campi compilati
-  // se no mostra pulsante per accedere (poi la registrazione si potrà selezionare da sign-in)
-  
   return (
     <section className="page">
       <div className="w-1/3 mx-auto">
@@ -203,8 +159,19 @@ export default function SignIn() {
             {errors.password && <small className="validation-error">{errors.password.message}</small>}
           </div>
 
+          { error &&
+            <div className="col-span-1 lg:col-span-2 mt-4">
+              <div className="relative px-2 py-1 leading-normal text-red-700" role="alert">
+                <span className="absolute inset-y-0 left-0 flex items-center ml-4">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" fillRule="evenodd"></path></svg>
+                </span>
+                <p className="ml-8">{error}</p>
+              </div>
+            </div>
+          }
+
           <button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded">
-            Iscriviti
+            { state.mode === 'sign-in' ? 'Accedi' : 'Iscriviti' }
           </button>
 
         </div>

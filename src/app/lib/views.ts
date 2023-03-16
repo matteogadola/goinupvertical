@@ -15,6 +15,10 @@ export const getOrders = cache(async () => {
 
 export const getEntries = cache(async (event_id: string) => {
   const supabase = createClient();
+
+  const user = (await supabase.auth.getSession()).data.session?.user;
+  console.log('getEntries', user?.email);
+
   const { data } = await supabase.from('v_entries').select().eq('event_id', event_id).order('date');
   return data;
 });

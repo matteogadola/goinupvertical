@@ -27,7 +27,7 @@ export default async function OrdersList({ className }: { className?: string }) 
       { orders?.length &&
       <section className={classNames(className, "")}>
         <div className="text-center">
-          <h3 className="overtitle">Iscrizioni cech vertical 2 <span className="text-gray-600 font-thin">({orders.length})</span></h3>
+          <h3 className="overtitle">Iscrizioni Carnet <span className="text-gray-600 font-thin">({orders.length})</span></h3>
         </div>
 
         <table className="mt-8 text-sm">
@@ -51,7 +51,7 @@ export default async function OrdersList({ className }: { className?: string }) 
           { orders.map((order, index) =>
             <tr key={index}>
               <td className="pr-5 py-1">{order.order_id}</td>
-              <td className="pr-10 py-1">{dt(order.date).datetime()}</td>
+              <td className="pr-10 py-1 whitespace-nowrap">{dt(order.date).format('DD-MM-YY')}</td>
               <td className="pr-10 py-1">{order.payment_method}</td>
               <td className="pr-10 py-1">{order.payment_status}</td>
               <td className="pr-10 py-1">{order.first_name}</td>

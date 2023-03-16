@@ -2,6 +2,9 @@ import './globals.css'
 import { fonts } from '../lib/fonts'
 import Navbar from '@/app/components/navbar'
 import Footer from '@/app/components/footer'
+import SupabaseProvider from '@/app/components/supabase-provider'
+import SupabaseListener from '@/app/components/supabase-listener'
+import { createClient } from '@/lib/supabase-auth-server'
 
 //import SupabaseListener from './components/supabase-listener'
 //import SupabaseProvider from './components/supabase-provider'
@@ -14,29 +17,29 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-/*  const supabase = createClient()
+  const supabase = createClient()
 
   const {
     data: { session },
   } = await supabase.auth.getSession()
 
-  console.log(session?.user)
-*/
+  console.log("layout")
+
   return (
     <html lang="it" className={`${fonts.map(font => font.variable).join(' ')}`}>
       <head />
       <body className="flex flex-col min-h-screen">
-        {/*<SupabaseProvider>
+        <SupabaseProvider session={session}>
           <SupabaseListener serverAccessToken={session?.access_token} />
           <Navbar />
           <main>
             {children}
           </main>
-        </SupabaseProvider>*/}
-        <Navbar />
+        </SupabaseProvider>
+        {/*<Navbar />
         <main>
           {children}
-        </main>
+        </main>*/}
         <Footer />
       </body>
     </html>
