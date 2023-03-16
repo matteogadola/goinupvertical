@@ -12,12 +12,12 @@ export default function SupabaseListener({ serverAccessToken }: { serverAccessTo
   const setAuthSession = useStore((state) => state.setAuthSession);
 
   useEffect(() => {
+    console.log("MUMBLE")
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       setAuthSession(session);
       if (session?.access_token !== serverAccessToken) {
-        console.log("differente", session?.user)
         router.refresh()
       }
     })
@@ -25,7 +25,7 @@ export default function SupabaseListener({ serverAccessToken }: { serverAccessTo
     return () => {
       subscription.unsubscribe()
     }
-  }, [serverAccessToken, router, supabase, setAuthSession])
+  }, [serverAccessToken, router, supabase])
 
   return null
 }

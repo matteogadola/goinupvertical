@@ -7,7 +7,7 @@ import Credits from '@/app/components/credits'
 
 import homeBrandImage from 'public/images/home-1.png'
 import headerImage from 'public/images/header.jpg'
-import { getOrders } from '@/app/lib/orders'
+import { getOrders } from '@/app/lib/views'
 // export const revalidate = 85000
 
 export const metadata = {

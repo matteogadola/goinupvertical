@@ -10,8 +10,9 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation'
 import { Order } from '@/types/orders'
 import { useEffect } from 'react'
 import { useStore } from '@/store/store'
-import { getOrders } from '@/app/lib/orders'
+import { getOrders } from '@/app/lib/views'
 import OrdersList from './orders-list'
+import EntriesList from './entries-list'
 
 export default async function AdminPage() {
   //const orders = await getOrders()
@@ -19,11 +20,6 @@ export default async function AdminPage() {
   return (
     <>
       <section className="page">
-
-        <div>
-          <span className="overtitle">Carnet</span>
-          <span className="title">Carnet</span>
-        </div>
 
         {/* @ts-expect-error Server Component */}
         <OrdersList className="mt-8" />
