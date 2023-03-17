@@ -26,16 +26,19 @@ export interface SignUpForm {
 
 export default function SignIn() {
   const router = useRouter();
-  const { supabase } = useSupabase()
+  const { supabase, session } = useSupabase()
 
   useEffect(() => {
-    supabase.auth.getSession().then(res => {
+    if (session?.user) {
+      router.replace('/admin');
+    }
+    /*supabase.auth.getSession().then(res => {
       console.log("getSession", res.data.session)
       if (res.data.session) {
         router.replace('/admin');
       }
-    })
-  }, [supabase]);
+    })*/
+  }, [session]);
 
   const [error, setError] = useState<string | undefined>(undefined)
 

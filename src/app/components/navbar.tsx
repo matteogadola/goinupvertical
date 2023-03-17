@@ -63,11 +63,11 @@ export default function Navbar({ cover }: Props) {
           </div>
         </div>
 
-        <div className={classNames("hidden md:flex md:items-center md:gap-4 z-10", {" text-white": isHome })}>
+        <div className={classNames("hidden md:flex md:items-center md:gap-4 z-10 text-gray-600 hover:text-gray-500", {" text-white": isHome })}>
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>
-                <span className="block mt-2 md:mt-0 hover:text-gray-500">{link.name}</span>
+                <span className="block mt-2 md:mt-0">{link.name}</span>
               </Link>
             ))
           }

@@ -51,7 +51,7 @@ export default function NavbarUserBadge() {
       { session?.user &&
         <div className="flex justify-center">
         <div className="relative inline-block">
-            <button onClick={toggle} className="relative z-10 flex items-center p-2 text-sm text-gray-600 border border-transparent rounded-md">
+            <button onClick={toggle} className="relative z-10 flex items-center p-2 text-sm border border-transparent rounded-md">
                 <span className="mx-0.5">{session?.user.email}</span>
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z" fill="currentColor"></path>
@@ -70,11 +70,11 @@ export default function NavbarUserBadge() {
     
                 <hr className="border-gray-200 dark:border-gray-700 " />
                 
-                <a href="#" className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                <a href="#" className="line-through block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                     Profilo
                 </a>
                 
-                <a href="#" className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                <a href="#" className="line-through block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                     Impostazioni
                 </a>
     
