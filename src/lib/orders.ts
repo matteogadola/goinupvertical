@@ -4,7 +4,7 @@ import { pool } from './pg';
 import { dt } from './date';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
-import { capitalize, verifyTin } from './helpers';
+import { calcStripeTax, capitalize, verifyTin } from './helpers';
 import { db } from './firebase';
 
 export const getOrder = async (id: number) => {
@@ -264,6 +264,20 @@ const createOrder = async (params: Partial<Order>) => {
           });
         }
       }
+    }
+
+    // add tax
+    if (params.payment_method === 'stripe') {
+      //const totalAmount = params.items.reduce((a, v) => a + v.price, 0);
+      //const stripeTax = 25 + Math.round(totalAmount * 0.014);
+      //const stripeTaxIva = Math.round(stripeTax * 0.22);
+      const tax = calcStripeTax(params.items);
+
+      await client.query(
+        `INSERT INTO order_items (order_id, name, price)
+        VALUES($1, $2, $3)`,
+        [order.id, 'Commissioni di servizio', tax]
+      );
     }
 
     if (process.env.NODE_ENV === 'production') {
