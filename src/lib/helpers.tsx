@@ -1,3 +1,4 @@
+import { OrderItem } from '@/types/orders'
 import CodiceFiscale from 'codice-fiscale-js'
 import { customAlphabet } from 'nanoid'
 
@@ -79,4 +80,12 @@ export const capitalize = function(input: string) {
   const output = wordArray.map(word => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`);
 
   return output.join(' ');
+};
+
+// rounded up to the nearest .5
+export const calcStripeTax = function(items: OrderItem[]) {
+  const totalAmount = items.reduce((a, v) => a + v.price, 0);
+  const stripeTax = 25 + Math.round(totalAmount * 0.014);
+  const stripeTaxIva = Math.round(stripeTax * 0.22);
+  return Math.ceil((stripeTax + stripeTaxIva) / 50) * 50;
 };

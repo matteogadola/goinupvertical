@@ -4,7 +4,7 @@ import { pool } from './pg';
 import { dt } from './date';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
-import { capitalize, verifyTin } from './helpers';
+import { calcStripeTax, capitalize, verifyTin } from './helpers';
 import { db } from './firebase';
 import { createClient } from './supabase-auth-server';
 import { cache } from 'react';
@@ -289,6 +289,19 @@ export const createOrder = async (params: Partial<Order>) => {
           });
         }
       }
+    }
+
+    // add tax
+    if (params.payment_method === 'stripe') {
+      const tax = calcStripeTax(params.items);
+
+      const { rows: orderItemTaxRows } = await client.query(
+        `INSERT INTO order_items (order_id, name, price)
+        VALUES($1, $2, $3)`,
+        [order.id, 'Commissioni di servizio', tax]
+      );
+      const orderItemTax = orderItemTaxRows[0];
+      orderItems.push(orderItemTax);
     }
 
     if (process.env.NODE_ENV === 'production') {
