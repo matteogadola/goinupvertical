@@ -12,7 +12,7 @@ import sepaLogo from 'public/images/logos/sepa.svg'
 import { useState } from 'react'
 import EntryFormLocationsDialog from './form-locations-dialog'
 import { useRouter } from 'next/navigation'
-import { base64 } from '@/lib/helpers'
+import { base64, calcStripeTax } from '@/lib/helpers'
 
 export default function EntryCart() {
   const { replace } = useRouter()
@@ -94,11 +94,25 @@ export default function EntryCart() {
                       </li>
                     )}
 
+                    { paymentMethod === 'stripe' &&
+                      <li className="flex pt-6">
+                        <div className="ml-2 flex flex-1 flex-col">
+                          <div>
+                            <div className="flex justify-between text-base text-gray-900">
+                              <h3>Commissioni di servizio</h3>
+                              <p className="">{calcStripeTax(cartItems) / 100}€</p>
+                            </div>
+                          </div>
+                        
+                        </div>
+                      </li>
+                    }
+
                   </ul>
 
                   <div className="ml-2 flex justify-between text-base font-medium text-gray-900 my-4">
                     <p>Totale</p>
-                    <p>{totalAmount / 100}€</p>
+                    <p>{ (totalAmount + (paymentMethod === 'stripe' ?  calcStripeTax(cartItems) : 0)) / 100 }€</p>
                   </div>
 
                 </div>
