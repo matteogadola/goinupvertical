@@ -273,11 +273,13 @@ const createOrder = async (params: Partial<Order>) => {
       //const stripeTaxIva = Math.round(stripeTax * 0.22);
       const tax = calcStripeTax(params.items);
 
-      await client.query(
+      const { rows: orderItemTaxRows } = await client.query(
         `INSERT INTO order_items (order_id, name, price)
         VALUES($1, $2, $3)`,
         [order.id, 'Commissioni di servizio', tax]
       );
+      const orderItemTax = orderItemTaxRows[0];
+      orderItems.push(orderItemTax);
     }
 
     if (process.env.NODE_ENV === 'production') {
