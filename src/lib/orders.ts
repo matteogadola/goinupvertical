@@ -268,9 +268,6 @@ const createOrder = async (params: Partial<Order>) => {
 
     // add tax
     if (params.payment_method === 'stripe') {
-      //const totalAmount = params.items.reduce((a, v) => a + v.price, 0);
-      //const stripeTax = 25 + Math.round(totalAmount * 0.014);
-      //const stripeTaxIva = Math.round(stripeTax * 0.22);
       const tax = calcStripeTax(params.items);
 
       const { rows: orderItemTaxRows } = await client.query(
