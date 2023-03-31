@@ -15,10 +15,15 @@ import EntriesList from './entries-list'
 
 export default async function AdminPage() {
   //const orders = await getOrders()
+  
 
   return (
     <>
       <section className="page">
+
+        <div>
+          seleziona gara<></>
+        </div>
 
         {/* @ts-expect-error Server Component */}
         <OrdersList className="mt-8" />

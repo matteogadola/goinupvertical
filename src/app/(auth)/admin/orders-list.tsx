@@ -16,7 +16,6 @@ import { getEntries } from '@/app/lib/views'
 import { CSVLink, CSVDownload } from 'react-csv'
 import DownloadCsv from './download-csv'
 
-
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default async function OrdersList({ className }: { className?: string }) {
