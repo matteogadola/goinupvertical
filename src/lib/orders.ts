@@ -106,85 +106,42 @@ const createOrder = async (params: Partial<Order>) => {
       //orderItems.push(orderItem);
 
       // tarrozzata, poi rimarrà questa senza la seconda clausola
-      /*if (item?.entry && item.id !== 1001) {
+      if (item?.entry && item.id !== 1001) {
         item.entry.first_name = capitalize(item.entry.first_name);
         item.entry.last_name = capitalize(item.entry.last_name);
-
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
 
-        try {
-          const { rows: entrieRows } = await client.query<Entry>(
-            `INSERT INTO entries (order_item_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
-              gender, country, team, email, phone_number, tin)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
-            [
-              orderItem.id,
-              item.id,
-              item.event_id,
-              item.entry.first_name,
-              item.entry.last_name,
-              item.entry.birth_date ??
-                `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
-              item.entry.birth_place ?? cf.birthplace.nome,
-              item.entry.gender ?? cf.gender,
-              item.entry.country,
-              item.entry.team,
-              item.entry.email,
-              item.entry.phone_number,
-              item.entry.tin,
-            ]
-          );
-        } catch (e: any) {
-          if (e.code === '23505' && e.constraint === 'entries_unique') {
-            const { rows } = await client.query(
-              `SELECT orders.id
-              FROM entries
-              INNER JOIN order_items ON entries.order_item_id = order_items.id
-              INNER JOIN orders ON order_items.order_id = orders.id
-              WHERE payment_method = 'stripe' AND payment_status <> 'paid'
-              AND event_id = $1 AND tin = $2`,
-              [item.entry.event_id, item.entry.tin]
-            );
+        const { rows: entrieRows } = await client.query<Entry>(
+          `INSERT INTO entries (order_item_id, order_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
+          gender, country, team, email, phone_number, tin)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+          ON CONFLICT ON CONSTRAINT entries_unique
+          DO UPDATE SET order_item_id = excluded.order_item_id, order_id = excluded.order_id, item_id = excluded.item_id,
+          first_name = excluded.first_name, last_name = excluded.last_name, birth_date = excluded.birth_date,
+          birth_place = excluded.birth_place, gender = excluded.gender, country = excluded.country, team = excluded.team,
+          email = excluded.email, phone_number = excluded.phone_number
+          WHERE entries.event_id = excluded.event_id AND entries.tin = excluded.tin`,
+          [
+            orderItem.id,
+            order.id,
+            item.id,
+            item.event_id,
+            item.entry.first_name,
+            item.entry.last_name,
+            item.entry.birth_date ??
+              `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
+            item.entry.birth_place ?? cf.birthplace.nome,
+            item.entry.gender ?? cf.gender,
+            item.entry.country,
+            item.entry.team,
+            item.entry.email,
+            item.entry.phone_number,
+            item.entry.tin,
+          ]
+        );
 
-            if (rows.length > 0) {
-              await client.query(
-                `UPDATE entries
-                SET order_item_id = $3, item_id = $4, first_name = $5, last_name = $6,
-                birth_date = $7, birth_place = $8, gender = $9, country = $10, team = $11, email = $12, phone_number = $13
-                FROM order_items INNER JOIN orders ON order_items.order_id = orders.id
-                WHERE entries.order_item_id = order_items.id AND payment_method = 'stripe' AND payment_status <> 'paid
-                AND event_id = $1 AND tin = $2`,
-                [
-                  item.event_id,
-                  item.entry.tin,
-                  orderItem.id,
-                  item.id,
-                  item.entry.first_name,
-                  item.entry.last_name,
-                  item.entry.birth_date ??
-                    `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
-                  item.entry.birth_place ?? cf.birthplace.nome,
-                  item.entry.gender ?? cf.gender,
-                  item.entry.country,
-                  item.entry.team,
-                  item.entry.email,
-                  item.entry.phone_number,
-                ]
-              );
-            } else {
-              throw new Error(
-                `${item.entry.first_name} ${item.entry.last_name} risulta già ${
-                  item.entry.gender === 'F' ? 'iscritta' : 'iscritto'
-                }`
-              );
-            }
-          }
-
-          throw e;
-        }
-
-        //orderItems[count - 1].entry = entrieRows[0]; // SERVE???
         entries.push({
+          order_item_id: orderItem.id,
           order_id: order.id,
           item_id: item.id,
           event_id: item.event_id,
@@ -201,7 +158,7 @@ const createOrder = async (params: Partial<Order>) => {
           phone_number: item.entry.phone_number,
           tin: item.entry.tin,
         });
-      }*/
+      }
 
       // tarrozzata !
       if (item?.entry && item.id === 1001) {
