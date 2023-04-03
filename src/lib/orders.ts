@@ -95,6 +95,7 @@ const createOrder = async (params: Partial<Order>) => {
       if (item?.description) {
         item.description = capitalize(item.description);
       }
+
       const { rows: orderItemRows } = await client.query(
         `INSERT INTO order_items (order_id, item_id, name, price, description)
         VALUES($1, $2, $3, $4, $5) RETURNING *`,
@@ -272,7 +273,7 @@ const createOrder = async (params: Partial<Order>) => {
 
       const { rows: orderItemTaxRows } = await client.query(
         `INSERT INTO order_items (order_id, name, price)
-        VALUES($1, $2, $3)`,
+        VALUES($1, $2, $3) RETURNING *`,
         [order.id, 'Commissioni di servizio', tax]
       );
       const orderItemTax = orderItemTaxRows[0];
