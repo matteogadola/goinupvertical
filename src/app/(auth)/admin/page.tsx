@@ -11,22 +11,20 @@ import { Order } from '@/types/orders'
 import { useEffect } from 'react'
 import { getOrders } from '@/app/lib/views'
 import OrdersList from './orders-list'
-import EntriesList from './entries-list'
+import Events from './events'
 
 export default async function AdminPage() {
   //const orders = await getOrders()
-  
+  const events = await getEvents({ fromDate: dt().startOf('year').format(), orderBy: 'date' })
 
   return (
     <>
       <section className="page">
 
-        <div>
-          seleziona gara<></>
-        </div>
+        <Events className="mt-8" events={events} />
 
-        {/* @ts-expect-error Server Component */}
-        <OrdersList className="mt-8" />
+        {/* @ts-expect-error Server Component 
+        <OrdersList className="mt-8" />*/}
         
       </section>
     </>
