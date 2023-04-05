@@ -262,7 +262,7 @@ export const createOrder = async (params: Partial<Order>) => {
       orderItems.push(orderItemTax);
     }
 
-    if (process.env.NODE_ENV === 'production') {
+    /*if (process.env.NODE_ENV === 'production') {
       await db.runTransaction(async (t) => {
         t.set(db.collection('orders').doc(order.id.toString()), { ...order, items: orderItems });
 
@@ -270,7 +270,7 @@ export const createOrder = async (params: Partial<Order>) => {
           t.set(db.collection('events').doc(item.event_id).collection('entries').doc(item.tin), item);
         }
       });
-    }
+    }*/
 
     await client.query('COMMIT');
     return { ...order, items: orderItems };
@@ -295,10 +295,10 @@ export const updateOrder = async (id: number, params: Partial<Order>) => {
   try {
     const { data, error } = await supabase.from('orders').update(params).eq('id', id);
 
-    if (process.env.NODE_ENV === 'production') {
+    /*if (process.env.NODE_ENV === 'production') {
       const orderRef = db.collection('orders').doc(id.toString());
       await orderRef.update(params);
-    }
+    }*/
 
     if (error) {
       console.warn(`[updateOrder] error: ${error.message}`);

@@ -65,7 +65,7 @@ export default function EventContent({ event, className }: { event: Event | unde
 
           <h3 className="title">{event.name}</h3>
           
-          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+          {/*<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
               <div className="">
@@ -81,7 +81,7 @@ export default function EventContent({ event, className }: { event: Event | unde
               </div>
 
             </div>
-          </form>
+          </form>*/}
 
           <EntriesList entries={entries} eventName={event.name} className="mt-8" />
         </section>
