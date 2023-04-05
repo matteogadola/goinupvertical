@@ -72,7 +72,7 @@ export default function EntriesList({ entries, eventName, className }: { entries
               <td className="pr-10 py-1">{entry.gender}</td>
               <td className="pr-10 py-1">{entry.team}</td>
               { (entry.payment_method === 'cash' && entry.payment_status === 'pending') &&
-                <td className="pr-10 py-1 whitespace-nowrap"><button onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
+                <td className="pr-10 py-1 whitespace-nowrap"><button className="px-1 py-2 bg-slate-300 hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
               }
             </tr>
           )}
