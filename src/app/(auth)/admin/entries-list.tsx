@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { base64 } from '@/lib/helpers'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { getEvents } from '@/lib/events'
 import { dt, getDate } from '@/lib/date'
 //import { base64 } from '@/lib/helpers'
@@ -27,21 +27,36 @@ const supabase = createClient();
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default function EntriesList({ entries, eventName, className }: { entries: any[], eventName: string, className?: string }) {
+  const [items, setItems] = useState<any[]>(entries)
+  useEffect(() => {
+    console.log("OK")
+    setItems(entries)
+  }, [entries]);
 
   const setPaymentStatus = async (orderId: number, status: string) => {
-    const { data } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
+    const { data, error } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
+
+    if (!error) {
+      const index = items.findIndex(item => item.order_id === orderId);
+
+      if (index >= 0) {
+        const newItems = [...items];
+        newItems.splice(index, 1, { ...newItems[index], payment_status: status });
+        setItems(newItems);
+      }
+    }
     return data;
   }
 
   return (
     <Suspense fallback={<Spinner />}>
-      { entries?.length &&
+      { items?.length &&
       <section className={classNames(className, "")}>
         <div className="">
-          <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({entries.length})</span></h3>
+          <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({items.length})</span></h3>
         </div>
 
-        <DownloadCsv data={entries} name={eventName} className="mt-2" />
+        <DownloadCsv data={items} name={eventName} className="mt-2" />
 
         <table className="mt-4 text-sm">
           <thead>
@@ -60,7 +75,7 @@ export default function EntriesList({ entries, eventName, className }: { entries
             </tr>
           </thead>
           <tbody>
-          { entries.map((entry, index) =>
+          { items.map((entry, index) =>
             <tr key={index}>
               <td className="pr-5 py-1">{entry.order_id}</td>
               <td className="pr-10 py-1">{entry.category}</td>

@@ -22,13 +22,8 @@ import EventContent from './event-content';
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default function Events({ events, className }: { events: Event[], className?: string }) {
-  //const entries = await getEntries('cech-vertical-2')
-
   const { supabase, session } = useSupabase()
-
   const [event, setEvent] = useState<Event | undefined>(undefined)
-
-
 
   const selectEvent = (event: Event) => {
     setEvent(event);
@@ -40,10 +35,10 @@ export default function Events({ events, className }: { events: Event[], classNa
       <section className={classNames(className, "flex")}>
 
         <div>
-          <ul>
-          { events.map((event, index) =>
-            <li key={index}>
-              <button onClick={() => selectEvent(event)} className="px-2 py-1">{event.name}</button>
+          <ul className="separator">
+          { events.map((item, index) =>
+            <li key={index} className="py-2 whitespace-nowrap">
+              <button onClick={() => selectEvent(item)} className={classNames({'font-semibold': event?.id === item.id}, "hover:opacity-80")}>{item.name}</button>
             </li>
           )}
           </ul>

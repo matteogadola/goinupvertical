@@ -108,3 +108,11 @@ form .field-helper > button,
 
   position: relative;
 }*/
+
+ul.separator li {
+  border-bottom: 1px solid #CCC;
+}
+
+ul.separator li:last-child {
+  border-bottom: 0;
+}
