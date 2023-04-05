@@ -19,17 +19,18 @@ import { createClient } from '@/lib/supabase-auth-browser'
 
 const supabase = createClient();
 
-async function setPaymentStatus(orderId: number, status: string) {
-  const { data } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
-  return data;
-}
+//async function setPaymentStatus(orderId: number, status: string) {
+//  const { data } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
+//  return data;
+//}
 
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default function EntriesList({ entries, eventName, className }: { entries: any[], eventName: string, className?: string }) {
 
   const setPaymentStatus = async (orderId: number, status: string) => {
-    
+    const { data } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
+    return data;
   }
 
   return (
@@ -72,7 +73,7 @@ export default function EntriesList({ entries, eventName, className }: { entries
               <td className="pr-10 py-1">{entry.gender}</td>
               <td className="pr-10 py-1">{entry.team}</td>
               { (entry.payment_method === 'cash' && entry.payment_status === 'pending') &&
-                <td className="pr-10 py-1 whitespace-nowrap"><button className="px-1 py-2 bg-slate-300 hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
+                <td className="pr-10 py-1 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
               }
             </tr>
           )}
