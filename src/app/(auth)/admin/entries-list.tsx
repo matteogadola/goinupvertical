@@ -26,7 +26,7 @@ const supabase = createClient();
 
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
-export default function EntriesList({ entries, eventName, className }: { entries: any[], eventName: string, className?: string }) {
+export default function EntriesList({ entries, eventId, className }: { entries: any[], eventId: string, className?: string }) {
   const [items, setItems] = useState<any[]>(entries)
   useEffect(() => {
     console.log("OK")
@@ -56,7 +56,7 @@ export default function EntriesList({ entries, eventName, className }: { entries
           <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({items.length})</span></h3>
         </div>
 
-        <DownloadCsv data={items} name={eventName} className="mt-2" />
+        <DownloadCsv data={items} name={eventId} className="mt-2" />
 
         <table className="mt-4 text-sm">
           <thead>
