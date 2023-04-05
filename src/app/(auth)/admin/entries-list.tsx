@@ -76,19 +76,19 @@ export default function EntriesList({ entries, eventId, className }: { entries: 
           </thead>
           <tbody>
           { items.map((entry, index) =>
-            <tr key={index}>
-              <td className="pr-5 py-1">{entry.order_id}</td>
-              <td className="pr-10 py-1">{entry.category}</td>
-              <td className="pr-10 py-1 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
-              <td className="pr-10 py-1">{entry.payment_method}</td>
-              <td className="pr-10 py-1">{entry.payment_status}</td>
-              <td className="pr-10 py-1">{entry.first_name}</td>
-              <td className="pr-10 py-1">{entry.last_name}</td>
-              <td className="pr-10 py-1">{entry.birth_year}</td>
-              <td className="pr-10 py-1">{entry.gender}</td>
-              <td className="pr-10 py-1">{entry.team}</td>
+            <tr key={index} className="border-b">
+              <td className="pr-5 py-2">{entry.order_id}</td>
+              <td className="pr-10 py-2">{entry.category}</td>
+              <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
+              <td className="pr-10 py-2">{entry.payment_method}</td>
+              <td className="pr-10 py-2">{entry.payment_status}</td>
+              <td className="pr-10 py-2">{entry.first_name}</td>
+              <td className="pr-10 py-2">{entry.last_name}</td>
+              <td className="pr-10 py-2">{entry.birth_year}</td>
+              <td className="pr-10 py-2">{entry.gender}</td>
+              <td className="pr-10 py-2">{entry.team}</td>
               { (entry.payment_method === 'cash' && entry.payment_status === 'pending') &&
-                <td className="pr-10 py-1 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
+                <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
               }
             </tr>
           )}
