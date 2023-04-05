@@ -61,7 +61,7 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
     submit_type: 'pay',
     payment_method_types: ['card'],
     currency: 'eur',
-    customer_email: body.user_email, //  body.items[0].entry?.email, // la prima dell'elenco !
+    customer_email: body.user_email,
     line_items,
     automatic_tax: {
       enabled: false,

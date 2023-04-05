@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation'
 
 import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
+import { useSupabase } from './supabase-provider'
+import NavbarUserBadge from './navbar-user-badge'
 
 interface Props {
   cover?: boolean | undefined;
@@ -22,6 +24,14 @@ const navLinks = [
 // w-full h-256 bg-cover-image bg-cover bg-center
 export default function Navbar({ cover }: Props) {
   const isHome = usePathname() === '/'
+
+  //const { supabase } = useSupabase();
+  //let user;
+  
+  //supabase.auth.getSession().then(res => user = res.data.session?.user).catch(e => console.error(e));
+  //supabase.auth.update({password: "password"})
+
+  
 
   return (
   <header className={classNames("w-full", {" relative bg-black h-screen": isHome })}>
@@ -53,14 +63,15 @@ export default function Navbar({ cover }: Props) {
           </div>
         </div>
 
-        <div className={classNames("hidden md:flex md:items-center md:gap-4 z-10", {" text-white": isHome })}>
+        <div className={classNames("hidden md:flex md:items-center md:gap-4 z-10 text-gray-600 hover:text-gray-500", {" text-white": isHome })}>
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>
-                <span className="block mt-2 md:mt-0 hover:text-gray-500">{link.name}</span>
+                <span className="block mt-2 md:mt-0">{link.name}</span>
               </Link>
             ))
           }
+          <NavbarUserBadge />
         </div>
       </div>
     </nav>
