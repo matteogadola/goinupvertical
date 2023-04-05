@@ -13,7 +13,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  console.log('middleware', session?.user.email, req.nextUrl.pathname);
   if (!session?.user && req.nextUrl.pathname.startsWith('/admin')) {
     const signInUrl = new URL('/sign-in', req.url);
     return NextResponse.redirect(signInUrl);

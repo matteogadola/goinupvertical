@@ -23,8 +23,6 @@ export default async function RootLayout({
     data: { session },
   } = await supabase.auth.getSession()
 
-  console.log("layout")
-
   return (
     <html lang="it" className={`${fonts.map(font => font.variable).join(' ')}`}>
       <head />

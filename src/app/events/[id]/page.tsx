@@ -62,11 +62,11 @@ export default async function EventPage({
     </section>
   )
 }
-/*
+
 export async function generateStaticParams() {
   const events = await getEvents()
 
   return events.map((event) => ({
     id: event.id,
   }))
-}*/
+}
