@@ -28,10 +28,7 @@ const supabase = createClient();
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default function EntriesList({ entries, eventId, className }: { entries: any[], eventId: string, className?: string }) {
   const [items, setItems] = useState<any[]>(entries)
-  useEffect(() => {
-    console.log("OK")
-    setItems(entries)
-  }, [entries]);
+  useEffect(() => setItems(entries), [entries]);
 
   const setPaymentStatus = async (orderId: number, status: string) => {
     const { data, error } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
