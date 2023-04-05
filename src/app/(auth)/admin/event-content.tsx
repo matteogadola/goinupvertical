@@ -83,7 +83,7 @@ export default function EventContent({ event, className }: { event: Event | unde
             </div>
           </form>*/}
 
-          <EntriesList entries={entries} eventName={event.name} className="mt-8" />
+          <EntriesList entries={entries} eventId={event.id} className="mt-8" />
         </section>
       }
     </Suspense>

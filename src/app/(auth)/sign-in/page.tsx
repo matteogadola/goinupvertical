@@ -121,7 +121,7 @@ export default function SignIn() {
 
   return (
     <section className="page">
-      <div className="w-1/3 mx-auto">
+      <div className="w-full lg:w-1/3 mx-auto">
       <form className="" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className={classNames({'hidden': state.mode === 'sign-in'})}>
