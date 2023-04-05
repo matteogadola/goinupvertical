@@ -14,11 +14,11 @@ import { CSVLink, CSVDownload } from 'react-csv';
 
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
-export default function DownloadCsv({ data, className }: { data: any[], className?: string }) {
+export default function DownloadCsv({ data, name, className }: { data: any[], name: string, className?: string }) {
   
   return (
     <section className={classNames(className, "")}>
-      <CSVLink data={data} filename={"iscrizioni.csv"} separator={";"} className="text-button">Scarica file</CSVLink>
+      <CSVLink data={data} filename={`iscrizioni-${name}.csv`} separator={";"} className="text-button">Scarica file</CSVLink>
     </section>
   )
 }
