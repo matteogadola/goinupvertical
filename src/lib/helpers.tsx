@@ -75,8 +75,7 @@ export const callback = function(entries: any) {
 };
 
 export const capitalize = function(input: string) {
-  // .replace(/\b./g, function(m){ return m.toUpperCase(); });
-  const wordArray = input.split(' ');
+  const wordArray = input.trim().replace(/\s\s+/g, ' ').split(' ');
   const output = wordArray.map(word => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`);
 
   return output.join(' ');
