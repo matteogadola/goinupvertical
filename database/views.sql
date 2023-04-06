@@ -19,4 +19,5 @@ CREATE VIEW v_entries AS
       INNER JOIN orders o ON e.order_id = o.id
       INNER JOIN order_items oi ON e.order_item_id = oi.id
       INNER JOIN items i ON oi.item_id = i.id
-  WHERE o.payment_status = 'paid'::text OR (o.payment_method = 'cash'::text AND o.payment_status = 'pending'::text);
+  WHERE o.payment_status = 'paid'::text OR (o.payment_method = 'cash'::text AND o.payment_status = 'pending'::text)
+  ORDER BY e.last_name, e.first_name;

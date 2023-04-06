@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { base64 } from '@/lib/helpers'
-import { Suspense, useState, use, useEffect } from 'react'
+import { Suspense, useState, use, useEffect, cache } from 'react'
 import { getEvents } from '@/lib/events'
 import { dt, getDate } from '@/lib/date'
 //import { base64 } from '@/lib/helpers'
@@ -25,12 +25,12 @@ type EventForm = Partial<Event>
 
 const supabase = createClient();
 
-async function fetchEvent(id: string | undefined) {
+const fetchEvent = cache(async (id: string | undefined) => {
   if (id === undefined) return undefined;
 
-  const { data } = await supabase.from('v_entries').select().eq('event_id', id).order('date');
+  const { data } = await supabase.from('v_entries').select().eq('event_id', id);
   return data;
-}
+});
 
 export default function EventContent({ event, className }: { event: Event | undefined, className?: string }) {
   const [entries, setEntries] = useState<any | undefined>(undefined)
