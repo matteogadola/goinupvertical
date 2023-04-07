@@ -14,7 +14,7 @@ import { CSVLink } from 'react-csv';
 export default function DownloadCsv({ data, name, className }: { data: any[], name: string, className?: string }) {
   return (
     <section className={classNames(className, "")}>
-      <CSVLink data={data} filename={`iscrizioni-${name.toLowerCase()}.csv`} separator={";"} className="text-button">Scarica file</CSVLink>
+      <CSVLink data={data ?? []} filename={`iscrizioni-${name.toLowerCase()}.csv`} separator={";"} className="text-button">Scarica file</CSVLink>
     </section>
   )
 }

@@ -20,13 +20,11 @@ export const sendMail = async (mail: Mail) => {
 };
 
 export const sendConfirmationMail = async (order: Order) => {
-  //const html = render(<Confirm order={order} />);
-
   const details = order.items.map(
     (item) => `
     <tr>
       <td style="padding: 0.5rem 0;">${item.name}</td>
-      <td style="padding: 0.5rem 0;">${item.description}</td>
+      <td style="padding: 0.5rem 0;">${item.description ?? ''}</td>
       <td style="padding: 0.5rem 0;">${item.quantity}</td>
       <td style="padding: 0.5rem 0;">${item.price / 100}€</td>
     </tr>`
@@ -68,7 +66,7 @@ export const sendConfirmationMail = async (order: Order) => {
               </tr>
             </thead>
             <tbody>
-              ${details}
+              ${details.join('')}
             </tbody>
           </table>
 
@@ -80,19 +78,20 @@ export const sendConfirmationMail = async (order: Order) => {
         </body>
       </html>
       `,
+  }).catch((e: any) => {
+    console.error('Errore invio mail', e.message);
   });
 
-  const body = await response.json();
+  const body = await response?.json();
 
-  if (body.success !== true) {
-    console.log('errore invio mail');
-    console.error(body);
+  if (body?.success !== true) {
+    console.error('Errore invio mail', body);
   }
 
   await updateOrder(order.id, {
     notification_date: dt().utc().format(),
-    notification_status: body.success === true ? 'success' : 'error',
+    notification_status: body?.success === true ? 'success' : 'error',
   });
 
-  return body.success;
+  return body?.success;
 };
