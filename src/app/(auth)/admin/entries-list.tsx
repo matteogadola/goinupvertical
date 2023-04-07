@@ -7,6 +7,8 @@ import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 import DownloadCsv from './download-csv'
 import { createClient } from '@/lib/supabase-auth-browser'
+import { Order, OrderItem } from '@/types/orders';
+import { sendConfirmationMail } from '@/lib/mail';
 
 const supabase = createClient();
 
@@ -38,7 +40,7 @@ export default function EntriesList({ entries, eventId, className }: { entries: 
     <Suspense fallback={<Spinner />}>
       <section className={classNames(className, "")}>
         <div className="">
-          <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({state.entries.length})</span></h3>
+          <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({state.entries?.length})</span></h3>
         </div>
 
         <DownloadCsv data={state.entries} name={eventId} className="mt-2" />
