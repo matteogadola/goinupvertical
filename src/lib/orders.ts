@@ -285,7 +285,12 @@ export const createOrder = async (params: Partial<Order>) => {
         throw new Error(`${lastEntry?.description} risulta già iscritto`);
       }
     }
-    throw new Error(`Errore interno ${e.code}`);
+
+    if (e.code) {
+      throw new Error(`Errore interno ${e.code}`);
+    } else {
+      throw e;
+    }
   } finally {
     client.release();
   }
