@@ -34,28 +34,32 @@ function base64Decode<T = string> (input: string, toObj = true) {
 }
 
 export const verifyTin = function(tin: string, firstName: string, lastName: string) {
-  const cf = new CodiceFiscale(tin);
+  try {
+    const cf = new CodiceFiscale(tin);
 
-  if (!cf.isValid()) {
+    if (!cf.isValid()) {
+      throw new Error(`Codice fiscale ${tin} non valido`);
+    }
+  
+    const checkTin = new CodiceFiscale({
+      name: firstName,
+      surname: lastName,
+      gender: cf.gender,
+      day: cf.day,
+      month: cf.month,
+      year: cf.year,
+      birthplace: cf.birthplace.nome,
+      birthplaceProvincia: '',
+    });
+  
+    if (checkTin.toString() !== cf.cf) {
+      throw new Error(`Corrispondenza codice fiscale non valida`);
+    }
+
+    return cf;
+  } catch (e: any) {
     throw new Error(`Codice fiscale ${tin} non valido`);
   }
-
-  const checkTin = new CodiceFiscale({
-    name: firstName,
-    surname: lastName,
-    gender: cf.gender,
-    day: cf.day,
-    month: cf.month,
-    year: cf.year,
-    birthplace: cf.birthplace.nome,
-    birthplaceProvincia: '',
-  });
-
-  if (checkTin.toString() !== cf.cf) {
-    throw new Error(`Corrispondenza codice fiscale non valida`);
-  }
-
-  return cf;
 };
 
 export const callback = function(entries: any) {

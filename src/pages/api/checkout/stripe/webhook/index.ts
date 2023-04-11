@@ -51,6 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           payment_date: dt.unix(payment.created).utc().format(),
         });*/
       }
+      //await sendPaymentErrorMail();
       break;
     case 'checkout.session.expired':
       const sessionExp = event.data.object as Stripe.Checkout.Session;
