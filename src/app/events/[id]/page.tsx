@@ -22,7 +22,7 @@ export default async function EventPage({
     notFound()
   }
 
-  const itemsData = getItems({ event_id: event.id })
+  const items = await getItems({ event_id: event.id })
 
   return (
     <section className="page">
@@ -40,8 +40,10 @@ export default async function EventPage({
 
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
           <div className="mt-8">
-            {/* @ts-expect-error Server Component */}
-            <ItemsList list={itemsData} />
+            { dt(event.date).diff(dt(), 'hours') > 46
+              ? <ItemsList list={items} />
+              : dt(event.date).isBefore(dt()) ?? <p className="underline">Iscrizione disponibile alla partenza</p>
+            }
           </div>
 
         </div>

@@ -5,11 +5,11 @@ import { base64 } from '@/lib/helpers'
 import { Item } from '@/types/items'
 
 interface Props {
-  list: Item[] | Promise<Item[]>;
+  list: Item[];
 }
 
-export default async function ItemsList({ list }: Props) {
-  const items = (await list).filter(item => item.status !== 'internal')
+export default function ItemsList({ list }: Props) {
+  const items = list.filter(item => item.status !== 'internal')
 
   return (
     <Suspense fallback={<Spinner />}>
