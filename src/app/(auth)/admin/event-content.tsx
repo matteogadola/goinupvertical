@@ -39,7 +39,7 @@ export default function EventContent({ event, className }: { event: Event | unde
     fetchEvent(event?.id)
       .then(entries => setEntries(entries))
       .catch(() => setEntries(undefined));
-    
+
     setValue('status', event?.status);
   }, [event]);
   
