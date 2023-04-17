@@ -33,17 +33,6 @@ export default function EntryForm({ item, className }: { item: Item, className?:
     country: 'ITA',
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    defaultValues = {
-      ...defaultValues,
-      first_name: 'Matte',
-      last_name: 'Gad',
-      tin: 'GDLMTT88R21F712C',
-      email: 'gado@asd.it',
-      phone_number: '0342610000',
-    }
-  }
-
   const {
     register,
     handleSubmit,
@@ -57,18 +46,17 @@ export default function EntryForm({ item, className }: { item: Item, className?:
   } = useForm<EntryForm>({
     mode: 'onTouched',
     defaultValues
-    //defaultValues
   })
 
   const onSubmit: SubmitHandler<EntryForm> = async data => {
+    data.tin = data.tin.toUpperCase()
+
     const duplicateIndex = cartItems.findIndex(item => item.entry?.tin === data.tin)
 
     if (duplicateIndex !== -1) {
       setError('tin', { message: 'Codice fiscale già presente in carrello' })
       return
     }
-
-    data.tin = data.tin.toUpperCase()
 
     addCartItem({
       id: item.id,
@@ -93,7 +81,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
   }
 
   const calcTin = (data: any) => {
-    console.log(data)
+    console.debug("Calcolato codice fiscale", data);
 
     setValue('first_name', data.first_name)
     setValue('last_name', data.last_name)

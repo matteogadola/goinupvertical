@@ -1,6 +1,6 @@
 DROP VIEW IF EXISTS v_entries;
 
-CREATE VIEW v_entries AS
+CREATE OR REPLACE VIEW v_entries WITH (security_invoker) AS
   SELECT e.order_id,
     e.event_id,
     i.category,
@@ -21,3 +21,5 @@ CREATE VIEW v_entries AS
       INNER JOIN items i ON oi.item_id = i.id
   WHERE o.payment_status = 'paid'::text OR (o.payment_method = 'cash'::text AND o.payment_status = 'pending'::text)
   ORDER BY e.last_name, e.first_name;
+
+  --ALTER VIEW v_entries OWNER TO authenticated;

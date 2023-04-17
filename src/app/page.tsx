@@ -44,12 +44,6 @@ export default async function HomePage() {
           <HomeMission />
         </section>
 
-        {/*<section className="mt-28">
-          <HomeBanner />
-        </section>*/}
-
-        <HomeCarnet className="mt-36" />
-
         {/*<section>
           <div className="text-center">
             <h3 className="overtitle">Calendario</h3>
