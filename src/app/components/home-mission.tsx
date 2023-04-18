@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import Image from 'next/image'
 import missionImage from 'public/images/mission.png'
 
-export default async function HomeMission({ className }: { className?: string }) {
+export default function HomeMission({ className }: { className?: string }) {
 
   return (
     <section className={classNames("grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-4", className)}>

@@ -1,13 +1,8 @@
-import Image from 'next/image'
 import HomeMission from '@/app/components/home-mission'
-import HomeCarnet from '@/app/components/home-carnet'
 import HomeEvents from '@/app/components/home-events'
 import HomeGoinupCalendar from '@/app/components/home-goinup-calendar'
 import Credits from '@/app/components/credits'
 
-import homeBrandImage from 'public/images/home-1.png'
-import headerImage from 'public/images/header.jpg'
-import { getOrders } from '@/app/lib/views'
 // export const revalidate = 85000
 
 export const metadata = {
@@ -16,7 +11,6 @@ export const metadata = {
 }
 
 export default async function HomePage() {
-
   /*const targets = document.querySelectorAll(".js-show-on-scroll");
 
   const observer = new IntersectionObserver(callback);
@@ -40,7 +34,6 @@ export default async function HomePage() {
       <div className="page">
 
         <section className="mt-20">
-          {/* @ts-expect-error Server Component */}
           <HomeMission />
         </section>
 
