@@ -9,7 +9,7 @@ import { dt } from '@/lib/date';
 import CodiceFiscale from 'codice-fiscale-js';
 import { Order, OrderItem } from '@/types/orders';
 import { Entry } from '@/types/entries';
-import { sendConfirmationMail, sendMail } from '@/lib/mail';
+import { sendConfirmationMail } from '@/app/lib/mail';
 import { createOrder } from '@/lib/orders';
 import { createCheckoutSession } from './stripe';
 

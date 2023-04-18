@@ -10,8 +10,6 @@ import Spinner from '@/components/spinner'
 
 import flyer from 'public/images/flyers/goinup-5.webp'
 
-// https://tailwindcomponents.com/component/tags
-//export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default async function HomeGoinupCalendar({ className }: { className?: string }) {
   const showFlyer = true;
   const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', promoterId: 1 })
