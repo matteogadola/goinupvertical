@@ -31,7 +31,6 @@ export default function Navbar({ cover }: Props) {
   //supabase.auth.getSession().then(res => user = res.data.session?.user).catch(e => console.error(e));
   //supabase.auth.update({password: "password"})
 
-  
 
   return (
   <header className={classNames("w-full", {" relative bg-black h-screen": isHome })}>
