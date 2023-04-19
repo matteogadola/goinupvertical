@@ -40,7 +40,7 @@ export default async function HomePage() {
             { event.event_attachments.map((attachment: any, index: any) => 
               
                 <a key={index} href={attachment.url} target='_blank'>
-                  <button className="bg-button px-2 py-1 rounded text-white hover:opacity-70">{attachment.name}</button>
+                  <button className="bg-button px-2 py-1 rounded text-slate-200 hover:opacity-70">{attachment.name}</button>
                 </a>
               
             )}
