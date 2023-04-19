@@ -33,14 +33,14 @@ export default async function HomePage() {
 
       <div className="mt-8">
         { events.map(event => 
-          <div key={event.id} className="w-1/3 p-6 shadow-lg">
+          <div key={event.id} className="w-full lg:w-1/3 p-6 shadow lg:shadow-lg">
             <span className="overtitle">{event.edition}° {event.name}</span>
             
-            <div className="mt-4 space-x-6">
+            <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
             { event.event_attachments.map((attachment: any, index: any) => 
               
                 <a key={index} href={attachment.url} target='_blank'>
-                  <button className="bg-button px-2 py-1 rounded text-slate-200 hover:opacity-70">{attachment.name}</button>
+                  <button className="bg-button px-2 py-1 rounded hover:opacity-70">{attachment.name}</button>
                 </a>
               
             )}
