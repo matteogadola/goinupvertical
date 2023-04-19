@@ -94,13 +94,13 @@ export const sendConfirmationMail = async (order: Order) => {
 
   const body = await response?.json();
 
-  if (body?.success !== true) {
+  if (response.status !== 201) {
     console.error('Errore invio mail', body);
   }
 
   await updateOrder(order.id, {
     notification_date: dt().utc().format(),
-    notification_status: body?.success === true ? 'success' : 'error',
+    notification_status: response.status === 201 ? 'success' : 'error',
   });
 
   return body?.success;
