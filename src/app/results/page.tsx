@@ -16,10 +16,8 @@ export const metadata = {
 const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
-    .select(`id, name, edition, event_attachments (*) `)
-    //.gte('date', dt().startOf('year').format())
-    .lt('date', dt().add(1, 'day'))
-    //.eq('status', 'scheduled')
+    .select(`id, name, edition, event_attachments!inner (*) `)
+    .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
     .returns<any[]>();
   return data ?? [];
@@ -30,17 +28,23 @@ export default async function HomePage() {
 
   return (
     <section className="page">
+      <h1 className="overtitle">Allegati</h1>
       <h1 className="title">Classifiche</h1>
 
       <div className="mt-8">
         { events.map(event => 
-          <div key={event.id} className="p-6 shadow-sm hover:shadow-lg">
-            <span className="overtitle">{event.name}</span>
+          <div key={event.id} className="w-1/3 p-6 shadow-lg">
+            <span className="overtitle">{event.edition}° {event.name}</span>
+            
+            <div className="mt-4 space-x-6">
             { event.event_attachments.map((attachment: any, index: any) => 
-              <div key={index}>
-                <a href={attachment.url} target='_blank'>{attachment.name}</a>
-              </div>
+              
+                <a key={index} href={attachment.url} target='_blank'>
+                  <button className="bg-button px-2 py-1 rounded text-white hover:opacity-70">{attachment.name}</button>
+                </a>
+              
             )}
+            </div>
           </div>
         )}
       </div>
