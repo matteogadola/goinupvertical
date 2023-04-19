@@ -9,6 +9,7 @@ import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
 import { useSupabase } from './supabase-provider'
 import NavbarUserBadge from './navbar-user-badge'
+import { useState } from 'react'
 
 interface Props {
   cover?: boolean | undefined;
@@ -25,12 +26,16 @@ const navLinks = [
 export default function Navbar({ cover }: Props) {
   const isHome = usePathname() === '/'
 
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false);
+
   //const { supabase } = useSupabase();
   //let user;
   
   //supabase.auth.getSession().then(res => user = res.data.session?.user).catch(e => console.error(e));
   //supabase.auth.update({password: "password"})
-
+  const toggleHamburger = () => {
+    setIsHamburgerOpen(!isHamburgerOpen);
+  }
 
   return (
   <header className={classNames("w-full", {" relative bg-black h-screen": isHome })}>
@@ -43,9 +48,11 @@ export default function Navbar({ cover }: Props) {
     /><div className="display absolute top-20 left-10 lg:top-40 lg:left-20 w-36 md:w-96 lg:w-auto">
     <h1>GO<span className="text-accent">in</span>UP</h1>
     <h3>Circuito di 11 gare vertical<br /><span className="whitespace-nowrap">in montagna</span></h3>
-  </div></div> }
+    <Link href="/results" className="lg:hidden relative top-20 bg-red-400 bg-opacity-80 px-4 py-2 rounded">Classifiche</Link>
+  </div>
+  </div> }
     <nav>
-      <div className="h-12 mx-4 md:mx-8 md:flex md:items-center md:justify-between">
+      <div className="h-12 pl-4 md:px-8 md:flex md:items-center md:justify-between">
         <div className="flex justify-between items-center">
           {!isHome && 
             <div className="text-lg md:text-xl font-unbounded font-bold hover:opacity-70">
@@ -53,16 +60,17 @@ export default function Navbar({ cover }: Props) {
             </div>
           }
           
-          <div className="hidden">{/*flex md:hidden*/}
-            <button type="button" className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu">
-              <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
-                <path fillRule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
-              </svg>
-            </button>
+          <div className="hidden">{/*flex e/o block md:hidden*/}
+            <button type="button" onClick={() => toggleHamburger()} className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 hover:opacity-70">
+            { isHamburgerOpen
+              ? <svg className="w-6 h-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" /></svg>
+              : <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
+            }
+          </button>
           </div>
         </div>
 
-        <div className={classNames("hidden md:flex md:items-center md:gap-4 z-10 text-gray-600", {" text-white": isHome })}>
+        <div className={classNames("hidden lg:flex lg:items-center lg:gap-4 z-10 text-gray-600", {" text-white": isHome })}>
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>
@@ -72,6 +80,7 @@ export default function Navbar({ cover }: Props) {
           }
           <NavbarUserBadge />
         </div>
+
       </div>
     </nav>
     </header>
