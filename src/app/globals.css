@@ -3,18 +3,11 @@
 @tailwind utilities;
 
 body {
-  @apply font-poppins text-slate-800 bg-background;
-  /*background: rgb(255,253,218);
-  background: linear-gradient(115deg, rgba(255,253,218,1) 65%, rgba(230,170,104,1) 100%);*/
+  @apply bg-background text-slate-800 font-poppins;
 }
 
 .page {
   @apply mt-4 mx-4 lg:mt-8 lg:mx-8;
-}
-
-.bg-gradient {
-  background: rgb(175,238,255);
-  background: linear-gradient(120deg, rgba(175,238,255,1) 0%, rgba(255,226,163,1) 100%);
 }
 
 .display {
@@ -39,32 +32,8 @@ body {
   @apply bg-button text-white rounded-lg px-4 py-2
 }
 
-/* deprecated */
-.text-old {
-  @apply text-slate-500;
-}
-
 form .label {
   @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
-}
-
-
-
-.min-h-10 {
-  min-height: 19rem;
-}
-
-.scale {
-  transform: scale(-1);
-}
-
-.page-container {
-  @apply mt-4 md:mx-20;
-}
-
-/* deprecated */
-.form-input {
-  @apply appearance-none block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:border-gray-500;
 }
 
 form .field {
@@ -91,23 +60,6 @@ form .field-helper > button,
 .p-inputtext, .p-autocomplete, .p-dropdown, .p-calendar {
   width: 100%;
 }
-
-/* deprecated */
-.validation-error {
-  @apply text-red-500 text-xs
-}
-
-/*.bg-image {
-  background-image: url("/images/cover-1.jpg");
-
-  min-height: 380px;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  position: relative;
-}*/
 
 ul.separator li {
   border-bottom: 1px solid #CCC;

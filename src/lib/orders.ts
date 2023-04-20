@@ -5,7 +5,6 @@ import { dt } from './date';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { calcStripeTax, capitalize, verifyTin } from './helpers';
-import { db } from './firebase';
 import { createClient } from './supabase-auth-server';
 import { cache } from 'react';
 
@@ -157,7 +156,7 @@ export const createOrder = async (params: Partial<Order>) => {
               `${cf.year}-${String(cf.month).padStart(2, '0')}-${String(cf.day).padStart(2, '0')}`,
             item.entry.birth_place ?? cf.birthplace.nome,
             item.entry.gender ?? cf.gender,
-            item.entry.country,
+            item.entry.country ?? 'ITA',
             item.entry.team,
             item.entry.email,
             item.entry.phone_number,

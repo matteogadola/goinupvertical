@@ -5,7 +5,7 @@ import { sendConfirmationMail } from './mail';
 
 // https://supabase.github.io/wrappers/stripe/
 
-export async function createCheckout(orderData: Pick<Order, 'user_email' | 'payment_method' | 'items'>) {
+export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_email' | 'payment_method' | 'items'>) {
   const response = await fetch('/api/checkout', {
     method: 'POST',
     body: JSON.stringify(orderData),

@@ -33,3 +33,13 @@ export interface EventDetail {
   finishLine: string;
   location?: string;
 }
+
+//
+export interface EventLink {
+  eventId: string;
+  type: EventLinkType;
+  name: string;
+  url: string;
+}
+
+export type EventLinkType = 'classifica' | 'foto' | 'sarcazzo';

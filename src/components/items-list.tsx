@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function ItemsList({ list }: Props) {
-  const items = list.filter(item => item.status !== 'internal')
+  const items = list.filter(item => item.status === 'published')
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -17,7 +17,7 @@ export default function ItemsList({ list }: Props) {
         <div className="container">
           <div className="divide-y-2 divide-gray-50 lg:pr-24">
             { items.length === 0
-              ? <p>Iscrizione non ancora disponibile</p>
+              ? <p>Iscrizione non disponibile</p>
               : items.map((item, index) => (
                   <div key={index} className="border shadow-md hover:shadow-lg pl-2">
                     <Link href={{ pathname: '/events/entry', query: { q: base64.encode(item) } }}>

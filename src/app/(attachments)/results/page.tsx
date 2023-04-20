@@ -23,7 +23,18 @@ const fetchEvents = cache(async () => {
   return data ?? [];
 });
 
-export default async function HomePage() {
+/*const fetchEvents = cache(async () => {
+  const { data } = await supabase
+    .from('events')
+    .select(`id, name, edition, event_attachments!inner (*)`)
+    .eq('event_attachments.type', 'result')
+    .gte('date', dt().startOf('year').format())
+    .order('date', { ascending: true })
+    .returns<any[]>();
+  return data ?? [];
+});*/
+
+export default async function ResultsPage() {
   const events = await fetchEvents();
 
   return (

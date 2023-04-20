@@ -4,10 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-
 import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
-import { useSupabase } from './supabase-provider'
 import NavbarUserBadge from './navbar-user-badge'
 import { useState } from 'react'
 
@@ -17,8 +15,8 @@ interface Props {
 
 const navLinks = [
   { name: "Classifiche", path: "/results" },
+  { name: "Foto", path: "/photos" },
   { name: "Regolamento", path: "/regulation" },
-  //{ name: "Mission", path: "mission" },
   //{ name: "Accedi", path: "sign-in" },
 ]
 

@@ -8,5 +8,14 @@ export interface Item {
   detail: any;
   price: number;
   stock: number;
-  status: string;
+  status: ItemStatus;
 }
+
+export type ItemStatus = 'hidden' | 'internal' | 'published' | 'cancelled' | 'stockout';
+/**
+ * hidden - non visibile da nessuna parte
+ * internal - visibile solo in ambiente amministrativo
+ * published
+ * cancelled
+ * stockout
+ */

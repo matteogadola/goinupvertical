@@ -2,7 +2,7 @@ import type { Entry } from './entries';
 
 export interface Order {
   id: number;
-  user_id: string | null;
+  user_id?: string | null;
   user_email: string;
   date: string;
   status: string;
@@ -23,7 +23,7 @@ export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed
 export interface OrderItem {
   id: number;
   order_id?: number;
-  item_id: number;
+  //item_id?: number;
   event_id?: string; // ???
   name: string;
   quantity: number;
