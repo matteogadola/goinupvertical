@@ -30,7 +30,7 @@ export default async function PhotosPage() {
   return (
     <section className="page">
       <h1 className="overtitle">Allegati</h1>
-      <h1 className="title">Classifiche</h1>
+      <h1 className="title">Foto</h1>
 
       <div className="mt-8">
         { events.map(event => 
