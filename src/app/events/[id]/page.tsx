@@ -22,7 +22,7 @@ export default async function EventPage({
     notFound()
   }
 
-  const items = await getItems({ event_id: event.id })
+  const items = await getItems({ eventId: event.id, status: 'published' })
 
   return (
     <section className="page">
