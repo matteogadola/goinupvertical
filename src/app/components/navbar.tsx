@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 
 import headerImage from 'public/images/header.jpg'
 import classNames from 'classnames'
-import { useSupabase } from './supabase-provider'
 import NavbarUserBadge from './navbar-user-badge'
 import { useState } from 'react'
 

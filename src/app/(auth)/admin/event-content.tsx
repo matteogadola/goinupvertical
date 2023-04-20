@@ -118,6 +118,8 @@ export default function EventContent({ event, className }: { event: Event | unde
   const addEntry = (order: any) => {
     setState({ ...state, isAddEntryDialogOpened: false })
 
+    console.log(order)
+
     // INSERISCI NUOVA ENTRY IN ARRAY
   }
 
