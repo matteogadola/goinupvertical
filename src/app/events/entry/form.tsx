@@ -109,7 +109,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               className={classNames("field", {"invalid": errors.first_name})}
               {...register("first_name", { required: 'Campo obbligatorio' })}
             />
-            {errors.first_name && <small className="validation-error">{errors.first_name.message}</small>}
+            {errors.first_name && <small className="field-error">{errors.first_name.message}</small>}
           </div>
 
           <div>
@@ -119,7 +119,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               className={classNames("field", {"invalid": errors.last_name})}
               {...register("last_name", { required: 'Campo obbligatorio' })}
             />
-            {errors.last_name && <small className="validation-error">{errors.last_name.message}</small>}
+            {errors.last_name && <small className="field-error">{errors.last_name.message}</small>}
           </div>
 
           <div>
@@ -136,7 +136,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               })}
             />
             <small className="field-helper">Non lo ricordi? <button onClick={() => openTinCalculator()}>Calcolalo</button></small>
-            { errors.tin && <small className="validation-error block">{errors.tin.message}</small> }
+            { errors.tin && <small className="field-error block">{errors.tin.message}</small> }
           </div>
 
           <div className="">
@@ -147,7 +147,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
                 <>
                   <label className="label" htmlFor={field.name}>Società</label>
                   <Autocomplete name={field.name} value={field.value} items={teams} placeholder="Opzionale" onChange={e => field.onChange(e.target.value.toUpperCase())} />
-                  {fieldState.error?.message && <small className="validation-error">{fieldState.error?.message}</small>}
+                  {fieldState.error?.message && <small className="field-error">{fieldState.error?.message}</small>}
                 </>
               )}
             />
@@ -167,7 +167,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               })}
               className="field"
             />
-            {errors.email && <small className="validation-error">{errors.email.message}</small>}
+            {errors.email && <small className="field-error">{errors.email.message}</small>}
           </div>
 
           <div className="">
@@ -184,7 +184,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               })}
               className="field"
             />
-            {errors.phone_number && <small className="validation-error">{errors.phone_number.message}</small>}
+            {errors.phone_number && <small className="field-error">{errors.phone_number.message}</small>}
           </div>
 
           <div className="lg:col-span-2">
@@ -202,7 +202,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               <label htmlFor="hs-checkbox-delete" className="ml-3">
                 <span className="block text-sm font-semibold text-gray-800 dark:text-gray-300">Privacy Policy</span>
                 <span id="hs-checkbox-delete-description" className="block text-xs text-gray-600 dark:text-gray-500">Accetto i <a href="/legal/terms" target="_blank" className="text-button" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="text-button" rel="noopener noreferrer">informativa sulla privacy</a> di Goinup</span>
-                {errors.privacy_policy && <small className="validation-error">{errors.privacy_policy.message}</small>}
+                {errors.privacy_policy && <small className="field-error">{errors.privacy_policy.message}</small>}
               </label>
             </div>
           </div>
