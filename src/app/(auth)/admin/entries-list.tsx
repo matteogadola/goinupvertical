@@ -7,13 +7,36 @@ import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 import DownloadCsv from './download-csv'
 import { createClient } from '@/lib/supabase-auth-browser'
-import { Order, OrderItem } from '@/types/orders';
+import { Event } from '@/types/events';
 import { sendConfirmationMail } from '@/lib/mail';
+import { PlusIcon } from '@/app/components/icons';
+import EntryDialog from './entry-dialog';
 
 const supabase = createClient();
 
-export default function EntriesList({ entries, eventId, className }: { entries: any[], eventId: string, className?: string }) {
-  const [state, setState] = useState({ entries, items: entries });
+type Props = {
+  className?: string;
+  entries: any[];
+  items: any[];
+  event: Event;
+}
+
+interface State {
+  entries: any[];
+  items: any[];
+  isDialogOpen: boolean;
+  selectedEntry: any | undefined;
+}
+
+export default function EntriesList({ entries, items, event, className }: Props) {
+
+  const [state, setState] = useState<State>({
+    entries,
+    items: entries,
+    isDialogOpen: false,
+    selectedEntry: undefined
+  });
+
   useEffect(() => setState({ ...state, entries, items: entries }), [entries]);
 
   const setPaymentStatus = async (orderId: number, status: string) => {
@@ -36,14 +59,34 @@ export default function EntriesList({ entries, eventId, className }: { entries: 
     setState({ ...state, items: filtered });
   }
 
+  const onCreate = () => {
+    setState({ ...state, isDialogOpen: true, selectedEntry: undefined })
+  }
+
+  const closeDialog = () => {
+    setState({ ...state, isDialogOpen: false, selectedEntry: undefined })
+  }
+
+  // rinomina...
+  const addEntry = (order: any) => {
+    setState({ ...state, isDialogOpen: false })
+
+    console.log(order)
+
+    // INSERISCI NUOVA ENTRY IN ARRAY
+  }
+
   return (
     <Suspense fallback={<Spinner />}>
+      { state.isDialogOpen && <EntryDialog event={event} items={items} onEntryCreated={addEntry} onClose={closeDialog} /> }
+
       <section className={classNames(className, "")}>
-        <div className="">
+        <div className="flex items-center space-x-4">
           <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({state.entries?.length})</span></h3>
+          <button onClick={onCreate} className="button-icon"><PlusIcon /></button>
         </div>
 
-        <DownloadCsv data={state.entries} name={eventId} className="mt-2" />
+        <DownloadCsv data={state.entries} name={event.id} className="mt-2" />
 
         {/*<div className="mt-4 border rounded relative">
           <label htmlFor="first" className=" absolute -top-2.5 z-10 left-1 px-1 text-sm">Filtri</label>

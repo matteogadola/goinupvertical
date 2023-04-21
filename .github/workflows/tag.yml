@@ -6,7 +6,7 @@ name: Tag
 on:
   push:
     branches:
-      - main
+#      - main
 
 jobs:
   tag:

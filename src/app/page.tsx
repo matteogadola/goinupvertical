@@ -6,7 +6,7 @@ import Credits from '@/app/components/credits'
 // export const revalidate = 85000
 
 export const metadata = {
-  title: 'GOinUP',
+  title: 'Goinup',
   description: 'Circuito di gare vertical a scopo benefico',
 }
 

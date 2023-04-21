@@ -68,3 +68,7 @@ ul.separator li {
 ul.separator li:last-child {
   border-bottom: 0;
 }
+
+.button-icon {
+  @apply bg-slate-200 shadow rounded-xl hover:opacity-70 hover:shadow-md;
+}

@@ -13,6 +13,7 @@ export interface Event {
   description: string | null;
   body: string | null;
   flyer: string | null;
+  attachments?: Attachment[];
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';
@@ -35,7 +36,8 @@ export interface EventDetail {
 }
 
 //
-export interface EventLink {
+export interface Attachment {
+  id: number;
   eventId: string;
   type: EventLinkType;
   name: string;
