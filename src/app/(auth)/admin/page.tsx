@@ -18,11 +18,12 @@ const supabase = createClient();
 const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
-    .select()
+    .select(`*, attachments(*)`)
     .neq('id', 'pietro-vertical-5')
     .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
     .returns<Event[]>();
+    console.log(data)
   return data ?? [];
 });
 

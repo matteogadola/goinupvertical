@@ -39,7 +39,7 @@ interface State {
   isLoading: boolean;
 }
 
-export default function AddEntryDialog({ className, event, items, onEntryCreated, onClose }: Props) {
+export default function EntryDialog({ className, event, items, onEntryCreated, onClose }: Props) {
   const { supabase, session } = useSupabase()
 
   const [state, setState] = useState<State>({ error: undefined, isLoading: false });

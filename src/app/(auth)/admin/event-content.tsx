@@ -15,14 +15,15 @@ import goinup from 'public/images/credits/goinup.png'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 import { getOrders, getEntries } from '@/app/lib/views'
-import { Event } from '@/types/events'
+import { Attachment, Event } from '@/types/events'
 import { useSupabase } from '@/app/components/supabase-provider';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createClient } from '@/lib/supabase-auth-browser'
 import EntriesList from './entries-list';
 import { Entry } from '@/types/entries';
-import AddEntryDialog from './add-entry-dialog';
 import { Item } from '@/types/items';
+import AttachmentsList from './attachments-list';
+import AttachmentDialog from './attachment-dialog';
 
 type EventForm = Partial<Event>
 
@@ -77,7 +78,11 @@ export default function EventContent({ event, className }: { event: Event | unde
   }, [event]);*/
 
   //const [entries, setEntries] = useState<any | undefined>(undefined)
-  const [state, setState] = useState<State>({ entries: [], items: [], isAddEntryDialogOpened: false });
+  const [state, setState] = useState<State>({
+    entries: [],
+    items: [],
+    isAddEntryDialogOpened: false,
+  });
 
   useEffect(() => {
     Promise.all([
@@ -107,37 +112,20 @@ export default function EventContent({ event, className }: { event: Event | unde
     
   }
 
-  const openAddEntryDialog = () => {
-    setState({ ...state, isAddEntryDialogOpened: true })
-  }
+  
 
-  const closeAddEntryDialog = () => {
-    setState({ ...state, isAddEntryDialogOpened: false })
-  }
 
-  const addEntry = (order: any) => {
-    setState({ ...state, isAddEntryDialogOpened: false })
 
-    console.log(order)
-
-    // INSERISCI NUOVA ENTRY IN ARRAY
-  }
 
   return (
     <Suspense fallback={<Spinner />}>
       { event &&
         <section className={classNames(className, "")}>
-          { state.isAddEntryDialogOpened && <AddEntryDialog event={event} items={state.items} onEntryCreated={addEntry} onClose={closeAddEntryDialog} /> }
-
+          
           <h3 className="title">{event.name}</h3>
 
           { /* qui va la form di modifica evento */ }
 
-          { !!state.items.length &&
-            <div className="mt-8">
-              <button onClick={openAddEntryDialog} className="px-1 py-0.5 bg-button text-slate-100 rounded hover:opacity-70">Iscrivi partecipante</button>
-            </div>
-          }
           {/*<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -156,7 +144,9 @@ export default function EventContent({ event, className }: { event: Event | unde
             </div>
           </form>*/}
 
-          <EntriesList entries={state.entries} eventId={event.id} className="mt-8" />
+          <AttachmentsList attachments={event.attachments} className="mt-8" />
+
+          <EntriesList entries={state.entries} items={state.items} event={event} className="mt-8" />
         </section>
       }
     </Suspense>
