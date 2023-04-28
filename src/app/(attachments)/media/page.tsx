@@ -18,20 +18,20 @@ const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
     .select(`id, name, edition, attachments!inner (*)`)
-    .eq('attachments.type', 'photo')
+    .neq('attachments.type', 'result')
     .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
     .returns<Event[]>();
   return data ?? [];
 });
 
-export default async function PhotosPage() {
+export default async function MediaPage() {
   const events = await fetchEvents();
 
   return (
     <section className="page">
       <h1 className="overtitle">Allegati</h1>
-      <h1 className="title">Foto</h1>
+      <h1 className="title">Media</h1>
 
       <div className="mt-8">
         { events.map(event => 

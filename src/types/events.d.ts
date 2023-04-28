@@ -44,4 +44,4 @@ export interface Attachment {
   url: string;
 }
 
-export type EventLinkType = 'classifica' | 'foto' | 'sarcazzo';
+export type EventLinkType = 'result' | 'photo' | 'video' | 'article' | 'link';

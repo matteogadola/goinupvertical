@@ -1,23 +1,10 @@
 'use client'
 
 import { FormEvent, useEffect, useState } from 'react'
-import { base64 } from '@/lib/helpers'
-import { useRouter } from 'next/navigation'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
-import places from 'public/localization/it/places.json'
-import teams from 'public/localization/it/teams.json'
-
-import Autocomplete from '@/components/ui/autocomplete'
-
 import classNames from 'classnames'
-import { useStore } from '@/store/store'
-import Dialog from '@/components/ui/dialog'
-import CodiceFiscale from 'codice-fiscale-js'
 import { Attachment, Event } from '@/types/events'
-import { Entry } from '@/types/entries'
-import { Item } from '@/types/items'
-import { createCheckout } from '@/lib/checkout'
 import { useSupabase } from '@/app/components/supabase-provider'
 import { createClient } from '@/lib/supabase-auth-browser'
 
@@ -128,6 +115,9 @@ export default function AttachmentDialog({ className, attachment, onResult, onCl
                 >
                   <option value='result'>Classifica</option>
                   <option value='photo'>Foto</option>
+                  <option value='video'>Video</option>
+                  <option value='article'>Articolo</option>
+                  <option value='link'>Link generico</option>
                 </select>
                 {errors.type && <small className="field-error">{errors.type.message}</small>}
               </div>
