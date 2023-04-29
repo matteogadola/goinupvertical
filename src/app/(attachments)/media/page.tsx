@@ -6,6 +6,7 @@ import { cache } from 'react'
 import supabase from '@/lib/supabase'
 import { dt } from '@/lib/date'
 import { Event } from '@/types/events'
+import { LinkIcon, PhotoIcon, VideoIcon } from '@/app/components/icons'
 
 // export const revalidate = 85000
 
@@ -39,23 +40,19 @@ export default async function MediaPage() {
             <span className="overtitle">{event.edition}° {event.name}</span>
             
             <div className="mt-4">
-              <ul>
+              <ul className="space-y-4">
               { event.attachments?.map((attachment: any, index: any) => 
-                <li key={index}>
-                  <a href={attachment.url} target='_blank'>
-                  <button className="bg-button text-slate-200 px-2 py-1 rounded hover:opacity-70">{attachment.name}</button>
-                  </a>
+                <li key={index} className="flex space-x-2">
+                  { attachment.type === 'photo'
+                    ? <PhotoIcon />
+                    : attachment.type === 'video'
+                      ? <VideoIcon />
+                      : <LinkIcon />
+                  }
+                  <a href={attachment.url} target='_blank' className="text-lg hover:opacity-70">{attachment.name}</a>
                 </li>
               )}
               </ul>
-            </div>
-
-            <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            { event.attachments?.map((attachment: any, index: any) => 
-                <a key={index} href={attachment.url} target='_blank'>
-                  <button className="bg-button text-slate-200 px-2 py-1 rounded hover:opacity-70">{attachment.name}</button>
-                </a>
-            )}
             </div>
           </div>
         )}
