@@ -27,6 +27,11 @@ import AttachmentDialog from './attachment-dialog';
 
 type EventForm = Partial<Event>
 
+type Props = {
+  className?: string;
+  event: Event | undefined;
+}
+
 interface State {
   items: Item[];
   entries: any[]; // any[]
@@ -34,6 +39,16 @@ interface State {
 }
 
 const supabase = createClient();
+
+const fetchEvent = cache(async (id: string) => {
+  const { data } = await supabase
+    .from('events')
+    .select()
+    .eq('id', id)
+    .returns<Event[]>()
+    .single();
+  return data;
+});
 
 const fetchEventItems = cache(async (id: string | undefined) => {
   if (id === undefined) return [];
@@ -56,7 +71,7 @@ const fetchEntries = cache(async (id: string | undefined) => {
   return data ?? [];
 });
 
-export default function EventContent({ event, className }: { event: Event | undefined, className?: string }) {
+export default function EventContent({ event, className }: Props) {
   /*const [state, setState] = useState<State>({ entries: [], items: [], isAddEntryDialogOpened: false });
 
   useEffect(() => {
@@ -144,7 +159,7 @@ export default function EventContent({ event, className }: { event: Event | unde
             </div>
           </form>*/}
 
-          <AttachmentsList attachments={event.attachments} className="mt-8" />
+          <AttachmentsList event={event} className="mt-8" />
 
           <EntriesList entries={state.entries} items={state.items} event={event} className="mt-8" />
         </section>

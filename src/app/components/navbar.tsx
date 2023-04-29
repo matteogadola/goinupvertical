@@ -15,7 +15,7 @@ interface Props {
 
 const navLinks = [
   { name: "Classifiche", path: "/results" },
-  { name: "Foto", path: "/photos" },
+  { name: "Media", path: "/media" },
   { name: "Regolamento", path: "/regulation" },
   //{ name: "Accedi", path: "sign-in" },
 ]
@@ -68,7 +68,7 @@ export default function Navbar({ cover }: Props) {
           </div>
         </div>
 
-        <div className={classNames("hidden lg:flex lg:items-center lg:gap-4 z-10 text-gray-600", {" text-white": isHome })}>
+        <div className={classNames("hidden lg:flex lg:items-center lg:gap-6 z-10 text-gray-600", {" text-white": isHome })}>
           {
             navLinks.map((link, index) => (
               <Link href={link.path} key={index}>

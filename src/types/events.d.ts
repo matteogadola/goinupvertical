@@ -38,10 +38,10 @@ export interface EventDetail {
 //
 export interface Attachment {
   id: number;
-  eventId: string;
+  event_id: string;
   type: EventLinkType;
   name: string;
   url: string;
 }
 
-export type EventLinkType = 'classifica' | 'foto' | 'sarcazzo';
+export type EventLinkType = 'result' | 'photo' | 'video' | 'article' | 'link';

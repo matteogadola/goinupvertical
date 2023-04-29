@@ -1,35 +1,23 @@
 'use client'
 
 import { FormEvent, useEffect, useState } from 'react'
-import { base64 } from '@/lib/helpers'
-import { useRouter } from 'next/navigation'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
-import places from 'public/localization/it/places.json'
-import teams from 'public/localization/it/teams.json'
-
-import Autocomplete from '@/components/ui/autocomplete'
-
 import classNames from 'classnames'
-import { useStore } from '@/store/store'
-import Dialog from '@/components/ui/dialog'
-import CodiceFiscale from 'codice-fiscale-js'
 import { Attachment, Event } from '@/types/events'
-import { Entry } from '@/types/entries'
-import { Item } from '@/types/items'
-import { createCheckout } from '@/lib/checkout'
 import { useSupabase } from '@/app/components/supabase-provider'
 import { createClient } from '@/lib/supabase-auth-browser'
 
-type AttachmentForm = Omit<Attachment, 'id'>
+//type AttachmentForm = Omit<Attachment, 'id'>
 /*interface AttachmentForm extends Attachment {
 }*/
 
 type Props = {
   className?: string;
   attachment: Attachment | undefined;
+  event: Event;
   //items: Item[];
-  onResult(e: any): void;
+  onResult(attachment: Attachment): void;
   onClose(e: any): void;
 }
 
@@ -40,69 +28,90 @@ interface State {
 
 const supabase = createClient();
 
-const createAttachment = async (attachment: Attachment) => {
-  const { data } = await supabase
+const createAttachment = async (attachment: Omit<Attachment, 'id'>) => {
+  const { data, error } = await supabase
     .from('attachments')
     .insert(attachment)
     .select()
     .returns<Attachment[]>()
     .single();
 
-  console.log(data)
+  if (error) {
+    throw new Error(`Errore inatteso: ${error.code}`);
+  }
+    /*
+    {
+    "code": "23503",
+    "details": "Key (event_id)=() is not present in table \"events\".",
+    "hint": null,
+    "message": "insert or update on table \"attachments\" violates foreign key constraint \"attachments_event_id_fkey\""
+}
+*/
   return data;
 };
 
-export default function AttachmentDialog({ className, attachment, onResult, onClose }: Props) {
+const updateAttachment = async (attachment: Partial<Attachment>) => {
+  const id = attachment.id;
+  delete attachment.id;
+
+  const { data, error } = await supabase
+    .from('attachments')
+    .update(attachment)
+    .eq('id', id)
+    .select()
+    .returns<Attachment[]>()
+    .single();
+
+  if (error) {
+    throw new Error(`Errore inatteso: ${error.code}`);
+  }
+
+  return data;
+};
+
+export default function AttachmentDialog({ className, attachment, event, onResult, onClose }: Props) {
   const { supabase, session } = useSupabase()
 
-  const [state, setState] = useState<State>({ error: undefined, isLoading: false });
+  const [state, setState] = useState<State>({ error: '', isLoading: false });
+  const [error, setError] = useState(null)
 
   // se attachmente undefined
   
-  const { register, handleSubmit, control, setValue, setError, reset, formState: { errors } } = useForm<AttachmentForm>({
+  const { register, handleSubmit, control, setValue, reset, formState: { errors } } = useForm<Attachment>({
     defaultValues: attachment
   })
 
-  const onSubmit: SubmitHandler<AttachmentForm> = async data => {
-    /*data.tin = data.tin.toUpperCase();
-
-    const item = items.find(item => item.id === Number(data.item_id));
-
-    if (item === undefined) {
-      console.warn('Ticket non valido', data);
-      setState({ ...state, error: 'Ticket non valido' });
-      return
-    }
+  const onSubmit: SubmitHandler<Attachment> = async data => {
+    setError(null);
 
     try {
       setState({ ...state, isLoading: true });
+      let attachment;
 
-      const order = await createCheckout({
-        user_id: session?.user.id,
-        payment_method: 'cash',
-        user_email: data.email,
-        items: [{
-          id: item.id,
+      if (data.id) {
+        attachment = await updateAttachment(data);
+      } else {
+        attachment = await createAttachment({
           event_id: event.id,
-          name: item.name,
-          price: item.price,
-          quantity: 1,
-          description: `${data.first_name} ${data.last_name}`,
-          entry: data,
-        }]
-      })
-      //setError(null)
-      
-      if (order) {
-        console.debug('[add-entry-dialog] Order inserito correttamente', order);
-        onEntryCreated(order);
+          type: data.type,
+          name: data.name,
+          url: data.url,
+        });
+      }
+
+      if (attachment) {
+        setState({ ...state, error: '' });
+        onResult(attachment);
       }
     } catch (e: any) {
-      console.log(JSON.stringify(e.message))
-      //setError(e.message)
+      //console.log(JSON.stringify(e.message))
+      console.log("DENTRO", e.message)
+      //console.log("dentro")
+      setError(e.message);
+      setState({ ...state, error: e.message });
     } finally {
       setState({ ...state, isLoading: false });
-    }*/
+    }
   }
 
   return (
@@ -119,6 +128,12 @@ export default function AttachmentDialog({ className, attachment, onResult, onCl
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
+              <div className="hidden">
+                <input
+                    type="text"
+                    {...register("id")}
+                  />
+              </div>
 
               <div>
                 <label className="label" htmlFor="type">Tipologia</label>
@@ -128,6 +143,9 @@ export default function AttachmentDialog({ className, attachment, onResult, onCl
                 >
                   <option value='result'>Classifica</option>
                   <option value='photo'>Foto</option>
+                  <option value='video'>Video</option>
+                  <option value='article'>Articolo</option>
+                  <option value='link'>Link generico</option>
                 </select>
                 {errors.type && <small className="field-error">{errors.type.message}</small>}
               </div>
@@ -162,7 +180,20 @@ export default function AttachmentDialog({ className, attachment, onResult, onCl
 
 
             </div>
-            <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+
+
+            <div className="px-4">
+            {error && <div className="mt-4">
+                <div className="relative px-2 py-1 leading-normal text-red-700" role="alert">
+                  <span className="absolute inset-y-0 left-0 flex items-center ml-4">
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" fillRule="evenodd"></path></svg>
+                  </span>
+                  <p className="ml-8">{error}</p>
+                </div>
+              </div>
+}
+
+            <div className="flex items-center justify-end p-6 rounded-b">
               <button onClick={onClose} className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                 Annulla
               </button>
@@ -181,7 +212,7 @@ export default function AttachmentDialog({ className, attachment, onResult, onCl
                 Conferma
               </button>
             </div>
-
+</div>
           </form>
         </div>
       </div>
