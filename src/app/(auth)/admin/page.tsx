@@ -3,7 +3,7 @@
 import { cache, Suspense, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
-import { Event } from '@/types/events'
+import { Attachment, Event } from '@/types/events'
 import EventContent from './event-content';
 import { createClient } from '@/lib/supabase-auth-browser';
 import { dt } from '@/lib/date';
@@ -23,7 +23,6 @@ const fetchEvents = cache(async () => {
     .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
     .returns<Event[]>();
-    console.log(data)
   return data ?? [];
 });
 

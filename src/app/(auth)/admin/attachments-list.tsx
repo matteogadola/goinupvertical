@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, cache, useEffect, useState } from 'react'
 import { dt } from '@/lib/date'
 
 import classNames from 'classnames'
@@ -9,32 +9,61 @@ import DownloadCsv from './download-csv'
 import { createClient } from '@/lib/supabase-auth-browser'
 import { Order, OrderItem } from '@/types/orders';
 import { sendConfirmationMail } from '@/lib/mail';
-import { Attachment } from '@/types/events';
+import { Attachment, Event } from '@/types/events';
 import { PlusIcon, SettingIcon, TrashIcon } from '@/app/components/icons';
 import AttachmentDialog from './attachment-dialog';
 
 type Props = {
   className?: string;
-  attachments: Attachment[] | undefined;
+  //attachments: Attachment[] | undefined;
+  event: Event;
+  //onChange(event_id: string, attachments: Attachment[]): void;
 }
 
 interface State {
-  attachments: Attachment[] | undefined;
+  attachments: Attachment[];
   isDialogOpen: boolean;
   selectedAttachment: Attachment | undefined;
 }
 
-export default function AttachmentsList({ attachments, className }: Props) {
+const supabase = createClient();
+
+const fetchAttachments = cache(async (event_id: string) => {
+  const { data } = await supabase
+    .from('attachments')
+    .select()
+    .eq('event_id', event_id)
+    .returns<Attachment[]>();
+  
+  return data ?? [];
+});
+
+const deleteAttachment = async (attachment: Attachment) => {
+  const { data, error } = await supabase
+    .from('attachments')
+    .delete()
+    .eq('id', attachment.id);
+
+  if (error) {
+    throw new Error(`Errore inatteso: ${error.code}`);
+  }
+
+  return data;
+};
+
+export default function AttachmentsList({ event, className }: Props) {
 
   const [state, setState] = useState<State>({
-    attachments,
+    attachments: [],
     isDialogOpen: false,
     selectedAttachment: undefined
   });
 
-  useEffect(() => setState({ ...state, attachments }), [attachments]);
-  // in realtà dovresti mandarlo al padre...
-  // il pade potrebbe essere cacheato...
+  useEffect(() => {
+    fetchAttachments(event.id)
+      .then(attachments => setState({ ...state, attachments }))
+      .catch(() => setState({ ...state, attachments: [] }))
+  }, [event]);
 
   const onCreate = () => {
     setState({ ...state, isDialogOpen: true, selectedAttachment: undefined })
@@ -45,11 +74,31 @@ export default function AttachmentsList({ attachments, className }: Props) {
   }
 
   const onDelete = (attachment: Attachment) => {
-    setState({ ...state, isDialogOpen: true, selectedAttachment: attachment })
+    try {
+      deleteAttachment(attachment);
+
+      const newAttachments = state.attachments.filter(item => item.id !== attachment.id);
+      setState({ ...state, attachments: newAttachments });
+    } catch (e: any) {
+
+    }
   }
 
-  const onResult = (attachment: Attachment) => {
-    setState({ ...state, isDialogOpen: true, selectedAttachment: attachment })
+  const onDialogResult = (attachment: Attachment) => {
+    const index = state.attachments.findIndex(item => item.id === attachment.id);
+    let newAttachments;
+
+    if (index === -1) {
+      newAttachments = [...state.attachments, attachment];
+    } else {
+      newAttachments = state.attachments.map(item => {
+        if (item.id === attachment.id) {
+          return attachment;
+        }
+        return item;
+      });
+    }
+    setState({ ...state, isDialogOpen: false, selectedAttachment: undefined, attachments: newAttachments });
   }
 
   const closeDialog = () => {
@@ -58,7 +107,7 @@ export default function AttachmentsList({ attachments, className }: Props) {
 
   return (
     <Suspense fallback={<Spinner />}>
-      { state.isDialogOpen && <AttachmentDialog attachment={state.selectedAttachment} onResult={() => {}} onClose={closeDialog} /> }
+      { state.isDialogOpen && <AttachmentDialog attachment={state.selectedAttachment} event={event} onResult={onDialogResult} onClose={closeDialog} /> }
 
       <section className={classNames(className, "")}>
         <div className="flex items-center space-x-4">
@@ -66,7 +115,7 @@ export default function AttachmentsList({ attachments, className }: Props) {
           <button onClick={onCreate} className="button-icon"><PlusIcon /></button>
         </div>
 
-        { !!attachments?.length &&
+        { !!state.attachments?.length &&
           <div className="mt-4">
 
             <table className="text-sm">
@@ -79,7 +128,7 @@ export default function AttachmentsList({ attachments, className }: Props) {
                 </tr>
               </thead>
               <tbody>
-              { attachments.map((attachment, index) =>
+              { state.attachments.map((attachment, index) =>
                 <tr key={index} className="border-b">
                   <td className="pr-10 py-2">{attachment.type}</td>
                   <td className="pr-10 py-2 whitespace-nowrap">{attachment.name}</td>

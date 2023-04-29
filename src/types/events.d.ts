@@ -38,7 +38,7 @@ export interface EventDetail {
 //
 export interface Attachment {
   id: number;
-  eventId: string;
+  event_id: string;
   type: EventLinkType;
   name: string;
   url: string;
