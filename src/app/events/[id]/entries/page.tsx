@@ -1,15 +1,19 @@
 'use client'
 
 import Spinner from '@/components/spinner';
+import { base64 } from '@/lib/helpers';
 import { createClient } from '@/lib/supabase-auth-browser';
+import { Event } from '@/types/events';
 import { redirect, usePathname, useSearchParams } from 'next/navigation'
 import { Suspense, cache, useEffect, useState } from 'react';
+
+interface SearchParams {
+  q: string;
+}
 
 interface State {
   entries: any[];
   items: any[];
-  //isDialogOpen: boolean;
-  //selectedEntry: any | undefined;
 }
 
 const supabase = createClient();
@@ -20,15 +24,14 @@ const fetchEntries = cache(async (id: string) => {
 });
 
 export default function EventEntriesPage() {
+  const event = base64.decode<Event>(useSearchParams()?.get('q') ?? '')
+
   const routePath = usePathname()?.split('/');
   const event_id = routePath?.[2];
-
 
   const [state, setState] = useState<State>({
     entries: [],
     items: [],
-    //isDialogOpen: false,
-    //selectedEntry: undefined
   });
 
   useEffect(() => {
@@ -56,11 +59,11 @@ export default function EventEntriesPage() {
       <section className="page">
         <div>
           <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({state.entries?.length})</span></h3>
-          {/*<h1 className="title mt-3">{event.edition}° {event.name}</h1>*/}
+          {(event?.edition && event?.name) && <h1 className="title mt-3">{event.edition}° {event.name}</h1>}
         </div>
 
         {!!state.items?.length &&
-          <div className="mt-4">
+          <div className="mt-8">
             {/*<input type="text" className="appearance-none bg-transparent border-b focus:outline-none" placeholder="Cognome" onChange={(e) => filterEntries(e)} />*/}
 
             <table className="text-sm">
