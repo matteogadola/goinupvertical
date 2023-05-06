@@ -3,12 +3,14 @@ import { Suspense } from 'react'
 import Spinner from './spinner'
 import { base64 } from '@/lib/helpers'
 import { Item } from '@/types/items'
+import { Event } from '@/types/events'
 
 interface Props {
   list: Item[];
+  event: Event;
 }
 
-export default function ItemsList({ list }: Props) {
+export default function ItemsList({ list, event }: Props) {
   const items = list.filter(item => item.status === 'published')
 
   return (
@@ -16,21 +18,22 @@ export default function ItemsList({ list }: Props) {
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container">
           <div className="divide-y-2 divide-gray-50 lg:pr-24">
-            { items.length === 0
+            {items.length === 0
               ? <p>Iscrizione non disponibile</p>
-              : items.map((item, index) => (
+              : <div>
+                {items.map((item, index) => (
                   <div key={index} className="border shadow-md hover:shadow-lg pl-2">
                     <Link href={{ pathname: '/events/entry', query: { q: base64.encode(item) } }}>
-                      <div className="py-4 flex flex-wrap md:flex-nowrap hover:opacity-80">
+                      <div className="py-6 flex flex-wrap md:flex-nowrap hover:opacity-80">
                         <div className="md:flex-grow">
-                          <h2 className="text-2xl text-gray-800">{ item.name }</h2>
-                          <p className="leading-relaxed">{ item.summary }</p>
-                          <button className="text-button inline-flex items-center mt-2">Iscriviti
+                          <h2 className="text-2xl text-gray-800">{item.name}</h2>
+                          <p className="leading-relaxed">{item.summary}</p>
+                          {/*<button className="text-button inline-flex items-center mt-2">Iscriviti
                             <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M5 12h14"></path>
                               <path d="M12 5l7 7-7 7"></path>
                             </svg>
-                          </button>
+                          </button>*/}
                         </div>
                         <div className="md:mr-4 items-center flex">
                           <span className="text-gray-800 text-xl uppercase">{item.price / 100}€</span>
@@ -38,7 +41,13 @@ export default function ItemsList({ list }: Props) {
                       </div>
                     </Link>
                   </div>
-              ))
+                ))}
+                <div className="mt-8">
+                  <Link href={{ pathname: `/events/${event?.id}/entries`, query: { q: base64.encode(event) } }}>
+                    <span className="text-button">Vedi elenco iscritti</span>
+                  </Link>
+                </div>
+              </div>
             }
           </div>
         </div>

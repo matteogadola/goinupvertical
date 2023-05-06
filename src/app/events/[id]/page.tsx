@@ -28,8 +28,8 @@ export default async function EventPage({
     <section className="page">
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div>
-          <span className="overtitle">{ event.date ? dt(event.date).format('ddd DD MMM') : 'Evento' }</span>
-          <h1 className="title mt-3">{ event.edition }° { event.name }</h1>
+          <span className="overtitle">{event.date ? dt(event.date).format('ddd DD MMM') : 'Evento'}</span>
+          <h1 className="title mt-3">{event.edition}° {event.name}</h1>
           <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
           <div className="mt-8">
@@ -40,9 +40,9 @@ export default async function EventPage({
 
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
           <div className="mt-8">
-            { event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
-                ? <ItemsList list={items} />
-                : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
+            {event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
+              ? <ItemsList list={items} event={event} />
+              : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
             }
           </div>
 
@@ -59,7 +59,7 @@ export default async function EventPage({
             />
           }
         </div>
-        
+
       </div>
     </section>
   )
