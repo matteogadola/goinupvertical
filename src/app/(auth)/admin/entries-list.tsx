@@ -68,17 +68,16 @@ export default function EntriesList({ entries, items, event, className }: Props)
   }
 
   // rinomina...
-  const addEntry = (order: any) => {
-    setState({ ...state, isDialogOpen: false })
-
-    console.log(order)
-
-    // INSERISCI NUOVA ENTRY IN ARRAY
+  const addEntry = (entry: any) => {
+    // andrebbe aggiunto in ordine?
+    const newEntries = state.entries;
+    newEntries.unshift(entry);
+    setState({ ...state, isDialogOpen: false, entries: newEntries });
   }
 
   return (
     <Suspense fallback={<Spinner />}>
-      { state.isDialogOpen && <EntryDialog event={event} items={items} onEntryCreated={addEntry} onClose={closeDialog} /> }
+      {state.isDialogOpen && <EntryDialog event={event} items={items} onEntryCreated={addEntry} onClose={closeDialog} />}
 
       <section className={classNames(className, "")}>
         <div className="flex items-center space-x-4">
@@ -103,7 +102,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
           <input type="text" className="appearance-none bg-transparent border-b focus:outline-none" placeholder="Cognome" onChange={(e) => filterEntries(e)} />
         </div>
 
-        { state.items?.length &&
+        {state.items?.length &&
           <div className="mt-4">
 
             <table className="text-sm">
@@ -123,23 +122,23 @@ export default function EntriesList({ entries, items, event, className }: Props)
                 </tr>
               </thead>
               <tbody>
-              { state.items.map((entry, index) =>
-                <tr key={index} className="border-b">
-                  <td className="pr-5 py-2">{entry.order_id}</td>
-                  <td className="pr-10 py-2">{entry.category}</td>
-                  <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
-                  <td className="pr-10 py-2">{entry.payment_method}</td>
-                  <td className="pr-10 py-2">{entry.payment_status}</td>
-                  <td className="pr-10 py-2 whitespace-nowrap">{entry.last_name}</td>
-                  <td className="pr-10 py-2 whitespace-nowrap">{entry.first_name}</td>
-                  <td className="pr-10 py-2">{entry.birth_year}</td>
-                  <td className="pr-10 py-2">{entry.gender}</td>
-                  <td className="pr-10 py-2">{entry.team}</td>
-                  { (entry.payment_method === 'cash' && entry.payment_status === 'pending') &&
-                    <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
-                  }
-                </tr>
-              )}
+                {state.items.map((entry, index) =>
+                  <tr key={index} className="border-b">
+                    <td className="pr-5 py-2">{entry.order_id}</td>
+                    <td className="pr-10 py-2">{entry.category}</td>
+                    <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
+                    <td className="pr-10 py-2">{entry.payment_method}</td>
+                    <td className="pr-10 py-2">{entry.payment_status}</td>
+                    <td className="pr-10 py-2 whitespace-nowrap">{entry.last_name}</td>
+                    <td className="pr-10 py-2 whitespace-nowrap">{entry.first_name}</td>
+                    <td className="pr-10 py-2">{entry.birth_year}</td>
+                    <td className="pr-10 py-2">{entry.gender}</td>
+                    <td className="pr-10 py-2">{entry.team}</td>
+                    {(entry.payment_method === 'cash' && entry.payment_status === 'pending') &&
+                      <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
+                    }
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
