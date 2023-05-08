@@ -72,6 +72,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
     // andrebbe aggiunto in ordine?
     const newEntries = state.entries;
     newEntries.unshift(entry);
+
     setState({ ...state, isDialogOpen: false, entries: newEntries });
   }
 

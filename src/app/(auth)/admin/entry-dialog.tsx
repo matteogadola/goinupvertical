@@ -19,6 +19,7 @@ import { Entry } from '@/types/entries'
 import { Item } from '@/types/items'
 import { createCheckout } from '@/lib/checkout'
 import { useSupabase } from '@/app/components/supabase-provider'
+import { createClient } from '@/lib/supabase-auth-browser'
 
 
 //type AddEntryForm = Pick<Entry, 'first_name' | 'last_name' | 'tin' | 'team' | 'email' | 'phone_number'> & {item_id: number };
@@ -50,6 +51,10 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
   /*const data: FormDialogState | null = null
   useEffect(() => {
   }, [data])*/
+  const fetchEntry = async (id: number) => {
+    const { data } = await supabase.from('v_entries').select().eq('order_id', id);
+    return data;
+  };
 
   const onSubmit: SubmitHandler<AddEntryForm> = async data => {
     data.tin = data.tin.toUpperCase();
@@ -81,9 +86,9 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
       })
       //setError(null)
 
-      if (order) {
+      if (order?.id) {
         console.debug('[add-entry-dialog] Order inserito correttamente', order);
-        onEntryCreated(order);
+        onEntryCreated(await fetchEntry(order.id));
       }
     } catch (e: any) {
       console.log(JSON.stringify(e.message))
