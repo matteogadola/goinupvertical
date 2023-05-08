@@ -19,7 +19,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="it" className={`${fonts.map(font => font.variable).join(' ')}`}>
+    <html lang="it" className={`${fonts.map(font => font.className).join(' ')}`}>
       <head />
       <body className="flex flex-col min-h-screen">
         <SupabaseProvider session={session}>
