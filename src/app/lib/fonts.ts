@@ -7,19 +7,19 @@ export const unbounded = Unbounded({
 });
 
 const poppins = Poppins({
-  variable: '--font-poppins',
   subsets: ['latin'],
   weight: ['400'],
+  variable: '--font-poppins',
 });
 
 const inter = Inter({
-  variable: '--font-inter',
   subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 const roboto_mono = Roboto_Mono({
-  variable: '--font-roboto-mono',
   subsets: ['latin'],
+  variable: '--font-roboto-mono',
 });
 
 export const fonts = [unbounded, poppins];

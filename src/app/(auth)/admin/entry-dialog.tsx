@@ -44,9 +44,9 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
 
   const [state, setState] = useState<State>({ error: undefined, isLoading: false });
 
-  
+
   const { register, handleSubmit, control, setValue, setError, reset, formState: { errors } } = useForm<AddEntryForm>()
-  
+
   /*const data: FormDialogState | null = null
   useEffect(() => {
   }, [data])*/
@@ -80,7 +80,7 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
         }]
       })
       //setError(null)
-      
+
       if (order) {
         console.debug('[add-entry-dialog] Order inserito correttamente', order);
         onEntryCreated(order);
@@ -146,11 +146,10 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
 
               <div className="pb-6">
                 <select
-                  className={classNames("field", {"invalid": errors.item_id})}
-                  disabled={items.length < 2}
-                  {...register("item_id", { required: 'Campo obbligatorio' })}
+                  className={classNames("field", { "invalid": errors.item_id })}
+                  {...register("item_id")}
                 >
-                  { items.map((item, index) =>
+                  {items.map((item, index) =>
                     <option key={index} value={item.id}>{item.name}</option>
                   )}
                 </select>
@@ -163,7 +162,7 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
                   <label className="label" htmlFor="first_name">Nome</label>
                   <input
                     type="text"
-                    className={classNames("field", {"invalid": errors.first_name})}
+                    className={classNames("field", { "invalid": errors.first_name })}
                     {...register("first_name", { required: 'Campo obbligatorio' })}
                   />
                   {errors.first_name && <small className="field-error">{errors.first_name.message}</small>}
@@ -173,79 +172,79 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
                   <label className="label" htmlFor="last_name">Cognome</label>
                   <input
                     type="text"
-                    className={classNames("field", {"invalid": errors.last_name})}
+                    className={classNames("field", { "invalid": errors.last_name })}
                     {...register("last_name", { required: 'Campo obbligatorio' })}
                   />
                   {errors.last_name && <small className="field-error">{errors.last_name.message}</small>}
                 </div>
 
-          <div>
-            <label className="label" htmlFor="tin">Codice Fiscale</label>
-            <input
-              type="text"
-              className={classNames("field uppercase", {"invalid": errors.tin})}
-              {...register("tin", {
-                required: 'Campo obbligatorio',
-                pattern: {
-                  value: /^(?:[A-Z][AEIOU][AEIOUX]|[AEIOU]X{2}|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i,
-                  message: "Codice fiscale non valido"
-                },
-              })}
-            />
-            { errors.tin && <small className="field-error block">{errors.tin.message}</small> }
-          </div>
+                <div>
+                  <label className="label" htmlFor="tin">Codice Fiscale</label>
+                  <input
+                    type="text"
+                    className={classNames("field uppercase", { "invalid": errors.tin })}
+                    {...register("tin", {
+                      required: 'Campo obbligatorio',
+                      pattern: {
+                        value: /^(?:[A-Z][AEIOU][AEIOUX]|[AEIOU]X{2}|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}(?:[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[15MR][\dLMNP-V]|[26NS][0-8LMNP-U])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM]|[AC-EHLMPR-T][26NS][9V])|(?:[02468LNQSU][048LQU]|[13579MPRTV][26NS])B[26NS][9V])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$/i,
+                        message: "Codice fiscale non valido"
+                      },
+                    })}
+                  />
+                  {errors.tin && <small className="field-error block">{errors.tin.message}</small>}
+                </div>
 
-          <div className="">
-            <Controller
-              name="team"
-              control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <label className="label" htmlFor={field.name}>Società</label>
-                  <Autocomplete name={field.name} value={field.value} items={teams} placeholder="Opzionale" onChange={e => field.onChange(e.target.value.toUpperCase())} />
-                  {fieldState.error?.message && <small className="field-error">{fieldState.error?.message}</small>}
-                </>
-              )}
-            />
-          </div>
+                <div className="">
+                  <Controller
+                    name="team"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <>
+                        <label className="label" htmlFor={field.name}>Società</label>
+                        <Autocomplete name={field.name} value={field.value} items={teams} placeholder="Opzionale" onChange={e => field.onChange(e.target.value.toUpperCase())} />
+                        {fieldState.error?.message && <small className="field-error">{fieldState.error?.message}</small>}
+                      </>
+                    )}
+                  />
+                </div>
 
-          <div className="">
-            <label className="label" htmlFor="email">Email</label>
-            <input
-              type="email"
-              aria-invalid={errors.email ? "true" : "false"}
-              {...register("email", {
-                required: 'Campo obbligatorio',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Indirizzo mail non valido"
-                },
-              })}
-              className="field"
-            />
-            {errors.email && <small className="field-error">{errors.email.message}</small>}
-          </div>
+                <div className="">
+                  <label className="label" htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    aria-invalid={errors.email ? "true" : "false"}
+                    {...register("email", {
+                      required: 'Campo obbligatorio',
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Indirizzo mail non valido"
+                      },
+                    })}
+                    className="field"
+                  />
+                  {errors.email && <small className="field-error">{errors.email.message}</small>}
+                </div>
 
-          <div className="">
-            <label className="label" htmlFor="phone_number">Telefono</label>
-            <input
-              type="text"
-              aria-invalid={errors.phone_number ? "true" : "false"}
-              {...register("phone_number", {
-                required: 'Campo obbligatorio',
-                pattern: {
-                  value: /^((00|\+)39)??(3\d{2}|0\d{1,3})\d{6,7}$/,
-                  message: "Numero di telefono non valido"
-                },
-              })}
-              className="field"
-            />
-            {errors.phone_number && <small className="field-error">{errors.phone_number.message}</small>}
-          </div>
+                <div className="">
+                  <label className="label" htmlFor="phone_number">Telefono</label>
+                  <input
+                    type="text"
+                    aria-invalid={errors.phone_number ? "true" : "false"}
+                    {...register("phone_number", {
+                      required: 'Campo obbligatorio',
+                      pattern: {
+                        value: /^((00|\+)39)??(3\d{2}|0\d{1,3})\d{6,7}$/,
+                        message: "Numero di telefono non valido"
+                      },
+                    })}
+                    className="field"
+                  />
+                  {errors.phone_number && <small className="field-error">{errors.phone_number.message}</small>}
+                </div>
 
               </div>
 
-            
+
 
 
 
@@ -264,7 +263,7 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
                 disabled={state.isLoading}
                 className="rounded-md bg-button px-6 py-3 text-base font-medium text-white hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
               >
-                { state.isLoading &&
+                {state.isLoading &&
                   <svg aria-hidden="true" role="status" className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
                     <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"></path>
