@@ -6,10 +6,17 @@ import ItemsList from '@/components/items-list'
 import { dt, getReadableDate } from '@/lib/date'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { base64 } from '@/lib/helpers'
 
 interface Params {
   id: string;
 }
+
+/*export async function generateMetadata({ params }) {
+  return {
+    title: '...',
+  };
+}*/
 
 export default async function EventPage({
   params,
@@ -44,6 +51,12 @@ export default async function EventPage({
               ? <ItemsList list={items} event={event} />
               : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
             }
+
+            {!!items.length && <div className="mt-8">
+              <Link href={{ pathname: `/events/${event?.id}/entries`, query: { q: base64.encode(event) } }}>
+                <span className="text-button">Vedi elenco iscritti</span>
+              </Link>
+            </div>}
           </div>
 
         </div>
