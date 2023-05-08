@@ -86,7 +86,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
           <button onClick={onCreate} className="button-icon"><PlusIcon /></button>
         </div>
 
-        <DownloadCsv data={state.entries} name={event.id} className="mt-2" />
+        {state.entries && <DownloadCsv data={state.entries} name={event.id} className="mt-2" />}
 
         {/*<div className="mt-4 border rounded relative">
           <label htmlFor="first" className=" absolute -top-2.5 z-10 left-1 px-1 text-sm">Filtri</label>

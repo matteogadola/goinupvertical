@@ -52,7 +52,7 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
   useEffect(() => {
   }, [data])*/
   const fetchEntry = async (id: number) => {
-    const { data } = await supabase.from('v_entries').select().eq('order_id', id);
+    const { data } = await supabase.from('v_entries').select().eq('order_id', id).single();
     return data;
   };
 
