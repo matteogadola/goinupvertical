@@ -70,10 +70,10 @@ export default function EntriesList({ entries, items, event, className }: Props)
   // rinomina...
   const addEntry = (entry: any) => {
     // andrebbe aggiunto in ordine?
-    const newEntries = state.entries;
+    const newEntries = [...state.entries];
     newEntries.unshift(entry);
 
-    setState({ ...state, isDialogOpen: false, entries: newEntries });
+    setState({ ...state, isDialogOpen: false, entries: newEntries, items: newEntries });
   }
 
   return (
