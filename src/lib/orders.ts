@@ -126,7 +126,7 @@ export const createOrder = async (params: Partial<Order>) => {
         [order.id, item.id, item.name, item.price, item?.description]
       );
       const orderItem = orderItemRows[0];
-      const count = orderItems.push(orderItem);
+      orderItems.push({ ...orderItem, event_id: item.event_id });
       //orderItems.push(orderItem);
 
       // tarrozzata, poi rimarrà questa senza la seconda clausola
