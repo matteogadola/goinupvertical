@@ -106,7 +106,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             <label className="label" htmlFor="first_name">Nome</label>
             <input
               type="text"
-              className={classNames("field", {"invalid": errors.first_name})}
+              className={classNames("field", { "invalid": errors.first_name })}
               {...register("first_name", { required: 'Campo obbligatorio' })}
             />
             {errors.first_name && <small className="field-error">{errors.first_name.message}</small>}
@@ -116,7 +116,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             <label className="label" htmlFor="last_name">Cognome</label>
             <input
               type="text"
-              className={classNames("field", {"invalid": errors.last_name})}
+              className={classNames("field", { "invalid": errors.last_name })}
               {...register("last_name", { required: 'Campo obbligatorio' })}
             />
             {errors.last_name && <small className="field-error">{errors.last_name.message}</small>}
@@ -126,7 +126,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             <label className="label" htmlFor="tin">Codice Fiscale</label>
             <input
               type="text"
-              className={classNames("field uppercase", {"invalid": errors.tin})}
+              className={classNames("field uppercase", { "invalid": errors.tin })}
               {...register("tin", {
                 required: 'Campo obbligatorio',
                 pattern: {
@@ -136,7 +136,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
               })}
             />
             <small className="field-helper">Non lo ricordi? <button onClick={() => openTinCalculator()}>Calcolalo</button></small>
-            { errors.tin && <small className="field-error block">{errors.tin.message}</small> }
+            {errors.tin && <small className="field-error block">{errors.tin.message}</small>}
           </div>
 
           <div className="">
@@ -207,7 +207,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             </div>
           </div>
 
-          
+
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-12">
           {/*<Button label="Indietro" className="col-span-3 hover:text-gray-600 py-2" onClick={() => router.back()} />*/}
