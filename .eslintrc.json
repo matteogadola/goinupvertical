@@ -2,5 +2,9 @@
   "extends": [
     "next/core-web-vitals",
     "prettier"
-  ]
+  ],
+  "ignorePatterns": [
+    ".gitignore",
+    "public/"
+  ],
 }

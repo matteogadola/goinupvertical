@@ -4,8 +4,8 @@
   "private": true,
   "types": "./index.d.ts",
   "scripts": {
-    "format": "prettier --check --ignore-path .gitignore ./src",
-    "format:fix": "prettier --write --ignore-path .gitignore ./src",
+    "format": "prettier --check ./src",
+    "format:fix": "prettier --write ./src",
     "lint": "next lint",
     "dev": "next dev",
     "build": "next build",
