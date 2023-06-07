@@ -141,7 +141,7 @@ export default function AttachmentDialog({ className, attachment, event, onResul
                     className={classNames("field", { "invalid": errors.type })}
                     {...register("type", { required: 'Campo obbligatorio' })}
                   >
-                    <option value='result' disabled>Classifica</option>
+                    <option value='result'>Classifica</option>
                     <option value='photo' selected>Foto</option>
                     <option value='video'>Video</option>
                     <option value='article'>Articolo</option>
