@@ -34,9 +34,9 @@ export default async function MediaPage() {
       <h1 className="overtitle">Allegati</h1>
       <h1 className="title">Media</h1>
 
-      <div className="mt-8">
+      <div className="mt-8 space-y-8">
         {events.map(event =>
-          <div key={event.id} className="w-full lg:w-1/3 p-6 shadow lg:shadow-lg">
+          <div key={event.id} className="w-full lg:w-1/3 p-6 shadow">
             <span className="overtitle">{event.edition}° {event.name}</span>
 
             <div className="mt-4">
