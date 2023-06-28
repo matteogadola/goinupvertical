@@ -24,6 +24,7 @@ import { Entry } from '@/types/entries';
 import { Item } from '@/types/items';
 import AttachmentsList from './attachments-list';
 import AttachmentDialog from './attachment-dialog';
+import EventStatus from './event-status';
 
 type EventForm = Partial<Event>
 
@@ -58,9 +59,9 @@ const fetchEventItems = cache(async (id: string | undefined) => {
     .select()
     .eq('event_id', id)
     .returns<Item[]>();
-  
-    // if event date is today vendi solo on-site
-    // in caso contrario solo ticket
+
+  // if event date is today vendi solo on-site
+  // in caso contrario solo ticket
   return data ?? [];
 });
 
@@ -111,7 +112,7 @@ export default function EventContent({ event, className }: Props) {
 
     setValue('status', event?.status);
   }, [event]);
-  
+
   const {
     register,
     handleSubmit,
@@ -124,44 +125,27 @@ export default function EventContent({ event, className }: Props) {
   } = useForm()
 
   const onSubmit: SubmitHandler<EventForm> = async (data) => {
-    
+
   }
 
-  
+
 
 
 
 
   return (
     <Suspense fallback={<Spinner />}>
-      { event &&
-        <section className={classNames(className, "")}>
-          
+      {event &&
+        <section className={classNames(className, "space-y-8")}>
+
           <h3 className="title">{event.name}</h3>
+          <small className="text-gray-600">{dt(event.date).format("dddd DD MMMM - HH:mm")}</small>
 
-          { /* qui va la form di modifica evento */ }
+          <EventStatus event={event} items={state.items} />
 
-          {/*<form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <AttachmentsList event={event} />
 
-              <div className="">
-                <label className="label" htmlFor="status">Stato</label>
-                <select
-                  {...register("status")}
-                  className="field"
-                >
-                  <option value="internal">Nascosto</option>
-                  <option value="published">Visibile con Link</option>
-                  <option value="scheduled">Visibile</option>
-                </select>
-              </div>
-
-            </div>
-          </form>*/}
-
-          <AttachmentsList event={event} className="mt-8" />
-
-          <EntriesList entries={state.entries} items={state.items} event={event} className="mt-8" />
+          <EntriesList entries={state.entries} event={event} items={state.items} />
         </section>
       }
     </Suspense>

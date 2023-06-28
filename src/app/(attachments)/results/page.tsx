@@ -20,8 +20,10 @@ const fetchEvents = cache(async () => {
     .select(`id, name, edition, attachments!inner (*)`)
     .eq('attachments.type', 'result')
     .gte('date', dt().startOf('year').format())
+    .order('category', { ascending: false })
     .order('date', { ascending: false })
     .returns<Event[]>();
+
   return data ?? [];
 });
 
