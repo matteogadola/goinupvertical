@@ -2,10 +2,11 @@ import HomeMission from '@/app/components/home-mission'
 import HomeEvents from '@/app/components/home-events'
 import HomeGoinupCalendar from '@/app/components/home-goinup-calendar'
 import Credits from '@/app/components/credits'
+import { Metadata } from 'next'
 
 // export const revalidate = 85000
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Goinup',
   description: 'Circuito di gare vertical a scopo benefico',
 }

@@ -12,6 +12,8 @@ import { sendConfirmationMail } from '@/lib/mail';
 import { Attachment, Event } from '@/types/events';
 import { PlusIcon, SettingIcon, TrashIcon } from '@/app/components/icons';
 import AttachmentDialog from './attachment-dialog';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/types/supabase';
 
 type Props = {
   className?: string;
@@ -26,32 +28,35 @@ interface State {
   selectedAttachment: Attachment | undefined;
 }
 
-const supabase = createClient();
+//const supabase = createClient();
 
-const fetchAttachments = cache(async (event_id: string) => {
-  const { data } = await supabase
-    .from('attachments')
-    .select()
-    .eq('event_id', event_id)
-    .returns<Attachment[]>();
 
-  return data ?? [];
-});
-
-const deleteAttachment = async (attachment: Attachment) => {
-  const { data, error } = await supabase
-    .from('attachments')
-    .delete()
-    .eq('id', attachment.id);
-
-  if (error) {
-    throw new Error(`Errore inatteso: ${error.code}`);
-  }
-
-  return data;
-};
 
 export default function AttachmentsList({ event, className }: Props) {
+  const supabase = createClientComponentClient<Database>();
+
+  const fetchAttachments = cache(async (event_id: string) => {
+    const { data } = await supabase
+      .from('attachments')
+      .select()
+      .eq('event_id', event_id)
+      .returns<Attachment[]>();
+
+    return data ?? [];
+  });
+
+  const deleteAttachment = async (attachment: Attachment) => {
+    const { data, error } = await supabase
+      .from('attachments')
+      .delete()
+      .eq('id', attachment.id);
+
+    if (error) {
+      throw new Error(`Errore inatteso: ${error.code}`);
+    }
+
+    return data;
+  };
 
   const [state, setState] = useState<State>({
     attachments: [],

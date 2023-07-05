@@ -15,7 +15,8 @@ type SupabaseContext = {
 
 const Context = createContext<SupabaseContext | undefined>(undefined)
 
-export default function SupabaseProvider({ children, session }: { children: React.ReactNode, session: MaybeSession }) {
+//export default 
+function SupabaseProvider({ children, session }: { children: React.ReactNode, session: MaybeSession }) {
   const [supabase] = useState(() => createClient())
 
   return (
@@ -25,7 +26,8 @@ export default function SupabaseProvider({ children, session }: { children: Reac
   )
 }
 
-export const useSupabase = () => {
+//export
+const useSupabase = () => {
   const context = useContext(Context);
   if (context === undefined) {
     throw new Error("useSupabase must be used inside SupabaseProvider");

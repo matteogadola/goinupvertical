@@ -23,10 +23,10 @@ export default async function EventPage({
 }: {
   params: Params
 }) {
-  const event = await getEvent(params.id)
+  const event = await getEvent(params.id);
 
   if (event === null || event.status === 'internal') {
-    notFound()
+    notFound();
   }
 
   const items = await getItems({ eventId: event.id, status: 'published' })
@@ -36,11 +36,11 @@ export default async function EventPage({
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div>
           <span className="overtitle">{event.date ? dt(event.date).format('ddd DD MMM') : 'Evento'}</span>
-          <h1 className="title mt-3">{event.edition}° {event.name}</h1>
+          <h1 className="title mt-3">{!!event.edition && <span>{event.edition}° </span>}{event.name}</h1>
           <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
           <div className="mt-8">
-            <Link href="/regulation">
+            <Link href={event.regulation ?? "/regulation"}>
               <span className="text-button hover:opacity-80">Consulta il regolamento</span>
             </Link>
           </div>

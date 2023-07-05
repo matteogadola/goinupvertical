@@ -16,7 +16,7 @@ import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 import { getOrders, getEntries } from '@/app/lib/views'
 import { Attachment, Event } from '@/types/events'
-import { useSupabase } from '@/app/components/supabase-provider';
+//import { useSupabase } from '@/app/components/supabase-provider';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createClient } from '@/lib/supabase-auth-client'
 import EntriesList from './entries-list';
@@ -29,7 +29,6 @@ import EventStatus from './event-status';
 type EventForm = Partial<Event>
 
 type Props = {
-  className?: string;
   event: Event | undefined;
 }
 
@@ -72,27 +71,7 @@ const fetchEntries = cache(async (id: string | undefined) => {
   return data ?? [];
 });
 
-export default function EventContent({ event, className }: Props) {
-  /*const [state, setState] = useState<State>({ entries: [], items: [], isAddEntryDialogOpened: false });
-
-  useEffect(() => {
-    if (event?.id === undefined) {
-      console.log("undefined")
-      setState({ ...state, entries: [], items: [] });
-    } else {
-      console.log(event.id)
-      fetchEntries(event.id)
-        .then(entries => setState({ ...state, entries }))
-        .catch(() => setState({ ...state, entries: [] }));
-
-      fetchEventItems(event.id)
-        .then(items => setState({ ...state, items }))
-        .catch(() => setState({ ...state, items: [] }));
-    }
-
-    //setValue('status', event?.status);
-  }, [event]);*/
-
+export default function EventContent({ event }: Props) {
   //const [entries, setEntries] = useState<any | undefined>(undefined)
   const [state, setState] = useState<State>({
     entries: [],
@@ -136,7 +115,7 @@ export default function EventContent({ event, className }: Props) {
   return (
     <Suspense fallback={<Spinner />}>
       {event &&
-        <section className={classNames(className, "space-y-8")}>
+        <section className="space-y-8">
 
           <h3 className="title">{event.name}</h3>
           <small className="text-gray-600">{dt(event.date).format("dddd DD MMMM - HH:mm")}</small>

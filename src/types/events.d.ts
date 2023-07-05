@@ -13,6 +13,7 @@ export interface Event {
   description: string | null;
   body: string | null;
   flyer: string | null;
+  regulation: string | null;
   attachments?: Attachment[];
 }
 
