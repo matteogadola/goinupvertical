@@ -16,10 +16,8 @@ export default async function HomePage() {
     <section className="page">
       <HomeMission className="mt-20" />
 
-      {/* @ts-expect-error Server Component */}
       <HomeEvents className="mt-36" />
 
-      {/* @ts-expect-error Server Component */}
       <HomeGoinupCalendar className="mt-36" />
 
       <Credits className="mt-40" />
