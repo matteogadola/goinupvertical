@@ -23,7 +23,7 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
     queryBuilder.eq('promoter_id', props.promoterId);
   }
   if (props?.status) {
-    queryBuilder.neq('status', props.status);
+    queryBuilder.eq('status', props.status);
   }
   if (props?.notInternal) { // a tendere elimina
     queryBuilder.neq('status', 'internal');
