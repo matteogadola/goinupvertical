@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase-auth-browser'
+import { createClient } from '@/lib/supabase-auth-client'
 import { Event, EventStatus } from '@/types/events'
 import { Item, ItemStatus } from '@/types/items'
 

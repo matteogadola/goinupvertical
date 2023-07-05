@@ -19,7 +19,7 @@ import { Entry } from '@/types/entries'
 import { Item } from '@/types/items'
 import { createCheckout } from '@/lib/checkout'
 import { useSupabase } from '@/app/components/supabase-provider'
-import { createClient } from '@/lib/supabase-auth-browser'
+import { createClient } from '@/lib/supabase-auth-client'
 
 
 //type AddEntryForm = Pick<Entry, 'first_name' | 'last_name' | 'tin' | 'team' | 'email' | 'phone_number'> & {item_id: number };

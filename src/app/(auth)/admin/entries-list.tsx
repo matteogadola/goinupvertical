@@ -6,7 +6,7 @@ import { dt } from '@/lib/date'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 import DownloadCsv from './download-csv'
-import { createClient } from '@/lib/supabase-auth-browser'
+import { createClient } from '@/lib/supabase-auth-client'
 import { Event } from '@/types/events';
 import { sendConfirmationMail } from '@/lib/mail';
 import { PlusIcon } from '@/app/components/icons';

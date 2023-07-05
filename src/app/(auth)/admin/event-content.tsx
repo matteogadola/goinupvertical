@@ -18,7 +18,7 @@ import { getOrders, getEntries } from '@/app/lib/views'
 import { Attachment, Event } from '@/types/events'
 import { useSupabase } from '@/app/components/supabase-provider';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { createClient } from '@/lib/supabase-auth-browser'
+import { createClient } from '@/lib/supabase-auth-client'
 import EntriesList from './entries-list';
 import { Entry } from '@/types/entries';
 import { Item } from '@/types/items';

@@ -6,7 +6,7 @@ import { dt } from '@/lib/date'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 import DownloadCsv from './download-csv'
-import { createClient } from '@/lib/supabase-auth-browser'
+import { createClient } from '@/lib/supabase-auth-client'
 import { Order, OrderItem } from '@/types/orders';
 import { sendConfirmationMail } from '@/lib/mail';
 import { Attachment, Event } from '@/types/events';
@@ -34,7 +34,7 @@ const fetchAttachments = cache(async (event_id: string) => {
     .select()
     .eq('event_id', event_id)
     .returns<Attachment[]>();
-  
+
   return data ?? [];
 });
 
@@ -107,7 +107,7 @@ export default function AttachmentsList({ event, className }: Props) {
 
   return (
     <Suspense fallback={<Spinner />}>
-      { state.isDialogOpen && <AttachmentDialog attachment={state.selectedAttachment} event={event} onResult={onDialogResult} onClose={closeDialog} /> }
+      {state.isDialogOpen && <AttachmentDialog attachment={state.selectedAttachment} event={event} onResult={onDialogResult} onClose={closeDialog} />}
 
       <section className={classNames(className, "")}>
         <div className="flex items-center space-x-4">
@@ -115,7 +115,7 @@ export default function AttachmentsList({ event, className }: Props) {
           <button onClick={onCreate} className="button-icon"><PlusIcon /></button>
         </div>
 
-        { !!state.attachments?.length &&
+        {!!state.attachments?.length &&
           <div className="mt-4">
 
             <table className="text-sm">
@@ -128,19 +128,19 @@ export default function AttachmentsList({ event, className }: Props) {
                 </tr>
               </thead>
               <tbody>
-              { state.attachments.map((attachment, index) =>
-                <tr key={index} className="border-b">
-                  <td className="pr-10 py-2">{attachment.type}</td>
-                  <td className="pr-10 py-2 whitespace-nowrap">{attachment.name}</td>
-                  <td className="pr-10 py-2">{attachment.url}</td>
-                  <td>
-                    <div className="flex space-x-2">
-                      <button onClick={() => onUpdate(attachment)}><SettingIcon /></button>
-                      <button onClick={() => onDelete(attachment)}><TrashIcon /></button>
-                    </div>
-                  </td>
-                </tr>
-              )}
+                {state.attachments.map((attachment, index) =>
+                  <tr key={index} className="border-b">
+                    <td className="pr-10 py-2">{attachment.type}</td>
+                    <td className="pr-10 py-2 whitespace-nowrap">{attachment.name}</td>
+                    <td className="pr-10 py-2">{attachment.url}</td>
+                    <td>
+                      <div className="flex space-x-2">
+                        <button onClick={() => onUpdate(attachment)}><SettingIcon /></button>
+                        <button onClick={() => onDelete(attachment)}><TrashIcon /></button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

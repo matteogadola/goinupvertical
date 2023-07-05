@@ -6,7 +6,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { Attachment, Event } from '@/types/events'
 import { useSupabase } from '@/app/components/supabase-provider'
-import { createClient } from '@/lib/supabase-auth-browser'
+import { createClient } from '@/lib/supabase-auth-client'
 
 //type AttachmentForm = Omit<Attachment, 'id'>
 /*interface AttachmentForm extends Attachment {
