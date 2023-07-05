@@ -68,14 +68,6 @@ export default function NavbarUserBadge({ session }: Props) {
                   Amministrazione
                 </Link>
 
-                {/*<a href="#" className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                    ...
-                </a>
-    
-                <a href="#" className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                    ...
-                </a>*/}
-
                 <hr className="border-gray-200 dark:border-gray-700 " />
 
                 <button onClick={handleLogout} className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
