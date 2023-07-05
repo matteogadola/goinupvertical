@@ -2,7 +2,7 @@
 
 import Spinner from '@/components/spinner';
 import { base64 } from '@/lib/helpers';
-import { createClient } from '@/lib/supabase-auth-browser';
+import { createClient } from '@/lib/supabase-auth-client';
 import { Event } from '@/types/events';
 import { redirect, usePathname, useSearchParams } from 'next/navigation'
 import { Suspense, cache, useEffect, useState } from 'react';
