@@ -1,7 +1,6 @@
 import Stripe from 'stripe';
 import getStripe from './stripe';
 import { Order, OrderItem } from '@/types/orders';
-import { sendConfirmationMail } from './mail';
 
 // https://supabase.github.io/wrappers/stripe/
 
