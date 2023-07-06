@@ -1,6 +1,6 @@
 import supabase from './supabase';
 
-import { Event } from '@/types/events';
+import { Event, EventStatus } from '@/types/events';
 import { dt } from './date';
 import { cache } from 'react';
 
@@ -8,6 +8,7 @@ interface GetEventsProps {
   fromDate: string;
   orderBy: string;
   limit: number;
+  status: EventStatus;
   notInternal: boolean;
   promoterId: number;
 }
@@ -23,6 +24,9 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
   }
   if (props?.notInternal) {
     queryBuilder.neq('status', 'internal');
+  }
+  if (props?.status) {
+    queryBuilder.eq('status', props.status);
   }
   if (props?.orderBy) {
     queryBuilder.order(props.orderBy, { ascending: true });
