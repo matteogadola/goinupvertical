@@ -25,6 +25,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(400).send(`Webhook Error: ${e.message}`);
   }
 
+  if (event.livemode !== true) {
+    return res.status(200).send('');
+  }
+
   let order_id: number;
   switch (event.type) {
     case 'payment_intent.canceled':
