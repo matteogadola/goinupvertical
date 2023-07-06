@@ -3,12 +3,14 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useRouter } from 'next/navigation';
 
 interface Props {
   session: Session | null;
 }
 
 export default function NavbarUserBadge({ session }: Props) {
+  const router = useRouter();
   const supabase = createClientComponentClient();
 
   const [isOpen, setIsOpen] = useState(false)
@@ -19,11 +21,14 @@ export default function NavbarUserBadge({ session }: Props) {
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
+
     setIsOpen(false);
 
     if (error) {
       console.error(error)
     }
+
+    router.refresh();
   }
 
   return (
