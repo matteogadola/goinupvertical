@@ -10,10 +10,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2022-11-15',
 });
 
-/*const stripeTeamValtellina = new Stripe(process.env.STRIPE_TEAMVALTELLINA_SECRET_KEY!, {
-  apiVersion: '2022-11-15',
-});*/
-
 // https://stripe.com/docs/api/checkout/sessions/create
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
