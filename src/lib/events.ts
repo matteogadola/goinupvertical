@@ -40,7 +40,15 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
 });
 
 export const getEvent = cache(async (id: string) => {
-  const { data } = await supabase.from('events').select().eq('id', id).returns<Event[]>().single();
+  const { data } = await supabase
+    .from('events')
+    .select(`
+      *,
+      promoters (name, stripe_account)`
+    )
+    .eq('id', id)
+    .returns<Event[]>()
+    .single();
 
   return data;
 });

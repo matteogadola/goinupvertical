@@ -12,6 +12,7 @@ import { Entry } from '@/types/entries';
 import { sendConfirmationMail } from '@/app/lib/mail';
 import { createOrder } from '@/lib/orders';
 import { createCheckoutSession } from './stripe';
+import { getEvent } from '@/lib/events';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const { method, headers, body } = req;
@@ -28,7 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await sendConfirmationMail(order);
       return res.json(order);
     } else if (order.payment_method === 'stripe') {
-      const { id } = await createCheckoutSession(headers, order);
+      const stripeAccount = (await getEvent(order.items[0].event_id!))?.promoters?.stripe_account ?? undefined;
+      const { id } = await createCheckoutSession(headers, order, stripeAccount);
       return res.json({ ...order, checkoutSessionId: id });
     } else {
       throw new Error('Metodo di pagamento non supportato');
