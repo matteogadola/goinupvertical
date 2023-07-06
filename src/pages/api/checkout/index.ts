@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     } else if (order.payment_method === 'stripe') {
       const stripeAccount = (await getEvent(order.items[0].event_id!))?.promoters?.stripe_account ?? undefined;
       const { id } = await createCheckoutSession(headers, order, stripeAccount);
-      return res.json({ ...order, checkoutSessionId: id });
+      return res.json({ ...order, stripeAccount, checkoutSessionId: id });
     } else {
       throw new Error('Metodo di pagamento non supportato');
     }

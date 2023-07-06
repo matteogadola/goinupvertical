@@ -1,6 +1,5 @@
 import Stripe from 'stripe';
 import getStripe from './stripe';
-import getStripeTeamValtellina from './stripe';
 import { Order, OrderItem } from '@/types/orders';
 import { sendConfirmationMail } from './mail';
 
@@ -22,9 +21,7 @@ export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_em
   }
 
   if (body.payment_method === 'stripe') {
-    //body.
-    //const stripeAccount = '';
-    const stripe = await getStripe();
+    const stripe = await getStripe(body.stripeAccount);
 
     try {
       await stripe!.redirectToCheckout({
