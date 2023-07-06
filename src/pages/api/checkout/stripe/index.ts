@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { Order } from '@/types/orders';
 import { pool } from '@/lib/pg';
 import { base64 } from '@/lib/helpers';
+import { getEvent } from '@/lib/events';
 
 // https://stripe.com/docs/api/versioning
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -34,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 }
 
-export const createCheckoutSession = async (headers: any, body: Order) => {
+export const createCheckoutSession = async (headers: any, body: Order, stripeAccount?: string) => {
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   for (let item of body.items) {
@@ -59,7 +60,7 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
   const params: Stripe.Checkout.SessionCreateParams = {
     mode: 'payment',
     submit_type: 'pay',
-    payment_method_types: ['card'],
+    //payment_method_types: ['card'],
     currency: 'eur',
     customer_email: body.user_email,
     line_items,
@@ -85,5 +86,5 @@ export const createCheckoutSession = async (headers: any, body: Order) => {
   // e comunque servono mille dati...
   // io la creerei a posteriori con la mail che inviamo con le info
 
-  return stripe.checkout.sessions.create(params);
+  return stripe.checkout.sessions.create(params, { stripeAccount });
 };

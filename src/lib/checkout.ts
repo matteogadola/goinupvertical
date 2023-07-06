@@ -1,7 +1,6 @@
 import Stripe from 'stripe';
 import getStripe from './stripe';
 import { Order, OrderItem } from '@/types/orders';
-import { sendConfirmationMail } from './mail';
 
 // https://supabase.github.io/wrappers/stripe/
 
@@ -21,8 +20,7 @@ export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_em
   }
 
   if (body.payment_method === 'stripe') {
-    //const session: Stripe.Checkout.Session = body.session;
-    const stripe = await getStripe();
+    const stripe = await getStripe(body.stripeAccount);
 
     try {
       await stripe!.redirectToCheckout({
