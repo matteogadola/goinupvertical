@@ -4,7 +4,7 @@ export interface Event {
   name: string;
   edition: number;
   date: string;
-  promoter_id: number;
+  promoter_id: text;
   capacity: number;
   status: EventStatus;
   detail: Partial<EventDetail> | null;
