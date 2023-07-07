@@ -10,7 +10,7 @@ interface GetEventsProps {
   limit: number;
   status: EventStatus;
   notInternal: boolean;
-  promoterId: number;
+  promoterId: string;
 }
 
 export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {

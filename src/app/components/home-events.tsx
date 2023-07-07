@@ -16,7 +16,7 @@ import Spinner from '@/components/spinner'
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
 export default async function HomeEvents({ className }: { className: string }) {
-  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, status: 'scheduled' })
+  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, promoterId: 'goinup', status: 'scheduled' })
 
   return (
     <Suspense fallback={<Spinner />}>

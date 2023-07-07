@@ -29,7 +29,7 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }: { res: any }) {
-  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, status: 'scheduled' });
+  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, promoterId: 'goinup', status: 'scheduled' });
 
   const sitemap = generateSiteMap(events);
 

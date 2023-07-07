@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import NavbarUserBadge from './navbar-user-badge'
 import { useState } from 'react'
 import { ArrowRightIcon, ChevronRightIcon, HamburgerIcon } from './icons'
+import NavbarLogo from './navbar/navbar-logo'
 
 interface Props {
   cover?: boolean | undefined;
@@ -58,6 +59,7 @@ export default function Navbar({ cover }: Props) {
         </div>}
         <nav>
           <div className="flex h-12 pl-4 px-8 items-center justify-between">
+            <NavbarLogo />
             {!isHome &&
               <div className="text-lg md:text-xl font-unbounded font-bold hover:opacity-70">
                 <Link href="/">GO<span className="text-accent">in</span>UP</Link>
