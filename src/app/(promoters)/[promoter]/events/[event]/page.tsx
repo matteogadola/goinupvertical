@@ -57,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: [
-      { params: { promoter: 'goinup', event: 'uno' } },
+      { params: { promoter: 'goinup', event: 'tre' } },
       { params: { promoter: 'team-valtellina', event: 'due' } },
     ],
     fallback: false,
