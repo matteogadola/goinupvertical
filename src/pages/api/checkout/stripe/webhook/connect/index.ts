@@ -4,15 +4,12 @@ import Stripe from 'stripe';
 import { getOrder, updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
 import { sendConfirmationMail } from '@/app/lib/mail';
-import { base64 } from '@/lib/helpers';
-import { Order } from '@/types/orders';
 
-// https://stripe.com/docs/api/versioning
-// Handle the event - https://stripe.com/docs/api/events/types
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2022-11-15',
+  stripeAccount: 'acct_1NFZcvKlQvfcHhj3'
 });
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const webhookSecret = process.env.STRIPE_WEBHOOK_CONNECT_SECRET!;
 
 export const config = { api: { bodyParser: false } };
 
@@ -105,24 +102,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
   res.status(200).send('');
 }
-
-/*
-SE TUTTO VA BENE (4242 4242 4242 4242)
-Arrivato evento: charge.succeeded
-Arrivato evento: checkout.session.completed
-Arrivato evento: payment_intent.succeeded
-Arrivato evento: payment_intent.created
-
-CON SECURE CODE (4000 0000 0000 3220)
-Arrivato evento: payment_intent.created
-Arrivato evento: payment_intent.requires_action
-Arrivato evento: payment_intent.succeeded
-Arrivato evento: checkout.session.completed
-Arrivato evento: charge.succeeded
-
-SENZA FONDI (POVERO) (4000 0000 0000 9995)
-Arrivato evento: payment_intent.created
-Arrivato evento: payment_intent.payment_failed
-Arrivato evento: charge.failed (ma rimango sulla pagina di pagamento)
-poi esco, e dopo 11:05)
-*/

@@ -39,11 +39,13 @@ export default async function EventPage({
           <h1 className="title mt-3">{!!event.edition && <span>{event.edition}° </span>}{event.name}</h1>
           <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
-          <div className="mt-8">
-            <Link href={event.regulation ?? "/regulation"}>
-              <span className="text-button hover:opacity-80">Consulta il regolamento</span>
-            </Link>
-          </div>
+          {event.promoter_id === 1 &&
+            <div className="mt-8">
+              <Link href={event.regulation ?? "/regulation"}>
+                <span className="text-button hover:opacity-80">Consulta il regolamento</span>
+              </Link>
+            </div>
+          }
 
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
           <div className="mt-8">

@@ -8,9 +8,9 @@ interface GetEventsProps {
   fromDate: string;
   orderBy: string;
   limit: number;
-  notInternal: boolean;
   status: EventStatus;
-  promoterId: number;
+  notInternal: boolean;
+  promoterId: string;
 }
 
 export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
@@ -28,6 +28,9 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
   if (props?.notInternal) { // a tendere elimina
     queryBuilder.neq('status', 'internal');
   }
+  if (props?.status) {
+    queryBuilder.eq('status', props.status);
+  }
   if (props?.orderBy) {
     queryBuilder.order(props.orderBy, { ascending: true });
   }
@@ -40,7 +43,15 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
 });
 
 export const getEvent = cache(async (id: string) => {
-  const { data } = await supabase.from('events').select().eq('id', id).returns<Event[]>().single();
+  const { data } = await supabase
+    .from('events')
+    .select(`
+      *,
+      promoters (name, stripe_account)`
+    )
+    .eq('id', id)
+    .returns<Event[]>()
+    .single();
 
   return data;
 });

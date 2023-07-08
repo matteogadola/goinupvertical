@@ -29,10 +29,9 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }: { res: any }) {
-  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, status: 'published' });
+  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, promoterId: 'goinup', status: 'scheduled' });
 
   const sitemap = generateSiteMap(events);
-
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
   res.end();
