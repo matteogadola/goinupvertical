@@ -1,21 +1,40 @@
-CREATE TYPE user_role AS ENUM('user', 'moderator', 'admin');
+CREATE TYPE user_role AS ENUM('user', 'manager', 'admin');
 CREATE TYPE grant_mode AS ENUM('read', 'write');
+CREATE TYPE gender AS ENUM('M', 'F');
 
 CREATE TABLE IF NOT EXISTS users (
-  id uuid NOT NULL,
-  first_name TEXT,
-  last_name TEXT,
-  email TEXT,
-  role user_role NOT NULL DEFAULT 'user'::user_role,
-
-  CONSTRAINT users_pkey PRIMARY KEY (id),
-  CONSTRAINT users_id_fkey 
-    FOREIGN KEY (id) 
-    REFERENCES auth.users (id) 
-    MATCH SIMPLE 
-    ON UPDATE CASCADE 
-    ON DELETE CASCADE
+  id uuid PRIMARY KEY, -- UUID from auth.users
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone_number TEXT,
+  tin TEXT,
+  country TEXT,
+  birth_place TEXT,
+  birth_date TEXT,
+  gender GENDER,
+  team: TEXT
 );
+
+CREATE TABLE IF NOT EXISTS user_roles (
+  id SERIAL,
+  user_id uuid references users on delete cascade not null,
+  role user_role NOT NULL DEFAULT 'user'::user_role,
+  unique (user_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_promoter_grants (
+  id SERIAL,
+  user_id uuid references users on delete cascade not null,
+  promoter_id TEXT references promoters on delete cascade not null
+);
+
+CREATE TABLE IF NOT EXISTS user_event_grants (
+  id SERIAL,
+  user_id uuid references users on delete cascade not null,
+  event_id TEXT references events on delete cascade not null
+);
+
 
 CREATE TABLE IF NOT EXISTS grant_users_events (
   user_id uuid REFERENCES users (id),

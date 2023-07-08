@@ -63,3 +63,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false,
   }
 }
+
+/*export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const event = await getEvent(params.event);
+
+  return {
+    props: {
+      event,
+    },
+    revalidate: 1800,
+  }
+}*/

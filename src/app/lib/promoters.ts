@@ -7,6 +7,6 @@ export const getPromoters = async () => {
 };
 
 export const getPromoter = async (id: string) => {
-  const { data } = await supabase.from('promoters').select().eq('alias', id).returns<Promoter[]>().single();
+  const { data } = await supabase.from('promoters').select().eq('id', id).returns<Promoter[]>().single();
   return data;
 };
