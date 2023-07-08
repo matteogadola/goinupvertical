@@ -1,4 +1,5 @@
-//import 'server-only';
+import 'server-only';
+
 import { Order, OrderItem } from '@/types/orders';
 import { pool } from './pg';
 import { dt } from './date';

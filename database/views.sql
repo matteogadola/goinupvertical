@@ -7,6 +7,7 @@ CREATE VIEW v_entries WITH (security_invoker) AS
     o.date,
     o.payment_method,
     o.payment_status,
+    o.payment_id,
     e.first_name,
     e.last_name,
     e.tin,

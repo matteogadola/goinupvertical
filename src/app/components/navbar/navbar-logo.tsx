@@ -16,7 +16,7 @@ export default function NavbarLogo() {
   const routePath = usePathname();
   const isHome = routePath === '/';
 
-  console.log(routePath)
+  //console.log(routePath)
 
   return (
     <>

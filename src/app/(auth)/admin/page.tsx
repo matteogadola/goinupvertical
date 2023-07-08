@@ -15,6 +15,14 @@ interface State {
 
 const supabase = createClient();
 
+const fetchSarcazzo = cache(async () => {
+  const { data } = await supabase
+    .from('users')
+    .select();
+  //.returns<User[]>();
+  return data ?? [];
+});
+
 const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
@@ -29,10 +37,16 @@ const fetchEvents = cache(async () => {
 export default function Events({ className }: { className?: string }) {
   const [state, setState] = useState<State>({ events: [], event: undefined });
 
+
+
   useEffect(() => {
     fetchEvents()
       .then(events => setState({ ...state, events }))
       .catch(() => setState({ ...state, events: [] }))
+
+    /*fetchSarcazzo().then(asd => {
+      console.log("ok", asd)
+    }).catch((e) => console.log(e))*/
   }, []);
 
   const selectEvent = (event: Event) => {
@@ -42,16 +56,16 @@ export default function Events({ className }: { className?: string }) {
   return (
     <Suspense fallback={<Spinner />}>
       <section className="page">
-        { !!state.events.length &&
+        {!!state.events.length &&
           <div className={classNames(className, "flex")}>
 
             <div>
               <ul className="separator">
-              { state.events.map((item, index) =>
-                <li key={index} className="py-2 whitespace-nowrap">
-                  <button onClick={() => selectEvent(item)} className={classNames({'font-semibold': state.event?.id === item.id}, "hover:opacity-80")}>{item.name}</button>
-                </li>
-              )}
+                {state.events.map((item, index) =>
+                  <li key={index} className="py-2 whitespace-nowrap">
+                    <button onClick={() => selectEvent(item)} className={classNames({ 'font-semibold': state.event?.id === item.id }, "hover:opacity-80")}>{item.name}</button>
+                  </li>
+                )}
               </ul>
             </div>
 

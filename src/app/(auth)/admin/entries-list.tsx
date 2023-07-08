@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react'
+import { ChangeEvent, Suspense, useEffect, useState } from 'react'
 import { dt } from '@/lib/date'
 
 import classNames from 'classnames'
@@ -8,9 +8,10 @@ import Spinner from '@/components/spinner'
 import DownloadCsv from './download-csv'
 import { createClient } from '@/lib/supabase-auth-browser'
 import { Event } from '@/types/events';
-import { sendConfirmationMail } from '@/lib/mail';
 import { PlusIcon } from '@/app/components/icons';
 import EntryDialog from './entry-dialog';
+import { PaymentStatus } from '@/types/orders';
+import { useForm } from 'react-hook-form';
 
 const supabase = createClient();
 
@@ -28,6 +29,11 @@ interface State {
   selectedEntry: any | undefined;
 }
 
+type FormState = {
+  last_name: string;
+  payment_status: string;
+}
+
 export default function EntriesList({ entries, items, event, className }: Props) {
 
   const [state, setState] = useState<State>({
@@ -38,6 +44,20 @@ export default function EntriesList({ entries, items, event, className }: Props)
   });
 
   useEffect(() => setState({ ...state, entries, items: entries }), [entries]);
+  useEffect(() => reset(), [event]);
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    setValue,
+    watch,
+    reset,
+    formState: { errors }
+  } = useForm<FormState>({
+    defaultValues: { last_name: '', payment_status: '' }
+  })
 
   const setPaymentStatus = async (orderId: number, status: string) => {
     const { data, error } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
@@ -54,10 +74,38 @@ export default function EntriesList({ entries, items, event, className }: Props)
     return data;
   }
 
-  const filterEntries = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  /*const filterEntries = async (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const filtered = state.entries.filter(entry => entry.last_name.toLowerCase().includes(e.target.value.toLowerCase()));
     setState({ ...state, items: filtered });
-  }
+  }*/
+
+  useEffect(() => {
+    const subscription = watch((values) => {
+      let filtered = [...state.entries];
+
+      if (values.last_name) {
+        filtered = filtered.filter(entry => entry.last_name.toLowerCase().includes(values.last_name));
+      }
+
+      if (values.payment_status) {
+        filtered = filtered.filter(item => item.payment_status === values.payment_status);
+      }
+
+      setState((state) => ({ ...state, items: filtered }));
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  /*const formValues = watch();
+  useEffect(() => {
+    let filtered = state.entries.filter(entry => entry.last_name.toLowerCase().includes(formValues.last_name));
+
+    if (formValues.payment_status) {
+      filtered = filtered.filter(item => item.payment_status === formValues.payment_status);
+    }
+
+    setState({ ...state, items: filtered });
+  }, [formValues]);*/
 
   const onCreate = () => {
     setState({ ...state, isDialogOpen: true, selectedEntry: undefined })
@@ -86,13 +134,32 @@ export default function EntriesList({ entries, items, event, className }: Props)
           {dt().isBefore(event.date) && <button onClick={onCreate} className="button-icon"><PlusIcon /></button>}
         </div>
 
-        {!!state.items?.length &&
+        {!!state.entries?.length &&
           <div>
             <DownloadCsv data={state.entries} name={event.id} className="mt-2" />
 
-            <div className="mt-4">
-              <input type="text" className="appearance-none bg-transparent border-b focus:outline-none" placeholder="Cognome" onChange={(e) => filterEntries(e)} />
-            </div>
+            <form>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:w-1/2 mt-4">
+
+                <div>
+                  <label className="label" htmlFor="type">Cognome</label>
+                  <input type="text" className="field" {...register("last_name")} />
+                </div>
+
+                <div>
+                  <label className="label" htmlFor="type">Pagamento</label>
+                  <select
+                    className="field"
+                    {...register("payment_status")}
+                  >
+                    <option value=''></option>
+                    <option value='pending'>Da confermare</option>
+                    <option value='paid'>Confermato</option>
+                  </select>
+                </div>
+
+              </div>
+            </form>
 
             <div className="mt-4">
 
@@ -115,7 +182,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                 <tbody>
                   {state.items.map((entry, index) =>
                     <tr key={index} className="border-b">
-                      <td className="pr-5 py-2">{entry.order_id}</td>
+                      <td className="pr-5 py-2"><a href={"https://dashboard.stripe.com/payments/" + entry.payment_id} className="text-button" target="_blank">{entry.order_id}</a></td>
                       <td className="pr-10 py-2">{entry.category}</td>
                       <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
                       <td className="pr-10 py-2">{entry.payment_method}</td>
