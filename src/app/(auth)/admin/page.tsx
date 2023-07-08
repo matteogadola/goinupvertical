@@ -15,14 +15,6 @@ interface State {
 
 const supabase = createClient();
 
-const fetchSarcazzo = cache(async () => {
-  const { data } = await supabase
-    .from('users')
-    .select();
-  //.returns<User[]>();
-  return data ?? [];
-});
-
 const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
@@ -37,16 +29,10 @@ const fetchEvents = cache(async () => {
 export default function Events({ className }: { className?: string }) {
   const [state, setState] = useState<State>({ events: [], event: undefined });
 
-
-
   useEffect(() => {
     fetchEvents()
       .then(events => setState({ ...state, events }))
       .catch(() => setState({ ...state, events: [] }))
-
-    /*fetchSarcazzo().then(asd => {
-      console.log("ok", asd)
-    }).catch((e) => console.log(e))*/
   }, []);
 
   const selectEvent = (event: Event) => {
