@@ -2,7 +2,9 @@ import HomeMission from '@/app/components/home-mission'
 import HomeEvents from '@/app/components/home-events'
 import HomeGoinupCalendar from '@/app/components/home-goinup-calendar'
 import Credits from '@/app/components/credits'
-import { Metadata } from 'next'
+import { GetStaticProps, Metadata } from 'next'
+import { Suspense } from 'react'
+import Spinner from '@/components/spinner'
 
 // export const revalidate = 85000
 
@@ -14,14 +16,16 @@ export const metadata: Metadata = {
 export default async function HomePage() {
 
   return (
-    <section className="page">
-      <HomeMission className="mt-20" />
+    <section className="page space-y-32">
+      <HomeMission />
 
-      <HomeEvents className="mt-36" />
+      <Suspense fallback={<Spinner />}>
+        <HomeEvents />
+      </Suspense>
 
-      <HomeGoinupCalendar className="mt-36" />
+      <HomeGoinupCalendar />
 
-      <Credits className="mt-40" />
+      <Credits />
     </section>
   )
 }

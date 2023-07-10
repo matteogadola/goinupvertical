@@ -12,11 +12,10 @@ import flyer from 'public/images/flyers/goinup-5.webp'
 
 export default async function HomeGoinupCalendar({ className }: { className?: string }) {
   const showFlyer = true;
-  const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', promoterId: 1 })
-  
+  //const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', promoterId: 'goinup' })
+
   return (
-    <Suspense fallback={<Spinner />}>
-      <section className={classNames(className, "")}>
+    <>
       {showFlyer &&
         <div className="mt-20 w-full flex justify-center justify-items-center">
           <Image
@@ -26,7 +25,7 @@ export default async function HomeGoinupCalendar({ className }: { className?: st
           />
         </div>}
 
-      {(!showFlyer && events.length > 0) &&
+      {/*(!showFlyer && events.length > 0) &&
         <div>
           <div className="text-center">
             <h3 className="overtitle">Calendario</h3>
@@ -36,11 +35,11 @@ export default async function HomeGoinupCalendar({ className }: { className?: st
           <div className="w-full">
             <table className="mt-12 m-auto">
               <tbody>
-                { events.map((event, index) =>
+                {events.map((event, index) =>
                   <tr key={index} className="font-unbounded">
                     <td className="py-4">
                       <span className="font-semibold text-accent text-lg lg:text-xl uppercase">
-                        { dt(event.date).format('ddd DD MMM') }
+                        {dt(event.date).format('ddd DD MMM')}
                       </span>
                     </td>
                     <td className="py-4 pl-4 lg:pl-8">
@@ -50,8 +49,8 @@ export default async function HomeGoinupCalendar({ className }: { className?: st
                     </td>
                     <td className="py-4 pl-4 lg:pl-8">
                       <span className="font-light text-base lg:text-xl">
-                        {event.detail?.location ? event.detail.location : 
-                        event.detail?.startLine && event.detail?.finishLine ? `${event.detail?.startLine} - ${event.detail?.finishLine}` : ''
+                        {event.detail?.location ? event.detail.location :
+                          event.detail?.startLine && event.detail?.finishLine ? `${event.detail?.startLine} - ${event.detail?.finishLine}` : ''
                         }
                       </span>
                     </td>
@@ -61,8 +60,7 @@ export default async function HomeGoinupCalendar({ className }: { className?: st
             </table>
           </div>
         </div>
-      }
-      </section>
-    </Suspense>
+      */}
+    </>
   )
 }

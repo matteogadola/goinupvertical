@@ -3,6 +3,9 @@ returns trigger as $$
 begin
   insert into public.users (id, email, first_name, last_name)
   values (new.id, new.email, new.raw_user_meta_data->>'first_name', new.raw_user_meta_data->>'last_name');
+
+  insert into public.user_roles (user_id, role)
+  values (new.id, 'user'::user_role);
   return new;
 end;
 $$ language plpgsql security definer;

@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   title: 'Console di amministrazione',
 }
 
+// rinomina in manage ???
+
 export default async function Admin() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { session } } = await supabase.auth.getSession();

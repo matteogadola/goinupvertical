@@ -21,7 +21,7 @@ export default async function SignIn() {
   const { data: { session } } = await supabase.auth.getSession();
 
   if (session) {
-    redirect('/admin')
+    redirect(session.user.app_metadata.role ? '/admin' : '/account')
   }
 
   return (

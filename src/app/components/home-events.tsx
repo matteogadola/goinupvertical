@@ -1,27 +1,19 @@
-import { getItem } from '@/lib/items'
 import Link from 'next/link'
 import Image from 'next/image'
-
-import { base64 } from '@/lib/helpers'
-import { Suspense } from 'react'
 import { getEvents } from '@/lib/events'
 import { dt, getDate } from '@/lib/date'
-//import { base64 } from '@/lib/helpers'
 
 import goinup from 'public/images/credits/goinup.png'
 
 import classNames from 'classnames'
-import Spinner from '@/components/spinner'
 
-// https://tailwindcomponents.com/component/tags
-//export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
-export default async function HomeEvents({ className }: { className: string }) {
+export default async function HomeEvents() {
   const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, promoterId: 'goinup', status: 'scheduled' })
 
   return (
-    <Suspense fallback={<Spinner />}>
-      {events.length > 0 &&
-        <section className={classNames(className, "")}>
+    <>
+      {events?.length > 0 &&
+        <section>
           <div className="text-center">
             <h3 className="overtitle">Prossimi</h3>
             <h1 className="title">Eventi</h1>
@@ -74,6 +66,6 @@ export default async function HomeEvents({ className }: { className: string }) {
         </div>*/}
         </section>
       }
-    </Suspense>
+    </>
   )
 }

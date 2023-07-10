@@ -25,7 +25,6 @@ export default function LoginForm() {
   });
 
   const handleSignIn = async (formData: any) => {
-    //e.preventDefault();
     const { data, error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
@@ -35,7 +34,7 @@ export default function LoginForm() {
       throw new Error(error.message);
     }
 
-    router.push('/');
+    router.push(data.user.app_metadata.role ? '/admin' : '/account');
     router.refresh();
 
     return data;

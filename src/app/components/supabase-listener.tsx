@@ -3,15 +3,14 @@
 import { useStore } from '@/store/store'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { useSupabase } from './supabase-provider'
 
-export default function SupabaseListener({ serverAccessToken }: { serverAccessToken?: string }) {
-  const { supabase } = useSupabase()
+function SupabaseListener({ serverAccessToken }: { serverAccessToken?: string }) {
+  //const { supabase } = useSupabase()
   const router = useRouter()
 
   const setAuthSession = useStore((state) => state.setAuthSession);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
@@ -24,7 +23,7 @@ export default function SupabaseListener({ serverAccessToken }: { serverAccessTo
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase, router, serverAccessToken])
+  }, [supabase, router, serverAccessToken])*/
 
   return null
 }

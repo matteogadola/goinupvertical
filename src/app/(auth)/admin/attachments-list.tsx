@@ -8,7 +8,6 @@ import Spinner from '@/components/spinner'
 import DownloadCsv from './download-csv'
 import { createClient } from '@/lib/supabase-auth-client'
 import { Order, OrderItem } from '@/types/orders';
-import { sendConfirmationMail } from '@/lib/mail';
 import { Attachment, Event } from '@/types/events';
 import { PlusIcon, SettingIcon, TrashIcon } from '@/app/components/icons';
 import AttachmentDialog from './attachment-dialog';
