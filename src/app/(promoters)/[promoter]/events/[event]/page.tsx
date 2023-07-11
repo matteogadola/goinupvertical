@@ -17,11 +17,14 @@ interface Params {
 
 interface Props {
   params: Params;
-  searchParams: { [key: string]: string | string[] | undefined };
+  //searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function EventPage(props: Props) {
-  const { params, searchParams } = props;
+export default async function EventPage({
+  params,
+}: {
+  params: Params
+}) {
   const event = await getEvent(params.event);
 
   if (event === null || event.status === 'internal') {
@@ -79,7 +82,7 @@ export default async function EventPage(props: Props) {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+/*export const getStaticPaths: GetStaticPaths = async () => {
   const events = await getEvents();
 
   return {
@@ -91,6 +94,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     })),
     fallback: false,
   }
+}*/
+export async function generateStaticParams() {
+  const events = await getEvents();
+
+  return events.map(event => ({
+    promoter: event.promoter_id,
+    event: event.id
+  }))
 }
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
