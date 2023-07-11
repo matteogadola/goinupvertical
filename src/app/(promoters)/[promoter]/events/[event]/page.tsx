@@ -25,59 +25,18 @@ export default async function EventPage({
 }: {
   params: Params
 }) {
+  console.log(params.event)
   const event = await getEvent(params.event) as Event;
 
   /*if (event === null || event.status === 'internal') {
     notFound();
-  }*/
+  }
 
-  const items = await getItems({ eventId: event.id, status: 'published' })
+  const items = await getItems({ eventId: event.id, status: 'published' })*/
 
   return (
     <section className="page">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div>
-          <span className="overtitle">{event.date ? dt(event.date).format('ddd DD MMM') : 'Evento'}</span>
-          <h1 className="title mt-3">{!!event.edition && <span>{event.edition}° </span>}{event.name}</h1>
-          <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
-
-          {event.promoter_id === 1 &&
-            <div className="mt-8">
-              <Link href={event.regulation ?? "/regulation"}>
-                <span className="text-button hover:opacity-80">Consulta il regolamento</span>
-              </Link>
-            </div>
-          }
-
-          {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
-          <div className="mt-8">
-            {event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
-              ? <ItemsList list={items} event={event} />
-              : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
-            }
-
-            {!!items.length && <div className="mt-8">
-              <Link href={{ pathname: `${event?.id}/entries`, query: { q: base64.encode(event) } }}>
-                <span className="text-button">Vedi elenco iscritti</span>
-              </Link>
-            </div>}
-          </div>
-
-        </div>
-
-        <div className="flex lg:justify-end">
-          {
-            event.flyer && <Image
-              className="mt-4 lg:mt-0"
-              src={`/images/flyers/${event.flyer}`}
-              alt="Flyer"
-              width={500}
-              height={500}
-            />
-          }
-        </div>
-
-      </div>
+      lolle
     </section>
   )
 }
