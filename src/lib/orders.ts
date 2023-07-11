@@ -7,12 +7,12 @@ import supabase from './supabase';
 import { calcStripeTax, capitalize, verifyTin } from './helpers';
 import { cache } from 'react';
 
-export const getOrders = cache(async () => {
+export const getOrders = async () => {
   const { data } = await supabase.from('orders').select().returns<Order[]>();
   return data;
-});
+};
 
-export const getOrder = cache(async (id: number) => {
+export const getOrder = async (id: number) => {
   const { data } = await supabase.from('orders').select().eq('id', id).returns<Order[]>().single();
 
   if (data !== null) {
@@ -21,7 +21,7 @@ export const getOrder = cache(async (id: number) => {
   }
 
   return data;
-});
+};
 
 export const createOrder = async (params: Partial<Order>) => {
   if (params?.items === undefined || params.items.length === 0) {

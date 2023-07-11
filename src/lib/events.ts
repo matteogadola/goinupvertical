@@ -13,7 +13,7 @@ interface GetEventsProps {
   promoterId: string;
 }
 
-export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
+export const getEvents = async (props?: Partial<GetEventsProps>) => {
   const queryBuilder = supabase.from('events').select();
 
   if (props?.fromDate) {
@@ -40,9 +40,9 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
 
   const { data } = await queryBuilder.returns<Event[]>();
   return data ?? [];
-});
+};
 
-export const getEvent = cache(async (id: string) => {
+export const getEvent = async (id: string) => {
   const { data } = await supabase
     .from('events')
     .select(`
@@ -54,7 +54,7 @@ export const getEvent = cache(async (id: string) => {
     .single();
 
   return data;
-});
+};
 
 export async function createEvent(race: Omit<any, 'id'>) {
   /*  const normalizedName = race.name

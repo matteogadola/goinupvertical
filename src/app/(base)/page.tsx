@@ -19,7 +19,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navbar promoter="goinup" />
       <section className="page space-y-32">
         <HomeMission />
 
@@ -31,7 +30,6 @@ export default async function HomePage() {
 
         <Credits />
       </section>
-      <Footer promoter="goinup" />
     </>
   )
 }

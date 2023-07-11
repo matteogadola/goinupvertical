@@ -1,18 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Stripe from 'stripe';
-//import { Entry } from '@models/types'
-import { Client } from 'pg';
-import { pool } from '@/lib/pg';
-import { dt } from '@/lib/date';
-//import { Item, Order, OrderItem } from '@models/types'
-//import { Parser, Validator } from '@marketto/codice-fiscale-utils'
-import CodiceFiscale from 'codice-fiscale-js';
-import { Order, OrderItem } from '@/types/orders';
-import { Entry } from '@/types/entries';
 import { sendConfirmationMail } from '@/lib/mail';
 import { createOrder } from '@/lib/orders';
 import { createCheckoutSession } from './stripe';
 import { getEvent } from '@/lib/events';
+import { Promoter } from '@/types/promoters';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const { method, headers, body } = req;
@@ -29,9 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await sendConfirmationMail(order);
       return res.json(order);
     } else if (order.payment_method === 'stripe') {
-      const promoter = (await getEvent(order.items[0].event_id!))?.promoters ?? undefined;
-      const { id } = await createCheckoutSession(headers, order, promoter);
-      return res.json({ ...order, stripeAccount: promoter?.stripe_account, checkoutSessionId: id });
+      const stripeAccount = (await getEvent(order.items[0].event_id!))?.promoters?.stripe_account ?? undefined;
+      const { id } = await createCheckoutSession(headers, order, stripeAccount);
+      return res.json({ ...order, stripeAccount, checkoutSessionId: id });
     } else {
       throw new Error('Metodo di pagamento non supportato');
     }

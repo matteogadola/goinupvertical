@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 }
 
-export const createCheckoutSession = async (headers: any, body: Order, promoter?: Promoter) => {
+export const createCheckoutSession = async (headers: any, body: Order, stripeAccount?: string) => {
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   for (let item of body.items) {
@@ -79,8 +79,8 @@ export const createCheckoutSession = async (headers: any, body: Order, promoter?
       },
     },
     success_url: `${headers.origin}/confirm?session_id={CHECKOUT_SESSION_ID}&q=${q}`,
-    cancel_url: `${headers.origin}/${promoter?.id ?? 'goinup'}/events/${body.items[0].event_id}`,
+    cancel_url: headers.referer,
   };
 
-  return stripe.checkout.sessions.create(params, { stripeAccount: promoter?.stripe_account ?? undefined });
+  return stripe.checkout.sessions.create(params, { stripeAccount });
 };

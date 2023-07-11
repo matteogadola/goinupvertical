@@ -24,7 +24,7 @@ export default async function HomeEvents() {
             { "xl:grid-cols-2": events.length === 2 }
           )}>
             {events.map((event, index) =>
-              <Link href={`events/${event.id}`} key={index}>
+              <Link href={`${event.promoter_id}/events/${event.id}`} key={index}>
                 <div className="lg:max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
                   <div className="relative text-white text-center">
                     <Image src={event.summary_image ? `/images/summaries/${event.summary_image}` : goinup} width={500} height={200} style={{ objectFit: "cover", objectPosition: "center" }} className="h-48" alt="Image" />
