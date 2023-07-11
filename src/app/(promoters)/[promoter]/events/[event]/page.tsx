@@ -20,11 +20,8 @@ interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function EventPage({
-  params,
-}: {
-  params: Params
-}) {
+export default async function EventPage(props: Props) {
+  const { params, searchParams } = props;
   const event = await getEvent(params.event);
 
   if (event === null || event.status === 'internal') {
