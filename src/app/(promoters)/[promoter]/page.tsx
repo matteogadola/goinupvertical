@@ -1,6 +1,5 @@
-import type { GetStaticPaths, Metadata, ResolvingMetadata } from 'next'
-import { getPromoter, getPromoters } from '@/app/lib/promoters'
-import RootLayout from '@/app/layout';
+import type { Metadata, ResolvingMetadata } from 'next'
+import { getPromoter } from '@/lib/promoters'
 
 interface Params {
   promoter: string;
@@ -22,7 +21,6 @@ export default async function PromoterPage({ params }: Props) {
 
   return (
     <section className="page">
-      dentro
     </section>
   )
 }
