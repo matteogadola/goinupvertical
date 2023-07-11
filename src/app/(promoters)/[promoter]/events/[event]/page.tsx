@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { Event } from '@/types/events'
 import { getEvent, getEvents } from '@/lib/events'
 import { getItems } from '@/lib/items'
 import ItemsList from '@/components/items-list'
