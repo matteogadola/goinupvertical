@@ -25,11 +25,11 @@ export default async function EventPage({
 }: {
   params: Params
 }) {
-  const event = await getEvent(params.event);
+  const event = await getEvent(params.event) as Event;
 
-  if (event === null || event.status === 'internal') {
+  /*if (event === null || event.status === 'internal') {
     notFound();
-  }
+  }*/
 
   const items = await getItems({ eventId: event.id, status: 'published' })
 
@@ -81,20 +81,6 @@ export default async function EventPage({
     </section>
   )
 }
-
-/*export const getStaticPaths: GetStaticPaths = async () => {
-  const events = await getEvents();
-
-  return {
-    paths: events.map(item => ({
-      params: {
-        promoter: item.promoter_id,
-        event: item.id
-      }
-    })),
-    fallback: false,
-  }
-}*/
 
 export const dynamicParams = false;
 export const revalidate = 21600; // 6h
