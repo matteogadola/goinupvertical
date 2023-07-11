@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { base64 } from '@/lib/helpers'
 import { GetStaticPaths, Metadata, ResolvingMetadata } from 'next/types'
-import { getPromoter } from '@/app/lib/promoters'
+import { getPromoter } from '@/lib/promoters'
 
 interface Params {
   promoter: string;

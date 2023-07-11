@@ -47,7 +47,7 @@ export const getEvent = cache(async (id: string) => {
     .from('events')
     .select(`
       *,
-      promoters (name, stripe_account)`
+      promoters (id, name, stripe_account)`
     )
     .eq('id', id)
     .returns<Event[]>()

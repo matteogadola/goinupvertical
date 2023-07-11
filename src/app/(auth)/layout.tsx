@@ -3,12 +3,8 @@ import Footer from '@/components/footer'
 
 export default function AuthLayout({
   children,
-  params,
 }: {
   children: React.ReactNode
-  params: {
-    promoter: string
-  }
 }) {
   return (
     <>

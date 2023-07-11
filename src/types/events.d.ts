@@ -15,7 +15,7 @@ export interface Event {
   flyer: string | null;
   regulation: string | null;
   attachments?: Attachment[];
-  promoters?: { name: string; stripe_account: string; };
+  promoters?: { id: string, name: string; stripe_account: string; };
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';

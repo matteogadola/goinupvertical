@@ -4,6 +4,7 @@ import { Order } from '@/types/orders';
 import { pool } from '@/lib/pg';
 import { base64 } from '@/lib/helpers';
 import { getEvent } from '@/lib/events';
+import { Promoter } from '@/types/promoters';
 
 // https://stripe.com/docs/api/versioning
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -35,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 }
 
-export const createCheckoutSession = async (headers: any, body: Order, stripeAccount?: string) => {
+export const createCheckoutSession = async (headers: any, body: Order, promoter?: Promoter) => {
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
   for (let item of body.items) {
@@ -78,13 +79,8 @@ export const createCheckoutSession = async (headers: any, body: Order, stripeAcc
       },
     },
     success_url: `${headers.origin}/confirm?session_id={CHECKOUT_SESSION_ID}&q=${q}`,
-    cancel_url: `${headers.origin}/${stripeAccount ? 'team-valtellina' : 'goinup'}/events/${body.items[0].event_id}`, // tarrozzata
+    cancel_url: `${headers.origin}/${promoter?.id ?? 'goinup'}/events/${body.items[0].event_id}`,
   };
 
-  // tariffe invoice
-  // https://support.stripe.com/questions/pricing-for-post-payment-invoices-for-one-time-purchases-via-checkout-and-payment-links
-  // e comunque servono mille dati...
-  // io la creerei a posteriori con la mail che inviamo con le info
-
-  return stripe.checkout.sessions.create(params, { stripeAccount });
+  return stripe.checkout.sessions.create(params, { stripeAccount: promoter?.stripe_account ?? undefined });
 };

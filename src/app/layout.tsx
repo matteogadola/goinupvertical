@@ -1,5 +1,5 @@
 import '@/app/globals.css'
-import { fonts } from '@/app/lib/fonts'
+import { fonts } from '@/lib/fonts'
 
 export default async function RootLayout({
   children,

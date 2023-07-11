@@ -2,7 +2,7 @@
 
 import { Order } from '@/types/orders';
 import { dt } from 'src/lib/date';
-import { updateOrder } from '@/app/lib/orders';
+import { updateOrder } from '@/lib/orders';
 
 interface Mail {
   to: string;
