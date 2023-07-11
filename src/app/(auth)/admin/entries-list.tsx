@@ -81,7 +81,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
 
   useEffect(() => {
     const subscription = watch((values) => {
-      let filtered = [...state.entries];
+      let filtered = state.entries;
 
       if (values.last_name) {
         filtered = filtered.filter(entry => entry.last_name.toLowerCase().includes(values.last_name));
