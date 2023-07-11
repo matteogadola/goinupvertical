@@ -78,7 +78,7 @@ export const createCheckoutSession = async (headers: any, body: Order, stripeAcc
       },
     },
     success_url: `${headers.origin}/confirm?session_id={CHECKOUT_SESSION_ID}&q=${q}`,
-    cancel_url: `${headers.origin}/events/${body.items[0].event_id}`,
+    cancel_url: `${headers.origin}/${stripeAccount ? 'team-valtellina' : 'goinup'}/events/${body.items[0].event_id}`, // tarrozzata
   };
 
   // tariffe invoice

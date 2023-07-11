@@ -1,0 +1,45 @@
+import type { GetStaticPaths, Metadata, ResolvingMetadata } from 'next'
+import { getPromoter, getPromoters } from '@/app/lib/promoters'
+import RootLayout from '@/app/layout';
+
+interface Params {
+  promoter: string;
+}
+
+interface Props {
+  params: Params;
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function PromoterPage({ params }: Props) {
+  /*const event = await getEvent(params.id);
+
+  if (event === null || event.status === 'internal') {
+    notFound();
+  }
+
+  const items = await getItems({ eventId: event.id, status: 'published' })*/
+
+  return (
+    <section className="page">
+      dentro
+    </section>
+  )
+}
+
+/*export const getStaticPaths: GetStaticPaths = async () => {
+  const promoters = await getPromoters();
+
+  return {
+    paths: promoters.map(item => ({ params: { promoter: item.id } })),
+    fallback: false,
+  }
+}*/
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const promoter = await getPromoter(params.promoter);
+
+  return {
+    title: promoter?.name,
+  }
+}

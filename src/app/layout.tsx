@@ -1,7 +1,5 @@
-import './globals.css'
+import '@/app/globals.css'
 import { fonts } from '@/app/lib/fonts'
-import Navbar from '@/app/components/navbar'
-import Footer from '@/app/components/footer'
 
 export default async function RootLayout({
   children,
@@ -12,11 +10,7 @@ export default async function RootLayout({
     <html lang="it" className={`${fonts.map(font => font.variable).join(' ')}`}>
       <head />
       <body className="flex flex-col min-h-screen">
-        <Navbar />
-        <main>
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   )

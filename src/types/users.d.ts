@@ -1,4 +1,4 @@
-export interface Promoter {
+export interface User {
   id: string;
   name: string;
   logo: string | null;

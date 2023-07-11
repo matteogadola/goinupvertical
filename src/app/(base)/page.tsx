@@ -5,6 +5,8 @@ import Credits from '@/app/components/credits'
 import { GetStaticProps, Metadata } from 'next'
 import { Suspense } from 'react'
 import Spinner from '@/components/spinner'
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
 
 // export const revalidate = 85000
 
@@ -16,16 +18,20 @@ export const metadata: Metadata = {
 export default async function HomePage() {
 
   return (
-    <section className="page space-y-32">
-      <HomeMission />
+    <>
+      <Navbar promoter="goinup" />
+      <section className="page space-y-32">
+        <HomeMission />
 
-      <Suspense fallback={<Spinner />}>
-        <HomeEvents />
-      </Suspense>
+        <Suspense fallback={<Spinner />}>
+          <HomeEvents />
+        </Suspense>
 
-      <HomeGoinupCalendar />
+        <HomeGoinupCalendar />
 
-      <Credits />
-    </section>
+        <Credits />
+      </section>
+      <Footer promoter="goinup" />
+    </>
   )
 }
