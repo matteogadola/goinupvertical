@@ -95,6 +95,10 @@ export default async function EventPage({
     fallback: false,
   }
 }*/
+
+export const dynamicParams = false;
+export const revalidate = 28800;
+
 export async function generateStaticParams() {
   const events = await getEvents();
 

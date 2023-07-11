@@ -14,7 +14,6 @@ import goinup from 'public/images/credits/goinup.png'
 
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
-import { getOrders, getEntries } from '@/app/lib/views'
 import { Attachment, Event } from '@/types/events'
 //import { useSupabase } from '@/app/components/supabase-provider';
 import { SubmitHandler, useForm } from 'react-hook-form';
