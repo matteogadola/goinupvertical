@@ -47,7 +47,8 @@ export const getEvent = async (id: string) => {
     .from('events')
     .select(`
       *,
-      promoters (id, name, stripe_account)`
+      promoter:promoters (id, name, stripe_account),
+      items (*)`
     )
     .eq('id', id)
     .returns<Event[]>()

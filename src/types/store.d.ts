@@ -5,10 +5,12 @@ import type { Auth } from './app';
 export interface Store {
   appError: AppError | null;
   //supabase: SupabaseClient<Database>;
-  auth: Auth;
+  //session: Session | null;
+  //setSession: (session: Session | null) => void;
+  //auth: Auth;
   //user: User | undefined;
   //setUser: (user: User | undefined) => void;
-  setAuthSession: (session: Session | null) => void;
+  //setAuthSession: (session: Session | null) => void;
   cartItems: OrderItem[];
   paymentMethod: PaymentMethod;
   setAppError: (error: AppError | null) => void;

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useStore } from '@/store/store'
 
 export interface SignUpForm {
   first_name: string;
@@ -56,6 +57,9 @@ export default function LoginForm() {
     if (error) {
       throw new Error(error.message);
     }
+
+    router.push(data.user?.app_metadata.role ? '/admin' : '/account');
+    router.refresh();
 
     return data;
   }

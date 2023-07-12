@@ -1,11 +1,15 @@
+'use client'
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   promoter?: string;
-  routePath?: string | null;
 }
 
-export default function NavbarBrand({ promoter, routePath }: Props) {
+export default function NavbarBrand({ promoter }: Props) {
+  const routePath = usePathname();
+
   if (routePath === '/') {
     return <div></div>
   }

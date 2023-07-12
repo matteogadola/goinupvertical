@@ -26,11 +26,9 @@ export default async function EventPage({
 }) {
   const event = await getEvent(params.event);
 
-  if (event === null || event.status === 'internal') {
-    notFound();
-  }
+  if (event === null) notFound()
 
-  const items = await getItems({ eventId: event.id, status: 'published' })
+  //const items = await getItems({ eventId: event.id, status: 'published' })
 
   return (
     <section className="page">
@@ -51,11 +49,11 @@ export default async function EventPage({
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
           <div className="mt-8">
             {event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
-              ? <ItemsList list={items} event={event} />
+              ? <ItemsList list={event.items} event={event} />
               : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
             }
 
-            {!!items.length && <div className="mt-8">
+            {!!event.items?.length && <div className="mt-8">
               <Link href={{ pathname: `${event?.id}/entries`, query: { q: base64.encode(event) } }}>
                 <span className="text-button">Vedi elenco iscritti</span>
               </Link>
@@ -85,7 +83,7 @@ export const dynamicParams = false;
 export const revalidate = 21600; // 6h
 
 export async function generateStaticParams() {
-  const events = await getEvents();
+  const events = await getEvents({ notInternal: true });
 
   return events.map(event => ({
     promoter: event.promoter_id,

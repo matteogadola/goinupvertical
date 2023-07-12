@@ -5,9 +5,10 @@ interface Stepper {}
 
 export const useStore = create<Store>((set) => ({
   appError: null,
-  auth: { session: null },
+  //auth: { session: null },
   //user: undefined,
-  setAuthSession: (session) => set((state) => ({ ...state, auth: { session } })),
+  //session: null,
+  //setSession: (session) => set((state) => ({ ...state, session })),
   //stepper: undefined,
   cartItems: [],
   paymentMethod: 'stripe',

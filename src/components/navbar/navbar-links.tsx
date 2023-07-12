@@ -1,3 +1,5 @@
+'use client'
+
 import type { NavLink } from '@/types/app';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -9,10 +11,10 @@ import NavbarMobile from './navbar-mobile';
 interface Props {
   links: NavLink[];
   promoter?: string;
-  routePath?: string | null;
 }
 
-export default function NavbarLinks({ links, promoter, routePath }: Props) {
+export default function NavbarLinks({ links, promoter }: Props) {
+  const routePath = usePathname();
 
   if (promoter === 'goinup') {
     return (

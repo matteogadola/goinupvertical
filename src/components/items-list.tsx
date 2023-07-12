@@ -6,12 +6,12 @@ import { Item } from '@/types/items'
 import { Event } from '@/types/events'
 
 interface Props {
-  list: Item[];
+  list: Item[] | undefined;
   event: Event;
 }
 
 export default function ItemsList({ list, event }: Props) {
-  const items = list.filter(item => item.status === 'published')
+  const items = list?.filter(item => item.status === 'published') ?? []
 
   return (
     <Suspense fallback={<Spinner />}>
