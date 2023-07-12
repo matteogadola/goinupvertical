@@ -1,5 +1,5 @@
 import type { Metadata, ResolvingMetadata } from 'next'
-import { getPromoter } from '@/lib/promoters'
+import { getPromoter, getPromoters } from '@/lib/promoters'
 
 interface Params {
   promoter: string;
@@ -33,6 +33,17 @@ export default async function PromoterPage({ params }: Props) {
     fallback: false,
   }
 }*/
+
+export const dynamicParams = false;
+export const revalidate = 21600; // 6h
+
+export async function generateStaticParams() {
+  const promoters = await getPromoters();
+
+  return promoters.map(promoter => ({
+    promoter: promoter.id,
+  }))
+}
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const promoter = await getPromoter(params.promoter);
