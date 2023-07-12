@@ -8,3 +8,9 @@ export interface AppError {
 export interface Auth {
   session: Session | null;
 }
+
+export interface NavLink {
+  name: string;
+  path: string;
+  visible?: boolean;
+}
