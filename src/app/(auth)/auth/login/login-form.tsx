@@ -45,7 +45,7 @@ export default function LoginForm() {
 
   const signUp = async (formData: any) => {
     console.log(`${location.origin}/auth/callback`)
-    const { data, error } = await supabase.auth.signUp({
+    /*const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
       options: {
@@ -66,7 +66,7 @@ export default function LoginForm() {
     router.push(data.user?.app_metadata.role ? '/admin' : '/');
     router.refresh();
 
-    return data;
+    return data;*/
   }
 
   const {
