@@ -2,7 +2,6 @@ CREATE OR REPLACE FUNCTION public.handle_delete_user()
 returns trigger as $$
 begin
   delete from public.users where id = OLD.id;
-  delete from public.user_roles where user_id = OLD.id;
   return new;
 end;
 $$ language plpgsql security definer;

@@ -35,7 +35,9 @@ export default function LoginForm() {
       throw new Error(error.message);
     }
 
-    router.push(data.user.app_metadata.role ? '/admin' : '/account');
+    // dovranno pushare a confirm apassowrd
+    // router.push(data.user.app_metadata.role ? '/admin' : '/account');
+    router.push(data.user.app_metadata.role ? '/admin' : '/');
     router.refresh();
 
     return data;
