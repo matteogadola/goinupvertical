@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import classNames from 'classnames'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useStore } from '@/store/store'
+import Button from '@/components/ui/button'
 
 export interface SignUpForm {
   first_name: string;
@@ -18,11 +19,12 @@ export default function LoginForm() {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
-  const [error, setError] = useState<string | undefined>(undefined)
+  //const [error, setError] = useState<string | undefined>(undefined)
 
   const [state, setState] = useState({
     error: undefined,
-    mode: 'sign-in'
+    mode: 'sign-in',
+    isLoading: false,
   });
 
   const handleSignIn = async (formData: any) => {
@@ -35,12 +37,7 @@ export default function LoginForm() {
       throw new Error(error.message);
     }
 
-    // dovranno pushare a confirm apassowrd
-    // router.push(data.user.app_metadata.role ? '/admin' : '/account');
-    router.push(data.user.app_metadata.role ? '/admin' : '/');
-    router.refresh();
-
-    return data;
+    return data
   }
 
   const signUp = async (formData: any) => {
@@ -84,6 +81,8 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     try {
+      //setState({ ...state, isLoading: true })
+      setState(state => ({ ...state, isLoading: true }))
       if (state.mode === 'sign-in') {
         await handleSignIn(data);
       } else if (state.mode === 'sign-up') {
@@ -93,10 +92,14 @@ export default function LoginForm() {
       }
       // router.refresh();
     } catch (e: any) {
-      setError(e.message);
+      //setError(e.message);
+      console.log("MUMBLE", e.message)
+      setState(state => ({ ...state, error: e.message }))
       return;
+    } finally {
+      setState(state => ({ ...state, isLoading: false }))
+      //setState({ ...state, isLoading: false })
     }
-    // reset();
   }
 
   const toggle = () => {
@@ -147,20 +150,23 @@ export default function LoginForm() {
               {errors.password && <small className="validation-error">{errors.password.message}</small>}
             </div>
 
-            {error &&
+            {state.error &&
               <div className="col-span-1 lg:col-span-2 mt-4">
                 <div className="relative px-2 py-1 leading-normal text-red-700" role="alert">
                   <span className="absolute inset-y-0 left-0 flex items-center ml-4">
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" fillRule="evenodd"></path></svg>
                   </span>
-                  <p className="ml-8">{error}</p>
+                  <p className="ml-8">{state.error}</p>
                 </div>
               </div>
             }
 
-            <button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded">
+            {/*<button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded">
+          </button>*/}
+
+            <Button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded" isLoading={state.isLoading}>
               {state.mode === 'sign-in' ? 'Accedi' : 'Iscriviti'}
-            </button>
+            </Button>
 
           </div>
         </form>
