@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { Metadata, NextPage } from 'next'
 import Image from 'next/image'
 import { Event } from '@/types/events'
 import { getEvent, getEvents } from '@/lib/events'
@@ -78,3 +78,6 @@ export default function ConfirmPage({ searchParams }: Props) {
   )
 }
 
+export const metadata: Metadata = {
+  title: 'Conferma ordine',
+}
