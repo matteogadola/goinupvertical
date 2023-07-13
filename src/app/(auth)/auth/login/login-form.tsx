@@ -62,7 +62,8 @@ export default function LoginForm() {
 
     // dovranno pushare a confirm apassowrd
     // router.push(data.user.app_metadata.role ? '/admin' : '/account');
-    // router.push(data.user?.app_metadata.role ? '/admin' : '/');
+    router.push(data.user?.app_metadata.role ? '/admin' : '/');
+    // CONFERMA MAIL
     router.refresh();
 
     return data;
