@@ -7,6 +7,8 @@ import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { calcStripeTax, capitalize, verifyTin } from './helpers';
 import { cache } from 'react';
+import { getEvent } from './events';
+import { Promoter } from '@/types/promoters';
 
 export const getOrders = async () => {
   const { data } = await supabase.from('orders').select().returns<Order[]>();
@@ -82,14 +84,11 @@ export const createOrder = async (params: Partial<Order>) => {
 
     await client.query('BEGIN');
 
-    const event = await client.query<Event>(
-      'SELECT * FROM events WHERE id = $1',
-      [params.items[0].id]
-    ).then(res => res.rows.shift());
+    const event = await getEvent(params.items[0].event_id!);
 
-    const { rows: orders } = await client.query<Omit<Order, 'items'>>(
-      `INSERT INTO orders (user_id, user_email, amount, date, payment_method, payment_status)
-      VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
+    const order = await client.query<Omit<Order, 'items'>>(
+      `INSERT INTO orders (user_id, user_email, amount, date, payment_method, payment_status, promoter_id)
+      VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
       [
         params.user_id ?? null,
         params.user_email,
@@ -97,9 +96,9 @@ export const createOrder = async (params: Partial<Order>) => {
         dt().utc().format(),
         params.payment_method,
         params.payment_method === 'stripe' ? 'intent' : 'pending',
+        event?.promoter?.id,
       ]
-    );
-    const order = { ...orders[0], promoter_id: event?.promoter_id };
+    ).then(res => res.rows.shift()!);
     console.debug(`[createOrder] order: ${JSON.stringify(order)}`);
 
     for (let item of params.items) {

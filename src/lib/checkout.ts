@@ -21,7 +21,7 @@ export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_em
   }
 
   if (body.payment_method === 'stripe') {
-    const stripe = await getStripe(undefined);
+    const stripe = await getStripe(body.stripeAccount);
 
     try {
       await stripe!.redirectToCheckout({

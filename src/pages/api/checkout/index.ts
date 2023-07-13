@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await sendConfirmationMail(order);
       return res.json(order);
     } else if (order.payment_method === 'stripe') {
-      const stripeAccount = (await getPromoter(order.promoter_id))?.stripe_account ?? undefined;
+      const stripeAccount = (await getPromoter(order.promoter_id!))?.stripe_account ?? undefined;
       const { id } = await createCheckoutSession(headers, order, stripeAccount);
       return res.json({ ...order, stripeAccount, checkoutSessionId: id });
     } else {

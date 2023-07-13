@@ -1,4 +1,5 @@
 import type { Entry } from './entries';
+import { Promoter } from './promoters';
 
 export interface Order {
   id: number;
