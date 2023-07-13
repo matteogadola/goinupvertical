@@ -1,5 +1,3 @@
-'use client'
-
 import { NextPage } from 'next'
 import Image from 'next/image'
 import { Event } from '@/types/events'
@@ -18,8 +16,12 @@ interface SearchParams {
   q: string;
 }
 
-export default function ConfirmPage() {
-  const order = base64.decode<Order>(useSearchParams()?.get('q') ?? '')
+export interface Props {
+  searchParams: SearchParams;
+}
+
+export default function ConfirmPage({ searchParams }: Props) {
+  const order = base64.decode<Order>(searchParams.q);
 
   // NO - MOSTRA ERRORE
   if (order?.items === undefined || !order.items.length) redirect('/')
