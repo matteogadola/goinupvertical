@@ -1,36 +1,54 @@
-'server only'
+import type { Metadata, ResolvingMetadata } from 'next'
+import { getPromoter, getPromoters } from '@/lib/promoters'
 
-import type { GetStaticPaths, Metadata } from 'next'
-import { getPromoter, getPromoters } from '@/app/lib/promoters'
+interface Params {
+  promoter: string;
+}
 
-type Props = {
-  params: { promoter: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+interface Props {
+  params: Params;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function PromoterPage({ params }: Props) {
+  /*const event = await getEvent(params.id);
+
+  if (event === null || event.status === 'internal') {
+    notFound();
+  }
+
+  const items = await getItems({ eventId: event.id, status: 'published' })*/
 
   return (
-    <>
-      <span>Pagina di prova {params.promoter}</span>
-    </>
+    <section className="page">
+    </section>
   )
 }
 
-export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
+/*export const getStaticPaths: GetStaticPaths = async () => {
+  const promoters = await getPromoters();
+
+  return {
+    paths: promoters.map(item => ({ params: { promoter: item.id } })),
+    fallback: false,
+  }
+}*/
+
+export const dynamicParams = false;
+export const revalidate = 21600; // 6h
+
+export async function generateStaticParams() {
+  const promoters = await getPromoters();
+
+  return promoters.map(promoter => ({
+    promoter: promoter.id,
+  }))
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const promoter = await getPromoter(params.promoter);
 
   return {
     title: promoter?.name,
-  };
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const promoters = await getPromoters();
-  const paths = promoters.map(item => ({ params: { promoter: item.id } }));
-
-  return {
-    paths,
-    fallback: false,
   }
 }

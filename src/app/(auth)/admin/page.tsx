@@ -1,67 +1,50 @@
-'use client';
-
-import { cache, Suspense, useEffect, useState } from 'react'
-import classNames from 'classnames'
-import Spinner from '@/components/spinner'
-import { Attachment, Event } from '@/types/events'
-import EventContent from './event-content';
-import { createClient } from '@/lib/supabase-auth-browser';
+import { Event } from '@/types/events'
 import { dt } from '@/lib/date';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Database } from '@/types/supabase';
+import { cookies } from 'next/headers';
+import { notFound, redirect } from 'next/navigation';
+import AdminConsole from './admin-console';
+import { Metadata } from 'next';
 
-interface State {
-  events: Event[];
-  event: Event | undefined;
+export const metadata: Metadata = {
+  title: 'Console di amministrazione',
 }
 
-const supabase = createClient();
+// rinomina in manage ???
 
-const fetchEvents = cache(async () => {
-  const { data } = await supabase
+export default async function Admin() {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    redirect('/auth/login');
+  }
+
+  const { data: events } = await supabase
     .from('events')
     .select(`*, attachments(*)`)
     .neq('id', 'pietro-vertical-5')
     .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
     .returns<Event[]>();
-  return data ?? [];
-});
 
-export default function Events({ className }: { className?: string }) {
-  const [state, setState] = useState<State>({ events: [], event: undefined });
-
-  useEffect(() => {
-    fetchEvents()
-      .then(events => setState({ ...state, events }))
-      .catch(() => setState({ ...state, events: [] }))
-  }, []);
-
-  const selectEvent = (event: Event) => {
-    setState({ ...state, event })
+  if (!events?.length) {
+    return (
+      <>
+        <div className="page">
+          <div className="flex flex-col bg-red-100 bg-opacity-80 max-w-lg p-4">
+            <span className="font-semibold">Utente non abilitato</span>
+            <span>Contattare l&apos;amministratore per richiedere le abilitazioni necessarie</span>
+          </div>
+        </div>
+      </>
+    )
   }
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <section className="page">
-        {!!state.events.length &&
-          <div className={classNames(className, "flex")}>
-
-            <div>
-              <ul className="separator">
-                {state.events.map((item, index) =>
-                  <li key={index} className="py-2 whitespace-nowrap">
-                    <button onClick={() => selectEvent(item)} className={classNames({ 'font-semibold': state.event?.id === item.id }, "hover:opacity-80")}>{item.name}</button>
-                  </li>
-                )}
-              </ul>
-            </div>
-
-            <div className="pl-10 pt-1">
-              <EventContent event={state.event} />
-            </div>
-
-          </div>
-        }
-      </section>
-    </Suspense>
+    <>
+      <AdminConsole events={events} />
+    </>
   )
 }

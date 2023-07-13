@@ -3,7 +3,7 @@ import { buffer } from 'micro';
 import Stripe from 'stripe';
 import { getOrder, updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
-import { sendConfirmationMail } from '@/app/lib/mail';
+import { sendConfirmationMail } from '@/lib/mail';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2022-11-15',

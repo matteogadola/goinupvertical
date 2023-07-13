@@ -13,7 +13,7 @@ interface GetEventsProps {
   promoterId: string;
 }
 
-export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
+export const getEvents = async (props?: Partial<GetEventsProps>) => {
   const queryBuilder = supabase.from('events').select();
 
   if (props?.fromDate) {
@@ -22,7 +22,10 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
   if (props?.promoterId) {
     queryBuilder.eq('promoter_id', props.promoterId);
   }
-  if (props?.notInternal) {
+  if (props?.status) {
+    queryBuilder.eq('status', props.status);
+  }
+  if (props?.notInternal) { // a tendere elimina
     queryBuilder.neq('status', 'internal');
   }
   if (props?.status) {
@@ -37,21 +40,22 @@ export const getEvents = cache(async (props?: Partial<GetEventsProps>) => {
 
   const { data } = await queryBuilder.returns<Event[]>();
   return data ?? [];
-});
+};
 
-export const getEvent = cache(async (id: string) => {
+export const getEvent = async (id: string) => {
   const { data } = await supabase
     .from('events')
     .select(`
       *,
-      promoters (name, stripe_account)`
+      promoter:promoters (id, name, stripe_account),
+      items (*)`
     )
     .eq('id', id)
     .returns<Event[]>()
     .single();
 
   return data;
-});
+};
 
 export async function createEvent(race: Omit<any, 'id'>) {
   /*  const normalizedName = race.name

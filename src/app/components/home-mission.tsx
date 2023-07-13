@@ -1,12 +1,11 @@
-import classNames from 'classnames'
 import Image from 'next/image'
 import missionImage from 'public/images/mission.png'
 
-export default function HomeMission({ className }: { className?: string }) {
+export default function HomeMission() {
 
   return (
-    <section className={classNames("grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-4", className)}>
-      
+    <section className="grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-4">
+
       <div className="mt-4 lg:mt-12">
         <h3 className="overtitle">Finalità Benefica</h3>
         <h1 className="title">Chi siamo?</h1>

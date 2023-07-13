@@ -1,4 +1,5 @@
 import type { Entry } from './entries';
+import { Promoter } from './promoters';
 
 export interface Order {
   id: number;
@@ -13,6 +14,7 @@ export interface Order {
   payment_method: PaymentMethod;
   payment_status: PaymentStatus;
   items: OrderItem[];
+  promoter_id?: string; // ???
 }
 
 export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
@@ -23,7 +25,6 @@ export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed
 export interface OrderItem {
   id: number;
   order_id?: number;
-  //item_id?: number;
   event_id?: string; // ???
   name: string;
   quantity: number;

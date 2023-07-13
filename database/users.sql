@@ -16,25 +16,14 @@ CREATE TABLE IF NOT EXISTS users (
   team: TEXT
 );
 
-CREATE TABLE IF NOT EXISTS user_roles (
-  id SERIAL,
+CREATE TABLE IF NOT EXISTS user_grants (
+  id SERIAL PRIMARY KEY,
   user_id uuid references users on delete cascade not null,
   role user_role NOT NULL DEFAULT 'user'::user_role,
+  promoters jsonb,
+  events jsonb,
   unique (user_id)
 );
-
-CREATE TABLE IF NOT EXISTS user_promoter_grants (
-  id SERIAL,
-  user_id uuid references users on delete cascade not null,
-  promoter_id TEXT references promoters on delete cascade not null
-);
-
-CREATE TABLE IF NOT EXISTS user_event_grants (
-  id SERIAL,
-  user_id uuid references users on delete cascade not null,
-  event_id TEXT references events on delete cascade not null
-);
-
 
 CREATE TABLE IF NOT EXISTS grant_users_events (
   user_id uuid REFERENCES users (id),

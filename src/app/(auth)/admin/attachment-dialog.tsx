@@ -5,8 +5,10 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import classNames from 'classnames'
 import { Attachment, Event } from '@/types/events'
-import { useSupabase } from '@/app/components/supabase-provider'
-import { createClient } from '@/lib/supabase-auth-browser'
+//import { useSupabase } from '@/app/components/supabase-provider'
+import { createClient } from '@/lib/supabase-auth-client'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Database } from '@/types/supabase'
 
 //type AttachmentForm = Omit<Attachment, 'id'>
 /*interface AttachmentForm extends Attachment {
@@ -26,56 +28,56 @@ interface State {
   isLoading: boolean;
 }
 
-const supabase = createClient();
-
-const createAttachment = async (attachment: Omit<Attachment, 'id'>) => {
-  const { data, error } = await supabase
-    .from('attachments')
-    .insert(attachment)
-    .select()
-    .returns<Attachment[]>()
-    .single();
-
-  if (error) {
-    throw new Error(`Errore inatteso: ${error.code}`);
-  }
-  /*
-  {
-  "code": "23503",
-  "details": "Key (event_id)=() is not present in table \"events\".",
-  "hint": null,
-  "message": "insert or update on table \"attachments\" violates foreign key constraint \"attachments_event_id_fkey\""
-}
-*/
-  return data;
-};
-
-const updateAttachment = async (attachment: Partial<Attachment>) => {
-  const id = attachment.id;
-  delete attachment.id;
-
-  const { data, error } = await supabase
-    .from('attachments')
-    .update(attachment)
-    .eq('id', id)
-    .select()
-    .returns<Attachment[]>()
-    .single();
-
-  if (error) {
-    throw new Error(`Errore inatteso: ${error.code}`);
-  }
-
-  return data;
-};
+//const supabase = createClient();
 
 export default function AttachmentDialog({ className, attachment, event, onResult, onClose }: Props) {
-  const { supabase, session } = useSupabase()
+  //const { supabase, session } = useSupabase()
+  const supabase = createClientComponentClient<Database>();
 
   const [state, setState] = useState<State>({ error: '', isLoading: false });
   const [error, setError] = useState(null)
 
   // se attachmente undefined
+  const createAttachment = async (attachment: Omit<Attachment, 'id'>) => {
+    const { data, error } = await supabase
+      .from('attachments')
+      .insert(attachment)
+      .select()
+      .returns<Attachment[]>()
+      .single();
+
+    if (error) {
+      throw new Error(`Errore inatteso: ${error.code}`);
+    }
+    /*
+    {
+    "code": "23503",
+    "details": "Key (event_id)=() is not present in table \"events\".",
+    "hint": null,
+    "message": "insert or update on table \"attachments\" violates foreign key constraint \"attachments_event_id_fkey\""
+  }
+  */
+    return data;
+  };
+
+  const updateAttachment = async (attachment: Partial<Attachment>) => {
+    const id = attachment.id;
+    delete attachment.id;
+
+    const { data, error } = await supabase
+      .from('attachments')
+      .update(attachment)
+      .eq('id', id)
+      .select()
+      .returns<Attachment[]>()
+      .single();
+
+    if (error) {
+      throw new Error(`Errore inatteso: ${error.code}`);
+    }
+
+    return data;
+  };
 
   const { register, handleSubmit, control, setValue, reset, formState: { errors } } = useForm<Attachment>({
     defaultValues: attachment

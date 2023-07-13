@@ -13,8 +13,10 @@ export interface Event {
   description: string | null;
   body: string | null;
   flyer: string | null;
+  regulation: string | null;
   attachments?: Attachment[];
-  promoters?: { name: string; stripe_account: string; };
+  promoter?: { id: string, name: string; stripe_account: string; };
+  items?: Item[];
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';

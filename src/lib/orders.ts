@@ -2,34 +2,18 @@
 import { Order, OrderItem } from '@/types/orders';
 import { pool } from './pg';
 import { dt } from './date';
+import { Event } from '@/types/events';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { calcStripeTax, capitalize, verifyTin } from './helpers';
-import { createClient } from './supabase-auth-server';
 import { cache } from 'react';
+import { getEvent } from './events';
+import { Promoter } from '@/types/promoters';
 
-export const getOrders = cache(async () => {
-  //const supabase = createClient();
-  const { data } = await supabase.from('orders').select();
+export const getOrders = async () => {
+  const { data } = await supabase.from('orders').select().returns<Order[]>();
   return data;
-
-  /*const client = await pool.connect();
-
-  try {
-    const { rows: orders } = await client.query<Order>(`
-      SELECT orders.*, array_to_json(array_agg(order_items)) AS items
-      FROM orders
-      INNER JOIN order_items ON orders.id = order_items.order_id
-      GROUP BY orders.id`);
-
-    return orders;
-  } catch (e: any) {
-    console.warn(`[getOrders] errore: ${JSON.stringify(e.message)}`);
-    throw new Error(`Errore interno ${e.code}`);
-  } finally {
-    client.release();
-  }*/
-});
+};
 
 export const getOrder = async (id: number) => {
   const { data } = await supabase.from('orders').select().eq('id', id).returns<Order[]>().single();
@@ -100,9 +84,11 @@ export const createOrder = async (params: Partial<Order>) => {
 
     await client.query('BEGIN');
 
-    const { rows: orders } = await client.query<Omit<Order, 'items'>>(
-      `INSERT INTO orders (user_id, user_email, amount, date, payment_method, payment_status)
-      VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
+    const event = await getEvent(params.items[0].event_id!);
+
+    const order = await client.query<Omit<Order, 'items'>>(
+      `INSERT INTO orders (user_id, user_email, amount, date, payment_method, payment_status, promoter_id)
+      VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
       [
         params.user_id ?? null,
         params.user_email,
@@ -110,9 +96,9 @@ export const createOrder = async (params: Partial<Order>) => {
         dt().utc().format(),
         params.payment_method,
         params.payment_method === 'stripe' ? 'intent' : 'pending',
+        event?.promoter?.id,
       ]
-    );
-    const order = orders[0];
+    ).then(res => res.rows.shift()!);
     console.debug(`[createOrder] order: ${JSON.stringify(order)}`);
 
     for (let item of params.items) {
@@ -298,11 +284,6 @@ export const createOrder = async (params: Partial<Order>) => {
 export const updateOrder = async (id: number, params: Partial<Order>) => {
   try {
     const { data, error } = await supabase.from('orders').update(params).eq('id', id);
-
-    /*if (process.env.NODE_ENV === 'production') {
-      const orderRef = db.collection('orders').doc(id.toString());
-      await orderRef.update(params);
-    }*/
 
     if (error) {
       console.warn(`[updateOrder] error: ${error.message}`);

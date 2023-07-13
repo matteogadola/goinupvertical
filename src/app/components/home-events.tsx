@@ -1,27 +1,19 @@
-import { getItem } from '@/lib/items'
 import Link from 'next/link'
 import Image from 'next/image'
-
-import { base64 } from '@/lib/helpers'
-import { Suspense } from 'react'
 import { getEvents } from '@/lib/events'
 import { dt, getDate } from '@/lib/date'
-//import { base64 } from '@/lib/helpers'
 
 import goinup from 'public/images/credits/goinup.png'
 
 import classNames from 'classnames'
-import Spinner from '@/components/spinner'
 
-// https://tailwindcomponents.com/component/tags
-//export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
-export default async function HomeEvents({ className }: { className: string }) {
+export default async function HomeEvents() {
   const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, promoterId: 'goinup', status: 'scheduled' })
 
   return (
-    <Suspense fallback={<Spinner />}>
-      {events.length > 0 &&
-        <section className={classNames(className, "")}>
+    <>
+      {events?.length > 0 &&
+        <section>
           <div className="text-center">
             <h3 className="overtitle">Prossimi</h3>
             <h1 className="title">Eventi</h1>
@@ -32,7 +24,7 @@ export default async function HomeEvents({ className }: { className: string }) {
             { "xl:grid-cols-2": events.length === 2 }
           )}>
             {events.map((event, index) =>
-              <Link href={`events/${event.id}`} key={index}>
+              <Link href={`/events/${event.id}`} key={index}>
                 <div className="lg:max-w-sm rounded overflow-hidden shadow-lg hover:shadow-xl border-2 border-title hover:opacity-90">
                   <div className="relative text-white text-center">
                     <Image src={event.summary_image ? `/images/summaries/${event.summary_image}` : goinup} width={500} height={200} style={{ objectFit: "cover", objectPosition: "center" }} className="h-48" alt="Image" />
@@ -74,6 +66,6 @@ export default async function HomeEvents({ className }: { className: string }) {
         </div>*/}
         </section>
       }
-    </Suspense>
+    </>
   )
 }

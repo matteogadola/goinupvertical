@@ -18,8 +18,8 @@ import { Event } from '@/types/events'
 import { Entry } from '@/types/entries'
 import { Item } from '@/types/items'
 import { createCheckout } from '@/lib/checkout'
-import { useSupabase } from '@/app/components/supabase-provider'
-import { createClient } from '@/lib/supabase-auth-browser'
+//import { useSupabase } from '@/app/components/supabase-provider'
+import { createClient } from '@/lib/supabase-auth-client'
 
 
 //type AddEntryForm = Pick<Entry, 'first_name' | 'last_name' | 'tin' | 'team' | 'email' | 'phone_number'> & {item_id: number };
@@ -40,8 +40,10 @@ interface State {
   isLoading: boolean;
 }
 
+const supabase = createClient();
+
 export default function EntryDialog({ className, event, items, onEntryCreated, onClose }: Props) {
-  const { supabase, session } = useSupabase()
+  //const { supabase, session } = useSupabase()
 
   const [state, setState] = useState<State>({ error: undefined, isLoading: false });
 
@@ -71,7 +73,7 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
       setState({ ...state, isLoading: true });
 
       const order = await createCheckout({
-        user_id: session?.user.id,
+        user_id: null, //session?.user.id, // TODO PASSALO
         payment_method: 'cash',
         user_email: data.email,
         items: [{

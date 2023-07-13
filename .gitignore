@@ -43,3 +43,5 @@ next-env.d.ts
 /.github/workflows/firebase-hosting-merge.yml
 
 /public/images/old
+# Local Netlify folder
+.netlify

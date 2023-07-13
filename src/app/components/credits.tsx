@@ -111,7 +111,6 @@ const supporters = [
     name: 'La voce di Daniele',
     logo: voceDiDaniele,
     height: 70,
-    url: ''
   }, {
     name: 'San Bello',
     logo: sanBello,
@@ -160,15 +159,15 @@ const partners = [
   },
 ]
 
-export default function Credits({ className }: { className: string }) {
+export default function Credits() {
   return (
-    <section className={classNames(className, "text-center mx-4 space-y-8")}>
+    <section className="text-center mx-4 space-y-8">
       <div className="py-4">
         <h3 className="overtitle">Sponsor</h3>
         <div className="flex flex-wrap space-y-8">
-          { sponsors.map((item, index) =>
+          {sponsors.map((item, index) =>
             <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center">
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
                 <Image src={item.logo} height={item.height} alt={item.name} />
               </a>
             </div>
@@ -179,9 +178,9 @@ export default function Credits({ className }: { className: string }) {
       <div className="py-4">
         <h3 className="overtitle">Supporter</h3>
         <div className="flex flex-wrap space-y-8">
-          { supporters.map((item, index) =>
+          {supporters.map((item, index) =>
             <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center">
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
                 <Image src={item.logo} height={item.height} alt={item.name} />
               </a>
             </div>
@@ -192,9 +191,9 @@ export default function Credits({ className }: { className: string }) {
       <div className="py-4">
         <h3 className="overtitle">Media partner</h3>
         <div className="flex flex-wrap space-y-8">
-          { partners.map((item, index) =>
+          {partners.map((item, index) =>
             <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center">
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({"col-span-2 lg:col-span-3": index === sponsors.length -1 })}>
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
                 <Image src={item.logo} height={item.height} alt={item.name} />
               </a>
             </div>

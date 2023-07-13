@@ -6,12 +6,12 @@ import { Item } from '@/types/items'
 import { Event } from '@/types/events'
 
 interface Props {
-  list: Item[];
+  list: Item[] | undefined;
   event: Event;
 }
 
 export default function ItemsList({ list, event }: Props) {
-  const items = list.filter(item => item.status === 'published')
+  const items = list?.filter(item => item.status === 'published') ?? []
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -22,7 +22,7 @@ export default function ItemsList({ list, event }: Props) {
               ? <p>Iscrizione non disponibile</p>
               : items.map((item, index) => (
                 <div key={index} className="border shadow-md hover:shadow-lg pl-2">
-                  <Link href={{ pathname: '/events/entry', query: { q: base64.encode(item) } }}>
+                  <Link href={`/events/${event.id}/${item.id}`}>
                     <div className="py-6 flex flex-wrap md:flex-nowrap hover:opacity-80">
                       <div className="md:flex-grow">
                         <h2 className="text-2xl text-gray-800">{item.name}</h2>

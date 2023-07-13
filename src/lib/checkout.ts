@@ -10,6 +10,7 @@ export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_em
     body: JSON.stringify(orderData),
     headers: {
       'content-type': 'application/json',
+      'cancel_url': '',
     },
     cache: 'no-cache',
   });

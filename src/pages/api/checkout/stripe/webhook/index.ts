@@ -3,7 +3,7 @@ import { buffer } from 'micro';
 import Stripe from 'stripe';
 import { getOrder, updateOrder } from '@/lib/orders';
 import { dt } from '@/lib/date';
-import { sendConfirmationMail } from '@/app/lib/mail';
+import { sendConfirmationMail } from '@/lib/mail';
 import { base64 } from '@/lib/helpers';
 import { Order } from '@/types/orders';
 

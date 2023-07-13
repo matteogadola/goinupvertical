@@ -39,3 +39,17 @@ CREATE VIEW v_entries WITH (security_invoker) AS
     ORDER BY e.last_name, e.first_name;
 
   --ALTER VIEW v_entries OWNER TO authenticated;
+
+DROP VIEW IF EXISTS v_users;
+
+CREATE VIEW v_users WITH (security_invoker) AS
+  SELECT U.*,
+    UR.role,
+    array_remove(array_agg(UPG.promoter_id), NULL) as promoters,
+    array_remove(array_agg(UEG.event_id), NULL) as events
+  FROM public.users U
+  LEFT JOIN public.user_roles UR ON U.id = UR.user_id
+  LEFT JOIN public.user_promoter_grants UPG ON U.id = UPG.user_id
+  LEFT JOIN public.user_event_grants UEG ON U.id = UEG.user_id
+  GROUP BY U.id, UR.role
+  ORDER BY UR.role DESC, U.last_name, U.first_name;
