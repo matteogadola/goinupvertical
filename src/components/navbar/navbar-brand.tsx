@@ -24,7 +24,9 @@ export default function NavbarBrand({ promoter }: Props) {
 
   if (promoter === 'team-valtellina') {
     return (
-      <div></div>
+      <div className="text-lg md:text-xl font-unbounded font-bold hover:opacity-70">
+        <Link href="/"><span className="text-red-400">Team</span> Valtellina</Link>
+      </div>
     )
   }
 

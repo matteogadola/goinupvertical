@@ -4,6 +4,7 @@ import { createOrder } from '@/lib/orders';
 import { createCheckoutSession } from './stripe';
 import { getEvent } from '@/lib/events';
 import { Promoter } from '@/types/promoters';
+import { getPromoter } from '@/lib/promoters';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const { method, headers, body } = req;
@@ -20,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await sendConfirmationMail(order);
       return res.json(order);
     } else if (order.payment_method === 'stripe') {
-      const stripeAccount = (await getEvent(order.items[0].event_id!))?.promoter?.stripe_account ?? undefined;
+      const stripeAccount = (await getPromoter(order.promoter_id))?.stripe_account ?? undefined;
       const { id } = await createCheckoutSession(headers, order, stripeAccount);
       return res.json({ ...order, stripeAccount, checkoutSessionId: id });
     } else {

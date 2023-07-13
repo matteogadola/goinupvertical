@@ -2,6 +2,7 @@
 import { Order, OrderItem } from '@/types/orders';
 import { pool } from './pg';
 import { dt } from './date';
+import { Event } from '@/types/events';
 import { Entry } from '@/types/entries';
 import supabase from './supabase';
 import { calcStripeTax, capitalize, verifyTin } from './helpers';
@@ -81,6 +82,11 @@ export const createOrder = async (params: Partial<Order>) => {
 
     await client.query('BEGIN');
 
+    const event = await client.query<Event>(
+      'SELECT * FROM events WHERE id = $1',
+      [params.items[0].id]
+    ).then(res => res.rows.shift());
+
     const { rows: orders } = await client.query<Omit<Order, 'items'>>(
       `INSERT INTO orders (user_id, user_email, amount, date, payment_method, payment_status)
       VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
@@ -93,7 +99,7 @@ export const createOrder = async (params: Partial<Order>) => {
         params.payment_method === 'stripe' ? 'intent' : 'pending',
       ]
     );
-    const order = orders[0];
+    const order = { ...orders[0], promoter_id: event?.promoter_id };
     console.debug(`[createOrder] order: ${JSON.stringify(order)}`);
 
     for (let item of params.items) {
