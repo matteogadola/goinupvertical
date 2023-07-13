@@ -12,6 +12,7 @@ export interface Entry {
   country: string;
   birth_place: string | null;
   birth_date: string;
+  birth_year?: number;
   gender: 'M' | 'F';
   bib_number: smallint;
 }

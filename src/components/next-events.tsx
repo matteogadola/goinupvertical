@@ -7,12 +7,12 @@ import goinup from 'public/images/credits/goinup.png'
 
 import classNames from 'classnames'
 
-export default async function HomeEvents() {
+export default async function NextEvents() {
   const events = await getEvents({ fromDate: dt().format(), orderBy: 'date', limit: 3, promoterId: 'goinup', status: 'scheduled' })
 
   return (
     <>
-      {events?.length > 0 &&
+      {!!events?.length &&
         <section>
           <div className="text-center">
             <h3 className="overtitle">Prossimi</h3>

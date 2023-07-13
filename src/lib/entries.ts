@@ -38,22 +38,16 @@ type CreateEntryParams = Omit<
 
 interface GetEntriesProps {
   eventId: string;
-  eventAlias: string;
 }
 
-// chiaramente filtro su event_alias
 export const getEntries = async (props?: Partial<GetEntriesProps>) => {
-  const { data } = await supabase
-    .from('entries')
-    .select(
-      `
-      *,
-      tickets (event_alias)
-    `
-    )
-    .eq('tickets.event_alias', props?.eventAlias)
-    .returns<any[]>();
+  const queryBuilder = supabase.from('v_entries_public').select();
 
+  if (props?.eventId) {
+    queryBuilder.eq('event_id', props.eventId);
+  }
+
+  const { data } = await queryBuilder.returns<Entry[]>();
   return data ?? [];
 };
 
