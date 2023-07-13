@@ -81,7 +81,6 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     try {
-      //setState({ ...state, isLoading: true })
       setState(state => ({ ...state, isLoading: true }))
       if (state.mode === 'sign-in') {
         await handleSignIn(data);
@@ -92,13 +91,10 @@ export default function LoginForm() {
       }
       // router.refresh();
     } catch (e: any) {
-      //setError(e.message);
-      console.log("MUMBLE", e.message)
       setState(state => ({ ...state, error: e.message }))
       return;
     } finally {
       setState(state => ({ ...state, isLoading: false }))
-      //setState({ ...state, isLoading: false })
     }
   }
 
