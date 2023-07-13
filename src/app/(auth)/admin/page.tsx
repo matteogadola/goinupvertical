@@ -34,8 +34,8 @@ export default async function Admin() {
       <>
         <div className="page">
           <div className="flex flex-col bg-red-100 bg-opacity-80 max-w-lg p-4">
-            <span className="font-semibold ">Utente non abilitato</span>
-            <span>Contattare l'amministratore per richiedere le abilitazioni necessarie</span>
+            <span className="font-semibold">Utente non abilitato</span>
+            <span>Contattare l&apos;amministratore per richiedere le abilitazioni necessarie</span>
           </div>
         </div>
       </>
