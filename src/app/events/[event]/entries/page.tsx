@@ -7,18 +7,18 @@ import { Suspense, cache, useEffect, useState } from 'react';
 import { Props } from '../page';
 import { getEntries } from '@/lib/entries';
 import { getEvent, getEvents } from '@/lib/events';
+import classNames from 'classnames';
 
 export default async function EntriesPage({ params }: Props) {
   const event = await getEvent(params.event);
   if (event === null) notFound();
 
-  const entries = await getEntries({ eventId: event.id });
+  const entries: any[] = await getEntries({ eventId: event.id });
 
   /*const filterEntries = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const filtered = state.entries.filter(entry => entry.last_name.toLowerCase().includes(e.target.value.toLowerCase()));
     setState({ ...state, items: filtered });
   }*/
-
 
   return (
     <section className="page">
