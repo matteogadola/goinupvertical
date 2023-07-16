@@ -261,7 +261,7 @@ export const createOrder = async (params: Partial<Order>) => {
     return { ...order, items: orderItems };
   } catch (e: any) {
     await client.query('ROLLBACK');
-    console.warn(`[createOrder] errore: ${JSON.stringify(e.message)}`);
+    console.warn(`[createOrder] Errore ${e.code}: ${e.message}`);
 
     if (e.code === '23505') {
       if (e.constraint === 'entries_unique') {
@@ -271,11 +271,13 @@ export const createOrder = async (params: Partial<Order>) => {
       }
     }
 
-    if (e.code) {
+    throw new Error(e.message);
+    
+    /*if (e.code) {
       throw new Error(`Errore interno ${e.code}`);
     } else {
       throw e;
-    }
+    }*/
   } finally {
     client.release();
   }

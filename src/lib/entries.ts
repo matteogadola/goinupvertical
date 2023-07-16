@@ -40,7 +40,7 @@ interface GetEntriesProps {
   eventId: string;
 }
 
-export const getEntries = async (props?: Partial<GetEntriesProps>) => {
+export const getEntries = cache(async (props?: Partial<GetEntriesProps>) => {
   const queryBuilder = supabase.from('v_entries_public').select();
 
   if (props?.eventId) {
@@ -49,7 +49,7 @@ export const getEntries = async (props?: Partial<GetEntriesProps>) => {
 
   const { data } = await queryBuilder.returns<Entry[]>();
   return data ?? [];
-};
+});
 
 export const getEntry = async (id: string) => {
   const { data } = await supabase.from('entries').select().eq('id', id).returns<Entry[]>().single();
