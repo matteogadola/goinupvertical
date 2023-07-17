@@ -80,23 +80,25 @@ export default function EntriesList({ entries, items, event, className }: Props)
   }*/
 
   useEffect(() => {
-    console.log("quando entro?")
     const subscription = watch((values) => {
-      let filtered = state.entries;
-      console.log("ora?")
-
-      if (values.last_name) {
-        filtered = filtered.filter(entry => entry.last_name.toLowerCase().includes(values.last_name));
-      }
-
-      if (values.payment_status) {
-        filtered = filtered.filter(item => item.payment_status === values.payment_status);
-      }
-
-      setState((state) => ({ ...state, items: filtered }));
+      setState((state) => ({ ...state, items: filter(state.entries, values) }));
     })
     return () => subscription.unsubscribe()
   }, [])
+
+  const filter = (list: any[], values: Partial<FormState>) => {
+    let filtered = list;
+
+    if (values.last_name) {
+      filtered = filtered.filter(entry => entry.last_name.toLowerCase().includes(values.last_name));
+    }
+
+    if (values.payment_status) {
+      filtered = filtered.filter(item => item.payment_status === values.payment_status);
+    }
+
+    return filtered;
+  }
 
   /*const formValues = watch();
   useEffect(() => {
