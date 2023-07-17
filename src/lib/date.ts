@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/it';
 import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 dayjs.locale('it');
 dayjs.extend(utc);
+dayjs.extend(timezone);
 
 declare module 'dayjs' {
   interface Dayjs {
@@ -16,6 +18,8 @@ dayjs.extend((option, dayjsClass, dayjsFactory) => {
     return getDateTime(this);
   };
 });
+
+dayjs.tz.setDefault('Europe/Rome');
 
 export function getReadableDate(date: string, capitalize = true) {
   const data = dayjs(date).format('dddd DD MMMM');

@@ -80,8 +80,10 @@ export default function EntriesList({ entries, items, event, className }: Props)
   }*/
 
   useEffect(() => {
+    console.log("quando entro?")
     const subscription = watch((values) => {
       let filtered = state.entries;
+      console.log("ora?")
 
       if (values.last_name) {
         filtered = filtered.filter(entry => entry.last_name.toLowerCase().includes(values.last_name));
