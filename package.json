@@ -4,6 +4,7 @@
   "private": true,
   "types": "./index.d.ts",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "format": "prettier --check ./src",
     "format:fix": "prettier --write ./src",
     "lint": "next lint",
