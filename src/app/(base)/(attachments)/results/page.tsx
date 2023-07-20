@@ -7,7 +7,7 @@ import supabase from '@/lib/supabase'
 import { dt } from '@/lib/date'
 import { Event } from '@/types/events'
 
-// export const revalidate = 85000
+export const revalidate = 3600
 
 export const metadata = {
   title: 'Classifiche | Goinup',

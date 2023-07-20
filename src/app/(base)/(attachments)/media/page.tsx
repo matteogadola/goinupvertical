@@ -8,7 +8,7 @@ import { dt } from '@/lib/date'
 import { Event } from '@/types/events'
 import { LinkIcon, PhotoIcon, VideoIcon } from '@/app/components/icons'
 
-// export const revalidate = 85000
+export const revalidate = 3600
 
 export const metadata = {
   title: 'Foto | Goinup',
