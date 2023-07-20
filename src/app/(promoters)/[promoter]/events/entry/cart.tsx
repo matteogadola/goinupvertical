@@ -38,7 +38,7 @@ export default function EntryCart() {
 
       if (order) {
         clearCartItems()
-        replace(`/confirm?q=${base64.encode(order)}`)
+        //replace(`/confirm?q=${base64.encode(order)}`)
       }
     } catch (e: any) {
       console.log(JSON.stringify(e.message))

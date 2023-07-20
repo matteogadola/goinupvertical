@@ -1,6 +1,8 @@
 import Stripe from 'stripe';
 import getStripe from './stripe';
 import { Order, OrderItem } from '@/types/orders';
+import { redirect } from 'next/navigation'
+import { base64 } from './helpers';
 
 // https://supabase.github.io/wrappers/stripe/
 
@@ -31,6 +33,7 @@ export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_em
       console.error(e.message);
     }
   } else {
+    redirect(`/confirm?q=${base64.encode(body)}`)
     return body;
   }
 }

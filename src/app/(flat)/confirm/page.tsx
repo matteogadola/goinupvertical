@@ -1,5 +1,3 @@
-'use client'
-
 import { Metadata, NextPage } from 'next'
 import Image from 'next/image'
 import { Event } from '@/types/events'
@@ -22,11 +20,8 @@ export interface Props {
   searchParams: SearchParams;
 }
 
-// Serve ma non funziona
-//export default function ConfirmPage({ searchParams }: Props) {
-//  const order = base64.decode<Order>(searchParams.q);
-export default function ConfirmPage() {
-  const order = base64.decode<Order>(useSearchParams()?.get('q') ?? '')
+export default function ConfirmPage({ searchParams }: Props) {
+  const order = base64.decode<Order>(searchParams.q);
 
   if (order?.items === undefined || !order.items.length) {
     return (
@@ -86,6 +81,6 @@ export default function ConfirmPage() {
   )
 }
 
-/*export const metadata: Metadata = {
+export const metadata: Metadata = {
   title: 'Conferma ordine',
-}*/
+}
