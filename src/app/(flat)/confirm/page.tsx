@@ -21,10 +21,14 @@ export interface Props {
 }
 
 export default function ConfirmPage({ searchParams }: Props) {
+  console.log("confirm", searchParams)
   const order = base64.decode<Order>(searchParams.q);
 
+  console.log(order)
+  //const order = base64.decode<Order>(useSearchParams()?.get('q') ?? '')
+
   // NO - MOSTRA ERRORE
-  if (order?.items === undefined || !order.items.length) redirect('/')
+  //if (order?.items === undefined || !order.items.length) redirect('/')
 
   // se non ci sono params fai redirect a home
   //const order = base64.decode<Order>(encoded)
