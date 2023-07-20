@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation'
 import { base64, calcStripeTax } from '@/lib/helpers'
 
 export default function EntryCart() {
-  const { replace } = useRouter()
+  const { replace, push } = useRouter()
   const cartItems = useStore((state) => state.cartItems)
   const paymentMethod = useStore((state) => state.paymentMethod)
   const removeCartItem = useStore((state) => state.removeCartItem)
@@ -38,7 +38,7 @@ export default function EntryCart() {
 
       if (order) {
         clearCartItems()
-        //replace(`/confirm?q=${base64.encode(order)}`)
+        push(`/confirm?q=${base64.encode(order)}`)
       }
     } catch (e: any) {
       console.log(JSON.stringify(e.message))

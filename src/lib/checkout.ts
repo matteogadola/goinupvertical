@@ -33,7 +33,6 @@ export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_em
       console.error(e.message);
     }
   } else {
-    redirect(`/confirm?q=${base64.encode(body)}`)
     return body;
   }
 }
