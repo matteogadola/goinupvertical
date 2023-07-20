@@ -35,7 +35,7 @@ export default function ConfirmPage() {
         <section className="page">
           <span className="overtitle">Conferma</span>
           <div className="text mt-2">
-            L'iscrizione è stata completata con successo ma ci sono stati problemi nella generazione di questa pagina.<br />
+            L&apos;iscrizione è stata completata con successo ma ci sono stati problemi nella generazione di questa pagina.<br />
             Riceverai a breve una mail di conferma.<br />
           </div>
         </section>
