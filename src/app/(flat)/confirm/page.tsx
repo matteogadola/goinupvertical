@@ -1,3 +1,5 @@
+'use client'
+
 import { Metadata, NextPage } from 'next'
 import Image from 'next/image'
 import { Event } from '@/types/events'
@@ -20,24 +22,26 @@ export interface Props {
   searchParams: SearchParams;
 }
 
-export default function ConfirmPage({ searchParams }: Props) {
-  console.log("confirm", searchParams)
-  const order = base64.decode<Order>(searchParams.q);
+// Serve ma non funziona
+//export default function ConfirmPage({ searchParams }: Props) {
+//  const order = base64.decode<Order>(searchParams.q);
+export default function ConfirmPage() {
+  const order = base64.decode<Order>(useSearchParams()?.get('q') ?? '')
 
-  console.log(order)
-  //const order = base64.decode<Order>(useSearchParams()?.get('q') ?? '')
-
-  // NO - MOSTRA ERRORE
-  //if (order?.items === undefined || !order.items.length) redirect('/')
-
-  // se non ci sono params fai redirect a home
-  //const order = base64.decode<Order>(encoded)
-  //const entry = await getEntry(entry_id)
-  //const item = await getItem(item_id)
-
-  /*if (entry === null || item === null) {
-    redirect('/')
-  }*/
+  if (order?.items === undefined || !order.items.length) {
+    return (
+      <>
+        <Navbar promoter="goinup" />
+        <section className="page">
+          <span className="overtitle">Conferma</span>
+          <div className="text mt-2">
+            L'iscrizione è stata completata con successo ma ci sono stati problemi nella generazione di questa pagina.<br />
+            Riceverai a breve una mail di conferma.<br />
+          </div>
+        </section>
+      </>
+    )
+  }
 
   return (
     <>
