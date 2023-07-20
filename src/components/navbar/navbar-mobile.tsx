@@ -34,7 +34,7 @@ export default function NavbarMobile({ links, promoter }: Props) {
                 {
                   links.filter(item => item?.visible !== false).map((link, index) => (
                     <li key={index}>
-                      <Link href={link.path} onClick={() => setIsSidenavOpen(true)}>
+                      <Link href={link.path} onClick={() => setIsSidenavOpen(false)}>
                         <span className="block px-2 py-4 hover:opacity-70">{link.name}</span>
                       </Link>
                     </li>
