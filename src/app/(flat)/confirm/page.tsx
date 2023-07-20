@@ -86,6 +86,6 @@ export default function ConfirmPage() {
   )
 }
 
-export const metadata: Metadata = {
+/*export const metadata: Metadata = {
   title: 'Conferma ordine',
-}
+}*/
