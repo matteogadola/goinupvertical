@@ -9,6 +9,7 @@ export interface Entry {
   email: string;
   phone_number: string;
   team: string | null;
+  fidal_card: string | null;
   country: string;
   birth_place: string | null;
   birth_date: string;

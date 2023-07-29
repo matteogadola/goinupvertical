@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS users (
   birth_place TEXT,
   birth_date TEXT,
   gender GENDER,
-  team: TEXT
+  team: TEXT,
+  fidal_card: TEXT
 );
 
 CREATE TABLE IF NOT EXISTS user_grants (

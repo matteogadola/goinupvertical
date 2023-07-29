@@ -153,6 +153,24 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             />
           </div>
 
+          {item.options?.isFidalCardRequested && <div className="">
+            <label className="label" htmlFor="fidal_card">Tessera Fidal</label>
+            <input
+              type="fidal_card"
+              aria-invalid={errors.fidal_card ? "true" : "false"}
+              {...register("fidal_card", {
+                required: 'Campo obbligatorio',
+                /*pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Numero tessera fidal non valida"
+                  RRXXXXXX
+                },*/
+              })}
+              className="field"
+            />
+            {errors.fidal_card && <small className="field-error">{errors.fidal_card?.message}</small>}
+          </div>}
+
           <div className="">
             <label className="label" htmlFor="email">Email</label>
             <input
@@ -187,7 +205,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
             {errors.phone_number && <small className="field-error">{errors.phone_number.message}</small>}
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="flex items-end">
             <div className="relative flex items-start">
               <div className="flex items-center h-5 mt-1">
                 <input

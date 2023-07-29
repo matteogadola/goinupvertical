@@ -9,6 +9,7 @@ export interface Item {
   price: number;
   stock: number;
   status: ItemStatus;
+  options?: Partial<ItemOptions> | null;
 }
 
 export type ItemStatus = 'hidden' | 'internal' | 'published' | 'cancelled' | 'stockout';
@@ -19,3 +20,7 @@ export type ItemStatus = 'hidden' | 'internal' | 'published' | 'cancelled' | 'st
  * cancelled
  * stockout
  */
+
+export interface ItemOptions {
+  isFidalCardRequested: boolean;
+}
