@@ -123,13 +123,13 @@ export const createOrder = async (params: Partial<Order>) => {
 
         const { rows: entrieRows } = await client.query<Entry>(
           `INSERT INTO entries (order_item_id, order_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
-          gender, country, team, email, phone_number, tin)
-          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+          gender, country, team, email, phone_number, tin, fidal_card)
+          VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
           ON CONFLICT ON CONSTRAINT entries_unique
           DO UPDATE SET order_item_id = excluded.order_item_id, order_id = excluded.order_id, item_id = excluded.item_id,
           first_name = excluded.first_name, last_name = excluded.last_name, birth_date = excluded.birth_date,
           birth_place = excluded.birth_place, gender = excluded.gender, country = excluded.country, team = excluded.team,
-          email = excluded.email, phone_number = excluded.phone_number
+          email = excluded.email, phone_number = excluded.phone_number, fidal_card = excluded.fidal_card
           WHERE entries.event_id = excluded.event_id AND entries.tin = excluded.tin`,
           [
             orderItem.id,
@@ -147,6 +147,7 @@ export const createOrder = async (params: Partial<Order>) => {
             item.entry.email,
             item.entry.phone_number,
             item.entry.tin,
+            item.entry.fidal_card,
           ]
         );
 
@@ -167,6 +168,7 @@ export const createOrder = async (params: Partial<Order>) => {
           email: item.entry.email,
           phone_number: item.entry.phone_number,
           tin: item.entry.tin,
+          fidal_card: item.entry.fidal_card,
         });
       }
 
