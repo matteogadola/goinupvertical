@@ -1,19 +1,15 @@
-import Spinner from '@/components/spinner';
-import { base64 } from '@/lib/helpers';
-import { createClient } from '@/lib/supabase-auth-client';
-import { Event } from '@/types/events';
 import { notFound, redirect, usePathname, useSearchParams } from 'next/navigation'
-import { Suspense, cache, useEffect, useState } from 'react';
-import { Props } from '../page';
-import { getEntries } from '@/lib/entries';
-import { getEvent, getEvents } from '@/lib/events';
-import classNames from 'classnames';
+import { Suspense, cache, useEffect, useState } from 'react'
+import { Props } from '../page'
+import { getEntries } from '@/lib/entries'
+import { getEvent, getEvents } from '@/lib/events'
+import { Metadata, ResolvingMetadata } from 'next'
 
 export default async function EntriesPage({ params }: Props) {
   const event = await getEvent(params.event);
   if (event === null) notFound();
 
-  const entries: any[] = await getEntries({ eventId: event.id });
+  const entries = await getEntries({ eventId: event.id });
 
   /*const filterEntries = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const filtered = state.entries.filter(entry => entry.last_name.toLowerCase().includes(e.target.value.toLowerCase()));
@@ -59,4 +55,14 @@ export default async function EntriesPage({ params }: Props) {
 
     </section>
   )
+}
+
+export const revalidate = 3600; // 1h
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  const event = await getEvent(params.event);
+
+  return {
+    title: `Iscritti ${event?.name?.toLowerCase()}`,
+  }
 }
