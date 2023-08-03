@@ -17,3 +17,13 @@ export interface Entry {
   gender: 'M' | 'F';
   bib_number: smallint;
 }
+
+export type PartialEntry = Pick<
+  Entry,
+  | 'event_id'
+  | 'first_name'
+  | 'last_name'
+  | 'birth_year'
+  | 'gender'
+  | 'team'
+>

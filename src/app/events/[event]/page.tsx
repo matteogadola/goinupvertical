@@ -72,7 +72,7 @@ export default async function EventPage({ params }: Props) {
 }
 
 export const dynamicParams = false;
-export const revalidate = 21600; // 6h
+export const revalidate = 3600; // 1h
 
 export async function generateStaticParams() {
   const events = await getEvents({ notInternal: true });

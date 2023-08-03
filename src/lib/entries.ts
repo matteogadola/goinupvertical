@@ -2,7 +2,7 @@ import supabase from './supabase';
 
 import { Event } from '@/types/events';
 import { dt } from './date';
-import { Entry } from '@/types/entries';
+import { Entry, PartialEntry } from '@/types/entries';
 import Stripe from 'stripe';
 import { cache } from 'react';
 
@@ -41,13 +41,13 @@ interface GetEntriesProps {
 }
 
 export const getEntries = cache(async (props?: Partial<GetEntriesProps>) => {
-  const queryBuilder = supabase.from('v_entries_public').select();
+  const queryBuilder = supabase.from('v_entries').select('event_id, first_name, last_name, birth_year, gender, team');
 
   if (props?.eventId) {
     queryBuilder.eq('event_id', props.eventId);
   }
 
-  const { data } = await queryBuilder.returns<Entry[]>();
+  const { data } = await queryBuilder.returns<PartialEntry[]>();
   return data ?? [];
 });
 
