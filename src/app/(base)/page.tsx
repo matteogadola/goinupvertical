@@ -11,12 +11,6 @@ import Footer from '@/components/footer'
 import Link from 'next/link'
 import Image from 'next/image'
 import headerImage from 'public/images/header.jpg'
-// export const revalidate = 85000
-
-export const metadata: Metadata = {
-  title: 'Goinup',
-  description: 'Circuito di gare vertical a scopo benefico',
-}
 
 export default async function HomePage() {
 
@@ -48,4 +42,11 @@ export default async function HomePage() {
       </section>
     </>
   )
+}
+
+export const revalidate = 3600
+
+export const metadata: Metadata = {
+  title: 'Goinup',
+  description: 'Circuito di gare vertical a scopo benefico',
 }
