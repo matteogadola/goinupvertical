@@ -8,7 +8,9 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="it" className={`${fonts.map(font => font.variable).join(' ')}`}>
-      <head />
+      <head>
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+      </head>
       <body className="flex flex-col min-h-screen">
         {children}
       </body>
