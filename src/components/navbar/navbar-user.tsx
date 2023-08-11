@@ -51,15 +51,19 @@ export default function NavbarUser() {
 
           {isOpen &&
             <div className="absolute right-4 top-10 z-20 pt-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
-              <a href="#" className="flex min-w-max items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform hover:bg-gray-100">
-                <img className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src="/images/logos/goinup.png" alt="avatar" />
+              <Link
+                href="/account"
+                onClick={toggle}
+                className="flex min-w-max items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform hover:bg-gray-100"
+              >
+                {/*<img className="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src="/images/logos/goinup.png" alt="avatar" />*/}
                 <div className="mx-1">
                   <h1 className="text-sm font-semibold text-gray-700">{session?.user.user_metadata.first_name}</h1>
                   <p className="text-sm text-gray-500">{session?.user.email}</p>
                 </div>
-              </a>
+              </Link>
 
-              <hr className="border-gray-200 dark:border-gray-700 " />
+              {/*<hr className="border-gray-200 dark:border-gray-700 " />
 
               <a href="#" className="line-through block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                 Profilo
@@ -67,7 +71,7 @@ export default function NavbarUser() {
 
               <a href="#" className="line-through block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                 Impostazioni
-              </a>
+              </a>*/}
 
               <hr className="border-gray-200 dark:border-gray-700 " />
 
