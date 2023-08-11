@@ -12,20 +12,24 @@ export interface AccountForm extends UserAttributes {
 }
 
 export default async function AccountPage() {
+  return (<></>)
+}
+/*
+export default async function AccountPage() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
-  /*const [state, setState] = useState({
+  const [state, setState] = useState({
     error: undefined,
     //mode: 'sign-in',
     isLoading: false,
-  });*/
-  /*const event = await getEvent(params.id);
+  });
+  const event = await getEvent(params.id);
 
   if (event === null || event.status === 'internal') {
     notFound();
   }
 
-  const items = await getItems({ eventId: event.id, status: 'published' })*/
+  const items = await getItems({ eventId: event.id, status: 'published' })
 
 
   const {
@@ -43,14 +47,14 @@ export default async function AccountPage() {
 
   const onSubmit: SubmitHandler<AccountForm> = async (user) => {
     try {
-      /*setState(state => ({ ...state, isLoading: true }))
+      setState(state => ({ ...state, isLoading: true }))
       if (state.mode === 'sign-in') {
         await handleSignIn(data);
       } else if (state.mode === 'sign-up') {
         await signUp(data);
       } else {
         throw new Error('Operazione non gestita');
-      }*/
+      }
 
       //setState(state => ({ ...state, isLoading: true, error: undefined }))
       const { data, error } = await supabase.auth.updateUser(user)
@@ -93,12 +97,12 @@ export default async function AccountPage() {
             {errors.password && <small className="validation-error">{errors.password.message}</small>}
           </div>
 
-          {/*<Button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded" isLoading={state.isLoading}>
+          <Button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded" isLoading={state.isLoading}>
             Salva
-          </Button>*/}
+          </Button>
 
         </form>
       </div>
     </section>
   )
-}
+}*/
