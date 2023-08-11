@@ -1,22 +1,24 @@
 import Button from '@/components/ui/button';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClientComponentClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { UserAttributes } from '@supabase/supabase-js';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { cookies } from 'next/headers'
+import { Database } from '@/types/supabase';
 
 export interface AccountForm extends UserAttributes {
   //password: string;
 }
 
 export default async function AccountPage() {
-  const supabase = createClientComponentClient();
+  const supabase = createServerComponentClient<Database>({ cookies });
 
-  const [state, setState] = useState({
+  /*const [state, setState] = useState({
     error: undefined,
     //mode: 'sign-in',
     isLoading: false,
-  });
+  });*/
   /*const event = await getEvent(params.id);
 
   if (event === null || event.status === 'internal') {
@@ -50,7 +52,7 @@ export default async function AccountPage() {
         throw new Error('Operazione non gestita');
       }*/
 
-      setState(state => ({ ...state, isLoading: true, error: undefined }))
+      //setState(state => ({ ...state, isLoading: true, error: undefined }))
       const { data, error } = await supabase.auth.updateUser(user)
 
       if (error) {
@@ -67,10 +69,10 @@ export default async function AccountPage() {
       return data;
       // router.refresh();
     } catch (e: any) {
-      setState(state => ({ ...state, error: e.message }))
+      //setState(state => ({ ...state, error: e.message }))
       return;
     } finally {
-      setState(state => ({ ...state, isLoading: false }))
+      //setState(state => ({ ...state, isLoading: false }))
     }
   }
 
@@ -91,9 +93,9 @@ export default async function AccountPage() {
             {errors.password && <small className="validation-error">{errors.password.message}</small>}
           </div>
 
-          <Button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded" isLoading={state.isLoading}>
+          {/*<Button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded" isLoading={state.isLoading}>
             Salva
-          </Button>
+  </Button>*/}
 
         </form>
       </div>
