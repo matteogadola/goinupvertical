@@ -95,7 +95,7 @@ export default async function AccountPage() {
 
           {/*<Button type="submit" className="col-span-1 lg:col-span-2 mt-4 bg-blue-200 hover:opacity-80 font-bold py-2 px-4 rounded" isLoading={state.isLoading}>
             Salva
-  </Button>*/}
+          </Button>*/}
 
         </form>
       </div>
