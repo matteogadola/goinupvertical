@@ -27,7 +27,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
     "server-only": "^0.0.1",
-    "sharp": "^0.32.3",
+    "sharp": "^0.32.5",
     "stripe": "^12.13.0",
     "zustand": "^4.4.1"
   },
