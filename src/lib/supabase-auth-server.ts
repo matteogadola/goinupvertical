@@ -9,8 +9,8 @@ import type { Database } from '../types/supabase';
     headers,
     cookies,
   });*/
-const cookieStore = cookies()
+
 export const createClient = () =>
   createServerActionClient<Database>({
-    cookies: () => cookieStore,
+    cookies,
   });
