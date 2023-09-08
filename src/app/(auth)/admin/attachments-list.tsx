@@ -65,9 +65,9 @@ export default function AttachmentsList({ event, className }: Props) {
 
   useEffect(() => {
     fetchAttachments(event.id)
-      .then(attachments => setState({ ...state, attachments }))
-      .catch(() => setState({ ...state, attachments: [] }))
-  }, [event]);
+      .then(attachments => setState(state => ({ ...state, attachments })))
+      .catch(() => setState(state => ({ ...state, attachments: [] })))
+  }, [event, fetchAttachments]);
 
   const onCreate = () => {
     setState({ ...state, isDialogOpen: true, selectedAttachment: undefined })

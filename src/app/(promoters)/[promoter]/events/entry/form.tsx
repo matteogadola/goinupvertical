@@ -154,7 +154,7 @@ export default function EntryForm({ item, className }: { item: Item, className?:
           </div>
 
           {item.options?.isFidalCardRequested && <div className="">
-            <label className="label" htmlFor="fidal_card">Tessera Fidal</label>
+            <label className="label" htmlFor="fidal_card">Tessera Fidal/Runcard (Obbligatoria)</label>
             <input
               type="fidal_card"
               aria-invalid={errors.fidal_card ? "true" : "false"}

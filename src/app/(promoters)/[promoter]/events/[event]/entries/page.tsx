@@ -39,9 +39,9 @@ export default function EventEntriesPage() {
 
     console.log(event_id);
     fetchEntries(event_id)
-      .then(entries => setState({ ...state, entries, items: entries }))
+      .then(entries => setState(state => ({ ...state, entries, items: entries })))
       .catch(() => {
-        setState({ ...state, entries: [], items: [] });
+        setState(state => ({ ...state, entries: [], items: [] }));
         redirect('/');
       });
   }, [event_id]);
