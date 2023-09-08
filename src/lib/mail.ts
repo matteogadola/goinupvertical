@@ -8,10 +8,13 @@ interface Mail {
   to: string;
   subject: string;
   body: string;
+  sender?: string;
 }
 
 // https://developers.sendinblue.com/reference/sendtransacemail
 export const sendMail = async (mail: Mail) => {
+  const senderName = mail.sender ?? 'Goinup';
+
   return fetch('https://api.sendinblue.com/v3/smtp/email', {
     method: 'POST',
     headers: {
@@ -20,8 +23,8 @@ export const sendMail = async (mail: Mail) => {
       'api-key': process.env.SENDINBLUE_API_KEY!,
     },
     body: JSON.stringify({
-      sender: { email: 'noreply@goinupvertical.it', name: 'Goinup' },
-      replyTo: { email: 'noreply@goinupvertical.it', name: 'Goinup' },
+      sender: { email: 'noreply@goinupvertical.it', name: senderName },
+      replyTo: { email: 'noreply@goinupvertical.it', name: senderName },
       to: [{ email: mail.to }],
       subject: mail.subject,
       htmlContent: mail.body,
@@ -29,7 +32,7 @@ export const sendMail = async (mail: Mail) => {
   });
 };
 
-export const sendConfirmationMail = async (order: Order) => {
+export const sendConfirmationMail = async (order: Order, sender: string = 'GOinUP') => {
   const details = order.items.map(
     (item) => `
     <tr>
@@ -48,14 +51,15 @@ export const sendConfirmationMail = async (order: Order) => {
       : '';
 
   const response = await sendMail({
+    sender,
     to: order.user_email,
-    subject: `Conferma ordine GOinUP`,
+    subject: `Conferma ordine`,
     body: `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html>
         <head>
           <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-          <title>Conferma ordine GOinUP</title>
+          <title>Conferma ordine</title>
           <link href="https://fonts.googleapis.com/css2?family=Unbounded" rel="stylesheet" />
         </head>
         <body>
@@ -64,7 +68,7 @@ export const sendConfirmationMail = async (order: Order) => {
             <h2 style="color: #6FB06A;">Conferma</h1>
             <h1>Ordine n. ${order.id}</h1>
           </div>
-          <p>Grazie per aver completato l'ordine su GOinUP</p>
+          <p>Grazie per aver completato l'ordine</p>
 
           <table style="border-width: 1px; border-color: #94A3B8;">
             <thead>
@@ -85,7 +89,7 @@ export const sendConfirmationMail = async (order: Order) => {
           </div>
 
           <div style="margin-top: 2rem;">
-            <p>GOinUP</p>
+            <p>${sender}</p>
           </div>
         </body>
       </html>
