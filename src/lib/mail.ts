@@ -13,8 +13,6 @@ interface Mail {
 
 // https://developers.sendinblue.com/reference/sendtransacemail
 export const sendMail = async (mail: Mail) => {
-  const senderName = mail.sender ?? 'Goinup';
-
   return fetch('https://api.sendinblue.com/v3/smtp/email', {
     method: 'POST',
     headers: {
@@ -23,8 +21,8 @@ export const sendMail = async (mail: Mail) => {
       'api-key': process.env.SENDINBLUE_API_KEY!,
     },
     body: JSON.stringify({
-      sender: { email: 'noreply@goinupvertical.it', name: senderName },
-      replyTo: { email: 'noreply@goinupvertical.it', name: senderName },
+      sender: { email: 'noreply@goinupvertical.it', name: mail.sender },
+      replyTo: { email: 'noreply@goinupvertical.it', name: mail.sender },
       to: [{ email: mail.to }],
       subject: mail.subject,
       htmlContent: mail.body,
@@ -32,7 +30,9 @@ export const sendMail = async (mail: Mail) => {
   });
 };
 
-export const sendConfirmationMail = async (order: Order, sender: string = 'GOinUP') => {
+export const sendConfirmationMail = async (order: Order) => {
+  const sender = order.promoter_id === 'team-valtellina' ? 'TeamValtellina' : 'GOinUP';
+
   const details = order.items.map(
     (item) => `
     <tr>

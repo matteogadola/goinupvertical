@@ -91,7 +91,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           payment_status: 'paid',
           payment_date: dt.unix(session.created).utc().format(),
         });
-        await sendConfirmationMail(order, 'TeamValtellina');
+        await sendConfirmationMail(order);
       } else {
         console.error(`Checkout completed terminato in errore: ${JSON.stringify(session)}`);
       }
