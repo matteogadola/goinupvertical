@@ -35,12 +35,12 @@ export default function EntryFormCfDialog({ className, getValues, onCalc, onClos
   const { register, handleSubmit, control, setValue, setError, reset, formState: { errors } } = useForm<FormDialogState>({
     mode: 'onTouched'
   })
-  
+
   const data = getValues()
   useEffect(() => {
     setValue("first_name", data.first_name)
     setValue("last_name", data.last_name)
-  }, [data])
+  }, [data, setValue])
 
   const onSubmit: SubmitHandler<FormDialogState> = async data => {
     if (!places.includes(data.birth_place)) {
@@ -55,7 +55,7 @@ export default function EntryFormCfDialog({ className, getValues, onCalc, onClos
       surname: data.last_name,
       gender: data.gender,
       day: date.getDate(),
-      month: date.getMonth() +1,
+      month: date.getMonth() + 1,
       year: date.getFullYear(),
       birthplace: data.birth_place,
       birthplaceProvincia: ''
@@ -150,7 +150,7 @@ export default function EntryFormCfDialog({ className, getValues, onCalc, onClos
 
               </div>
 
-            
+
 
 
 

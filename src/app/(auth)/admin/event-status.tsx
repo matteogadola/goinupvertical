@@ -51,7 +51,7 @@ export default function EventStatus({ className, event, items }: Props) {
   const [itemsStatus, setItemsStatus] = useState<Item[]>([]);
 
   useEffect(() => {
-    setState({ ...state, status: event.status, items });
+    setState(state => ({ ...state, status: event.status, items }));
     setStatus(event.status)
     setItemsStatus(items)
   }, [event, items]);

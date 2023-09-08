@@ -14,7 +14,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^1.54.1",
     "@supabase/auth-helpers-nextjs": "^0.7.3",
-    "@supabase/supabase-js": "^2.26.0",
+    "@supabase/supabase-js": "^2.33.1",
     "classnames": "^2.3.2",
     "codice-fiscale-js": "^2.3.20",
     "dayjs": "^1.11.9",

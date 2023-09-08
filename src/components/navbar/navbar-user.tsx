@@ -14,7 +14,7 @@ export default function NavbarUser() {
   const routePath = usePathname();
   const router = useRouter();
   const supabase = createClientComponentClient();
-  //const sessione = use(supabase.auth.getSession());
+  const auth = supabase.auth;
 
   const [isOpen, setIsOpen] = useState(false)
   const [session, setSession] = useState<Session | null>(null)
@@ -36,10 +36,10 @@ export default function NavbarUser() {
   }
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    auth.onAuthStateChange((event, session) => {
       setSession(session)
     })
-  }, []);
+  }, [auth]);
 
   return (
     <div className={routePath === '/' ? 'text-white' : 'text-gray-600'}>

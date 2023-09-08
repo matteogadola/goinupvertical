@@ -36,16 +36,6 @@ type FormState = {
 
 export default function EntriesList({ entries, items, event, className }: Props) {
 
-  const [state, setState] = useState<State>({
-    entries,
-    items: entries,
-    isDialogOpen: false,
-    selectedEntry: undefined
-  });
-
-  useEffect(() => setState({ ...state, entries, items: entries }), [entries]);
-  useEffect(() => reset(), [event]);
-
   const {
     register,
     handleSubmit,
@@ -58,6 +48,17 @@ export default function EntriesList({ entries, items, event, className }: Props)
   } = useForm<FormState>({
     defaultValues: { last_name: '', payment_status: '' }
   })
+
+  const [state, setState] = useState<State>({
+    entries,
+    items: entries,
+    isDialogOpen: false,
+    selectedEntry: undefined
+  });
+
+  useEffect(() => setState(state => ({ ...state, entries, items: entries })), [entries]);
+  useEffect(() => reset(), [event, reset]);
+
 
   const setPaymentStatus = async (orderId: number, status: string) => {
     const { data, error } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
@@ -81,10 +82,10 @@ export default function EntriesList({ entries, items, event, className }: Props)
 
   useEffect(() => {
     const subscription = watch((values) => {
-      setState((state) => ({ ...state, items: filter(state.entries, values) }));
+      setState(state => ({ ...state, items: filter(state.entries, values) }));
     })
     return () => subscription.unsubscribe()
-  }, [])
+  }, [watch])
 
   const filter = (list: any[], values: Partial<FormState>) => {
     let filtered = list;

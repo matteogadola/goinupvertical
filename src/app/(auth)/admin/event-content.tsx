@@ -71,6 +71,17 @@ const fetchEntries = cache(async (id: string | undefined) => {
 });
 
 export default function EventContent({ event }: Props) {
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    setValue,
+    clearErrors,
+    reset,
+    formState: { errors }
+  } = useForm()
+
   //const [entries, setEntries] = useState<any | undefined>(undefined)
   const [state, setState] = useState<State>({
     entries: [],
@@ -83,24 +94,15 @@ export default function EventContent({ event }: Props) {
       fetchEntries(event?.id),
       fetchEventItems(event?.id)
     ]).then((values) => {
-      setState({ ...state, entries: values[0], items: values[1] });
+      setState(state => ({ ...state, entries: values[0], items: values[1] }));
     }).catch((e) => {
-      setState({ ...state, entries: [], items: [] });
+      setState(state => ({ ...state, entries: [], items: [] }));
     });
 
     setValue('status', event?.status);
-  }, [event]);
+  }, [event, setValue]);
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    getValues,
-    setValue,
-    clearErrors,
-    reset,
-    formState: { errors }
-  } = useForm()
+
 
   const onSubmit: SubmitHandler<EventForm> = async (data) => {
 
