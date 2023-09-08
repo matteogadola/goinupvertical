@@ -22,9 +22,7 @@ interface Props {
 }
 
 export default async function EntryPage({ params }: Props) {
-  console.log(params)
   const item = await getItem(params.item);
-  console.log(item)
   if (item === null) notFound()
 
   return (
