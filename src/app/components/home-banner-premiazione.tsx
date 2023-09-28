@@ -11,7 +11,7 @@ export default function HomeBanner({ className }: { className?: string }) {
     <section className={classNames("w-full", className)}>
       <Link href={`events/${eventId}`}>
 
-        <div className="mx-auto w-full md:w-3/5 flex items-center bg-slate-50 rounded-lg">
+        <div className="mx-auto w-full md:w-3/5 flex items-center rounded shadow-lg hover:shadow-xl">
           <div className="md:pr-24 md:pl-16">
             <div className="md:p-12">
               <h1 className="overtitle">Ven 13 ottobre</h1>
