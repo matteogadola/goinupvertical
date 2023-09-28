@@ -51,9 +51,6 @@ export interface OrderItem {
 export default function EventForm({ event }: Props) {
   const router = useRouter()
 
-  const cartItems = useStore((state) => state.cartItems)
-  const addCartItem = useStore((state) => state.addCartItem)
-
   let defaultValues: any = {
     privacy_policy: false,
     country: 'ITA',
@@ -99,6 +96,7 @@ export default function EventForm({ event }: Props) {
       if (order) {
         //clearCartItems()
         router.replace(`/confirm?q=${base64.encode(order)}`)
+        reset()
       }
     } catch (e: any) {
       console.log(JSON.stringify(e.message))
@@ -106,27 +104,6 @@ export default function EventForm({ event }: Props) {
     } finally {
       setState({ ...state, isLoading: false })
     }
-    /*data.tin = data.tin.toUpperCase()
-
-    const duplicateIndex = cartItems.findIndex(item => item.entry?.tin === data.tin)
-
-    if (duplicateIndex !== -1) {
-      setError('tin', { message: 'Codice fiscale già presente in carrello' })
-      return
-    }
-
-    addCartItem({
-      id: item.id,
-      event_id: item.event_id,
-      name: item.name,
-      price: item.price,
-      quantity: 1,
-      description: `${data.first_name} ${data.last_name}`,
-      entry: data,
-    })*/
-
-    // si ma dopo submit
-    // reset()
   }
 
   const updateQuantity = (id: number, quantity: number) => {

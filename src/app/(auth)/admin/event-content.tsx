@@ -125,7 +125,12 @@ export default function EventContent({ event }: Props) {
 
           <AttachmentsList event={event} />
 
-          <EntriesList entries={state.entries} event={event} items={state.items} />
+          {
+            event.category === 'race'
+              ? <EntriesList entries={state.entries} event={event} items={state.items} />
+              : <EntriesList entries={state.entries} event={event} items={state.items} />
+          }
+
         </section>
       }
     </Suspense>
