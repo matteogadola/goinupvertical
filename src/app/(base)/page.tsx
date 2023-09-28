@@ -11,6 +11,7 @@ import Footer from '@/components/footer'
 import Link from 'next/link'
 import Image from 'next/image'
 import headerImage from 'public/images/header.jpg'
+import HomeBanner from '../components/home-banner-premiazione'
 
 export default async function HomePage() {
 
@@ -31,6 +32,8 @@ export default async function HomePage() {
       </div>
       <section className="page relative space-y-32">
         <HomeMission />
+
+        <HomeBanner />
 
         <Suspense fallback={<Spinner />}>
           <HomeEvents />
