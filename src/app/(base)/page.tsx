@@ -31,9 +31,10 @@ export default async function HomePage() {
         </div>
       </div>
       <section className="page relative space-y-32">
-        <HomeMission />
 
         <HomeBanner />
+
+        <HomeMission />
 
         <Suspense fallback={<Spinner />}>
           <HomeEvents />
