@@ -109,9 +109,9 @@ export const createOrder = async (params: Partial<Order>) => {
       }
 
       const { rows: orderItemRows } = await client.query(
-        `INSERT INTO order_items (order_id, item_id, name, price, description)
-        VALUES($1, $2, $3, $4, $5) RETURNING *`,
-        [order.id, item.id, item.name, item.price, item?.description]
+        `INSERT INTO order_items (order_id, item_id, name, price, quantity, description)
+        VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
+        [order.id, item.id, item.name, item.price, item.quantity, item?.description]
       );
       const orderItem = orderItemRows[0];
       orderItems.push({ ...orderItem, event_id: item.event_id });
