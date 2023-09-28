@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import carnet from 'public/images/carnet.jpg'
 
 export default function HomeBanner({ className }: { className?: string }) {
-  const eventId = 'premiazione-goinup-5'
+  const eventId = 'cena-goinup-5'
 
   return (
     <section className={classNames("w-full", className)}>
