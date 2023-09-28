@@ -32,6 +32,8 @@ export default function EntryCart() {
       const order = await createCheckout({
         payment_method: paymentMethod,
         user_email: cartItems[0].entry?.email,
+        customer_first_name: cartItems[0].entry?.first_name,
+        customer_last_name: cartItems[0].entry?.last_name,
         items: cartItems
       })
       setError(null)

@@ -5,6 +5,8 @@ export interface Order {
   id: number;
   user_id?: string | null;
   user_email: string;
+  customer_first_name?: string;
+  customer_last_name?: string;
   date: string;
   status: string;
   notification_date: string;
@@ -19,7 +21,7 @@ export interface Order {
 
 export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
 
-export type PaymentMethod = 'stripe' | 'sepa' | 'cash';
+export type PaymentMethod = 'stripe' | 'sepa' | 'cash' | 'on-site';
 export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed';
 
 export interface OrderItem {

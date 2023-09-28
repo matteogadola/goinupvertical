@@ -6,7 +6,9 @@ import { base64 } from './helpers';
 
 // https://supabase.github.io/wrappers/stripe/
 
-export async function createCheckout(orderData: Pick<Order, 'user_id' | 'user_email' | 'payment_method' | 'items'>) {
+type Checkout = Pick<Order, 'user_id' | 'user_email' | 'payment_method' | 'items'> & Partial<Pick<Order, 'customer_first_name' | 'customer_last_name'>>
+
+export async function createCheckout(orderData: Checkout) {
   const response = await fetch('/api/checkout', {
     method: 'POST',
     body: JSON.stringify(orderData),
