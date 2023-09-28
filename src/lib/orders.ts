@@ -87,7 +87,7 @@ export const createOrder = async (params: Partial<Order>) => {
     const event = await getEvent(params.items[0].event_id!);
 
     const order = await client.query<Omit<Order, 'items'>>(
-      `INSERT INTO orders (user_id, user_email, costumer_first_name, costumer_last_name, amount, date, payment_method, payment_status, promoter_id)
+      `INSERT INTO orders (user_id, user_email, customer_first_name, customer_last_name, amount, date, payment_method, payment_status, promoter_id)
       VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`,
       [
         params.user_id ?? null,
