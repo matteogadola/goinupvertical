@@ -24,6 +24,7 @@ import { Item } from '@/types/items';
 import AttachmentsList from './attachments-list';
 import AttachmentDialog from './attachment-dialog';
 import EventStatus from './event-status';
+import OrdersList from './orders';
 
 type EventForm = Partial<Event>
 
@@ -128,7 +129,7 @@ export default function EventContent({ event }: Props) {
           {
             event.category === 'race'
               ? <EntriesList entries={state.entries} event={event} items={state.items} />
-              : <EntriesList entries={state.entries} event={event} items={state.items} />
+              : <OrdersList event={event} />
           }
 
         </section>
