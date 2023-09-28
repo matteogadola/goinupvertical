@@ -43,11 +43,11 @@ export const sendConfirmationMail = async (order: Order) => {
     </tr>`
   );
 
-  const paymentDetail =
-    order.payment_method === 'cash'
-      ? `
-  Per confermare la prenotazione è necessario completare il pagamento presso:<br /><br />
-  <b>3Passi Patagonia</b> Morbegno, Piazza 3 Novembre, 15`
+  const paymentDetail = order.payment_method === 'cash'
+    ? `Per confermare la prenotazione è necessario completare il pagamento presso:<br /><br />
+        <b>3Passi Patagonia</b> Morbegno, Piazza 3 Novembre, 15`
+    : order.payment_method === 'on-site'
+      ? ''//`Il pagamento avverà presso il luogo dell'evento`
       : '';
 
   const response = await sendMail({

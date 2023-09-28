@@ -69,9 +69,13 @@ export default function ConfirmPage({ searchParams }: Props) {
           </table>
 
           <p className="mt-8">A breve riceverai una mail con {
-            order.payment_method === 'sepa' ? 'le istruzioni per poter effettuare il bonifico' :
-              order.payment_method === 'cash' ? 'le istruzioni per poter effettuare il pagamento in contanti' :
-                'la conferma di pagamento'
+            order.payment_method === 'sepa'
+              ? 'le istruzioni per poter effettuare il bonifico'
+              : order.payment_method === 'cash'
+                ? 'le istruzioni per poter effettuare il pagamento in contanti'
+                : order.payment_method === 'on-site'
+                  ? 'la conferma dell\'ordine'
+                  : 'la conferma di pagamento'
           }
             .</p>
         </div>

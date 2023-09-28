@@ -1,3 +1,5 @@
+-- entries
+
 DROP VIEW IF EXISTS v_entries;
 
 CREATE VIEW v_entries WITH (security_invoker) AS
@@ -25,6 +27,27 @@ CREATE VIEW v_entries WITH (security_invoker) AS
   ORDER BY e.last_name, e.first_name;
 
   --ALTER VIEW v_entries OWNER TO authenticated;
+
+-- orders
+
+DROP VIEW IF EXISTS v_orders;
+
+CREATE VIEW v_orders WITH (security_invoker) AS
+  SELECT O.id,
+    O.date,
+    I.event_id,
+    OI.name,
+    OI.description,
+    OI.quantity,
+    O.customer_first_name,
+    O.customer_last_name
+  FROM order_items OI
+    INNER JOIN orders O ON OI.order_id = O.id
+    INNER JOIN items I ON OI.item_id = I.id
+  WHERE O.status IN ('created', 'confirmed')
+  ORDER BY O.customer_last_name, O.customer_first_name;
+
+-- users
 
 DROP VIEW IF EXISTS v_users;
 

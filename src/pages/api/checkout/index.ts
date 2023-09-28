@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     console.debug(`[checkout] body: ${JSON.stringify(body)}`);
     const order = await createOrder(body);
     console.debug(`[checkout] order: ${JSON.stringify(order)}`);
-    if (order.payment_method === 'cash') {
+    if (['cash', 'on-site'].includes(order.payment_method)) {
       await sendConfirmationMail(order);
       return res.json(order);
     } else if (order.payment_method === 'stripe') {

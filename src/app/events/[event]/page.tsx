@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { base64 } from '@/lib/helpers'
 import { GetStaticPaths, Metadata, ResolvingMetadata } from 'next/types'
 import { getPromoter } from '@/lib/promoters'
+import EventForm from '@/app/components/event-form'
 
 export interface Params {
   event: string;
@@ -39,18 +40,23 @@ export default async function EventPage({ params }: Props) {
           }
 
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
-          <div className="mt-8">
-            {event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
-              ? <ItemsList list={event.items} event={event} />
-              : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
-            }
+          {event.category === 'award-ceremony' &&
+            <EventForm event={event} />
+          }
+          {event.category !== 'award-ceremony' &&
+            <div className="mt-8">
+              {event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
+                ? <ItemsList list={event.items} event={event} />
+                : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
+              }
 
-            {!!event.items?.length && <div className="mt-8">
-              <Link href={`${event?.id}/entries`}>
-                <span className="text-button">Vedi elenco iscritti</span>
-              </Link>
-            </div>}
-          </div>
+              {!!event.items?.length && <div className="mt-8">
+                <Link href={`${event?.id}/entries`}>
+                  <span className="text-button">Vedi elenco iscritti</span>
+                </Link>
+              </div>}
+            </div>
+          }
 
         </div>
 
