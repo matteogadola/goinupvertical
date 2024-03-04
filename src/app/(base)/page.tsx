@@ -12,6 +12,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import headerImage from 'public/images/header.jpg'
 import HomeBanner from '../components/home-banner-premiazione'
+import HomeCarnet from '../components/home-carnet'
 
 export default async function HomePage() {
 
@@ -34,9 +35,10 @@ export default async function HomePage() {
 
         <HomeMission />
 
-        <Suspense fallback={<Spinner />}>
+        <HomeCarnet />
+        {/*<Suspense fallback={<Spinner />}>
           <HomeEvents />
-        </Suspense>
+        </Suspense>*/}
 
         <HomeGoinupCalendar />
 
