@@ -50,7 +50,13 @@ export default function OrdersList({ event }: Props) {
     <Suspense fallback={<Spinner />}>
       <section>
         <div className="flex items-center space-x-4">
-          <h3 className="overtitle">Coperti <span className="text-gray-600 font-normal">({orders.reduce((a, b) => a + b.quantity, 0)})</span></h3>
+          <h3 className="overtitle">
+            {
+              event.category === 'food'
+                ? <span>Coperti </span>
+                : <span>Ordini </span>
+            }
+            <span className="text-gray-600 font-normal">({orders.reduce((a, b) => a + b.quantity, 0)})</span></h3>
         </div>
 
         {!!orders.length &&

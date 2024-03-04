@@ -53,7 +53,7 @@ export default async function EventPage({
               : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
             }
 
-            {!!event.items?.length && <div className="mt-8">
+            {(!!event.items?.length && event.category === 'race') && <div className="mt-8">
               <Link href={{ pathname: `${event?.id}/entries`, query: { q: base64.encode(event) } }}>
                 <span className="text-button">Vedi elenco iscritti</span>
               </Link>

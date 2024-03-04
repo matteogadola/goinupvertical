@@ -11,7 +11,7 @@ export default function RegulationPage() {
       <section className="grid grid-flow-row gap-4 mt-12">
         <article>
           <h3 className="overtitle">Art. 1</h3>
-          <p className="mt-2">Insieme per Sacco, Consorzio Traona – Prati di Bioggio, Pro Loco Bema, Albaredo Promotion, Tiro alla Fune, Pro Loco Gerola, Sport Race Valtellina, Team Valtellina, K2 Valtellina, Pro loco la Caurga, La voce di Daniele organizzano il 6° GOinUP, circuito di Vertical a finalità benefica.</p>
+          <p className="mt-2">Insieme per Sacco, Consorzio Traona - Prati di Bioggio, Pro Loco Bema, Albaredo Promotion, Tiro alla Fune, Pro Loco Gerola, Sport Race Valtellina, Team Valtellina, K2 Valtellina, Pro loco la Caurga, La voce di Daniele organizzano il 6° GOinUP, circuito di Vertical a finalità benefica.</p>
         </article>
 
         <article>
@@ -33,7 +33,7 @@ export default function RegulationPage() {
               <li>- 17 Luglio 2024 - 5° Kurt-Up  (Mellarolo - Rif. La Corte)</li>
               <li>- 31 Luglio 2024 - 2^ Sostila Vertical (Sirta - Sostila)</li>
               <li>- 11 Settembre 2024 - 10^ Colmen Vertical (Morbegno/Desco - Cima Colmen)</li>
-              <li>- 25 Settembre 2024 - 2^ San Giorgio Vertical (Talamona - San Giorgio)</li>
+              <li>- 25 Settembre 2024 - 3^ San Giorgio Vertical (Talamona - San Giorgio)</li>
               <li>- 09 Ottobre 2024 - 8^ Arz-Up (Morbegno - Arzo)</li>
             </ul>
             In caso di maltempo rinvio alla sera successiva e svolgimento della prova anche con il cattivo tempo.
