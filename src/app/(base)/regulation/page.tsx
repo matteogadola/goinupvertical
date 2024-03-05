@@ -33,7 +33,7 @@ export default function RegulationPage() {
               <li>- 17 Luglio 2024 - 5° Kurt-Up  (Mellarolo - Rif. La Corte)</li>
               <li>- 31 Luglio 2024 - 2^ Sostila Vertical (Sirta - Sostila)</li>
               <li>- 11 Settembre 2024 - 10^ Colmen Vertical (Morbegno/Desco - Cima Colmen)</li>
-              <li>- 25 Settembre 2024 - 3^ San Giorgio Vertical (Talamona - San Giorgio)</li>
+              <li>- 25 Settembre 2024 - 2^ San Giorgio Vertical (Talamona - San Giorgio)</li>
               <li>- 09 Ottobre 2024 - 8^ Arz-Up (Morbegno - Arzo)</li>
             </ul>
             In caso di maltempo rinvio alla sera successiva e svolgimento della prova anche con il cattivo tempo.
