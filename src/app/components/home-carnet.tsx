@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import classNames from 'classnames'
 
-import carnet from 'public/images/flyers/carnet-goinup-6.webp'
+import carnet from 'public/images/carnet.webp'
 
 // https://tailwindcomponents.com/component/tags
 //export default async function HomeBanner({ ticket }: { ticket: Ticket }) {
