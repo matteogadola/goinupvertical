@@ -51,8 +51,8 @@ export const sendConfirmationMail = async (order: Order) => {
     : order.payment_method === 'sepa'
       ? `Per confermare la prenotazione è necessario effettuare un bonifico alle seguenti coordinate:
           <table>
-            <tr><td style="width: 6rem; padding: 0.1rem 0;">Destinatario</td><td>Team Valtellina</td></tr>
-            <tr><td style="width: 6rem; padding: 0.1rem 0;">IBAN</td><td>IT...</td></tr>
+            <tr><td style="width: 6rem; padding: 0.1rem 0;">Intestazione</td><td>Team Valtellina ASD</td></tr>
+            <tr><td style="width: 6rem; padding: 0.1rem 0;">IBAN</td><td>IT45A0569652231000009183X60</td></tr>
             <tr><td style="width: 6rem; padding: 0.1rem 0;">Importo</td><td>${totalPrice}€</td></tr>
             <tr><td style="width: 6rem; padding: 0.1rem 0;">Causale</td><td>Carnet goinup ordine ${order.id}</td></tr>
           </table>`
