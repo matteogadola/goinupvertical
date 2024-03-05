@@ -33,7 +33,7 @@ export const createOrder = async (params: Partial<Order>) => {
 
   const carnetItems = [
     { id: 1023, event_id: 'cech-up-3' },
-    { id: 1024, event_id: 'risc-up-2' },
+    { id: 1024, event_id: 'riscio-up-2' },
     { id: 1025, event_id: 'larg-up-6' },
     { id: 1026, event_id: 'lave-nsu-5' },
     { id: 1027, event_id: 'vertical-madonnina-1' },
@@ -41,8 +41,9 @@ export const createOrder = async (params: Partial<Order>) => {
     { id: 1029, event_id: 'kurt-up-5' },
     { id: 1030, event_id: 'sostila-vertical-2' },
     { id: 1031, event_id: 'colmen-vertical-10' },
-    { id: 1032, event_id: 'san-giorgio-vertical-3' },
+    { id: 1032, event_id: 'san-giorgio-vertical-2-2024' },
     { id: 1033, event_id: 'arz-up-8' },
+    { id: 1035, event_id: 'mirtillo-sprint-1' },
   ];
 
   const client = await pool.connect();

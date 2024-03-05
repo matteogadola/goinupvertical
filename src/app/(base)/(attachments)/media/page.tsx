@@ -20,7 +20,7 @@ const fetchEvents = cache(async () => {
     .from('events')
     .select(`id, name, edition, attachments!inner (*)`)
     .neq('attachments.type', 'result')
-    .gte('date', dt().startOf('year').format())
+    //.gte('date', dt().startOf('year').format())
     .order('date', { ascending: false })
     .returns<Event[]>();
   return data ?? [];
