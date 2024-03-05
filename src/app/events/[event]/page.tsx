@@ -50,7 +50,7 @@ export default async function EventPage({ params }: Props) {
                 : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
               }
 
-              {!!event.items?.length && <div className="mt-8">
+              {(!!event.items?.length && event.category === 'race') && <div className="mt-8">
                 <Link href={`${event?.id}/entries`}>
                   <span className="text-button">Vedi elenco iscritti</span>
                 </Link>

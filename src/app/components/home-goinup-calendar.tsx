@@ -8,7 +8,7 @@ import { dt, getDate } from '@/lib/date'
 import classNames from 'classnames'
 import Spinner from '@/components/spinner'
 
-import flyer from 'public/images/flyers/goinup-5.webp'
+import flyer from 'public/images/flyers/goinup-6.webp'
 
 export default async function HomeGoinupCalendar({ className }: { className?: string }) {
   const showFlyer = true;
