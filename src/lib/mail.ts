@@ -43,6 +43,8 @@ export const sendConfirmationMail = async (order: Order) => {
     </tr>`
   );
 
+  const totalPrice = order.items.reduce((a, v) => a + v.price / 100, 0);
+
   const paymentDetail = order.payment_method === 'cash'
     ? `Per confermare la prenotazione è necessario completare il pagamento presso:<br /><br />
         <b>3Passi Patagonia</b> Morbegno, Piazza 3 Novembre, 15`
@@ -51,7 +53,7 @@ export const sendConfirmationMail = async (order: Order) => {
           <table>
             <tr><td style="padding: 0.5rem 0;">Destinatario</td><td>Team Valtellina</td></tr>
             <tr><td style="padding: 0.5rem 0;">Coordinate</td><td>IT...</td></tr>
-            <tr><td style="padding: 0.5rem 0;">Importo</td><td>110€</td></tr>
+            <tr><td style="padding: 0.5rem 0;">Importo</td><td>${totalPrice}</td></tr>
             <tr><td style="padding: 0.5rem 0;">Causale</td><td>Carnet goinup ordine ${order.id}</td></tr>
           </table>`
       : order.payment_method === 'on-site'
