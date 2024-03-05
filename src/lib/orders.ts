@@ -32,17 +32,17 @@ export const createOrder = async (params: Partial<Order>) => {
   }
 
   const carnetItems = [
-    { id: 1002, event_id: 'cech-vertical-2' },
-    { id: 1003, event_id: 'riscio-up-1' },
-    { id: 1004, event_id: 'larg-up-5' },
-    { id: 1005, event_id: 'lave-nsu-4' },
-    { id: 1006, event_id: 'vertical-egul-4' },
-    { id: 1007, event_id: 'vertical-lino-4' },
-    { id: 1008, event_id: 'kurt-up-4' },
-    { id: 1009, event_id: 'sostila-vertical-1' },
-    { id: 1010, event_id: 'colmen-vertical-9' },
-    { id: 1011, event_id: 'san-giorgio-vertical-2' },
-    { id: 1012, event_id: 'arz-up-7' },
+    { id: 1023, event_id: 'cech-up-3' },
+    { id: 1024, event_id: 'risc-up-2' },
+    { id: 1025, event_id: 'larg-up-6' },
+    { id: 1026, event_id: 'lave-nsu-5' },
+    { id: 1027, event_id: 'vertical-madonnina-1' },
+    { id: 1028, event_id: 'vertical-lino-5' },
+    { id: 1029, event_id: 'kurt-up-5' },
+    { id: 1030, event_id: 'sostila-vertical-2' },
+    { id: 1031, event_id: 'colmen-vertical-10' },
+    { id: 1032, event_id: 'san-giorgio-vertical-3' },
+    { id: 1033, event_id: 'arz-up-8' },
   ];
 
   const client = await pool.connect();
@@ -61,25 +61,6 @@ export const createOrder = async (params: Partial<Order>) => {
         console.warn(`[createOrder] errore nella richiesta: ${JSON.stringify(params.items)}`);
         throw new Error('Errore nella richiesta');
       }
-
-      /*if (item?.entry) {
-        if (item.item_id === 1001) {
-          // for
-        } else {
-          const { rows } = await client.query<{ name: string; price: number }>(
-            `SELECT *
-            FROM entries
-            INNER JOIN orders ON entries.order_id = orders.id
-            WHERE orders.payment_method = 'stripe' AND orders.payment_status <> 'paid'
-            AND entries.event_id = NEW.event_id AND tin = NEW.tin
-            INTO item;
-            
-            
-            SELECT id FROM entries WHERE tin = $1 AND event_id = $2`,
-            [item.id, item.event_id]
-          );
-        }
-      }*/
     }
 
     await client.query('BEGIN');
@@ -118,7 +99,7 @@ export const createOrder = async (params: Partial<Order>) => {
       //orderItems.push(orderItem);
 
       // tarrozzata, poi rimarrà questa senza la seconda clausola
-      if (item?.entry && item.id !== 1001) {
+      if (item?.entry && item.id !== 1022) {
         item.entry.first_name = capitalize(item.entry.first_name);
         item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
@@ -175,7 +156,7 @@ export const createOrder = async (params: Partial<Order>) => {
       }
 
       // tarrozzata !
-      if (item?.entry && item.id === 1001) {
+      if (item?.entry && item.id === 1022) {
         item.entry.first_name = capitalize(item.entry.first_name);
         item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
