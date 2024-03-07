@@ -197,7 +197,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                       <td className="pr-10 py-2">{entry.birth_year}</td>
                       <td className="pr-10 py-2">{entry.gender}</td>
                       <td className="pr-10 py-2">{entry.team}</td>
-                      {(event.category !== 'carnet' && ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
+                      {(event.category !== 'race-series' && ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
                         <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
                       }
                     </tr>

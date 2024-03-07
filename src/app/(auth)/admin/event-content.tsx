@@ -100,7 +100,7 @@ export default function EventContent({ event }: Props) {
 
   useEffect(() => {
     Promise.all([
-      event?.category === 'carnet' ? fetchEntriesByCarnetItem(1022) : fetchEntries(event?.id),
+      event?.category === 'race-series' ? fetchEntriesByCarnetItem(1022) : fetchEntries(event?.id),
       //fetchEntries(event?.id),
       fetchEventItems(event?.id)
     ]).then((values) => {
@@ -138,7 +138,7 @@ export default function EventContent({ event }: Props) {
           {
             event.category === 'race'
               ? <EntriesList entries={state.entries} event={event} items={state.items} />
-              : event.category === 'carnet'
+              : event.category === 'race-series'
                 ? <CarnetList entries={state.entries} event={event} items={state.items} />
                 : <OrdersList event={event} />
           }
