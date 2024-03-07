@@ -41,7 +41,7 @@ CREATE VIEW v_entries_carnet WITH (security_invoker) AS
     payment_id,
     first_name,
     last_name,
-    birth_year
+    birth_year,
     gender,
     team
   FROM v_entries
