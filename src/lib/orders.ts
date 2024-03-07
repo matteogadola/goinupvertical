@@ -105,6 +105,10 @@ export const createOrder = async (params: Partial<Order>) => {
         item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
 
+        if (item.entry.team) {
+          item.entry.team = item.entry.team.trim();
+        }
+
         const { rows: entrieRows } = await client.query<Entry>(
           `INSERT INTO entries (order_item_id, order_id, item_id, event_id, first_name, last_name, birth_date, birth_place,
           gender, country, team, email, phone_number, tin, fidal_card)
@@ -161,6 +165,10 @@ export const createOrder = async (params: Partial<Order>) => {
         item.entry.first_name = capitalize(item.entry.first_name);
         item.entry.last_name = capitalize(item.entry.last_name);
         const cf = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
+
+        if (item.entry.team) {
+          item.entry.team = item.entry.team.trim();
+        }
 
         for (let row of carnetItems) {
           /*
