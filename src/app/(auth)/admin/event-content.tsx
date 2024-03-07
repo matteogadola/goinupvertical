@@ -25,6 +25,7 @@ import AttachmentsList from './attachments-list';
 import AttachmentDialog from './attachment-dialog';
 import EventStatus from './event-status';
 import OrdersList from './orders';
+import CarnetList from './carnet';
 
 type EventForm = Partial<Event>
 
@@ -71,6 +72,13 @@ const fetchEntries = cache(async (id: string | undefined) => {
   return data ?? [];
 });
 
+const fetchEntriesByCarnetItem = cache(async (id: number | undefined) => {
+  if (id === undefined) return [];
+
+  const { data } = await supabase.from('v_entries_carnet').select().eq('item_id', id);
+  return data ?? [];
+});
+
 export default function EventContent({ event }: Props) {
   const {
     register,
@@ -92,7 +100,8 @@ export default function EventContent({ event }: Props) {
 
   useEffect(() => {
     Promise.all([
-      fetchEntries(event?.id),
+      event?.category === 'carnet' ? fetchEntriesByCarnetItem(1022) : fetchEntries(event?.id),
+      //fetchEntries(event?.id),
       fetchEventItems(event?.id)
     ]).then((values) => {
       setState(state => ({ ...state, entries: values[0], items: values[1] }));
@@ -127,9 +136,11 @@ export default function EventContent({ event }: Props) {
           <AttachmentsList event={event} />
 
           {
-            ['race', 'races'].includes(event.category)
+            event.category === 'race'
               ? <EntriesList entries={state.entries} event={event} items={state.items} />
-              : <OrdersList event={event} />
+              : event.category === 'carnet'
+                ? <CarnetList entries={state.entries} event={event} items={state.items} />
+                : <OrdersList event={event} />
           }
 
         </section>

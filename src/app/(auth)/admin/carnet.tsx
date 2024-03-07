@@ -34,7 +34,7 @@ type FormState = {
   payment_status: string;
 }
 
-export default function EntriesList({ entries, items, event, className }: Props) {
+export default function CarnetList({ entries, items, event, className }: Props) {
 
   const {
     register,

@@ -5,6 +5,7 @@ DROP VIEW IF EXISTS v_entries;
 CREATE VIEW v_entries WITH (security_invoker) AS
   SELECT e.order_id,
     e.event_id,
+    oi.item_id,
     i.category,
     o.date,
     o.payment_method,
@@ -23,11 +24,27 @@ CREATE VIEW v_entries WITH (security_invoker) AS
       INNER JOIN orders o ON e.order_id = o.id
       INNER JOIN order_items oi ON e.order_item_id = oi.id
       INNER JOIN items i ON oi.item_id = i.id
-  WHERE o.payment_status = 'paid'::text OR (o.payment_method = 'cash'::text AND o.payment_status = 'pending'::text)
+  WHERE o.payment_status = 'paid' OR (o.payment_method IN ('cash', 'sepa') AND o.payment_status = 'pending')
   ORDER BY e.last_name, e.first_name;
 
   --ALTER VIEW v_entries OWNER TO authenticated;
 
+DROP VIEW IF EXISTS v_entries_carnet;
+
+CREATE VIEW v_entries_carnet WITH (security_invoker) AS
+  SELECT order_id,
+    item_id,
+    date,
+    payment_method,
+    payment_status,
+    payment_id,
+    first_name,
+    last_name,
+    birth_year
+    gender,
+    team
+  FROM v_entries
+  GROUP BY order_id, item_id, date, payment_method, payment_status, payment_id, first_name, last_name, birth_year, gender, team;
 -- orders
 
 DROP VIEW IF EXISTS v_orders;
