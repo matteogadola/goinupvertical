@@ -64,10 +64,12 @@ const fetchEventItems = cache(async (id: string | undefined) => {
   return data ?? [];
 });
 
-const fetchEntries = cache(async (id: string | undefined) => {
-  if (id === undefined) return [];
+const fetchEntries = cache(async (event?: Event) => {
+  if (!event?.id) return [];
 
-  const { data } = await supabase.from('v_entries').select().eq('event_id', id);
+  const { data } = event?.category === 'race-series'
+    ? await supabase.from('v_entries_carnet').select().eq('item_id', 1022) // TODO !!!
+    : await supabase.from('v_entries').select().eq('event_id', event.id);
   return data ?? [];
 });
 
@@ -92,7 +94,7 @@ export default function EventContent({ event }: Props) {
 
   useEffect(() => {
     Promise.all([
-      fetchEntries(event?.id),
+      fetchEntries(event),
       fetchEventItems(event?.id)
     ]).then((values) => {
       setState(state => ({ ...state, entries: values[0], items: values[1] }));
@@ -127,7 +129,7 @@ export default function EventContent({ event }: Props) {
           <AttachmentsList event={event} />
 
           {
-            event.category === 'race'
+            ['race', 'race-series'].includes(event.category)
               ? <EntriesList entries={state.entries} event={event} items={state.items} />
               : <OrdersList event={event} />
           }

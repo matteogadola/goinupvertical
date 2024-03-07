@@ -1,6 +1,6 @@
 export interface Event {
   id: string;
-  category: 'race' | 'food' | 'carnet' | 'award-ceremony';
+  category: 'race' | 'race-series' | 'food' | 'award-ceremony'; // 'carnet' 
   name: string;
   edition: number;
   date: string;

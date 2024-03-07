@@ -172,7 +172,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                 <thead>
                   <tr>
                     <td className="pr-5 border-b py-2">ORDINE</td>
-                    <td className="pr-10 border-b py-2">ISCRIZIONE</td>
+                    {event.category !== 'race-series' && <td className="pr-10 border-b py-2">ISCRIZIONE</td>}
                     <td className="pr-10 border-b py-2">DATA</td>
                     <td className="pr-10 border-b py-2">METODO</td>
                     <td className="pr-10 border-b py-2">STATO</td>
@@ -188,7 +188,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                   {state.items.map((entry, index) =>
                     <tr key={index} className="border-b">
                       <td className="pr-5 py-2"><a href={"https://dashboard.stripe.com/payments/" + entry.payment_id} className="text-button" target="_blank">{entry.order_id}</a></td>
-                      <td className="pr-10 py-2">{entry.category}</td>
+                      {event.category !== 'race-series' && <td className="pr-10 py-2">{entry.category}</td>}
                       <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
                       <td className="pr-10 py-2">{entry.payment_method}</td>
                       <td className="pr-10 py-2">{entry.payment_status}</td>
@@ -197,7 +197,10 @@ export default function EntriesList({ entries, items, event, className }: Props)
                       <td className="pr-10 py-2">{entry.birth_year}</td>
                       <td className="pr-10 py-2">{entry.gender}</td>
                       <td className="pr-10 py-2">{entry.team}</td>
-                      {(entry.payment_method === 'cash' && entry.payment_status === 'pending') &&
+                      {(
+                        ((event.category === 'race-series' && entry.category === 'carnet') ||
+                          (event.category !== 'race-series' && entry.category !== 'carnet')) &&
+                        ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
                         <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
                       }
                     </tr>
