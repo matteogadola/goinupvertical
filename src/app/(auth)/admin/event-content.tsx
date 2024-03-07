@@ -25,7 +25,6 @@ import AttachmentsList from './attachments-list';
 import AttachmentDialog from './attachment-dialog';
 import EventStatus from './event-status';
 import OrdersList from './orders';
-import CarnetList from './carnet';
 
 type EventForm = Partial<Event>
 
@@ -65,17 +64,12 @@ const fetchEventItems = cache(async (id: string | undefined) => {
   return data ?? [];
 });
 
-const fetchEntries = cache(async (id: string | undefined) => {
-  if (id === undefined) return [];
+const fetchEntries = cache(async (event?: Event) => {
+  if (!event?.id) return [];
 
-  const { data } = await supabase.from('v_entries').select().eq('event_id', id);
-  return data ?? [];
-});
-
-const fetchEntriesByCarnetItem = cache(async (id: number | undefined) => {
-  if (id === undefined) return [];
-
-  const { data } = await supabase.from('v_entries_carnet').select().eq('item_id', id);
+  const { data } = event?.category === 'race-series'
+    ? await supabase.from('v_entries_carnet').select().eq('item_id', 1022) // TODO !!!
+    : await supabase.from('v_entries').select().eq('event_id', event.id);
   return data ?? [];
 });
 
@@ -100,8 +94,7 @@ export default function EventContent({ event }: Props) {
 
   useEffect(() => {
     Promise.all([
-      event?.category === 'race-series' ? fetchEntriesByCarnetItem(1022) : fetchEntries(event?.id),
-      //fetchEntries(event?.id),
+      fetchEntries(event),
       fetchEventItems(event?.id)
     ]).then((values) => {
       setState(state => ({ ...state, entries: values[0], items: values[1] }));
@@ -136,11 +129,9 @@ export default function EventContent({ event }: Props) {
           <AttachmentsList event={event} />
 
           {
-            event.category === 'race'
+            ['race', 'race-series'].includes(event.category)
               ? <EntriesList entries={state.entries} event={event} items={state.items} />
-              : event.category === 'race-series'
-                ? <CarnetList entries={state.entries} event={event} items={state.items} />
-                : <OrdersList event={event} />
+              : <OrdersList event={event} />
           }
 
         </section>
