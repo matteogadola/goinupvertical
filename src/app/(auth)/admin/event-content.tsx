@@ -127,7 +127,7 @@ export default function EventContent({ event }: Props) {
           <AttachmentsList event={event} />
 
           {
-            event.category === 'race'
+            ['race', 'races'].includes(event.category)
               ? <EntriesList entries={state.entries} event={event} items={state.items} />
               : <OrdersList event={event} />
           }
