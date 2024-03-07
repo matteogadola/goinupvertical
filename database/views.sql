@@ -34,6 +34,7 @@ DROP VIEW IF EXISTS v_entries_carnet;
 CREATE VIEW v_entries_carnet WITH (security_invoker) AS
   SELECT order_id,
     item_id,
+    category,
     date,
     payment_method,
     payment_status,
@@ -44,7 +45,8 @@ CREATE VIEW v_entries_carnet WITH (security_invoker) AS
     gender,
     team
   FROM v_entries
-  GROUP BY order_id, item_id, date, payment_method, payment_status, payment_id, first_name, last_name, birth_year, gender, team;
+  GROUP BY order_id, item_id, category, date, payment_method, payment_status, payment_id, first_name, last_name, birth_year, gender, team
+  ORDER BY last_name, first_name;
 -- orders
 
 DROP VIEW IF EXISTS v_orders;
