@@ -2,7 +2,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 
 import lncLife from 'public/images/credits/lnc-life.svg'
-import alaLeon from 'public/images/credits/ala-leon-1.png'
+import leon from 'public/images/credits/leon.webp'
 import officinaFiorelli from 'public/images/credits/officina-fiorelli.png'
 import patagonia from 'public/images/credits/patagonia-1.png'
 import matFood from 'public/images/credits/mat-food.png'
@@ -32,10 +32,10 @@ const sponsors = [
     height: 40,
     url: 'https://www.lnclife.it'
   }, {
-    name: 'Ala Leon',
-    logo: alaLeon,
-    height: 90,
-    url: 'https://www.alamedicalspa.com'
+    name: 'Leon',
+    logo: leon,
+    height: 80,
+    url: 'https://www.leonbellessere.com/'
   }, {
     name: 'Officina Fiorelli',
     logo: officinaFiorelli,
@@ -55,6 +55,7 @@ const sponsors = [
 ]
 
 import alpiniAlbaredo from 'public/images/credits/alpini-albaredo.webp'
+import consorzioTraona from 'public/images/credits/consorzio-prati-bioggio.webp'
 import teamValtellina from 'public/images/credits/team-valtellina.webp'
 import sportRaceValtellina from 'public/images/credits/sport-race-valtellina.webp'
 import prolocoGerola from 'public/images/credits/proloco-gerola.png'
@@ -63,15 +64,14 @@ import insiemePerSacco from 'public/images/credits/insieme-per-sacco.webp'
 import k2v from 'public/images/credits/k2v.png'
 import tiroAllaFuneValtellina from 'public/images/credits/tiro-alla-fune-valtellina.webp'
 import voceDiDaniele from 'public/images/credits/voce-di-daniele.png'
-import sanBello from 'public/images/credits/san-bello.png'
+import mobiliRumi from 'public/images/credits/mobili-rumi.webp'
 import caurga from 'public/images/credits/caurga.png'
 
 const supporters = [
   {
-    name: 'Alpini Albaredo',
-    logo: alpiniAlbaredo,
-    height: 80,
-    url: 'https://www.facebook.com/profile.php?id=100069494139787',
+    name: 'Consorzio Traona',
+    logo: consorzioTraona,
+    height: 70,
   }, {
     name: 'Team Valtellina',
     logo: teamValtellina,
@@ -112,10 +112,10 @@ const supporters = [
     logo: voceDiDaniele,
     height: 70,
   }, {
-    name: 'San Bello',
-    logo: sanBello,
+    name: 'Mobili Rumi',
+    logo: mobiliRumi,
     height: 80,
-    url: 'http://www.sagradisanbello.it'
+    url: 'https://www.mobilirumi.it'
   }, {
     name: 'Caurga',
     logo: caurga,
@@ -127,8 +127,9 @@ const supporters = [
 import sportDiMontagna from 'public/images/credits/sportdimontagna.webp'
 import fotorunValtellina from 'public/images/credits/fotorun-valtellina.png'
 import speedtime from 'public/images/credits/speedtime.png'
+import radioTsn from 'public/images/credits/radio-tsn.webp'
 import centroValle from 'public/images/credits/centro-valle-netweek.webp'
-import laProvinciadiSondrio from 'public/images/credits/la-provincia-sondrio.svg'
+import laProvinciadiSondrio from 'public/images/credits/la-provincia-unica.webp'
 
 const partners = [
   {
@@ -142,6 +143,11 @@ const partners = [
     height: 100,
     url: 'https://www.facebook.com/FOTORUN.valtellina'
   }, {
+    name: 'Radio Tsn',
+    logo: radioTsn,
+    height: 60,
+    url: 'https://radiotsn.tv/'
+  }, {
     name: 'Speed Time Production',
     logo: speedtime,
     height: 70,
@@ -154,7 +160,7 @@ const partners = [
   }, {
     name: 'La Provincia di Sondrio',
     logo: laProvinciadiSondrio,
-    height: 30,
+    height: 50,
     url: 'https://www.laprovinciadisondrio.it'
   },
 ]
@@ -192,7 +198,7 @@ export default function Credits() {
         <h3 className="overtitle">Media partner</h3>
         <div className="flex flex-wrap space-y-8">
           {partners.map((item, index) =>
-            <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center">
+            <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center">
               <a href={item.url} target="_blank" rel="noopener noreferrer" className={classNames({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
                 <Image src={item.logo} height={item.height} alt={item.name} />
               </a>
