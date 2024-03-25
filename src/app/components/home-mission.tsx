@@ -6,12 +6,11 @@ export default function HomeMission() {
   return (
     <section className="flex items-center justify-center gap-32">
 
-      <div className="hidden lg:flex lg:relative bg-slate-600 opacity-80 shadow-xl rounded-full h-88 w-88 overflow-hidden">
+      <div className="hidden lg:flex lg:relative bg-slate-600 opacity-85 shadow-xl">
         <Image
           src={missionImage}
           alt="Mission"
-          layout="fill"
-          objectFit="cover"
+          height={300}
         />
       </div>
       <div className="">
