@@ -4,13 +4,14 @@ import missionImage from 'public/images/mission.webp'
 export default function HomeMission() {
 
   return (
-    <section className="flex items-center justify-center gap-32">
+    <section className="flex items-center justify-center gap-32 mt-20 mb-10">
 
-      <div className="hidden lg:flex lg:relative bg-slate-600 opacity-85 shadow-xl">
+      <div className="hidden lg:flex lg:relative bg-slate-600 opacity-80 shadow-xl rounded-full h-88 w-88 overflow-hidden">
         <Image
           src={missionImage}
           alt="Mission"
-          height={300}
+          layout="fill"
+          objectFit="cover"
         />
       </div>
       <div className="">
