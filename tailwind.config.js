@@ -15,7 +15,8 @@ module.exports = {
       variants: {
         animation: ['motion-safe'],
       },
-      height: {
+      spacing: {
+        88: '22rem',
         128: '32rem',
         256: '64rem',
       },

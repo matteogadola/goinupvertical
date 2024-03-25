@@ -1,12 +1,20 @@
 import Image from 'next/image'
-import missionImage from 'public/images/mission.png'
+import missionImage from 'public/images/mission.webp'
 
 export default function HomeMission() {
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-4">
+    <section className="flex items-center justify-center gap-32 mt-20 mb-10">
 
-      <div className="mt-4 lg:mt-12">
+      <div className="hidden lg:flex lg:relative bg-slate-600 opacity-80 shadow-xl rounded-full h-88 w-88 overflow-hidden">
+        <Image
+          src={missionImage}
+          alt="Mission"
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+      <div className="">
         <h3 className="overtitle">Finalità Benefica</h3>
         <h1 className="title">Chi siamo?</h1>
         <p className="mt-8 max-w-md">
@@ -15,13 +23,7 @@ export default function HomeMission() {
           diverse associazioni benefiche nel mandamento di Morbegno.
         </p>
       </div>
-      <div className="flex lg:relative bg-slate-600 opacity-80">
-        <Image
-          src={missionImage}
-          alt="Mission"
-          height={400}
-        />
-      </div>
+
     </section>
   )
 }
