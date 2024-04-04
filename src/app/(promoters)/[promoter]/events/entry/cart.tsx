@@ -138,20 +138,22 @@ export default function EntryCart() {
                   <Image src={amexLogo} height={30} alt="amex" />
                 </div>
 
-                {/*<div className="flex items-center pl-4 pr-2 border border-gray-200 rounded">
-                  <input type="radio" value="sepa" id="payment-method-sepa" checked={paymentMethod === 'sepa'} onChange={e => setPaymentMethod('sepa')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-                  <label htmlFor="payment-method-sepa" className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    <span>Bonifico Bancario</span>
-                  </label>
-                  <Image src={sepaLogo} height={50} alt="sepa" />
-                  </div>*/}
-                <div className="flex items-center pl-4 border border-gray-200 rounded">
-                  <input type="radio" value="cash" id="payment-method-cash" disabled={state.isLoading} checked={paymentMethod === 'cash'} onChange={e => setPaymentMethod('cash')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
-                  <label htmlFor="payment-method-cash" className={classNames("w-full ml-2 text-sm font-medium text-gray-900", { "py-2": paymentMethod === 'cash', "py-4": paymentMethod !== 'cash' })}>
-                    <span>Contanti</span>
-                    {paymentMethod === 'cash' && <span className="block font-normal text-xs">Sarà necessario recarsi presso uno degli <button onClick={() => openLocations()} className="text-button">store abilitati</button></span>}
-                  </label>
-                </div>
+                {totalAmount >= 100
+                  ? <div className="flex items-center pl-4 pr-2 border border-gray-200 rounded">
+                    <input type="radio" value="sepa" id="payment-method-sepa" checked={paymentMethod === 'sepa'} onChange={e => setPaymentMethod('sepa')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                    <label htmlFor="payment-method-sepa" className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <span>Bonifico Bancario</span>
+                    </label>
+                    <Image src={sepaLogo} height={50} alt="sepa" />
+                  </div>
+                  : <div className="flex items-center pl-4 border border-gray-200 rounded">
+                    <input type="radio" value="cash" id="payment-method-cash" disabled={state.isLoading} checked={paymentMethod === 'cash'} onChange={e => setPaymentMethod('cash')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                    <label htmlFor="payment-method-cash" className={classNames("w-full ml-2 text-sm font-medium text-gray-900", { "py-2": paymentMethod === 'cash', "py-4": paymentMethod !== 'cash' })}>
+                      <span>Contanti</span>
+                      {paymentMethod === 'cash' && <span className="block font-normal text-xs">Sarà necessario recarsi presso uno degli <button onClick={() => openLocations()} className="text-button">store abilitati</button></span>}
+                    </label>
+                  </div>
+                }
               </div>
 
 

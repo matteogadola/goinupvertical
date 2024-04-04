@@ -35,7 +35,7 @@ export default async function HomePage() {
 
         <HomeMission />
 
-        {/*<HomeCarnet />*/}
+        <HomeCarnet />
 
         <Suspense fallback={<Spinner />}>
           <HomeEvents />
