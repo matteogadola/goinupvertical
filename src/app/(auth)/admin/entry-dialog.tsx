@@ -47,8 +47,15 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
 
   const [state, setState] = useState<State>({ error: undefined, isLoading: false });
 
+  let defaultValues: any = {
+    privacy_policy: true,
+    country: 'ITA',
+  }
 
-  const { register, handleSubmit, control, setValue, setError, reset, formState: { errors } } = useForm<AddEntryForm>()
+  const { register, handleSubmit, control, setValue, setError, reset, formState: { errors } } = useForm<AddEntryForm>({
+    mode: 'onTouched',
+    defaultValues
+  })
 
   /*const data: FormDialogState | null = null
   useEffect(() => {
@@ -76,6 +83,8 @@ export default function EntryDialog({ className, event, items, onEntryCreated, o
         user_id: null, //session?.user.id, // TODO PASSALO
         payment_method: 'cash',
         user_email: data.email,
+        customer_first_name: data.first_name,
+        customer_last_name: data.last_name,
         items: [{
           id: item.id,
           event_id: event.id,
