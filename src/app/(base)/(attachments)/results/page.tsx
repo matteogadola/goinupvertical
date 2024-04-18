@@ -39,7 +39,7 @@ export default async function ResultsPage() {
         {events.map(event =>
           <div key={event.id} className="w-full lg:w-1/3 p-6 shadow">
             <span className="overtitle">{event.edition}° {event.name}</span>
-            <small>{dt(event.date).format('DD MMMM YYYY')}</small>
+            <span className="block text-xs">{dt(event.date).format('DD MMMM YYYY')}</span>
 
             <div className="mt-4">
               <ul className="space-y-4">
