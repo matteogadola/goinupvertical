@@ -6,6 +6,7 @@ import { cache } from 'react'
 import supabase from '@/lib/supabase'
 import { dt } from '@/lib/date'
 import { Event } from '@/types/events'
+import dayjs from 'dayjs'
 
 export const revalidate = 3600
 
@@ -17,10 +18,10 @@ export const metadata = {
 const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
-    .select(`id, name, edition, attachments!inner (*)`)
+    .select(`id, name, edition, date, attachments!inner (*)`)
     .eq('attachments.type', 'result')
     //.gte('date', dt().startOf('year').format())
-    .order('category', { ascending: false })
+    //.order('category', { ascending: false })
     .order('date', { ascending: false })
     .returns<Event[]>();
 
@@ -39,6 +40,7 @@ export default async function ResultsPage() {
         {events.map(event =>
           <div key={event.id} className="w-full lg:w-1/3 p-6 shadow">
             <span className="overtitle">{event.edition}° {event.name}</span>
+            <small>{dayjs(event.date).format('DD/MM/YYYY')}</small>
 
             <div className="mt-4">
               <ul className="space-y-4">
