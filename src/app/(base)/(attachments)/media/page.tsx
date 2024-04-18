@@ -38,8 +38,12 @@ export default async function MediaPage() {
         {events.map(event =>
           <div key={event.id} className="w-full lg:w-1/3 p-6 shadow">
             <span className="overtitle">{event.edition}° {event.name}</span>
-            {event.category === 'race' &&
-              <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
+            {event.category === 'race'
+              ? <>
+                <span className="overtitle">{event.edition}° {event.name}</span>
+                <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
+              </>
+              : <span className="overtitle">{event.name} {dt(event.date).format('YYYY')}</span>
             }
 
             <div className="mt-4">
