@@ -6,7 +6,6 @@ import { cache } from 'react'
 import supabase from '@/lib/supabase'
 import { dt } from '@/lib/date'
 import { Event } from '@/types/events'
-import dayjs from 'dayjs'
 
 export const revalidate = 3600
 
@@ -40,7 +39,7 @@ export default async function ResultsPage() {
         {events.map(event =>
           <div key={event.id} className="w-full lg:w-1/3 p-6 shadow">
             <span className="overtitle">{event.edition}° {event.name}</span>
-            <small>{dayjs(event.date).format('DD/MM/YYYY')}</small>
+            <small>{dt(event.date).format('DD MMMM YYYY')}</small>
 
             <div className="mt-4">
               <ul className="space-y-4">
