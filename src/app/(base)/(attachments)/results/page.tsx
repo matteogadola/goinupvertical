@@ -17,7 +17,7 @@ export const metadata = {
 const fetchEvents = cache(async () => {
   const { data } = await supabase
     .from('events')
-    .select(`id, name, edition, date, attachments!inner (*)`)
+    .select(`id, name, edition, date, category, attachments!inner (*)`)
     .eq('attachments.type', 'result')
     //.gte('date', dt().startOf('year').format())
     //.order('category', { ascending: false })
@@ -39,7 +39,9 @@ export default async function ResultsPage() {
         {events.map(event =>
           <div key={event.id} className="w-full lg:w-1/3 p-6 shadow">
             <span className="overtitle">{event.edition}° {event.name}</span>
-            <span className="block text-xs">{dt(event.date).format('DD MMMM YYYY')}</span>
+            {event.category === 'race' &&
+              <span className="block text-xs text-gray-400">{dt(event.date).format('DD MMMM YYYY')}</span>
+            }
 
             <div className="mt-4">
               <ul className="space-y-4">
