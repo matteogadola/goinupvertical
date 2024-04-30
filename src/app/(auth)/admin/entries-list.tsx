@@ -136,7 +136,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
       <section className={classNames(className, "")}>
         <div className="flex items-center space-x-4">
           <h3 className="overtitle">Iscritti <span className="text-gray-600 font-normal">({state.entries?.length})</span></h3>
-          {dt().isBefore(event.date) && <button onClick={onCreate} className="button-icon"><PlusIcon /></button>}
+          {(event.category === 'race-series' || dt().isBefore(event.date)) && <button onClick={onCreate} className="button-icon"><PlusIcon /></button>}
         </div>
 
         {!!state.entries?.length &&
