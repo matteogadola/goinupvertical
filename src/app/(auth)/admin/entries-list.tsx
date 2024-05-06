@@ -64,13 +64,21 @@ export default function EntriesList({ entries, items, event, className }: Props)
     const { data, error } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
 
     if (!error) {
-      const index = state.items.findIndex(item => item.order_id === orderId);
+      const updatedItems = state.items.map(item => {
+        if (item.order_id === orderId) {
+          return { ...item, payment_status: status }
+        }
+        return item
+      });
+      setState({ ...state, entries: updatedItems, items: updatedItems })
+      
+      /*const index = state.items.findIndex(item => item.order_id === orderId);
 
       if (index >= 0) {
         const newItems = [...state.items];
         newItems.splice(index, 1, { ...newItems[index], payment_status: status });
         setState({ ...state, entries: newItems, items: newItems })
-      }
+      }*/
     }
     return data;
   }
@@ -99,6 +107,10 @@ export default function EntriesList({ entries, items, event, className }: Props)
     }
 
     return filtered;
+  }
+  
+  const nItems = (order_id: number) => {
+    return state.entries.filter(entry => entry.order_id === order_id).length
   }
 
   /*const formValues = watch();
@@ -204,7 +216,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                         ((event.category === 'race-series' && entry.category === 'carnet') ||
                           (event.category !== 'race-series' && entry.category !== 'carnet')) &&
                         ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
-                        <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
+                        <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO{nItems(entry.order_id) > 1 && <span> (*)</span>}</button></td>
                       }
                     </tr>
                   )}
