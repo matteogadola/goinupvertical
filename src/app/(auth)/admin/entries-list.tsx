@@ -186,14 +186,14 @@ export default function EntriesList({ entries, items, event, className }: Props)
                     <td className="pr-4 border-b py-2">ORDINE</td>
                     {event.category !== 'race-series' && <td className="pr-4 border-b py-2">ISCRIZIONE</td>}
                     <td className="pr-8 border-b py-2">DATA</td>
-                    <td className="pr-8 border-b py-2">METODO</td>
+                    <td className="pr-4 border-b py-2">METODO</td>
                     <td className="pr-8 border-b py-2">STATO</td>
                     <td className="pr-8 border-b py-2">COGNOME</td>
                     <td className="pr-8 border-b py-2">NOME</td>
-                    <td className="pr-8 border-b py-2">ANNO</td>
-                    <td className="pr-8 border-b py-2">SESSO</td>
-                    <td className="pr-8 border-b py-2">TEAM</td>
-                    <td className="pr-4 border-b py-2"></td>
+                    <td className="pr-4 border-b py-2">ANNO</td>
+                    <td className="pr-4 border-b py-2">SESSO</td>
+                    <td className="pr-4 border-b py-2">TEAM</td>
+                    <td className="border-b py-2"></td>
                   </tr>
                 </thead>
                 <tbody>
@@ -205,18 +205,18 @@ export default function EntriesList({ entries, items, event, className }: Props)
                       }
                       {event.category !== 'race-series' && <td className="pr-4 py-2">{entry.category}</td>}
                       <td className="pr-8 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
-                      <td className="pr-8 py-2">{entry.payment_method}</td>
+                      <td className="pr-4 py-2">{entry.payment_method}</td>
                       <td className="pr-8 py-2">{entry.payment_status}</td>
                       <td className="pr-8 py-2 whitespace-nowrap">{entry.last_name}</td>
                       <td className="pr-8 py-2 whitespace-nowrap">{entry.first_name}</td>
-                      <td className="pr-8 py-2">{entry.birth_year}</td>
-                      <td className="pr-8 py-2">{entry.gender}</td>
-                      <td className="pr-8 py-2">{entry.team}</td>
+                      <td className="pr-4 py-2">{entry.birth_year}</td>
+                      <td className="pr-4 py-2">{entry.gender}</td>
+                      <td className="pr-4 py-2">{entry.team}</td>
                       {(
                         ((event.category === 'race-series' && entry.category === 'carnet') ||
                           (event.category !== 'race-series' && entry.category !== 'carnet')) &&
                         ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
-                        <td className="pr-8 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO{nItems(entry.order_id) > 1 && <span> ***</span>}</button></td>
+                        <td className="py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO{nItems(entry.order_id) > 1 && <span> ***</span>}</button></td>
                       }
                     </tr>
                   )}
