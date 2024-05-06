@@ -184,7 +184,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                 <thead>
                   <tr>
                     <td className="pr-4 border-b py-2">ORDINE</td>
-                    {event.category !== 'race-series' && <td className="pr-8 border-b py-2">ISCRIZIONE</td>}
+                    {event.category !== 'race-series' && <td className="pr-4 border-b py-2">ISCRIZIONE</td>}
                     <td className="pr-8 border-b py-2">DATA</td>
                     <td className="pr-8 border-b py-2">METODO</td>
                     <td className="pr-8 border-b py-2">STATO</td>
@@ -203,7 +203,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                         ? <td className="pr-4 py-2"><a href={"https://dashboard.stripe.com/payments/" + entry.payment_id} className="text-button" target="_blank">{entry.order_id}</a></td>
                         : <td className="pr-4 py-2">{entry.order_id}</td>
                       }
-                      {event.category !== 'race-series' && <td className="pr-8 py-2">{entry.category}</td>}
+                      {event.category !== 'race-series' && <td className="pr-4 py-2">{entry.category}</td>}
                       <td className="pr-8 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
                       <td className="pr-8 py-2">{entry.payment_method}</td>
                       <td className="pr-8 py-2">{entry.payment_status}</td>
