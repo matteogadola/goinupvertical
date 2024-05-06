@@ -64,7 +64,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
     const { data, error } = await supabase.from('orders').update({ payment_status: status }).eq('id', orderId);
 
     if (!error) {
-      const updatedItems = state.items.map(item => {
+      const updatedItems = state.entries.map(item => {
         if (item.order_id === orderId) {
           return { ...item, payment_status: status }
         }
