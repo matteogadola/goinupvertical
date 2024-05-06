@@ -201,7 +201,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                     <tr key={index} className="border-b">
                       {entry.payment_method === 'stripe' && entry.payment_id
                         ? <td className="pr-5 py-2"><a href={"https://dashboard.stripe.com/payments/" + entry.payment_id} className="text-button" target="_blank">{entry.order_id}</a></td>
-                        : <td className="pr-5 py-2">{entry.order_id}</td>
+                        : <td className="pr-5 py-2">{entry.order_id}{['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') && nItems(entry.order_id) > 1 && <span> *</span>}</td>
                       }
                       {event.category !== 'race-series' && <td className="pr-10 py-2">{entry.category}</td>}
                       <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
@@ -216,7 +216,7 @@ export default function EntriesList({ entries, items, event, className }: Props)
                         ((event.category === 'race-series' && entry.category === 'carnet') ||
                           (event.category !== 'race-series' && entry.category !== 'carnet')) &&
                         ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
-                        <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO{nItems(entry.order_id) > 1 && <span> (*)</span>}</button></td>
+                        <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
                       }
                     </tr>
                   )}
