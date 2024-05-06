@@ -183,40 +183,40 @@ export default function EntriesList({ entries, items, event, className }: Props)
               <table className="text-sm">
                 <thead>
                   <tr>
-                    <td className="pr-5 border-b py-2">ORDINE</td>
-                    {event.category !== 'race-series' && <td className="pr-10 border-b py-2">ISCRIZIONE</td>}
-                    <td className="pr-10 border-b py-2">DATA</td>
-                    <td className="pr-10 border-b py-2">METODO</td>
-                    <td className="pr-10 border-b py-2">STATO</td>
-                    <td className="pr-10 border-b py-2">COGNOME</td>
-                    <td className="pr-10 border-b py-2">NOME</td>
-                    <td className="pr-10 border-b py-2">ANNO</td>
-                    <td className="pr-10 border-b py-2">SESSO</td>
-                    <td className="pr-10 border-b py-2">TEAM</td>
-                    <td className="pr-10 border-b py-2"></td>
+                    <td className="pr-4 border-b py-2">ORDINE</td>
+                    {event.category !== 'race-series' && <td className="pr-8 border-b py-2">ISCRIZIONE</td>}
+                    <td className="pr-8 border-b py-2">DATA</td>
+                    <td className="pr-8 border-b py-2">METODO</td>
+                    <td className="pr-8 border-b py-2">STATO</td>
+                    <td className="pr-8 border-b py-2">COGNOME</td>
+                    <td className="pr-8 border-b py-2">NOME</td>
+                    <td className="pr-8 border-b py-2">ANNO</td>
+                    <td className="pr-8 border-b py-2">SESSO</td>
+                    <td className="pr-8 border-b py-2">TEAM</td>
+                    <td className="pr-4 border-b py-2"></td>
                   </tr>
                 </thead>
                 <tbody>
                   {state.items.map((entry, index) =>
                     <tr key={index} className="border-b">
                       {entry.payment_method === 'stripe' && entry.payment_id
-                        ? <td className="pr-5 py-2"><a href={"https://dashboard.stripe.com/payments/" + entry.payment_id} className="text-button" target="_blank">{entry.order_id}</a></td>
-                        : <td className="pr-5 py-2">{entry.order_id}{(entry.payment_status === 'pending' && nItems(entry.order_id) > 1) && <span>**</span>}</td>
+                        ? <td className="pr-4 py-2"><a href={"https://dashboard.stripe.com/payments/" + entry.payment_id} className="text-button" target="_blank">{entry.order_id}</a></td>
+                        : <td className="pr-4 py-2">{entry.order_id}</td>
                       }
-                      {event.category !== 'race-series' && <td className="pr-10 py-2">{entry.category}</td>}
-                      <td className="pr-10 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
-                      <td className="pr-10 py-2">{entry.payment_method}</td>
-                      <td className="pr-10 py-2">{entry.payment_status}</td>
-                      <td className="pr-10 py-2 whitespace-nowrap">{entry.last_name}</td>
-                      <td className="pr-10 py-2 whitespace-nowrap">{entry.first_name}</td>
-                      <td className="pr-10 py-2">{entry.birth_year}</td>
-                      <td className="pr-10 py-2">{entry.gender}</td>
-                      <td className="pr-10 py-2">{entry.team}</td>
+                      {event.category !== 'race-series' && <td className="pr-8 py-2">{entry.category}</td>}
+                      <td className="pr-8 py-2 whitespace-nowrap">{dt(entry.date).format('DD-MM-YY')}</td>
+                      <td className="pr-8 py-2">{entry.payment_method}</td>
+                      <td className="pr-8 py-2">{entry.payment_status}</td>
+                      <td className="pr-8 py-2 whitespace-nowrap">{entry.last_name}</td>
+                      <td className="pr-8 py-2 whitespace-nowrap">{entry.first_name}</td>
+                      <td className="pr-8 py-2">{entry.birth_year}</td>
+                      <td className="pr-8 py-2">{entry.gender}</td>
+                      <td className="pr-8 py-2">{entry.team}</td>
                       {(
                         ((event.category === 'race-series' && entry.category === 'carnet') ||
                           (event.category !== 'race-series' && entry.category !== 'carnet')) &&
                         ['cash', 'sepa'].includes(entry.payment_method) && entry.payment_status === 'pending') &&
-                        <td className="pr-10 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO</button></td>
+                        <td className="pr-8 py-2 whitespace-nowrap"><button className="text-button hover:opacity-70" onClick={() => setPaymentStatus(entry.order_id, 'paid')}>CONFERMA PAGAMENTO{nItems(entry.order_id) > 1 && <span> ***</span>}</button></td>
                       }
                     </tr>
                   )}
