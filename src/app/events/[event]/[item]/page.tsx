@@ -23,7 +23,7 @@ interface Props {
 
 export default async function EntryPage({ params }: Props) {
   const item = await getItem(params.item);
-  if (item === null) notFound()
+  if (item === null || item.status !== 'published') notFound();
 
   return (
     <section className="page">
