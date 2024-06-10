@@ -59,9 +59,9 @@ export const createOrder = async (params: Partial<Order>) => {
       );
 
       if (items.length === 0 || items[0]?.price !== item.price || items[0]?.name !== item.name) {
-        if (status !== 'published') {
+        if (items[0]?.status !== undefined && items[0]?.status !== 'published') {
           console.warn(`[createOrder] item non abilitato: ${JSON.stringify(params.items)}`);
-          throw new Error(`${item.name} non disponibile`);
+          throw new Error(`Iscrizione non disponibile`);
         }
         console.warn(`[createOrder] errore nella richiesta: ${JSON.stringify(params.items)}`);
         throw new Error('Errore nella richiesta');
