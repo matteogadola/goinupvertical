@@ -71,10 +71,13 @@ export const createOrder = async (params: Partial<Order>) => {
     await client.query('BEGIN');
 
     const event = await getEvent(params.items[0].event_id!);
-    const closingDate = dt(event.date).subtract(45, 'hours').subtract(45, 'minutes');
-    if (dt().isAfter(closingDate)) {
-      console.warn(`[createOrder] iscrizioni chiuse: ${JSON.stringify(params.items)}`);
-      throw new Error(`Iscrizioni chiuse. Potrai iscriverti alla partenza`);
+    
+    if (event?.date) {
+      const closingDate = dt(event.date).subtract(45, 'hours').subtract(45, 'minutes');
+      if (dt().isAfter(closingDate)) {
+        console.warn(`[createOrder] iscrizioni chiuse: ${JSON.stringify(params.items)}`);
+        throw new Error(`Iscrizioni chiuse. Potrai iscriverti alla partenza`);
+      }
     }
 
     const order = await client.query<Omit<Order, 'items'>>(
