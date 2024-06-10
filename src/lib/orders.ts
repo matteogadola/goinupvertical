@@ -53,7 +53,7 @@ export const createOrder = async (params: Partial<Order>) => {
   try {
     // "verifico" il prezzo lato server
     for (let item of params.items) {
-      const { rows: items } = await client.query<{ name: string; price: number: status: string }>(
+      const { rows: items } = await client.query<{ name: string; price: number; status: string }>(
         'SELECT name, price, status FROM items WHERE id = $1',
         [item.id]
       );
