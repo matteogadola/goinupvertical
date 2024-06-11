@@ -53,12 +53,16 @@ export const createOrder = async (params: Partial<Order>) => {
   try {
     // "verifico" il prezzo lato server
     for (let item of params.items) {
-      const { rows: items } = await client.query<{ name: string; price: number }>(
-        'SELECT name, price FROM items WHERE id = $1',
+      const { rows: items } = await client.query<{ name: string; price: number; status: string }>(
+        'SELECT name, price, status FROM items WHERE id = $1',
         [item.id]
       );
 
       if (items.length === 0 || items[0]?.price !== item.price || items[0]?.name !== item.name) {
+        if (items[0]?.status !== undefined && items[0]?.status !== 'published') {
+          console.warn(`[createOrder] item non abilitato: ${JSON.stringify(params.items)}`);
+          throw new Error(`Iscrizione non disponibile`);
+        }
         console.warn(`[createOrder] errore nella richiesta: ${JSON.stringify(params.items)}`);
         throw new Error('Errore nella richiesta');
       }
@@ -67,6 +71,14 @@ export const createOrder = async (params: Partial<Order>) => {
     await client.query('BEGIN');
 
     const event = await getEvent(params.items[0].event_id!);
+    
+    if (event?.date) {
+      const closingDate = dt(event.date).subtract(45, 'hours').subtract(45, 'minutes');
+      if (dt().isAfter(closingDate)) {
+        console.warn(`[createOrder] iscrizioni chiuse: ${JSON.stringify(params.items)}`);
+        throw new Error(`Iscrizioni chiuse. Potrai iscriverti alla partenza`);
+      }
+    }
 
     const order = await client.query<Omit<Order, 'items'>>(
       `INSERT INTO orders (user_id, user_email, customer_first_name, customer_last_name, amount, date, payment_method, payment_status, promoter_id)
