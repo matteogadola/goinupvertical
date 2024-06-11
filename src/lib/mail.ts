@@ -61,7 +61,7 @@ export const sendConfirmationMail = async (order: Order) => {
         : '';
 
   if (order.payment_method === 'cash' && order.items.length > 1) {
-    paymentDetail += `<br /><br /><span style="color: #B0B0B0;">N.B. l'ordine dovrà essere saldato nella sua totalità; non saranno accettati pagamenti parziali.<br />Grazie</span>`
+    paymentDetail += `<br /><br /><span>N.B. l'ordine dovrà essere saldato nella sua totalità; non saranno accettati pagamenti parziali</span>`
   }
 
   const response = await sendMail({
