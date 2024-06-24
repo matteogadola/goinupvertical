@@ -21,7 +21,7 @@ export interface Props {
 
 export default async function EventPage({ params }: Props) {
   const event = await getEvent(params.event);
-  if (event === null) notFound()
+  if (event === null || event.status === 'internal') notFound()
 
   return (
     <section className="page">
