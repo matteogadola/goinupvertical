@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 export default async function Admin() {
   const supabase = createServerComponentClient<Database>({ cookies });
   const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await supabase.auth.getUser();
 
   if (!session) {
     redirect('/auth/login');
@@ -29,13 +30,26 @@ export default async function Admin() {
     .order('date', { ascending: true })
     .returns<Event[]>();
 
-  if (!events?.length) {
+  if (!user?.app_metadata?.role) {
     return (
       <>
         <div className="page">
           <div className="flex flex-col bg-red-100 bg-opacity-80 max-w-lg p-4">
             <span className="font-semibold">Utente non abilitato</span>
             <span>Contattare l&apos;amministratore per richiedere le abilitazioni necessarie</span>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  if (!events?.length) {
+    return (
+      <>
+        <div className="page">
+          <div className="flex flex-col bg-yellow-100 bg-opacity-80 max-w-lg p-4">
+            <span className="font-semibold">Nessun risultato</span>
+            <span>Contattare l&apos;amministratore nel caso si creda manchino le abilitazioni necessarie</span>
           </div>
         </div>
       </>
