@@ -138,7 +138,7 @@ export default function EntryCart() {
                   <Image src={amexLogo} height={30} alt="amex" />
                 </div>
 
-                {totalAmount >= 10000
+                {totalAmount >= 100000
                   ? <div className="flex items-center pl-4 pr-2 border border-gray-200 rounded">
                     <input type="radio" value="sepa" id="payment-method-sepa" checked={paymentMethod === 'sepa'} onChange={e => setPaymentMethod('sepa')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                     <label htmlFor="payment-method-sepa" className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
