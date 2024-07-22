@@ -48,7 +48,7 @@ export default async function EventPage({
 
           {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
           <div className="mt-8">
-            {event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
+            {(!!event.closingDate && dt().isAfter(dt(event.closingDate))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
               ? <ItemsList list={event.items} event={event} />
               : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
             }

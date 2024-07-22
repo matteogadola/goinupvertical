@@ -36,7 +36,7 @@ export default function EntryPage() {
           <p className="mt-8" dangerouslySetInnerHTML={{ __html: item.description ?? '' }} />
           <EntryForm item={item} className="mt-8" />
         </div>
-        <div className="col-span-1 md:col-span-2 ml-16">
+        <div className="col-span-1 md:col-span-2 md:ml-16">
           <EntryCart />
         </div>
       </div>
