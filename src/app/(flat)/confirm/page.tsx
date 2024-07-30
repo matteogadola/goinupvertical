@@ -67,14 +67,15 @@ export default function ConfirmPage({ searchParams }: Props) {
                   </tr>
                 )
               }
-              {
-                order.items[0]?.name === 'Iscrizione 1^ Vertical Frasnedo' &&
-                  <div className="py-4">
-                    <span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>
-                  </div>
-              }
             </tbody>
           </table>
+          
+          {
+            order.items[0]?.name === 'Iscrizione 1^ Vertical Frasnedo' &&
+              <div className="py-4">
+                <span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>
+              </div>
+          }
 
           <p className="mt-8">A breve riceverai una mail con {
             order.payment_method === 'sepa'
