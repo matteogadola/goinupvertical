@@ -61,8 +61,12 @@ export const sendConfirmationMail = async (order: Order) => {
         : '';
 
   // da eliminare a metà agosto
-  if (order.payment_method === 'cash' && order.promoter_id === 'team-valtellina') {
-    '<br /><b>Bianchini Calzature</b> Morbegno, Piazza S.Antonio'
+  if (order.payment_method === 'cash' && order.promoter_id === 'team-valtellina' && order.items[0].id === 1036) {
+    paymentDetail += '<br /><b>Bianchini Calzature</b> Morbegno, Piazza S.Antonio'
+  }
+  
+  if (order.promoter_id === 'team-valtellina' && order.items[0].id === 1037) {
+    paymentDetail += '<br /><span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>'
   }
 
   if (order.payment_method === 'cash' && order.items.length > 1) {
