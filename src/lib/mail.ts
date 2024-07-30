@@ -66,7 +66,7 @@ export const sendConfirmationMail = async (order: Order) => {
   }
   
   if (order.promoter_id === 'team-valtellina' && order.items[0].name === 'Iscrizione 1^ Vertical Frasnedo') {
-    paymentDetail += '<br /><span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>'
+    paymentDetail += '<br /><br /><span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>'
   }
 
   if (order.payment_method === 'cash' && order.items.length > 1) {
