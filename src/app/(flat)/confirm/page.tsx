@@ -69,7 +69,7 @@ export default function ConfirmPage({ searchParams }: Props) {
               }
               {
                 order.items[0]?.name === 'Iscrizione 1^ Vertical Frasnedo' &&
-                  <div className="mt-4">
+                  <div className="py-4">
                     <span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>
                   </div>
               }
