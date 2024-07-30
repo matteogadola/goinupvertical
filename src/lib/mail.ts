@@ -65,7 +65,7 @@ export const sendConfirmationMail = async (order: Order) => {
     paymentDetail += '<br /><b>Bianchini Calzature</b> Morbegno, Piazza S.Antonio'
   }
   
-  if (order.promoter_id === 'team-valtellina' && order.items[0].id === 'Iscrizione 1^ Vertical Frasnedo') {
+  if (order.promoter_id === 'team-valtellina' && order.items[0].name === 'Iscrizione 1^ Vertical Frasnedo') {
     paymentDetail += '<br /><span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>'
   }
 
