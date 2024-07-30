@@ -22,6 +22,8 @@ export interface Props {
 
 export default function ConfirmPage({ searchParams }: Props) {
   const order = base64.decode<Order>(searchParams.q);
+  
+  const detail = <></>
 
   if (order?.items === undefined || !order.items.length) {
     return (
@@ -64,6 +66,12 @@ export default function ConfirmPage({ searchParams }: Props) {
                     <td className="py-2">{item.price / 100}€</td>
                   </tr>
                 )
+              }
+              {
+                order.items[0]?.name === 'Iscrizione 1^ Vertical Frasnedo' &&
+                  <div className="mt-4">
+                    <span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>
+                  </div>
               }
             </tbody>
           </table>
