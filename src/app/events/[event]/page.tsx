@@ -21,6 +21,7 @@ export interface Props {
 
 export default async function EventPage({ params }: Props) {
   const event = await getEvent(params.event);
+  console.log(event)
   if (event === null || event.status === 'internal') notFound()
 
   return (
