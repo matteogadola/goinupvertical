@@ -46,7 +46,10 @@ export default async function EventPage({ params }: Props) {
           {event.category !== 'award-ceremony' &&
             <div className="mt-8">
               <div>
-              {event.closingDate}
+              son dentro...
+              <p>uno: {event.closingDate}</p>
+              <p>due: {dt(event.closingDate).format()}</p>
+              <p>tre: dt().isAfter(dt(event.closingDate))</p>
               </div>
               {(!!event.closingDate && dt().isAfter(dt(event.closingDate))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
                 ? <ItemsList list={event.items} event={event} />
