@@ -48,11 +48,10 @@ export default async function EventPage({ params }: Props) {
             <div className="mt-8">
               <div>
               son dentro...
-              <p>closing: {dt(event.closing_date).format()}</p>
-              <p>ora: {dt().format()}</p>
-              <p>tre: {dt().isAfter(dt(event.closing_date))}</p>
+              <p>{dt().format()} è maggiore di {dt(event.closing_date).format()} ???</p>
+              <p>{dt().isAfter(dt(event.closing_date)) ? 'si' : 'no'}</p>
               </div>
-              {(!!event.closing_date && dt().isAfter(dt(event.closing_date))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
+              {(!!event.closing_date && dt().isBefore(dt(event.closing_date))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
                 ? <ItemsList list={event.items} event={event} />
                 : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
               }
