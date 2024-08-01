@@ -45,6 +45,9 @@ export default async function EventPage({ params }: Props) {
           }
           {event.category !== 'award-ceremony' &&
             <div className="mt-8">
+              <div>
+              {event.closingDate}
+              </div>
               {(!!event.closingDate && dt().isAfter(dt(event.closingDate))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
                 ? <ItemsList list={event.items} event={event} />
                 : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
