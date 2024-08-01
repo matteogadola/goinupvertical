@@ -72,7 +72,7 @@ export const createOrder = async (params: Partial<Order>) => {
 
     const event = await getEvent(params.items[0].event_id!);
     
-    if (event?.date) {
+    if (!!event?.date) {
       const closingDate = !!event.closing_date ? dt(event.closing_date) : dt(event.date).subtract(45, 'hours').subtract(45, 'minutes');
       if (dt().isAfter(closingDate)) {
         console.warn(`[createOrder] iscrizioni chiuse: ${JSON.stringify(params.items)}`);
