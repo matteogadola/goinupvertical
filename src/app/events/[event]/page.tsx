@@ -21,7 +21,6 @@ export interface Props {
 
 export default async function EventPage({ params }: Props) {
   const event = await getEvent(params.event);
-  console.log(event)
   if (event === null || event.status === 'internal') notFound()
 
   return (
@@ -46,11 +45,6 @@ export default async function EventPage({ params }: Props) {
           }
           {event.category !== 'award-ceremony' &&
             <div className="mt-8">
-              <div>
-              son dentro...
-              <p>{dt().format()} è maggiore di {dt(event.closing_date).format()} ???</p>
-              <p>{dt().isAfter(dt(event.closing_date)) ? 'si' : 'no'}</p>
-              </div>
               {(!!event.closing_date && dt().isBefore(dt(event.closing_date))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
                 ? <ItemsList list={event.items} event={event} />
                 : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
