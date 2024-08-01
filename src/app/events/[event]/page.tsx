@@ -48,9 +48,9 @@ export default async function EventPage({ params }: Props) {
             <div className="mt-8">
               <div>
               son dentro...
-              <p>uno: {event.closing_date}</p>
-              <p>due: {dt(event.closing_date).format()}</p>
-              <p>tre: dt().isAfter(dt(event.closing_date))</p>
+              <p>closing: {dt(event.closing_date).format()}</p>
+              <p>ora: {dt().format()}</p>
+              <p>tre: {dt().isAfter(dt(event.closing_date))}</p>
               </div>
               {(!!event.closing_date && dt().isAfter(dt(event.closing_date))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
                 ? <ItemsList list={event.items} event={event} />
