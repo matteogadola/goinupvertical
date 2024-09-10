@@ -25,7 +25,7 @@ export default async function Admin() {
   const { data: events } = await supabase
     .from('events')
     .select(`*, attachments(*)`)
-    .neq('id', 'pietro-vertical-5')
+    .eq('promoter_id', 'goinup')
     .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
     .returns<Event[]>();
