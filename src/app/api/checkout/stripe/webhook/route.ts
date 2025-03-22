@@ -3,7 +3,7 @@ import { Order, OrderItem } from '@/types/orders'
 import { createClient } from '@/utils/supabase/admin';
 
 import { dt } from '@/utils/date';
-import { sendConfirmationMail } from '@/utils/mailer';
+import { sendCheckoutMail } from '@/utils/mailer';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-02-24.acacia',
@@ -102,7 +102,7 @@ export async function POST(req: Request) {
         //  method: 'POST',
         //  body: order
         //})
-        await sendConfirmationMail(order);
+        await sendCheckoutMail(order);
       } else {
         console.error(`Checkout completed terminato in errore: ${JSON.stringify(session)}`);
       }

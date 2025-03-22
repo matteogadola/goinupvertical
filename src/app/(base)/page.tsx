@@ -1,6 +1,7 @@
 import FadeUpAnimation from '@/components/animations/fade-up';
 import Credits from '@/components/credits'
 import UpcomingEvents from '@/components/events/upcoming'
+import Footer from '@/components/footer';
 import BannerCarnet from '@/components/home/banner-carnet';
 import { dt } from '@/utils/date';
 import { urlFor } from '@/utils/sanity';
@@ -84,6 +85,7 @@ export default async function Home() {
     }
 
     <Credits className="mt-16" />
+    <Footer />
     </>
   );
 }
