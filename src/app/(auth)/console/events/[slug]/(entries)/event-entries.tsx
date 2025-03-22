@@ -29,10 +29,15 @@ export default function EventEntries({
 
   return (
     <Suspense fallback={<Spinner />}>
-      <span className="mt-4 font-unbounded text-xl">
-        Iscrizioni
-        <span className="ml-2 text-lg font-poppins font-light">({paidItems} / {data?.length})</span>
-      </span>
+      <div>
+        <span className="mt-4 font-unbounded text-xl">
+          Iscrizioni
+          <span className="ml-2 text-lg font-poppins font-light">{data?.length}</span>
+        </span>
+        {paidItems !== data?.length &&
+          <span className="block mt-1 text-xs font-poppins font-light">({paidItems} confermate)</span>
+        }
+      </div>
       <div className="mt-8">
         <DataTable columns={columns} data={data} />
       </div>
