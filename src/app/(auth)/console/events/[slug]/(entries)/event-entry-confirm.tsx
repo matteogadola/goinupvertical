@@ -1,17 +1,17 @@
 'use client'
 
-import { dt } from "@utils/date";
+import { dt } from "@/utils/date";
 import clsx from "clsx";
 import Link from "next/link";
-import EventEntryStatus from "@components/events/entry-status";
+import EventEntryStatus from "@/components/events/entry-status";
 import { Autocomplete, Button, Modal, Select, TextInput, UnstyledButton } from "@mantine/core";
-import { getMunicipalities } from "@utils/sanity/queries";
+import { getMunicipalities } from "@/utils/sanity/queries";
 import { DateInput, DateInputProps } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { use, useEffect, useMemo, useState } from "react";
-import ErrorTexty from "@components/ui/error-text";
-import ErrorText from "@components/ui/error-text";
+import ErrorTexty from "@/components/ui/error-text";
+import ErrorText from "@/components/ui/error-text";
 import { createClient } from "@/utils/supabase/client";
 import { Order, OrderItem } from "@/types/orders";
 import dayjs from "dayjs";

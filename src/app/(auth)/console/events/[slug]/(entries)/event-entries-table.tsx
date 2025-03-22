@@ -34,7 +34,7 @@ import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
 import { PlusIcon } from "lucide-react"
 import { MantineProvider, Modal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
-import ConsoleEventEntryCreate from "./event-entry-update"
+//import ConsoleEventEntryCreate from "./event-entry-update"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -101,7 +101,7 @@ export function DataTable<TData, TValue>({
           <Button onClick={open}><PlusIcon />Aggiungi iscrizione</Button>
           <MantineProvider>
             <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
-              <ConsoleEventEntryCreate onClose={close} />
+              {/*<ConsoleEventEntryCreate onClose={close} />*/}
             </Modal>
           </MantineProvider>
         </div>
