@@ -9,7 +9,7 @@ import {
   type CartStore,
   createCartStore,
   initCartStore,
-} from '@store/cart'
+} from '@/store/cart'
 
 export type CounterStoreApi = ReturnType<typeof createCartStore>
 
