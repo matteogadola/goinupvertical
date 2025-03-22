@@ -1,6 +1,6 @@
 import { Order, OrderItem } from '@/types/orders'
 import { createClient } from '@/utils/supabase/admin';
-import Sentry from '@sentry/node'
+import * as Sentry from '@sentry/node'
 
 /*
 protezione
