@@ -8,7 +8,7 @@ export default function EventChartPayMethod({
 }: {
   entries: any
 }) {
-  const entriesByPayMethod = useMemo(() => Object.groupBy(entries, ({ gender }: any) => gender), [entries])
+  const entriesByPayMethod = useMemo(() => Object.groupBy(entries, ({ payment_method }: any) => payment_method), [entries])
 
   const paymentsData = [
     { name: 'Online', value: entriesByPayMethod['stripe']?.length ?? 0, color: 'grape' },
