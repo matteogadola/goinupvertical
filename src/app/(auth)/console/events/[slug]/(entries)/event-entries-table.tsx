@@ -61,7 +61,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
-  console.log("DENTRO", data)
+
   const table = useReactTable({
     data,
     columns,
