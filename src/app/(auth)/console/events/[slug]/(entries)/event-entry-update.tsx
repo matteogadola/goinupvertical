@@ -1,13 +1,13 @@
 'use client'
 
-import { dt } from "@utils/date";
-import { getMunicipalities } from "@utils/sanity/queries";
+import { dt } from "@/utils/date";
+import { getMunicipalities } from "@/utils/sanity/queries";
 import { DateInput, DateInputProps } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { use, useEffect, useMemo, useState } from "react";
 import CodiceFiscale from 'codice-fiscale-js'
-import ErrorTexty from "@components/ui/error-text";
-import ErrorText from "@components/ui/error-text";
+import ErrorTexty from "@/components/ui/error-text";
+import ErrorText from "@/components/ui/error-text";
 import { createClient } from "@/utils/supabase/client";
 import { Order } from "@/types/orders";
 import dayjs from "dayjs";

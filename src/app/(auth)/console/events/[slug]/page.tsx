@@ -1,4 +1,4 @@
-import { dt } from '@utils/date';
+import { dt } from '@/utils/date';
 import { createClient } from '@/utils/supabase/server';
 import ConsoleEventTabs from './event-tabs';
 import { getClaims } from '@/utils/supabase/helpers';
