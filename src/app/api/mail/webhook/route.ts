@@ -8,6 +8,7 @@ protezione
 Primo indirizzo IP: 1.179.112.1
 Ultimo indirizzo IP: 1.179.127.254
 */
+
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
 });
