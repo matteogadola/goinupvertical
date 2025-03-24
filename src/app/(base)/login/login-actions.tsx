@@ -28,6 +28,7 @@ export async function loginWithPassword(credentials: { email: string, password: 
     }
   }
 
+  // 
   const url = (await getClaims(data.session))?.user_role ? '/console' : '/account'
 
   revalidatePath(url, 'layout')
