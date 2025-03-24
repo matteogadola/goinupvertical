@@ -83,7 +83,7 @@ export const getColumns = ({ onConfirm, onUpdate }: ColumnsProps): ColumnDef<Pay
       }
     },
   },
-  {
+  /*{
     id: "edit",
     cell: ({ row }) => {
       const entry = row.original
@@ -92,7 +92,7 @@ export const getColumns = ({ onConfirm, onUpdate }: ColumnsProps): ColumnDef<Pay
         <EntryEditButton entry={entry} onUpdate={onUpdate} />
       )
     },
-  },
+  },*/
   /*{
     id: "actions",
     cell: ({ row }) => {

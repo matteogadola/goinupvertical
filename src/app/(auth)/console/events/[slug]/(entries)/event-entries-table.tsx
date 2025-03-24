@@ -115,7 +115,7 @@ export function DataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="flex justify-end space-x-2">
+        <div className="hidden justify-end space-x-2">
           <div>
             <Button onClick={open}><PlusIcon />Aggiungi iscrizione</Button>
             <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
