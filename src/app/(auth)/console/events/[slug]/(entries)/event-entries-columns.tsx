@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import EntryConfirmButton from "./event-entry-confirm"
+import EntryEditButton from "./event-entry-edit"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Payment = {
@@ -15,10 +16,11 @@ export type Payment = {
 }
 
 type ColumnsProps = {
-  onConfirm: (entry: any) => void
+  onConfirm: (entry: any) => void,
+  onUpdate: (entry: any) => void,
 }
 
-export const getColumns = ({ onConfirm }: ColumnsProps): ColumnDef<Payment>[] => [
+export const getColumns = ({ onConfirm, onUpdate }: ColumnsProps): ColumnDef<Payment>[] => [
   {
     accessorKey: "order_id",
     header: "Ordine",
@@ -81,6 +83,16 @@ export const getColumns = ({ onConfirm }: ColumnsProps): ColumnDef<Payment>[] =>
       }
     },
   },
+  /*{
+    id: "edit",
+    cell: ({ row }) => {
+      const entry = row.original
+      
+      return (
+        <EntryEditButton entry={entry} onUpdate={onUpdate} />
+      )
+    },
+  },*/
   /*{
     id: "actions",
     cell: ({ row }) => {

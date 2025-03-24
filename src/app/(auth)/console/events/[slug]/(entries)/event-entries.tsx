@@ -7,6 +7,10 @@ import { DonutChart } from '@mantine/charts';
 import { DataTable } from './event-entries-table';
 import { getColumns } from './event-entries-columns';
 import { OrderItem } from '@/types/orders';
+import { Entry } from '@/types/entries';
+import { Button } from '@mantine/core';
+import { DownloadIcon } from 'lucide-react';
+import { Row } from '@tanstack/react-table';
 
 export default function EventEntries({
   entries,
@@ -24,7 +28,15 @@ export default function EventEntries({
     setData(newEntries)
   }, [])
 
-  const columns = useMemo(() => getColumns({ onConfirm }), [])
+  const onUpdate = useCallback((updatedEntry: Entry) => {
+    const newEntries = data.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
+      ? ({ ...entry, ...updatedEntry })
+      : entry
+    )
+    setData(newEntries)
+  }, [])
+
+  const columns = useMemo(() => getColumns({ onConfirm, onUpdate }), [])
   const paidItems = useMemo(() => data.filter((i: any) => i.payment_status === 'paid').length ?? 0, [data])
 
   return (

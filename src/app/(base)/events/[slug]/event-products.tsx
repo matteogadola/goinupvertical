@@ -4,11 +4,11 @@ import Link from "next/link";
 import EventEntry from "./event-entry";
 
 export default async function EventProducts({ event }: { event: any }) {
-
+  
   if (['race', 'serie'].includes(event.type)) {
     if (!event.products?.length) {
       return <></>
-    } else if (event.products?.length === 1) {
+    } else if (event.products?.length === 1 && event.products[0].status === 'open') {
       return <EventEntry event={event} product={event.products[0]} />
     } else {
       // son più di uno...per la gara non dovrebbe essere possibile

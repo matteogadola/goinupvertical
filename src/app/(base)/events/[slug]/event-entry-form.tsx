@@ -42,6 +42,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
   const modalSize = useMediaQuery('(max-width: 50em)') ? '95%' : '60%';
   //const [cart, setCart] = useState<any>([])
   const { items, addItem } = useCartStore()
+  const [error, setError] = useState<string | null>(null)
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -119,6 +120,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
     } catch(e: any) {
       console.log(e.message)
       // mostra errore
+      //setError(e.message)
     }
 
     addItem({

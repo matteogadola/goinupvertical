@@ -7,6 +7,8 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  Row,
+  RowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -31,9 +33,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/shadcn/dropdown-menu"
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-import { PlusIcon } from "lucide-react"
+import { DownloadIcon, PlusIcon } from "lucide-react"
 import { MantineProvider, Modal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
+import { mkConfig, generateCsv, download } from 'export-to-csv'
 //import ConsoleEventEntryCreate from "./event-entry-update"
 
 interface DataTableProps<TData, TValue> {
@@ -42,6 +45,15 @@ interface DataTableProps<TData, TValue> {
 }
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
+
+
+const csvConfig = mkConfig({
+  fieldSeparator: ',',
+  filename: 'sample', // export file name (without .csv)
+  decimalSeparator: '.',
+  useKeysAsHeaders: true,
+})
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -49,7 +61,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
-  console.log("DENTRO", data)
+
   const table = useReactTable({
     data,
     columns,
@@ -68,6 +80,12 @@ export function DataTable<TData, TValue>({
   const [showPanel, setShowPanel] = React.useState<Checked>(false)
   const [opened, { open, close }] = useDisclosure(false)
 
+  const exportCsv = (model: RowModel<TData>) => {
+    const rowData = model.rows.map((row: any) => row.original)
+    const csv = generateCsv(csvConfig)(rowData)
+    download(csvConfig)(csv)
+  }
+
   return (
     <div>
       <div className="grid grid-cols-3 items-center py-4 space-x-8">
@@ -75,7 +93,7 @@ export function DataTable<TData, TValue>({
           placeholder="Cognome..."
           column={table.getColumn("last_name")}
         />
-        <div className="hidden ml-4 w-min">
+        <div className="ml-4 w-min">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">Pagamento</Button>
@@ -97,13 +115,16 @@ export function DataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="hidden flex justify-end">
-          <Button onClick={open}><PlusIcon />Aggiungi iscrizione</Button>
-          <MantineProvider>
+        <div className="hidden justify-end space-x-2">
+          <div>
+            <Button onClick={open}><PlusIcon />Aggiungi iscrizione</Button>
             <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
               {/*<ConsoleEventEntryCreate onClose={close} />*/}
             </Modal>
-          </MantineProvider>
+          </div>
+          <Button variant="outline" size="sm" onClick={() => exportCsv(table.getRowModel())}>
+            <DownloadIcon className="size-4" aria-hidden="true" />
+          </Button>
         </div>
       </div>
     <div className="rounded-md border">
