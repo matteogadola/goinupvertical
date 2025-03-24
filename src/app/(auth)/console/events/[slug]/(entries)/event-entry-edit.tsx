@@ -20,17 +20,7 @@ const dateParser: DateInputProps['dateParser'] = (input) => {
   return dt(input, ['DD/MM/YYYY', 'D/MM/YYYY', 'DD/M/YYYY', 'D/M/YYYY']).toDate();
 };
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/shadcn/form"
-import { Input } from "@/components/ui/shadcn/input"
-import { Autocomplete, Button, Modal, TextInput } from "@mantine/core";
+import { Autocomplete, Button, Modal, Switch, TextInput } from "@mantine/core";
 import { DownloadIcon, UserPenIcon } from "lucide-react";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { isTinValid, verifyTin } from "@/utils/tin";
@@ -191,6 +181,13 @@ function ConsoleEventEntryUpdate({ entry, onClose, onUpdate }: { entry: any, onC
             className="col-span-2"
             key={form.key('phone_number')}
             {...form.getInputProps('phone_number')}
+          />
+
+          <Switch
+            defaultChecked
+            color="green"
+            labelPosition="left"
+            label="Pagato?"
           />
 
         </div>

@@ -2,10 +2,12 @@
 import { useCartStore } from '@/store/cart';
 import { createCheckout } from '@/utils/checkout';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 export default function CheckoutPage() {
   const { items, removeItem, paymentMethod, setPaymentMethod } = useCartStore();
   const state: any = {}
+  const [error, setError] = useState<string | null>(null)
 
   const totalAmount = items.reduce((a, b) => a + b.price, 0)
   const paymentMethods = items.reduce((a, b) => a.filter(v => b.payment_methods.includes(v)), ['stripe', 'cash', 'sepa'])
@@ -27,6 +29,8 @@ export default function CheckoutPage() {
     //setState({ ...state, isLoading: true });
 
     try {
+      setError(null)
+
       const order = await createCheckout({
         customer_email: items[0].entry?.email,
         customer_first_name: items[0].entry?.first_name,
@@ -42,7 +46,7 @@ export default function CheckoutPage() {
       }*/
     } catch (e: any) {
       console.log(JSON.stringify(e.message))
-      //setError(e.message)
+      setError(e.message)
     } finally {
       //setState({ ...state, isLoading: false })
     }
