@@ -4,7 +4,7 @@ import Link from "next/link";
 import EventEntry from "./event-entry";
 
 export default async function EventProducts({ event }: { event: any }) {
-  
+
   if (['race', 'serie'].includes(event.type)) {
     if (!event.products?.length) {
       return <></>

@@ -23,6 +23,9 @@ export default function EventEntryStatus({ event }: { event: any }) {
     if (event.products?.length === 1) {
       const product = event.products[0]
 
+      console.log(event.date)
+      console.log(dt(event.date).format('HH:mm'))
+
       // poi supporta sold out ecc
       if (product.status !== 'open') {
         return <span className="">Iscrizioni chiuse</span>
