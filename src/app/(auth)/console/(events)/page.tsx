@@ -45,39 +45,13 @@ export default async function ConsolePage() {
   }
 
   return (
-    <>
-    <AppShellHeader>
-      <Navbar links={enabledLinks} />
-    </AppShellHeader>
-    <AppShellNavbar p="md">
-      <Sidebar links={links} />
-    </AppShellNavbar>
-    <AppShellMain className="page">
-      <div className="flex">
-        <div className="min-w-64 pr-4 border-r-1 hidden md:flex">
-          <div className="mt-4">
-            <span className="font-unbounded text-xl">Eventi</span>
-            <ul className="separator mt-4">
-              {events?.map((item: any, index) =>
-                <li key={index} className="py-2 whitespace-nowrap">
-                  <Link href={'/console/events/' + item.slug}>{item.name}</Link>
-                </li>
-              )}
-            </ul>
-          </div>
-
-        </div>
-        <div className="pl-4">
-          <div className="page">
-            <div className="p-4">
-              <span className="">Seleziona un evento</span>
-            </div>
-          </div>
+    <div className="pl-4">
+      <div className="page">
+        <div className="p-4">
+          <span className="">Seleziona un evento</span>
         </div>
       </div>
-    </AppShellMain>
-    </>
-    
+    </div>
   )
 }
 
