@@ -13,7 +13,7 @@ import Navbar from '@/components/ui/mantine/navbar';
 const links: any[] = []
 const enabledLinks: any[] = []
 
-export default async function ConsolePage() {
+export default async function ConsoleEventsPage() {
   const claims = await getClaims()
 
   if (!claims?.user_role || !claims.user_groups?.length) {

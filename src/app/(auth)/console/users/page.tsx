@@ -1,44 +1,24 @@
-import type { Metadata } from 'next'
-import { createClient } from '@/utils/supabase/server'
-import Link from 'next/link'
-import { dt } from '@/utils/date'
-import { redirect } from 'next/navigation';
-import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
-import Navbar from '@/components/ui/mantine/navbar';
-import { Event } from '@/types/events'
-import Sidebar from '@/components/ui/mantine/sidebar';
+import { dt } from '@/utils/date';
+import { createClient } from '@/utils/supabase/server';
+import Link from 'next/link';
 import { getClaims } from '@/utils/supabase/helpers';
-import { hasRole } from '@/utils/supabase/auth';
-import { Role } from '@/types/user';
+import type { Event } from '@/types/events'
+import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
+import Sidebar from '@/components/ui/mantine/sidebar';
+import Navbar from '@/components/ui/mantine/navbar';
+//export const metadata: Metadata = {
+//  title: 'Console di amministrazione',
+//}
 
-const links: { name: string, path: string, hasRole?: Role }[] = [
-  { name: "Eventi", path: "/console/events" },
-  { name: "Utenti", path: "/console/users", hasRole: "admin" },
-]
+const links: any[] = []
+const enabledLinks: any[] = []
 
-export default async function ConsoleLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const events = await getEvents()
+export default async function ConsoleUsersPage() {
+  const claims = await getClaims()
 
   return (
-    <>
-      
-    </>
-  );
-}
-
-const getUser = async () => {
-  const supabase = await createClient()
-  const { data: { user }, error } = await supabase.auth.getUser()
-
-  if (error) {
-    console.log(error)
-    return null;
-  }
-  return user;
+    <></>
+  )
 }
 
 const getEvents = async () => {
@@ -49,7 +29,7 @@ const getEvents = async () => {
     .select()
     .gte('date', dt().startOf('year').format())
     .order('date', { ascending: true })
-    .returns<Event[]>();
-  
+    .overrideTypes<Event[], { merge: false }>();
+
   return data ?? []
 }

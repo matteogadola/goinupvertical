@@ -16,7 +16,7 @@ const links: { name: string, path: string, hasRole?: Role }[] = [
   { name: "Utenti", path: "/console/users", hasRole: "admin" },
 ]
 
-export default async function ConsoleLayout({
+export default async function ConsoleEventsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
