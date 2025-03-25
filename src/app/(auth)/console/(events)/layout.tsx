@@ -7,35 +7,26 @@ import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
 import Navbar from '@/components/ui/mantine/navbar';
 import { Event } from '@/types/events'
 import Sidebar from '@/components/ui/mantine/sidebar';
+import { getClaims } from '@/utils/supabase/helpers';
+import { hasRole } from '@/utils/supabase/auth';
+import { Role } from '@/types/user';
 
-export const metadata: Metadata = {
-  title: "Goinup Vertical",
-  description: "Circuito di gare vertical a scopo benefico",
-};
+const links: { name: string, path: string, hasRole?: Role }[] = [
+  { name: "Eventi", path: "/console/events" },
+  { name: "Utenti", path: "/console/users", hasRole: "admin" },
+]
 
-export default async function RootLayout({
+export default async function ConsoleEventsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUser()
-  if (!user) redirect('/login')
-
   const events = await getEvents()
-
-  /*const links = events?.map((event) => ({
-    { name: event.name, path: event.slug },
-  }))*/
-
-  const links = events.map(event => ({
-    name: event.name,
-    path: `/console/events/${event.slug}`,
-  }))
 
   return (
     <>
       <AppShellHeader>
-        <Navbar links={[]} />
+        <Navbar links={links} />
       </AppShellHeader>
       <AppShellNavbar p="md">
         <Sidebar links={links} />

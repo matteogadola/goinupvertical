@@ -93,7 +93,7 @@ export function DataTable<TData, TValue>({
           placeholder="Cognome..."
           column={table.getColumn("last_name")}
         />
-        <div className="ml-4 w-min">
+        <div className="ml-4 w-min hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">Pagamento</Button>

@@ -36,7 +36,7 @@ export async function updateSession(request: NextRequest) {
 
   if (user && ['login', 'register'].includes(nextRoute)) {
     const url = request.nextUrl.clone()
-    url.pathname = (await getClaims())?.user_role ? '/console' : '/account'
+    url.pathname = (await getClaims())?.user_role ? '/console' : '/' // '/account'
     return NextResponse.redirect(url)
   } else if (!user && ['account', 'console'].includes(nextRoute)) {
     const url = request.nextUrl.clone()

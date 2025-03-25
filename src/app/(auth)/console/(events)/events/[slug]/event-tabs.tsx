@@ -3,7 +3,7 @@
 import { Tabs } from '@mantine/core'
 import EventCharts from './(charts)/event-charts'
 import EventEntries from './(entries)/event-entries'
-import { Claims } from '@/types/user'
+import { Claims, Role } from '@/types/user'
 
 export default function ConsoleEventTabs({
   entries,
@@ -19,7 +19,7 @@ export default function ConsoleEventTabs({
         <Tabs.Tab value="entries">
           Iscrizioni
         </Tabs.Tab>
-        {claims?.user_role === 'owner' &&
+        {hasRole('editor', claims) &&
           <Tabs.Tab value="stats">
             Statistiche
           </Tabs.Tab>
@@ -35,4 +35,14 @@ export default function ConsoleEventTabs({
       </Tabs.Panel>
     </Tabs>
   )
+}
+
+const hasRole = (role: Role, claims?: Claims | null) => {
+  const roles = ['viewer', 'editor', 'manager', 'admin', 'owner']
+  if (!claims || !claims.user_role) return false
+
+  if (roles.indexOf(claims.user_role) >= roles.indexOf(role)) {
+    return true
+  }
+  return false
 }

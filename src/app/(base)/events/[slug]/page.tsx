@@ -23,7 +23,7 @@ export async function generateStaticParams() {
   const events = await getEvents()
 
   return events.map((event: any) => ({
-    slug: event.slug.current,
+    slug: event.slug.current
   }))
 }
 
@@ -66,9 +66,12 @@ export default async function EventPage({
           <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
           <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
-          <div className="mt-8">
+          <div className="flex flex-col mt-8 space-y-4">
             <Link href={event.regulation ?? "/regulation"}>
               <span className="link">Consulta il regolamento</span>
+            </Link>
+            <Link href={`${slug}/entries`}>
+              <span className="link">Vedi elenco iscritti</span>
             </Link>
           </div>
 
@@ -78,12 +81,6 @@ export default async function EventPage({
               ? <>{/*<ItemsList list={event.items} event={event} />*/}</>
               : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
             }
-
-            {(!!event.items?.length && event.category === 'race') && <div className="mt-8">
-              <Link href={{ pathname: `${event?.id}/entries`, query: { q: '' /*base64.encode(event)*/ } }}>
-                <span className="clickable">Vedi elenco iscritti</span>
-              </Link>
-            </div>}
           </div>
           
           <EventProducts event={event} />

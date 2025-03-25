@@ -6,6 +6,7 @@ import Spinner from '@/components/ui/spinner'
 import { DonutChart } from '@mantine/charts';
 import EventChartGender from './event-chart-gender';
 import EventChartPayMethod from './event-chart-pay-method';
+import EventChartClub from './event-chart-clubs';
 
 export default function EventCharts({
   entries,
@@ -16,9 +17,10 @@ export default function EventCharts({
   return (
     <Suspense fallback={<Spinner />}>
       <span className="mt-4 font-unbounded text-xl">Statistiche</span>
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center">
         <EventChartGender entries={entries} />
         <EventChartPayMethod entries={entries} />
+        <EventChartClub entries={entries} />
       </div>
     </Suspense>
   )

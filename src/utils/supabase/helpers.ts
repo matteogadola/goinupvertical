@@ -1,7 +1,7 @@
 import { Session } from '@supabase/supabase-js'
 import { jwtDecode } from 'jwt-decode'
 import { createClient } from './server'
-import { Claims } from '@/types/user'
+import { Claims, Role } from '@/types/user'
 
 export const getClaims = async (session?: Session | null) => {
 

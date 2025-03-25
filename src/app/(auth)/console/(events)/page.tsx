@@ -3,11 +3,17 @@ import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import { getClaims } from '@/utils/supabase/helpers';
 import type { Event } from '@/types/events'
+import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
+import Sidebar from '@/components/ui/mantine/sidebar';
+import Navbar from '@/components/ui/mantine/navbar';
 //export const metadata: Metadata = {
 //  title: 'Console di amministrazione',
 //}
 
-export default async function ConsolePage() {
+const links: any[] = []
+const enabledLinks: any[] = []
+
+export default async function ConsoleEventsPage() {
   const claims = await getClaims()
 
   if (!claims?.user_role || !claims.user_groups?.length) {
@@ -39,9 +45,11 @@ export default async function ConsolePage() {
   }
 
   return (
-    <div className="page">
-      <div className="p-4">
-        <span className="">Seleziona un evento</span>
+    <div className="pl-4">
+      <div className="page">
+        <div className="p-4">
+          <span className="">Seleziona un evento</span>
+        </div>
       </div>
     </div>
   )
