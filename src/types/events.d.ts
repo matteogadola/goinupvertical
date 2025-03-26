@@ -19,6 +19,7 @@ export interface Event {
   promoter?: { id: string, name: string; stripe_account: string; };
   items?: Item[];
   closing_date?: string;
+  links: any[]
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';

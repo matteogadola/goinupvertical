@@ -7,10 +7,10 @@ const sponsors = [
     className: 'h-12',
     url: 'https://www.popso.it'
   }, {
-    name: 'Mat Food',
-    logo: 'mat-food.png',
-    className: 'h-18',
-    url: 'http//www.mat-food.it',
+    name: 'Latteria Sociale Valtellina',
+    logo: 'latteria-valtellina.webp',
+    className: 'h-20',
+    url: 'https://www.latteriavaltellina.it'
   }, {
     name: 'Birrificio Valtellinese',
     logo: 'birrificio-valtellinese.png',
@@ -22,6 +22,11 @@ const sponsors = [
     className: 'h-10',
     url: 'https://www.lnclife.it'
   }, {
+    name: 'Mat Food',
+    logo: 'mat-food.png',
+    className: 'h-20',
+    url: 'http//www.mat-food.it',
+  }, {
     name: 'Leon',
     logo: 'leon.webp',
     className: 'h-14',
@@ -29,7 +34,7 @@ const sponsors = [
   }, {
     name: 'Officina Fiorelli',
     logo: 'officina-fiorelli.png',
-    className: 'h-12',
+    className: 'h-11',
     url: 'https://www.facebook.com/people/Officina-Autorizzata-Ford-di-Fiorelli-Matteo/100066566109924'
   }, {
     name: 'Patagonia',
@@ -41,6 +46,11 @@ const sponsors = [
     logo: 'avis.webp',
     className: 'h-18',
     url: 'https://www.avis.it/it'
+  }, {
+    name: 'Mobili Rumi',
+    logo: 'mobili-rumi.webp',
+    className: 'h-16',
+    url: 'https://www.mobilirumi.it'
   },
 ]
 
@@ -89,11 +99,6 @@ const supporters = [
     logo: 'voce-di-daniele.png',
     className: 'h-14',
   }, {
-    name: 'Mobili Rumi',
-    logo: 'mobili-rumi.webp',
-    className: 'h-14',
-    url: 'https://www.mobilirumi.it'
-  }, {
     name: 'Caurga',
     logo: 'caurga.png',
     className: 'h-14',
@@ -110,8 +115,13 @@ const partners = [
   }, {
     name: 'Fotorun Valtellina',
     logo: 'fotorun-valtellina.png',
-    className: 'h-18',
+    className: 'h-20',
     url: 'https://www.facebook.com/FOTORUN.valtellina'
+  }, {
+    name: 'Andrea Mazzoni',
+    logo: 'andrea-mazzoni.webp',
+    className: 'h-18',
+    url: 'https://it.linkedin.com/in/andrea-mazzoni-705113274'
   }, {
     name: 'Radio Tsn',
     logo: 'radio-tsn.webp',
@@ -125,7 +135,7 @@ const partners = [
   }, {
     name: 'Centrovalle',
     logo: 'centro-valle-netweek.webp',
-    className: 'h-14',
+    className: 'h-16',
     url: 'https://netweek.it/testate/giornale-di-sondrio-centro-valle/',
   }, {
     name: 'La Provincia di Sondrio',
