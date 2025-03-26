@@ -16,7 +16,7 @@ import Sidebar from '@/components/ui/mantine/sidebar';
 const links = [
   { name: "Home", path: "/", visible: false },
   { name: "Classifiche", path: "/results" },
-  { name: "Foto e Video", path: "/media" },
+  { name: "Foto e Video", path: "/photos" },
   { name: "Regolamento", path: "/regulation" },
 ]
 
