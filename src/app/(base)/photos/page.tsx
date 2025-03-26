@@ -15,7 +15,7 @@ export default async function MediaPage() {
   const events = await getEvents({ year: dt().year() })
   
   return <></>
-  return (
+  /*return (
     <section className="page">
       <h1 className="overtitle">Allegati</h1>
       <h1 className="title">Media</h1>
@@ -50,5 +50,5 @@ export default async function MediaPage() {
         )}
       </div>
     </section>
-  )
+  )*/
 }
