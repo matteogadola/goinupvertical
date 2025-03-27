@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="mt-auto">
       <div className="mt-8 py-4 flex items-center justify-center gap-y-2 md:space-x-12 flex-col md:flex-row">
-        <img src="/images/credits/goinup.png" height={60} width={60} alt="Logo" />
+        <img src="/images/logo/goinup.webp" height={60} width={60} alt="Logo" />
 
         <div className="order-last md:order-none text-center">
           <p className="text-sm">

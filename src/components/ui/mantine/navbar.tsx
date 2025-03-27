@@ -31,7 +31,7 @@ export default async function Navbar({
 
       <div className="flex items-center justify-center w-40">
         <Link href="/" className="hover:scale-105">
-          <img src="/images/logo/goinup-header.webp" className="h-11 object-contain" alt="Logo" />
+          <img src="/images/logo/goinup.webp" className="h-11 object-contain" alt="Logo" />
         </Link>
       </div>
 
