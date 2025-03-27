@@ -38,7 +38,7 @@ export default function NavbarUserButton({ user, className }: { user: User | nul
     <Menu shadow="md">
       <Menu.Target>
         <UnstyledButton className="hover:scale-105">
-          <Avatar src={user.user_metadata.avatar_url} variant="transparent" />
+          <Avatar src={user.user_metadata.avatar_url} variant="transparent" size="md" />
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
