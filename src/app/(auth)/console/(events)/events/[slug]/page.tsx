@@ -33,7 +33,7 @@ export default async function ConsoleEventPage({
         <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
       </div>
       <div className="mt-4">
-        <ConsoleEventTabs entries={entries} claims={claims} />
+        <ConsoleEventTabs event={event} entries={entries} claims={claims} />
       </div>
       {/*<div>info ecc</div>
       <div>

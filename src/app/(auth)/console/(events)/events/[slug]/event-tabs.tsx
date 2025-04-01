@@ -4,11 +4,14 @@ import { Tabs } from '@mantine/core'
 import EventCharts from './(charts)/event-charts'
 import EventEntries from './(entries)/event-entries'
 import { Claims, Role } from '@/types/user'
+import { Event } from '@/types/events'
 
 export default function ConsoleEventTabs({
+  event,
   entries,
   claims,
 }: {
+  event: Event,
   entries: any[],
   claims?: Claims | null,
 }) {
@@ -27,7 +30,7 @@ export default function ConsoleEventTabs({
       </Tabs.List>
 
       <Tabs.Panel value="entries" pt="xs">
-        <EventEntries entries={entries} />
+        <EventEntries event={event} entries={entries} />
       </Tabs.Panel>
 
       <Tabs.Panel value="stats" pt="xs">
