@@ -38,8 +38,10 @@ import { MantineProvider, Modal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { mkConfig, generateCsv, download } from 'export-to-csv'
 //import ConsoleEventEntryCreate from "./event-entry-update"
+import { Event } from '@/types/events'
 
 interface DataTableProps<TData, TValue> {
+  event: Event
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
@@ -48,13 +50,14 @@ type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 
 const csvConfig = mkConfig({
-  fieldSeparator: ',',
-  filename: 'sample', // export file name (without .csv)
+  fieldSeparator: ';',
+  //filename: `iscrizioni-${name.toLowerCase()}`, // export file name (without .csv)
   decimalSeparator: '.',
   useKeysAsHeaders: true,
 })
 
 export function DataTable<TData, TValue>({
+  event,
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -81,9 +84,21 @@ export function DataTable<TData, TValue>({
   const [opened, { open, close }] = useDisclosure(false)
 
   const exportCsv = (model: RowModel<TData>) => {
-    const rowData = model.rows.map((row: any) => row.original)
-    const csv = generateCsv(csvConfig)(rowData)
-    download(csvConfig)(csv)
+    const rowData: any[] = model.rows.map((row: any) => ({
+      order_id: row.original.order_id,
+      product_type: row.original.product_type,
+      payment_method: row.original.payment_method,
+      payment_status: row.original.payment_status,
+      phone_number: String(row.original.phone_number),
+      first_name: row.original.first_name,
+      last_name: row.original.last_name,
+      birth_year: row.original.birth_year,
+      gender: row.original.gender,
+      club: row.original.club ?? '',
+    }))
+    /*const rowData = model.rows.map((row: any) => row.original)*/
+    const csv = generateCsv({ ...csvConfig, filename: `iscrizioni-${event.slug}` })(rowData)
+    download({ ...csvConfig, filename: `iscrizioni-${event.slug}` })(csv)
   }
 
   return (
@@ -93,13 +108,12 @@ export function DataTable<TData, TValue>({
           placeholder="Cognome..."
           column={table.getColumn("last_name")}
         />
-        <div className="ml-4 w-min hidden">
-          <DropdownMenu>
+        <div className="ml-4 w-min">
+          {/*<DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">Pagamento</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              {/*<DropdownMenuSeparator />*/}
               <DropdownMenuCheckboxItem
                 checked={showPaymentStatusBar}
                 onCheckedChange={setShowPaymentStatus}
@@ -113,10 +127,10 @@ export function DataTable<TData, TValue>({
                 NON Confermato
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu>*/}
         </div>
-        <div className="hidden justify-end space-x-2">
-          <div>
+        <div className="flex justify-end space-x-2">
+          <div className="hidden">
             <Button onClick={open}><PlusIcon />Aggiungi iscrizione</Button>
             <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
               {/*<ConsoleEventEntryCreate onClose={close} />*/}
