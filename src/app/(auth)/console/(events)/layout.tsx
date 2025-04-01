@@ -23,13 +23,18 @@ export default async function ConsoleEventsLayout({
 }>) {
   const events = await getEvents()
 
+  const mdLinks = events.map((event) => ({
+    name: event.name,
+    path: `/console/events/${event.slug}`
+  }))
+
   return (
     <>
       <AppShellHeader>
         <Navbar links={links} />
       </AppShellHeader>
       <AppShellNavbar p="md">
-        <Sidebar links={links} />
+        <Sidebar links={mdLinks} />
       </AppShellNavbar>
       <AppShellMain className="page">
         <div className="flex">
