@@ -11,14 +11,7 @@ import ErrorText from "@/components/ui/error-text";
 import { createClient } from "@/utils/supabase/client";
 import { Order } from "@/types/orders";
 import dayjs from "dayjs";
-
-const dateParser: DateInputProps['dateParser'] = (input) => {
-  if (/^[0-9]{4}$/.test(input)) {
-    return new Date(Number(input), 0, 1);
-  }
-
-  return dt(input, ['DD/MM/YYYY', 'D/MM/YYYY', 'DD/M/YYYY', 'D/M/YYYY']).toDate();
-};
+import { YearPickerInput } from '@mantine/dates';
 
 import { Autocomplete, Button, Modal, Switch, TextInput } from "@mantine/core";
 import { DownloadIcon, UserPenIcon } from "lucide-react";
@@ -32,8 +25,8 @@ export default function EntryEditButton({
   entry,
   onUpdate,
 }: {
-  entry: any,
-  onUpdate?: any
+  readonly entry: any,
+  readonly onUpdate?: any
 }) {
   const [opened, { open, close }] = useDisclosure(false)
   // il bottone loading={loading} loaderProps={{ type: 'dots' }}
@@ -43,27 +36,24 @@ export default function EntryEditButton({
         <UserPenIcon className="size-4" aria-hidden="true" />
       </Button>
       <Modal opened={opened} onClose={close} title={"MODIFICA ISCRIZIONE - " + entry.last_name + " " + entry.first_name} withCloseButton={false} closeOnClickOutside={false} size="xl">
-        <ConsoleEventEntryUpdate entry={entry} onClose={close} onUpdate={onUpdate} />
+        <ConsoleEventEntryEdit entry={entry} onClose={close} onUpdate={onUpdate} />
       </Modal>
     </>
   )
 }
 
-function ConsoleEventEntryUpdate({ entry, onClose, onUpdate }: { entry: any, onClose: any, onUpdate: any }) {
+function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClose: any, onUpdate: any }) {
   const supabase = createClient()
 
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
-      first_name: entry.first_name ?? '',
-      last_name: entry.last_name ?? '',
-      tin: entry.tin ?? '',
-      gender: entry.gender ?? '',
-      birth_date: '',
-      birth_place: '',
-      club: entry.club ?? '',
-      //email: entry.email ?? '',
-      //phone_number: entry.phone_number ?? '',
+      first_name: entry.first_name,
+      last_name: entry.last_name,
+      tin: entry.tin,
+      club: entry.club,
+      email: entry.email,
+      phone_number: entry.phone_number
     },
     validate: {
       first_name: isNotEmpty('Inserisci il nome'),
@@ -84,8 +74,8 @@ function ConsoleEventEntryUpdate({ entry, onClose, onUpdate }: { entry: any, onC
       form.setFieldError('tin', e.message);
       return
     }
-    /*
-    try {
+
+    /*try {
       if (await entryExist(event.id, data.tin)) {
         form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
         return
@@ -93,138 +83,96 @@ function ConsoleEventEntryUpdate({ entry, onClose, onUpdate }: { entry: any, onC
     } catch(e: any) {
       console.log(e.message)
       // mostra errore
+    }*/
+
+    const delta = Object.fromEntries(Object.entries(data).filter(([key, value]: any) => value !== entry[key]))
+
+    if (Object.keys(delta).length) {
+      console.log(`delta (${entry.order_item_id})`, delta)
+      const updatedEntry = await updateEntry(entry.order_item_id, delta)
+      return onUpdate(updatedEntry)
     }
-
-    if (await save(data)) {
-      router.push('/checkout')
-    } else if (!form.isDirty()) {
-      const items = useCartStore.getState().items
-
-      if (items.length) {
-        form.clearErrors()
-        router.push('/checkout')
-      }
-    }
-
-    addItem({
-      product_id: product._id,
-      product_name: product.name,
-      description: capitalize(`${data.first_name} ${data.last_name}`),
-      price: product.price,
-      quantity: 1,
-      payment_methods: product.payment_methods,
-      event_id: event._id,
-      entry: {
-        ...data,
-        first_name: capitalize(data.first_name),
-        last_name: capitalize(data.last_name),
-        tin: data.tin.toUpperCase(),
-        email: data.email.toLowerCase(),
-      },
-    })*/
-
+    return onClose()
   }
 
   return (
-    <>
-      <form className="py-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+    <form className="py-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
 
-          <TextInput
-            withAsterisk
-            label="Nome"
-            className="col-span-2"
-            key={form.key('first_name')}
-            {...form.getInputProps('first_name')}
-          />
+        <TextInput
+          withAsterisk
+          label="Nome"
+          className="col-span-2"
+          key={form.key('first_name')}
+          {...form.getInputProps('first_name')}
+        />
 
-          <TextInput
-            withAsterisk
-            label="Cognome"
-            className="col-span-2"
-            key={form.key('last_name')}
-            {...form.getInputProps('last_name')}
-          />
+        <TextInput
+          withAsterisk
+          label="Cognome"
+          className="col-span-2"
+          key={form.key('last_name')}
+          {...form.getInputProps('last_name')}
+        />
 
+        <TextInput
+          withAsterisk
+          label="Codice fiscale"
+          className="col-span-2"
+          inputWrapperOrder={['label', 'input', 'description', 'error']}
+          key={form.key('tin')}
+          {...form.getInputProps('tin')}
+        />
 
-          <TextInput
-            withAsterisk
-            label="Codice fiscale"
-            className="col-span-2"
-            inputWrapperOrder={['label', 'input', 'description', 'error']}
-            key={form.key('tin')}
-            {...form.getInputProps('tin')}
-          />
+        <Autocomplete
+          label="Società"
+          placeholder="Opzionale"
+          className="col-span-2"
+          limit={5}
+          key={form.key('club')}
+          {...form.getInputProps('club')}
+          data={clubs}
+        />
 
-          <Autocomplete
-            label="Società"
-            placeholder="Opzionale"
-            className="col-span-2"
-            limit={5}
-            key={form.key('club')}
-            {...form.getInputProps('club')}
-            data={clubs}
-          />
+        <TextInput
+          withAsterisk
+          label="Email"
+          placeholder=""
+          className="col-span-2"
+          key={form.key('email')}
+          {...form.getInputProps('email')}
+        />
 
-          <TextInput
-            withAsterisk
-            label="Email"
-            placeholder=""
-            className="col-span-2"
-            key={form.key('email')}
-            {...form.getInputProps('email')}
-          />
+        <TextInput
+          label="Telefono"
+          placeholder="Opzionale"
+          className="col-span-2"
+          key={form.key('phone_number')}
+          {...form.getInputProps('phone_number')}
+        />
 
-          <TextInput
-            label="Telefono"
-            placeholder="Opzionale"
-            className="col-span-2"
-            key={form.key('phone_number')}
-            {...form.getInputProps('phone_number')}
-          />
+      </div>
 
-          <Switch
-            defaultChecked
-            color="green"
-            labelPosition="left"
-            label="Pagato?"
-          />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+        <Button onClick={onClose} variant="subtle" color="gray">Chiudi</Button>
+        <Button onClick={onSubmit} variant="filled">Salva</Button>
+      </div>
 
-        </div>
-      
-        <p className="mt-6">
-          <span className="block text-xs text-gray-600 dark:text-gray-500">
-            Completando l&apos;iscrizione accetti i <a href="/legal/terms" target="_blank" className="link" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="link" rel="noopener noreferrer">informativa sulla privacy</a>
-          </span>
-        </p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
-          <Button onClick={onClose} variant="subtle" color="gray">Chiudi</Button>
-          <Button onClick={onSubmit} variant="filled">Vai al pagamento</Button>
-        </div>
-
-      </form>
-    </>
+    </form>
   )
 }
 
-
-const updateOrderItems = async (id: number) => {
+const updateEntry = async (order_item_id: number, params: any) => {
   const supabase = createClient()
-  const params = {
-    status: 'confirmed',
-    payment_status: 'paid',
-    payment_date: dayjs.utc().format(),
-  }
 
   const { data, error } = await supabase
-    .from('order_items')
+    .from('entries')
     .update(params)
-    .eq('order_id', id);
+    .eq('order_item_id', order_item_id);
 
   if (error) {
     throw new Error(error.message)
   }
 
-  return { ...params, order_id: id }
+  return { ...params, order_item_id }
 }
