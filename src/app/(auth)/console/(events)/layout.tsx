@@ -7,8 +7,6 @@ import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
 import Navbar from '@/components/ui/mantine/navbar';
 import { Event } from '@/types/events'
 import Sidebar from '@/components/ui/mantine/sidebar';
-import { getClaims } from '@/utils/supabase/helpers';
-import { hasRole } from '@/utils/supabase/auth';
 import { Role } from '@/types/user';
 
 const links: { name: string, path: string, hasRole?: Role }[] = [
