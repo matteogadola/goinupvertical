@@ -23,7 +23,7 @@ export default async function ConsoleEventsLayout({
 }>) {
   const events = await getEvents()
 
-  const mdLinks = events.map((event) => ({
+  const sidenavLinks = events.map((event) => ({
     name: event.name,
     path: `/console/events/${event.slug}`
   }))
@@ -34,7 +34,7 @@ export default async function ConsoleEventsLayout({
         <Navbar links={links} />
       </AppShellHeader>
       <AppShellNavbar p="md">
-        <Sidebar links={mdLinks} />
+        <Sidebar links={sidenavLinks} />
       </AppShellNavbar>
       <AppShellMain className="page">
         <div className="flex">
@@ -42,9 +42,9 @@ export default async function ConsoleEventsLayout({
             <div className="mt-4">
               <span className="font-unbounded text-xl">Eventi</span>
               <ul className="separator mt-4">
-                {events?.map((item: any, index) =>
+                {sidenavLinks?.map((item: any, index) =>
                   <li key={index} className="py-2 whitespace-nowrap">
-                    <Link href={'/console/events/' + item.slug}>{item.name}</Link>
+                    <Link href={item.path}>{item.name}</Link>
                   </li>
                 )}
               </ul>
