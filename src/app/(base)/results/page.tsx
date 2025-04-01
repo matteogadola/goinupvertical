@@ -14,7 +14,7 @@ export default async function ResultsPage() {
   const events = await getSerieResults({ year: 2024 });
 
   return (
-    <section className="page">
+    <section>
       <h3><span className="highlighted">2024</span></h3>
       <h1 className="title">Classifiche</h1>
 

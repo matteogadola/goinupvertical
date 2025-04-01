@@ -24,21 +24,19 @@ export default function CheckoutConfirmPage({ searchParams }: any) {
 
   if (order?.items === undefined || !order.items.length) {
     return (
-      <>
-        <section className="page">
+        <section>
           <span className="overtitle">Conferma</span>
           <div className="text mt-2">
             L&apos;iscrizione è stata completata con successo ma ci sono stati problemi nella generazione di questa pagina.<br />
             Riceverai a breve una mail di conferma.<br />
           </div>
         </section>
-      </>
     )
   }
 
   return (
     <>
-      <section className="page">
+      <section>
         <span className="overtitle">Conferma</span>
         <h1 className="title mt-3">Ordine n. {order.id}</h1>
         <div className="text mt-2">

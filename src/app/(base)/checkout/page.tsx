@@ -53,7 +53,6 @@ export default function CheckoutPage() {
   }
 
   return (
-    <>
     <section className="mt-8 W-full lg:w-1/2 m-auto">
       {/*state.isLocationsOpened && <EntryFormLocationsDialog onClose={closeLocations} />*/}
       {!!items.length &&
@@ -202,7 +201,6 @@ export default function CheckoutPage() {
         </div>
       }
     </section>
-    </>
   );
 
 
