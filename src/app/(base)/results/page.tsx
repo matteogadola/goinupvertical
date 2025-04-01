@@ -20,7 +20,7 @@ export default async function ResultsPage() {
 
       <div className="mt-4 space-y-8">
         {events.map((event: any, index: any) =>
-          <div key={index} className="w-full lg:w-1/2 p-6">
+          <div key={index} className="w-full lg:w-1/2 pt-6">
             <h1 className="title">{event.name}</h1>
             {event.type === 'race' &&
               <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
