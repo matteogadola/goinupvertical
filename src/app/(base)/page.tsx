@@ -85,7 +85,6 @@ export default async function Home() {
       }
 
       <Credits className="mt-16" />
-      <Footer />
     </>
   );
 }
