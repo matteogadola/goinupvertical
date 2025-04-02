@@ -45,7 +45,6 @@ export default function EntryEditButton({
 function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClose: any, onUpdate: any }) {
   const supabase = createClient()
 
-  console.log("ConsoleEventEntryEdit", entry)
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {

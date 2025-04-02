@@ -72,6 +72,14 @@ export const getColumns = ({ onConfirm, onUpdate }: ColumnsProps): ColumnDef<Pay
     header: "Club",
   },
   {
+    accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "phone_number",
+    header: "Telefono",
+  },
+  {
     id: "confirm",
     cell: ({ row }) => {
       const entry = row.original
