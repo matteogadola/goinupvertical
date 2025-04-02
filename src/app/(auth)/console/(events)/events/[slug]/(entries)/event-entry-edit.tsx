@@ -88,7 +88,6 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
     const delta = Object.fromEntries(Object.entries(data).filter(([key, value]: any) => value !== entry[key]))
 
     if (Object.keys(delta).length) {
-      console.log(`delta (${entry.order_item_id})`, delta)
       const updatedEntry = await updateEntry(entry.order_item_id, delta)
       return onUpdate(updatedEntry)
     }
@@ -164,6 +163,7 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
 
 const updateEntry = async (order_item_id: number, params: any) => {
   const supabase = createClient()
+  console.log(`updateEntry ${order_item_id}`, params)
 
   const { data, error } = await supabase
     .from('entries')
