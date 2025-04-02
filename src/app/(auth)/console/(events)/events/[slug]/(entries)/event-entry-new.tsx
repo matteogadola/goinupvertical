@@ -19,6 +19,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { isTinValid, verifyTin } from "@/utils/tin";
 import { capitalize } from "@/utils/text";
 
+
 const clubs = getClubs()
 
 export default function EntryNewButton({
