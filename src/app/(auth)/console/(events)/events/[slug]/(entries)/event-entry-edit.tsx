@@ -89,7 +89,7 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
 
     if (Object.keys(delta).length) {
       const updatedEntry = await updateEntry(entry.order_item_id, delta)
-      return onUpdate(updatedEntry)
+      onUpdate(updatedEntry)
     }
     return onClose()
   }
