@@ -21,12 +21,12 @@ import { capitalize } from "@/utils/text";
 
 const clubs = getClubs()
 
-export default function EntryEditButton({
+export default function EntryNewButton({
   entry,
   onUpdate,
 }: {
-  readonly entry: any,
-  readonly onUpdate?: any
+  entry: any,
+  onUpdate?: any
 }) {
   const [opened, { open, close }] = useDisclosure(false)
   // il bottone loading={loading} loaderProps={{ type: 'dots' }}
@@ -36,24 +36,20 @@ export default function EntryEditButton({
         <UserPenIcon className="size-4" aria-hidden="true" />
       </Button>
       <Modal opened={opened} onClose={close} title={"MODIFICA ISCRIZIONE - " + entry.last_name + " " + entry.first_name} withCloseButton={false} closeOnClickOutside={false} size="xl">
-        <ConsoleEventEntryEdit entry={entry} onClose={close} onUpdate={onUpdate} />
+        <ConsoleEventEntryNew entry={entry} onClose={close} onUpdate={onUpdate} />
       </Modal>
     </>
   )
 }
 
-function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClose: any, onUpdate: any }) {
+function ConsoleEventEntryNew({ entry, onClose, onUpdate }: { entry: any, onClose: any, onUpdate: any }) {
   const supabase = createClient()
 
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
-      first_name: entry.first_name,
-      last_name: entry.last_name,
-      tin: entry.tin,
-      club: entry.club,
-      email: entry.email,
-      phone_number: entry.phone_number
+      ...entry,
+      birth_year: entry.birth_date ? dt(entry.birth_date).year() : '',
     },
     validate: {
       first_name: isNotEmpty('Inserisci il nome'),
@@ -74,8 +70,8 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
       form.setFieldError('tin', e.message);
       return
     }
-
-    /*try {
+    /*
+    try {
       if (await entryExist(event.id, data.tin)) {
         form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
         return
@@ -83,15 +79,36 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
     } catch(e: any) {
       console.log(e.message)
       // mostra errore
-    }*/
-
-    const delta = Object.fromEntries(Object.entries(data).filter(([key, value]: any) => value !== entry[key]))
-
-    if (Object.keys(delta).length) {
-      const updatedEntry = await updateEntry(entry.order_item_id, delta)
-      onUpdate(updatedEntry)
     }
-    return onClose()
+
+    if (await save(data)) {
+      router.push('/checkout')
+    } else if (!form.isDirty()) {
+      const items = useCartStore.getState().items
+
+      if (items.length) {
+        form.clearErrors()
+        router.push('/checkout')
+      }
+    }
+
+    addItem({
+      product_id: product._id,
+      product_name: product.name,
+      description: capitalize(`${data.first_name} ${data.last_name}`),
+      price: product.price,
+      quantity: 1,
+      payment_methods: product.payment_methods,
+      event_id: event._id,
+      entry: {
+        ...data,
+        first_name: capitalize(data.first_name),
+        last_name: capitalize(data.last_name),
+        tin: data.tin.toUpperCase(),
+        email: data.email.toLowerCase(),
+      },
+    })*/
+
   }
 
   return (
@@ -114,6 +131,7 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
           {...form.getInputProps('last_name')}
         />
 
+
         <TextInput
           withAsterisk
           label="Codice fiscale"
@@ -121,6 +139,14 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
           inputWrapperOrder={['label', 'input', 'description', 'error']}
           key={form.key('tin')}
           {...form.getInputProps('tin')}
+        />
+
+        <YearPickerInput
+          withAsterisk
+          label="Anno di nascita"
+          className="col-span-2"
+          key={form.key('birth_year')}
+          {...form.getInputProps('birth_year')}
         />
 
         <Autocomplete
@@ -150,29 +176,47 @@ function ConsoleEventEntryEdit({ entry, onClose, onUpdate }: { entry: any, onClo
           {...form.getInputProps('phone_number')}
         />
 
+        <Switch
+          defaultChecked
+          color="green"
+          labelPosition="left"
+          label="Pagato?"
+        />
+
       </div>
+    
+      <p className="mt-6">
+        <span className="block text-xs text-gray-600 dark:text-gray-500">
+          Completando l&apos;iscrizione accetti i <a href="/legal/terms" target="_blank" className="link" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="link" rel="noopener noreferrer">informativa sulla privacy</a>
+        </span>
+      </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
         <Button onClick={onClose} variant="subtle" color="gray">Chiudi</Button>
-        <Button onClick={onSubmit} variant="filled">Salva</Button>
+        <Button onClick={onSubmit} variant="filled">Vai al pagamento</Button>
       </div>
 
     </form>
   )
 }
 
-const updateEntry = async (order_item_id: number, params: any) => {
+
+const updateOrderItems = async (id: number) => {
   const supabase = createClient()
-  console.log(`updateEntry ${order_item_id}`, params)
+  const params = {
+    status: 'confirmed',
+    payment_status: 'paid',
+    payment_date: dayjs.utc().format(),
+  }
 
   const { data, error } = await supabase
-    .from('entries')
+    .from('order_items')
     .update(params)
-    .eq('order_item_id', order_item_id);
+    .eq('order_id', id);
 
   if (error) {
     throw new Error(error.message)
   }
 
-  return { ...params, order_item_id }
+  return { ...params, order_id: id }
 }

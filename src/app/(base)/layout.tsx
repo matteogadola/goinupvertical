@@ -7,6 +7,7 @@ import { AppShell, MantineProvider, AppShellHeader,
 import AppContainer from '@/components/ui/mantine/app';
 import Navbar from '@/components/ui/mantine/navbar';
 import Sidebar from '@/components/ui/mantine/sidebar';
+import Footer from '@/components/footer';
 
 /*export const metadata: Metadata = {
   title: "Goinup Vertical",
@@ -41,6 +42,7 @@ export default function RootLayout({
       </AppShellNavbar>
       <AppShellMain className="page">
         {children}
+        <Footer />
       </AppShellMain>
     </>
   );

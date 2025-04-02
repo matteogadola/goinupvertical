@@ -11,10 +11,13 @@ import { Entry } from '@/types/entries';
 import { Button } from '@mantine/core';
 import { DownloadIcon } from 'lucide-react';
 import { Row } from '@tanstack/react-table';
+import { Event } from '@/types/events'
 
 export default function EventEntries({
+  event,
   entries,
 }: {
+  event: Event,
   entries: any
 }) {
   const [data, setData] = useState(entries)
@@ -28,7 +31,7 @@ export default function EventEntries({
     setData(newEntries)
   }, [])
 
-  const onUpdate = useCallback((updatedEntry: Entry) => {
+  const onUpdate = useCallback((updatedEntry: Partial<Entry>) => {
     const newEntries = data.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
       ? ({ ...entry, ...updatedEntry })
       : entry
@@ -51,7 +54,7 @@ export default function EventEntries({
         }
       </div>
       <div className="mt-8">
-        <DataTable columns={columns} data={data} />
+        <DataTable event={event} columns={columns} data={data} />
       </div>
     </Suspense>
   )

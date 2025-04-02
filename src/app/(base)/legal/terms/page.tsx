@@ -7,7 +7,7 @@ export default function TermsPage() {
   const legalName = 'Goinup'
 
   return (
-    <section className="page">
+    <section>
       <h1 className="title">Termini e Condizioni di acquisto</h1>
       <span>Condizioni Generali di Contratto</span>
 

@@ -29,7 +29,7 @@ export default async function Navbar({
     <div className="page grid grid-cols-3 items-center h-full">
       <NavbarBurger />
 
-      <div className="flex items-center justify-center w-40">
+      <div className="flex items-center justify-center md:justify-start">
         <Link href="/" className="hover:scale-105">
           <img src="/images/logo/goinup.webp" className="h-11 object-contain" alt="Logo" />
         </Link>
@@ -49,7 +49,7 @@ export default async function Navbar({
         </ul>
       </div>
 
-      <div className="flex items-center justify-end ">
+      <div className="flex items-center justify-end">
         <NavbarCartButton />
         <NavbarUserButton user={user} />
       </div>
