@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { dt } from '@/utils/date'
 import { Event } from '@/types/events'
 import { LinkIcon, PhotoIcon, VideoIcon } from '@/components/icons'
-import { getEvents } from '@/utils/sanity/queries'
+import { getPhotos } from '@/utils/sanity/queries'
 
 export const revalidate = 3600
 
@@ -12,9 +12,36 @@ export const metadata = {
 }
 
 export default async function MediaPage() {
-  const events = await getEvents({ year: dt().year() })
+  const events = await getPhotos({ year: 2024 })
   
-  return <></>
+  return (
+    <>
+      <h3><span className="highlighted">2024</span></h3>
+      <h1 className="title">Foto</h1>
+
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
+        {events.map((event: any, index: number) =>
+          <div key={index} className="">
+            <h1 className="title">{event.name}</h1>
+            {event.type === 'race' &&
+              <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
+            }
+            {/*event.type === 'serie' &&
+              <span className="block text-xs text-gray-600">{dt(event.date).format('YYYY')}</span>
+            */}
+              <ul className="pt-4 space-y-4">
+                {event.links?.map((link: any, index: any) =>
+                  <li key={index} className="flex space-x-2">
+                    <a href={link.url} target='_blank' className="text-lg hover:opacity-70">{link.title}</a>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+        )}
+      </div>
+    </>
+  )
   /*return (
     <section className="page">
       <h1 className="overtitle">Allegati</h1>
