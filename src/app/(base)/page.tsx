@@ -5,11 +5,11 @@ import Footer from '@/components/footer';
 import BannerCarnet from '@/components/home/banner-carnet';
 import { dt } from '@/utils/date';
 import { urlFor } from '@/utils/sanity';
-import { getSeries, getUpcomingEvents } from '@/utils/sanity/queries'
+import { getSerie, getUpcomingEvents } from '@/utils/sanity/queries'
 
 export default async function Home() {
   const upcomingEvents = await getUpcomingEvents();
-  const serie = (await getSeries({ year: 2025 }))?.[0];
+  const serie = await getSerie({ year: 2025 });
 
   return (
     <>
@@ -18,7 +18,7 @@ export default async function Home() {
         <div className="flex lg:hidden items-start pb-8">
           <div className="shadow-lg">
             <FadeUpAnimation>
-              <img src="/images/homepage/quattro.webp" alt="Header image" className="grayscale-60" />
+              <img src="/images/homepage/quattro.webp" alt="header" className="grayscale-60" />
             </FadeUpAnimation>
           </div>
         </div>
@@ -34,12 +34,12 @@ export default async function Home() {
         <div className="hidden lg:flex lg:flex-col items-center mt-16">
           <div className="relative -left-10 shadow-lg hover:scale-105">
             <FadeUpAnimation>
-              <img src="/images/homepage/lino.jpg" alt="Header image" className="grayscale-50" width={400} />
+              <img src="/images/homepage/lino.jpg" alt="header" className="grayscale-50" width={400} />
             </FadeUpAnimation>
           </div>
           <div className="relative z-10 left-10 -top-7 shadow-lg hover:scale-105">
             <FadeUpAnimation>
-              <img src="/images/homepage/quattro.webp" alt="Header image" className="grayscale-50" width={500} />
+              <img src="/images/homepage/quattro.webp" alt="header" className="grayscale-50" width={500} />
             </FadeUpAnimation>
           </div>
         </div>

@@ -3,10 +3,13 @@ import clubs from '../data/names.json'
 import municipalities from '../data/municipalities.json'
 import { Event } from '@/types/events'
 
-export const getSeries = async ({ year }: { year: number }) => {
+export const getSerie = async ({ year }: { year: number }) => {
   const fromDate = new Date(year, 0, 1).toISOString().split('T')[0]
   const toDate = new Date(year + 1, 0, 1).toISOString().split('T')[0]
-  return client.fetch(`*[_type == "event" && type == "serie" && date >= $fromDate && date < $toDate]`, { fromDate, toDate })
+  return client.fetch(`*[_type == "event" && type == "serie" && date >= $fromDate && date < $toDate]{
+  ...,
+  products[]->
+  }[0]`, { fromDate, toDate })
 }
 
 export const getEvents = async ({ year }: { year?: number } = {}) => {
