@@ -1,14 +1,6 @@
 'use client'
 
-import FadeUpAnimation from '@/components/animations/fade-up';
-import Credits from '@/components/credits'
-import UpcomingEvents from '@/components/events/upcoming'
-import BannerCarnet from '@/components/home/banner-carnet';
-import { UnstyledButton } from '@mantine/core';
 import { useCartStore } from '@/store/cart';
-import { dt } from '@/utils/date';
-import { urlFor } from '@/utils/sanity';
-import { getSeries, getUpcomingEvents } from '@/utils/sanity/queries'
 import clsx from 'clsx';
 
 export default function CartItems({ className }: any) {
@@ -23,7 +15,7 @@ export default function CartItems({ className }: any) {
 
               <div className="">
                 <div className="flow-root">
-                  <ul role="list" className=" divide-y divide-gray-100">
+                  <ul className=" divide-y divide-gray-100">
                     {items.map((item, index) =>
                       <li key={index} className="flex py-6">
                         <div className="flex flex-1 flex-col">
