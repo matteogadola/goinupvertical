@@ -18,7 +18,6 @@ export default function EventChartOrder({
       count: entries?.length ?? 0
     }))
     .sort((a: any, b: any) => dt(a.date).unix() - dt(b.date).unix())
-    console.log(orderData)
 
   return (
     <div className="col-span-1 md:col-span-2">
