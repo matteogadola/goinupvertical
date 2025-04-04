@@ -1,15 +1,6 @@
 'use client'
 
-import FadeUpAnimation from '@/components/animations/fade-up';
-import Credits from '@/components/credits'
-import UpcomingEvents from '@/components/events/upcoming'
-import BannerCarnet from '@/components/home/banner-carnet';
 import { useCartStore } from '@/store/cart';
-import { dt } from '@/utils/date';
-import { urlFor } from '@/utils/sanity';
-import { getSeries, getUpcomingEvents } from '@/utils/sanity/queries'
-import clsx from 'clsx';
-import { useMemo } from 'react';
 
 export default function CartItems({ className }: any) {
   const { items, removeItem } = useCartStore();
