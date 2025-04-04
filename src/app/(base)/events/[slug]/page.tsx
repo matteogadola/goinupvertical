@@ -75,15 +75,9 @@ export default async function EventPage({
             </Link>
           </div>
 
-          {/* se l'evento è futuro mostra items da comprare, se passato mostra link a classifica e foto */}
-          <div className="mt-8">
-            {(!!event.closing_date && dt().isBefore(dt(event.closing_date))) || event.date === null || dt(event.date).diff(dt(), 'hours') >= 46
-              ? <>{/*<ItemsList list={event.items} event={event} />*/}</>
-              : dt(event.date).isAfter(dt(), 'hour') && <p>Iscrizione disponibile alla partenza</p>
-            }
+          <div className="pt-8">
+            <EventProducts event={event} />
           </div>
-          
-          <EventProducts event={event} />
         </div>
 
         <div className="flex lg:justify-center items-start">

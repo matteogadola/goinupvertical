@@ -20,6 +20,7 @@ export interface Event {
   items?: Item[];
   closing_date?: string;
   links: any[]
+  products: Product[];
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';

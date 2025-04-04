@@ -1,25 +1,19 @@
+import { Event } from '@/types/events'
 import { dt } from '@/utils/date'
 import { urlFor } from '@/utils/sanity'
 import clsx from 'clsx'
 import Link from 'next/link'
 
 export default function BannerCarnet({ serie, className }: { serie: any, className?: string }) {
-  if (serie.opening_date && dt(serie.opening_date).isAfter()) {
-    //return <></>
-  }
-  if (serie.closing_date && dt(serie.closing_date).isBefore()) {
-    //return <></>
-  }
-
-  if (serie === 'close') {
-    return
-  }
-
-  if (!serie.products?.length) {
-    return
-  }
-
   const product = serie.products[0]
+
+  if (!product || product.status !== 'open') {
+    return <></>
+  }
+
+  if (product.end_sale_date && dt(product.end_sale_date).isBefore()) {
+    return <></>
+  }
 
   return (
     <section className={clsx("", className)}>
@@ -35,7 +29,10 @@ export default function BannerCarnet({ serie, className }: { serie: any, classNa
               <h3 className="font-unbounded text-2xl font-semibold uppercase">Carnet 10 gare</h3>
               <p className="mt-4 text-gray-600">Acquista il carnet per tutte e 10 le gare del circuito GOinUP più la gara amica Mirtillo Vertical.</p>
               <div className="flex items-baseline mt-3">
-                <span className="text-button hover:opacity-70">Maggiori informazioni</span>
+                {product.end_sale_date && dt().add(52, 'hours').isAfter(product.end_sale_date)
+                  ? <span className="text-button hover:opacity-70 underline">Affrettati, l'offerta terminerà a breve</span>
+                  : <span className="text-button hover:opacity-70">Maggiori informazioni</span>
+                }
                 <span className="text-xs ml-1">&#x279c;</span>
               </div>
             </div>
