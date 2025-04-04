@@ -7,6 +7,7 @@ import { DonutChart } from '@mantine/charts';
 import EventChartGender from './event-chart-gender';
 import EventChartPayMethod from './event-chart-pay-method';
 import EventChartClub from './event-chart-clubs';
+import EventChartOrder from './event-chart-order';
 
 export default function EventCharts({
   entries,
@@ -21,6 +22,7 @@ export default function EventCharts({
         <EventChartGender entries={entries} />
         <EventChartPayMethod entries={entries} />
         <EventChartClub entries={entries} />
+        <EventChartOrder entries={entries} />
       </div>
     </Suspense>
   )
