@@ -14,7 +14,7 @@ export default function EventChartGender({
 
   const genderData = [
     { name: 'Maschi', value: entriesByGender['M']?.length ?? 0, color: 'indigo' },
-    { name: 'Donne', value: entriesByGender['F']?.length ?? 0, color: 'grape' },
+    { name: 'Femmine', value: entriesByGender['F']?.length ?? 0, color: 'grape' },
   ];
 
 
