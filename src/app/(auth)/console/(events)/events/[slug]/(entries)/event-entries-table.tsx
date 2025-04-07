@@ -39,11 +39,13 @@ import { useDisclosure } from "@mantine/hooks"
 import { mkConfig, generateCsv, download } from 'export-to-csv'
 //import ConsoleEventEntryCreate from "./event-entry-update"
 import { Event } from '@/types/events'
+import EntryNewButton from "./event-entry-new"
 
 interface DataTableProps<TData, TValue> {
   event: Event
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  onCreate: (entry: any) => void,
 }
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
@@ -60,6 +62,7 @@ export function DataTable<TData, TValue>({
   event,
   columns,
   data,
+  onCreate,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -132,10 +135,10 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex justify-end space-x-2">
           <div className="hidden">
-            <Button onClick={open}><PlusIcon />Aggiungi iscrizione</Button>
-            <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
-              {/*<ConsoleEventEntryCreate onClose={close} />*/}
-            </Modal>
+            <EntryNewButton event={event} onCreate={onCreate}>Aggiungi iscrizione</EntryNewButton>
+            {/*<Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
+              <ConsoleEventEntryCreate onClose={close} />
+            </Modal>*/}
           </div>
           <Button variant="outline" size="sm" onClick={() => exportCsv(table.getRowModel())}>
             <DownloadIcon className="size-4" aria-hidden="true" />

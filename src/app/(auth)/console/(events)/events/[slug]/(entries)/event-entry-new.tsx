@@ -14,49 +14,52 @@ import dayjs from "dayjs";
 import { YearPickerInput } from '@mantine/dates';
 
 import { Autocomplete, Button, Modal, Switch, TextInput } from "@mantine/core";
-import { DownloadIcon, UserPenIcon } from "lucide-react";
+import { DownloadIcon, PlusIcon, UserPenIcon } from "lucide-react";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { isTinValid, verifyTin } from "@/utils/tin";
 import { capitalize } from "@/utils/text";
+import { Event } from "@/types/events";
 
 
 const clubs = getClubs()
 
 export default function EntryNewButton({
-  entry,
-  onUpdate,
+  event,
+  onCreate,
+  children,
 }: {
-  entry: any,
-  onUpdate?: any
+  event: Event,
+  onCreate?: any,
+  children: any,
 }) {
   const [opened, { open, close }] = useDisclosure(false)
   // il bottone loading={loading} loaderProps={{ type: 'dots' }}
   return (
     <>
       <Button variant="outline" size="sm" onClick={open}>
-        <UserPenIcon className="size-4" aria-hidden="true" />
+        <PlusIcon />{children}
       </Button>
-      <Modal opened={opened} onClose={close} title={"MODIFICA ISCRIZIONE - " + entry.last_name + " " + entry.first_name} withCloseButton={false} closeOnClickOutside={false} size="xl">
-        <ConsoleEventEntryNew entry={entry} onClose={close} onUpdate={onUpdate} />
+      <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} closeOnClickOutside={false} size="xl">
+        <ConsoleEventEntryNew event={event} onClose={close} onCreate={onCreate} />
       </Modal>
     </>
   )
 }
 
-function ConsoleEventEntryNew({ entry, onClose, onUpdate }: { entry: any, onClose: any, onUpdate: any }) {
+function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Event, onClose: any, onCreate: any }) {
   const supabase = createClient()
 
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
-      ...entry,
-      birth_year: entry.birth_date ? dt(entry.birth_date).year() : '',
+      //...entry,
+      //birth_year: entry.birth_date ? dt(entry.birth_date).year() : '',
     },
     validate: {
-      first_name: isNotEmpty('Inserisci il nome'),
-      last_name: isNotEmpty('Inserisci il cognome'),
+      //first_name: isNotEmpty('Inserisci il nome'),
+      //last_name: isNotEmpty('Inserisci il cognome'),
       //email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Indirizzo mail non valido'),
-      tin: (value) => isTinValid(value)
+      //tin: (value) => isTinValid(value)
     },
   });
 
@@ -65,12 +68,12 @@ function ConsoleEventEntryNew({ entry, onClose, onUpdate }: { entry: any, onClos
 
     const { data: { user }, error } = await supabase.auth.getUser()
 
-    try {
+    /*try {
       verifyTin(data.tin, data.first_name, data.last_name)
     } catch(e: any) {
       form.setFieldError('tin', e.message);
       return
-    }
+    }*/
     /*
     try {
       if (await entryExist(event.id, data.tin)) {
