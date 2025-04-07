@@ -60,7 +60,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
     validate: {
       first_name: isNotEmpty('Inserisci il nome'),
       last_name: isNotEmpty('Inserisci il cognome'),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Indirizzo mail non valido'),
+      email: (value) => (/^[\w-+.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) ? null : 'Indirizzo mail non valido'),
       tin: (value) => isTinValid(value)
     },
     /*transformValues: (values) => ({

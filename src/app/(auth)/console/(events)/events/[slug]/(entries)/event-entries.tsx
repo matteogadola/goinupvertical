@@ -31,6 +31,14 @@ export default function EventEntries({
     setData(newEntries)
   }, [])
 
+  const onCreate = useCallback((updatedEntry: Partial<Entry>) => {
+    const newEntries = data.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
+      ? ({ ...entry, ...updatedEntry })
+      : entry
+    )
+    setData(newEntries)
+  }, [])
+
   const onUpdate = useCallback((updatedEntry: Partial<Entry>) => {
     const newEntries = data.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
       ? ({ ...entry, ...updatedEntry })
@@ -39,7 +47,7 @@ export default function EventEntries({
     setData(newEntries)
   }, [])
 
-  const columns = useMemo(() => getColumns({ onConfirm, onUpdate }), [])
+  const columns = useMemo(() => getColumns({ onUpdate, onConfirm }), [])
   const paidItems = useMemo(() => data.filter((i: any) => i.payment_status === 'paid').length ?? 0, [data])
 
   return (
@@ -54,7 +62,7 @@ export default function EventEntries({
         }
       </div>
       <div className="mt-8">
-        <DataTable event={event} columns={columns} data={data} />
+        <DataTable event={event} columns={columns} data={data} onCreate={onCreate} />
       </div>
     </Suspense>
   )

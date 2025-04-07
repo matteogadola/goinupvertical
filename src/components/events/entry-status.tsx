@@ -28,7 +28,11 @@ export default function EventEntryStatus({ event }: { event: any }) {
         return <span className="">Iscrizioni chiuse</span>
       }
 
-      if (!!product.end_sale_date && dt(product.end_sale_date).isBefore()) {
+      const endSaleDate = product.end_sale_date
+        ? dt(product.end_sale_date)
+        : dt(event.date).subtract(46, 'hours')
+      
+      if (dt(endSaleDate).isBefore()) {
         return (
           <div className="flex flex-col space-x-2">
             <span className="">Iscrizioni chiuse</span>
@@ -47,10 +51,6 @@ export default function EventEntryStatus({ event }: { event: any }) {
           </div>
         )
       }
-
-      const endSaleDate = product.end_sale_date
-        ? dt(product.end_sale_date)
-        : dt(event.date).subtract(46, 'hours')
 
       return (
         <div className="flex flex-col space-x-2">

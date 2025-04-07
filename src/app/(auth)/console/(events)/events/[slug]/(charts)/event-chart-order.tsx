@@ -1,9 +1,8 @@
 'use client';
 
-import { Suspense, useState, use, useEffect, cache, useMemo } from 'react'
-import { dt, getDate } from '@/utils/date'
-import Spinner from '@/components/ui/spinner'
-import { BarChart, DonutChart } from '@mantine/charts';
+import { useMemo } from 'react'
+import { dt } from '@/utils/date'
+import { BarChart } from '@mantine/charts';
 
 export default function EventChartOrder({
   entries,
