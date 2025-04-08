@@ -42,10 +42,11 @@ import { Event } from '@/types/events'
 import EntryNewButton from "./event-entry-new"
 
 interface DataTableProps<TData, TValue> {
-  event: Event
+  event: Partial<Event>
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  onCreate: (entry: any) => void,
+  //onCreate: (entry: any) => void,
+  //meta: any
 }
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
@@ -62,7 +63,7 @@ export function DataTable<TData, TValue>({
   event,
   columns,
   data,
-  onCreate,
+  //onCreate,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -79,6 +80,20 @@ export function DataTable<TData, TValue>({
       columnFilters,
       columnVisibility: { email: false, phone_number: false }
     },
+    meta: {
+      addRow: (entry: any) => {
+        console.log('lolle', entry)
+        /*const newRow: Student = {
+          studentId: Math.floor(Math.random() * 10000),
+          name: "",
+          dateOfBirth: "",
+          major: "",
+        };
+        const setFunc = (old: Student[]) => [...old, newRow];
+        setData(setFunc);
+        setOriginalData(setFunc);*/
+      },
+    }
   })
 
 
@@ -104,6 +119,8 @@ export function DataTable<TData, TValue>({
     const csv = generateCsv({ ...csvConfig, filename: `iscrizioni-${event.slug}` })(rowData)
     download({ ...csvConfig, filename: `iscrizioni-${event.slug}` })(csv)
   }
+
+  const meta = table.options.meta
 
   return (
     <div>
@@ -134,8 +151,8 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>*/}
         </div>
         <div className="flex justify-end space-x-2">
-          <div className="hidden">
-            <EntryNewButton event={event} onCreate={onCreate}>Aggiungi iscrizione</EntryNewButton>
+          <div className="">
+            <EntryNewButton event={event} onCreate={meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
             {/*<Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
               <ConsoleEventEntryCreate onClose={close} />
             </Modal>*/}

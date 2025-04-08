@@ -17,7 +17,7 @@ export default function EventEntries({
   event,
   entries,
 }: {
-  event: Event,
+  event: Partial<Event>,
   entries: any
 }) {
   const [data, setData] = useState(entries)
@@ -62,7 +62,7 @@ export default function EventEntries({
         }
       </div>
       <div className="mt-8">
-        <DataTable event={event} columns={columns} data={data} onCreate={onCreate} />
+        <DataTable event={event} columns={columns} data={data} />
       </div>
     </Suspense>
   )

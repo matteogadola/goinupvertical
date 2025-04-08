@@ -28,11 +28,13 @@ export default function EntryNewButton({
   onCreate,
   children,
 }: {
-  event: Event,
+  event: Partial<Event>,
   onCreate?: any,
   children: any,
 }) {
   const [opened, { open, close }] = useDisclosure(false)
+
+  console.log(event)
   // il bottone loading={loading} loaderProps={{ type: 'dots' }}
   return (
     <>
@@ -46,7 +48,7 @@ export default function EntryNewButton({
   )
 }
 
-function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Event, onClose: any, onCreate: any }) {
+function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Event>, onClose: any, onCreate: any }) {
   const supabase = createClient()
 
   const form = useForm({
@@ -68,6 +70,7 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Event, onCl
 
     const { data: { user }, error } = await supabase.auth.getUser()
 
+    onCreate(data)
     /*try {
       verifyTin(data.tin, data.first_name, data.last_name)
     } catch(e: any) {
@@ -185,19 +188,15 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Event, onCl
           color="green"
           labelPosition="left"
           label="Pagato?"
+          key={form.key('payment_status')}
+          {...form.getInputProps('payment_status')}
         />
 
       </div>
-    
-      <p className="mt-6">
-        <span className="block text-xs text-gray-600 dark:text-gray-500">
-          Completando l&apos;iscrizione accetti i <a href="/legal/terms" target="_blank" className="link" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="link" rel="noopener noreferrer">informativa sulla privacy</a>
-        </span>
-      </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
         <Button onClick={onClose} variant="subtle" color="gray">Chiudi</Button>
-        <Button onClick={onSubmit} variant="filled">Vai al pagamento</Button>
+        <Button onClick={onSubmit} variant="filled">Salva</Button>
       </div>
 
     </form>
@@ -205,7 +204,7 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Event, onCl
 }
 
 
-const updateOrderItems = async (id: number) => {
+const createEntry = async (entry: any) => {
   const supabase = createClient()
   const params = {
     status: 'confirmed',

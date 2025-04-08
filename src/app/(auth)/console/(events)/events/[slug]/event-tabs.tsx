@@ -11,7 +11,7 @@ export default function ConsoleEventTabs({
   entries,
   claims,
 }: {
-  event: Event,
+  event: Partial<Event>,
   entries: any[],
   claims?: Claims | null,
 }) {
