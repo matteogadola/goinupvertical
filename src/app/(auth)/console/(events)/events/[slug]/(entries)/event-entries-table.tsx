@@ -124,6 +124,7 @@ export function DataTable<TData, TValue>({
       phone_number: String(row.original.phone_number),
       first_name: row.original.first_name,
       last_name: row.original.last_name,
+      cf: row.original.tin,
       birth_year: row.original.birth_year,
       gender: row.original.gender,
       club: row.original.club ?? '',
