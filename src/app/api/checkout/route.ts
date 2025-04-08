@@ -1,11 +1,6 @@
-import { encodeBase64 } from '@/utils/encoding';
-import * as Sentry from '@sentry/node'
-import { invoke } from '@/utils/supabase/functions';
-import { Order } from '@/types/orders';
-
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-})
+import { invoke } from '@/utils/supabase/functions'
+import { encodeBase64 } from '@/utils/encoding'
+import { Order } from '@/types/orders'
 
 export async function POST(req: Request) {
   const payload = await req.json()
@@ -13,10 +8,8 @@ export async function POST(req: Request) {
 
   try {
     console.debug('Checkout payload', payload)
-
     //const order = await invoke('order-create', payload)
-    const order = await invoke<Order>('orders', payload)
-
+    const order = await invoke<Order>('order', payload)
     console.debug('Checkout order', order)
 
     const q = encodeBase64(JSON.stringify(order));
@@ -39,7 +32,6 @@ export async function POST(req: Request) {
       throw new Error('Metodo di pagamento non supportato');
     }
   } catch (e: any) {
-    Sentry.captureException(e)
     console.error(`Checkout error: ${e.message}`)
     return new Response(
       JSON.stringify({ error: e.message }), {

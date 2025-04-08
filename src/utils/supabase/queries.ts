@@ -23,6 +23,30 @@ export const getUpcomingEvents = async () => {
   //return client.fetch(`*[_type == "event" && status != "internal" && date >= "${today}"] | order(date) [0...2]`)
 }
 
+export const getEvent = async (query: Partial<{ id: string, slug: string }>) => {
+  const supabase = await createClient()
+
+  const { data } = await supabase
+    .from('events')
+    .select()
+    .match(query)
+    .single()
+
+  return data
+}
+
+export const getProduct = async (query: Partial<{ id: string, slug: string }>) => {
+  const supabase = await createClient()
+
+  const { data } = await supabase
+    .from('products')
+    .select()
+    .match(query)
+    .single()
+
+  return data
+}
+
 export const getClubs = (): string[] => {
   return clubs
 }
