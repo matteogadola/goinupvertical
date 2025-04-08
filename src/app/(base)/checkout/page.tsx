@@ -5,12 +5,13 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { Button, Group, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import ErrorText from '@/components/ui/error-text';
 
 export default function CheckoutPage() {
   const { items, removeItem, paymentMethod, setPaymentMethod } = useCartStore();
   const state: any = {}
   const [error, setError] = useState<string | null>(null)
-  const [loading, { toggle }] = useDisclosure();
+  const [loading, setLoading] = useState<boolean>(false)
 
   const totalAmount = items.reduce((a, b) => a + b.price, 0)
   const paymentMethods = items.reduce((a, b) => a.filter(v => b.payment_methods.includes(v)), ['stripe', 'cash', 'sepa'])
@@ -30,7 +31,7 @@ export default function CheckoutPage() {
 
   const checkout = async () => {
     //setState({ ...state, isLoading: true });
-    toggle()
+    setLoading(true)
 
     try {
       setError(null)
@@ -53,7 +54,7 @@ export default function CheckoutPage() {
       setError(e.message)
     } finally {
       //setState({ ...state, isLoading: false })
-      toggle()
+      setLoading(false)
     }
   }
 
@@ -160,16 +161,7 @@ export default function CheckoutPage() {
 }
               </div>
 
-
-
-              {/*error && <div className="mt-4">
-                <div className="relative px-2 py-1 leading-normal text-red-700" role="alert">
-                  <span className="absolute inset-y-0 left-0 flex items-center ml-4">
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" fillRule="evenodd"></path></svg>
-                  </span>
-                  <p className="ml-8">{error}</p>
-                </div>
-              </div>*/}
+              {!!error && <ErrorText className="mt-4">{error}</ErrorText>}
 
               <div className="mt-4">
               <Button

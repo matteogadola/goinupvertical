@@ -8,6 +8,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   Row,
+  RowData,
   RowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -42,13 +43,26 @@ import { Event } from '@/types/events'
 import EntryNewButton from "./event-entry-new"
 
 interface DataTableProps<TData, TValue> {
-  event: Event
+  event: Partial<Event>
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  onCreate: (entry: any) => void,
+  //onCreate: (entry: any) => void,
+  //meta: any
 }
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData extends RowData> {
+    addRow: any
+  }
+}
+
+/*declare module '@tanstack/react-table' {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    foo: string
+  }
+}*/
+// column.columnDef.meta
 
 
 const csvConfig = mkConfig({
@@ -62,7 +76,7 @@ export function DataTable<TData, TValue>({
   event,
   columns,
   data,
-  onCreate,
+  //onCreate,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -77,8 +91,22 @@ export function DataTable<TData, TValue>({
     state: {
       //sorting,
       columnFilters,
-      columnVisibility: { email: false, phone_number: false }
+      columnVisibility: { email: false, phone_number: false, tin: false }
     },
+    meta: {
+      addRow: (entry: any) => {
+        console.log('lolle', entry)
+        /*const newRow: Student = {
+          studentId: Math.floor(Math.random() * 10000),
+          name: "",
+          dateOfBirth: "",
+          major: "",
+        };
+        const setFunc = (old: Student[]) => [...old, newRow];
+        setData(setFunc);
+        setOriginalData(setFunc);*/
+      },
+    }
   })
 
 
@@ -135,7 +163,7 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex justify-end space-x-2">
           <div className="hidden">
-            <EntryNewButton event={event} onCreate={onCreate}>Aggiungi iscrizione</EntryNewButton>
+            <EntryNewButton event={event} onCreate={table.options.meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
             {/*<Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
               <ConsoleEventEntryCreate onClose={close} />
             </Modal>*/}
