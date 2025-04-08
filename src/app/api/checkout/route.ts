@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         status: 200,
       })
     } else if (order.payment_method === 'stripe') {
-      const session = await invoke('stripe-checkout', { order, origin, q })
+      const session = await invoke('stripe-checkout', { order, origin })
 
       return new Response(
         JSON.stringify({ ...order, checkoutSessionId: session.id, checkoutSessionUrl: session.url }), {

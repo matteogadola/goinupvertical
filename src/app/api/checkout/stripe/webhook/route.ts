@@ -1,17 +1,17 @@
-import Stripe from 'stripe';
+import Stripe from 'stripe'
 import { Order, OrderItem } from '@/types/orders'
-import { createClient } from '@/utils/supabase/admin';
+import { createClient } from '@/utils/supabase/admin'
 
-import { dt } from '@/utils/date';
-import { sendCheckoutMail } from '@/utils/mailer';
-import { createStripe } from '@/utils/stripe';
+import { dt } from '@/utils/date'
+import { sendCheckoutMail } from '@/utils/mailer'
+import { createStripe } from '@/utils/stripe'
 
 const stripe = createStripe()
 
 export async function POST(req: Request) {
-  const signature = req.headers.get('stripe-signature');
-  const payload = await req.text();
-  let receivedEvent;
+  const signature = req.headers.get('stripe-signature')
+  const payload = await req.text()
+  let receivedEvent
 
   try {
     receivedEvent = await stripe.webhooks.constructEventAsync(
