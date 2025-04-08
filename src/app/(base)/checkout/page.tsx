@@ -1,18 +1,18 @@
 'use client'
+
 import { useCartStore } from '@/store/cart';
-import { createCheckout } from '@/utils/checkout';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { Button, Group, Switch } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import ErrorText from '@/components/ui/error-text';
+import { useRouter } from 'next/navigation'
 
 export default function CheckoutPage() {
   const { items, removeItem, paymentMethod, setPaymentMethod } = useCartStore();
-  const state: any = {}
+
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
-
+  const router = useRouter()
   const totalAmount = items.reduce((a, b) => a + b.price, 0)
   const paymentMethods = items.reduce((a, b) => a.filter(v => b.payment_methods.includes(v)), ['stripe', 'cash', 'sepa'])
 
@@ -24,43 +24,39 @@ export default function CheckoutPage() {
     return Math.ceil((stripeTax + stripeTaxIva) / 50) * 50;
   };
 
-  //import { createCheckout } from '@/lib/checkout'
-  //const createCheckout = (lolle: any) => {}
-  console.log(items)
   const openLocations = () => {}
 
   const checkout = async () => {
-    //setState({ ...state, isLoading: true });
     setLoading(true)
+    setError(null)
 
     try {
-      setError(null)
-
-      const order = await createCheckout({
-        customer_email: items[0].entry?.email,
-        customer_first_name: items[0].entry?.first_name,
-        customer_last_name: items[0].entry?.last_name,
-        payment_method: paymentMethod,
-        items: items
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        body: JSON.stringify({
+          customer_email: items[0].entry?.email,
+          customer_first_name: items[0].entry?.first_name,
+          customer_last_name: items[0].entry?.last_name,
+          payment_method: paymentMethod,
+          items: items
+        }),
       })
-      //setError(null)
+      const data = await response.json()
 
-      /*if (order) {
-        clearCartItems()
-        replace(`/confirm?q=${base64.encode(order)}`)
-      }*/
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
+      router.replace(data.checkoutSessionUrl)
     } catch (e: any) {
-      console.log(JSON.stringify(e.message))
       setError(e.message)
     } finally {
-      //setState({ ...state, isLoading: false })
       setLoading(false)
     }
   }
 
   return (
     <section className="mt-8 W-full lg:w-1/2 m-auto">
-      {/*state.isLocationsOpened && <EntryFormLocationsDialog onClose={closeLocations} />*/}
       {!!items.length &&
         <div className="">
           <div className="flex h-full flex-col">
@@ -85,7 +81,7 @@ export default function CheckoutPage() {
                             <div className="flex justify-between text-base text-gray-900">
                               <p className="mt-1 text-sm text-gray-500">{item.description}</p>
                               <div className="flex">
-                                <button type="button" disabled={state.isLoading} className="text-xs text-button hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40" onClick={() => removeItem(index)}>Rimuovi</button>
+                                <button type="button" disabled={loading} className="text-xs text-button hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40" onClick={() => removeItem(index)}>Rimuovi</button>
                               </div>
                             </div>
                           </div>
@@ -125,7 +121,7 @@ export default function CheckoutPage() {
 
 {paymentMethods.includes('stripe') &&
   <div className="flex items-center pl-4 border border-gray-200 rounded">
-                  <input type="radio" value="stripe" id="payment-method-stripe" disabled={state.isLoading} checked={paymentMethod === 'stripe'} onChange={e => setPaymentMethod('stripe')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+                  <input type="radio" value="stripe" id="payment-method-stripe" disabled={loading} checked={paymentMethod === 'stripe'} onChange={e => setPaymentMethod('stripe')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
                   <label htmlFor="payment-method-stripe" className={clsx("w-full ml-2 text-sm font-medium text-gray-900", { "py-2": paymentMethod === 'stripe', "py-4": paymentMethod !== 'stripe' })}>
                     <span>Online</span>
                     {paymentMethod === 'stripe' && <span className="block font-normal text-xs">Conferma immediata</span>}
@@ -149,7 +145,7 @@ export default function CheckoutPage() {
 
 {paymentMethods.includes('cash') &&
   <div className="flex items-center pl-4 border border-gray-200 rounded">
-  <input type="radio" value="cash" id="payment-method-cash" disabled={state.isLoading} checked={paymentMethod === 'cash'} onChange={e => setPaymentMethod('cash')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+  <input type="radio" value="cash" id="payment-method-cash" disabled={loading} checked={paymentMethod === 'cash'} onChange={e => setPaymentMethod('cash')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
   <label htmlFor="payment-method-cash" className={clsx("w-full ml-2 text-sm font-medium text-gray-900", { "py-2": paymentMethod === 'cash', "py-4": paymentMethod !== 'cash' })}>
     <span>Contanti</span>
     {paymentMethod === 'cash' &&
