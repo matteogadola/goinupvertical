@@ -4,10 +4,9 @@ import { createClient } from '@/utils/supabase/admin';
 
 import { dt } from '@/utils/date';
 import { sendCheckoutMail } from '@/utils/mailer';
+import { createStripe } from '@/utils/stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-});
+const stripe = createStripe()
 
 export async function POST(req: Request) {
   const signature = req.headers.get('stripe-signature');

@@ -1,8 +1,8 @@
 import { GetServerSideProps, Metadata, NextPage } from 'next'
 import DaEliminare from './da-eliminare';
-import Stripe from 'stripe';
 import { decodeBase64 } from '@/utils/encoding';
 import { notFound } from 'next/navigation';
+import { createStripe } from '@/utils/stripe';
 
 interface SearchParams {
   session_id: string;
@@ -13,9 +13,7 @@ interface Props {
   searchParams: Promise<Partial<SearchParams>>
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-});
+const stripe = createStripe()
 
 export default async function CheckoutConfirmPage({ searchParams }: Props) {
   const { session_id, q } = await searchParams
