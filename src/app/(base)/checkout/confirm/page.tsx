@@ -1,24 +1,23 @@
 import { GetServerSideProps, Metadata, NextPage } from 'next'
-//import { useCartStore } from '@store/cart';
 import DaEliminare from './da-eliminare';
 import Stripe from 'stripe';
 import { decodeBase64 } from '@/utils/encoding';
 import { notFound } from 'next/navigation';
-/*
+
 interface SearchParams {
-  session_id?: string;
+  session_id: string;
   q: string;
 }
 
 interface Props {
-  searchParams: SearchParams;
-}*/
-// process.env.STRIPE_SECRET_KEY!
-const stripe = new Stripe('sk_test_51MHT1VJaZgjyJCpdcMKYInhMW6iYTLcgpnbuVMyWzrLkd6UCUdEESthbzPpMkwDaq9WLJbU8oSCBf8aYTFWEXQq900PaCLPJgw', {
+  searchParams: Promise<Partial<SearchParams>>
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-02-24.acacia',
 });
 
-export default async function CheckoutConfirmPage({ searchParams }: any) {
+export default async function CheckoutConfirmPage({ searchParams }: Props) {
   const { session_id, q } = await searchParams
 
   if (session_id && typeof session_id === 'string') {
