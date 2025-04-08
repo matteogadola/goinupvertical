@@ -31,7 +31,7 @@ export default function EventEntryStatus({ event }: { event: any }) {
       const endSaleDate = product.end_sale_date
         ? dt(product.end_sale_date)
         : dt(event.date).subtract(46, 'hours')
-      
+
       if (dt(endSaleDate).isBefore()) {
         return (
           <div className="flex flex-col space-x-2">
