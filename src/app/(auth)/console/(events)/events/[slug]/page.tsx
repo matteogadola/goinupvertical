@@ -2,6 +2,7 @@ import { dt } from '@/utils/date';
 import { createClient } from '@/utils/supabase/server';
 import ConsoleEventTabs from './event-tabs';
 import { getClaims } from '@/utils/supabase/helpers';
+import { notFound } from 'next/navigation';
 
 interface Params {
   slug: string;
@@ -23,6 +24,11 @@ export default async function ConsoleEventPage({
 }) {
   const { slug } = await params
   const event = await getEvent(slug);
+
+  if (!event) {
+    return notFound()
+  }
+
   const entries = await getEntries({ id: event.id, type: event.type });
   const claims = await getClaims();
 
@@ -50,10 +56,11 @@ const getEvent = async (slug: string) => {
 
   const { data } = await supabase
     .from('events')
-    .select()
+    //.select('id, name, type, date, products (id, name)')
+    .select('*, products (id, name)')
     .eq('slug', slug)
     .single()
-  
+
   return data
 }
 
