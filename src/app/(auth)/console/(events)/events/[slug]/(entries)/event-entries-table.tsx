@@ -8,6 +8,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   Row,
+  RowData,
   RowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -50,6 +51,18 @@ interface DataTableProps<TData, TValue> {
 }
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData extends RowData> {
+    addRow: any
+  }
+}
+
+/*declare module '@tanstack/react-table' {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    foo: string
+  }
+}*/
+// column.columnDef.meta
 
 
 const csvConfig = mkConfig({
@@ -78,7 +91,7 @@ export function DataTable<TData, TValue>({
     state: {
       //sorting,
       columnFilters,
-      columnVisibility: { email: false, phone_number: false }
+      columnVisibility: { email: false, phone_number: false, tin: false }
     },
     meta: {
       addRow: (entry: any) => {
@@ -120,8 +133,6 @@ export function DataTable<TData, TValue>({
     download({ ...csvConfig, filename: `iscrizioni-${event.slug}` })(csv)
   }
 
-  const meta = table.options.meta
-
   return (
     <div>
       <div className="grid grid-cols-3 items-center py-4 space-x-8">
@@ -151,8 +162,8 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>*/}
         </div>
         <div className="flex justify-end space-x-2">
-          <div className="">
-            <EntryNewButton event={event} onCreate={meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
+          <div className="hidden">
+            <EntryNewButton event={event} onCreate={table.options.meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
             {/*<Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
               <ConsoleEventEntryCreate onClose={close} />
             </Modal>*/}

@@ -19,6 +19,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { isTinValid, verifyTin } from "@/utils/tin";
 import { capitalize } from "@/utils/text";
 import { Event } from "@/types/events";
+import { FunctionsHttpError } from "@supabase/supabase-js";
 
 
 const clubs = getClubs()
@@ -34,14 +35,15 @@ export default function EntryNewButton({
 }) {
   const [opened, { open, close }] = useDisclosure(false)
 
-  console.log(event)
   // il bottone loading={loading} loaderProps={{ type: 'dots' }}
+  const product = event.products?.[0]
+
   return (
     <>
       <Button variant="outline" size="sm" onClick={open}>
         <PlusIcon />{children}
       </Button>
-      <Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} closeOnClickOutside={false} size="xl">
+      <Modal opened={opened} onClose={close} title={`NUOVA ISCRIZIONE - ${product.name}`} withCloseButton={false} closeOnClickOutside={false} size="xl">
         <ConsoleEventEntryNew event={event} onClose={close} onCreate={onCreate} />
       </Modal>
     </>
@@ -50,10 +52,24 @@ export default function EntryNewButton({
 
 function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Event>, onClose: any, onCreate: any }) {
   const supabase = createClient()
+  const product = event.products?.[0]
 
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
+      payment_method: 'cash',
+      payment_status: 'pending',
+      product_id: product.id,
+      event_id: event.id,
+      first_name: '',
+      last_name: '',
+      //birth_year: '',
+      gender: '',
+      country: 'ITA',
+      club: '',
+      email: '',
+      phone_number: '',
+      tin: ''
       //...entry,
       //birth_year: entry.birth_date ? dt(entry.birth_date).year() : '',
     },
@@ -68,9 +84,24 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
   const onSubmit = async () => {
     const data = form.getValues()
 
-    const { data: { user }, error } = await supabase.auth.getUser()
+    const tin = verifyTin(data.tin, data.first_name, data.last_name)
 
-    onCreate(data)
+    createEntry({
+      ...data,
+      description: capitalize(`${data.first_name} ${data.last_name}`),
+      quantity: 1,
+      first_name: capitalize(data.first_name),
+      last_name: capitalize(data.last_name),
+      //birth_date: data.birth_year
+      //  ? `${data.birth_year}-01-01`
+      //  : `${tin.year}-${String(tin.month).padStart(2, '0')}-${String(tin.day).padStart(2, '0')}`,
+      birth_date: `${tin.year}-${String(tin.month).padStart(2, '0')}-${String(tin.day).padStart(2, '0')}`,
+      tin: data.tin.toUpperCase(),
+      gender: data.gender || tin.gender,
+      email: data.email.toLowerCase(),
+      club: data.club ? data.club.trim().toUpperCase() : null,
+    })
+    //onCreate(data)
     /*try {
       verifyTin(data.tin, data.first_name, data.last_name)
     } catch(e: any) {
@@ -148,13 +179,13 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
           {...form.getInputProps('tin')}
         />
 
-        <YearPickerInput
+        {/*<YearPickerInput
           withAsterisk
           label="Anno di nascita"
           className="col-span-2"
           key={form.key('birth_year')}
           {...form.getInputProps('birth_year')}
-        />
+        />*/}
 
         <Autocomplete
           label="Società"
@@ -206,20 +237,26 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
 
 const createEntry = async (entry: any) => {
   const supabase = createClient()
-  const params = {
-    status: 'confirmed',
-    payment_status: 'paid',
-    payment_date: dayjs.utc().format(),
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  console.log('sbrem', {
+    ...entry,
+    user_id: user?.id,
+  })
+  /*const { data, error } = await supabase.rpc('create_entry', {
+    ...entry,
+    user_id: user?.id,
+  })
+
+  if (error instanceof FunctionsHttpError) {
+    const { message } = await error.context.json()
+    console.error(message)
+    //throw new Error(message)
+  } else if (error) {
+    //throw new Error(error.message)
+    console.error(error.message)
   }
 
-  const { data, error } = await supabase
-    .from('order_items')
-    .update(params)
-    .eq('order_id', id);
-
-  if (error) {
-    throw new Error(error.message)
-  }
-
-  return { ...params, order_id: id }
+  console.log('swag', data)*/
 }

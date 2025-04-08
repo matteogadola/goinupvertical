@@ -68,6 +68,10 @@ export const getColumns = ({ onConfirm, onUpdate }: ColumnsProps): ColumnDef<Pay
     header: "Sesso",
   },
   {
+    accessorKey: "tin",
+    header: "CF",
+  },
+  {
     accessorKey: "club",
     header: "Club",
   },
