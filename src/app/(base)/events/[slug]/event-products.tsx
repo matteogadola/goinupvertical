@@ -15,7 +15,7 @@ export default async function EventProducts({ event }: { event: any }) {
         return <span className="">Iscrizioni chiuse</span>
       }
 
-      const endSaleDate = product.end_sale_date
+      /*const endSaleDate = product.end_sale_date
         ? dt(product.end_sale_date)
         : dt(event.date).subtract(46, 'hours')
 
@@ -26,7 +26,7 @@ export default async function EventProducts({ event }: { event: any }) {
             <span className="block text-gray-700 text-sm">disponibili alla partenza</span>
           </div>
         )
-      }
+      }*/
 
       if (!!product.start_sale_date && dt(product.start_sale_date).isAfter()) {
         const startSaleDate = dt(product.start_sale_date)
