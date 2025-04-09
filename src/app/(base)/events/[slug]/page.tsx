@@ -5,6 +5,7 @@ import { urlFor } from '@/utils/sanity';
 import { notFound } from 'next/navigation';
 import { dt } from '@/utils/date';
 import EventProducts from './event-products';
+import EventAttachment from './event.attachment';
 
 interface Params {
   slug: string;
@@ -87,9 +88,10 @@ export default async function EventPage({
         }
       </div>
 
-      <div>
-        <EventProducts event={event} />
-      </div>
+      {dt(event.date).isAfter()
+        ? <EventProducts event={event} />
+        : <EventAttachment event={event} />
+      }
 
     </div>
   )

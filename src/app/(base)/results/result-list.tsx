@@ -39,7 +39,7 @@ export default function ResultList({
   };
 
   return (
-    <div className="mt-8">
+    <div className="mt-4 lg:mt-8">
       <select
         id="year-select"
         value={selectedYear}
