@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useTransition, Suspense, useMemo } from "react";
-import { getResultsByYear } from "./actions";
+import { getLinksByYear } from "./actions";
 import { Event } from "@/types/events";
 import { urlForDowload } from "@/utils/sanity";
 import { dt } from "@/utils/date";
@@ -12,7 +12,7 @@ interface PhotoDisplayProps {
   availableYears: number[];
 }
 
-export default function ResultList({
+export default function PhotoList({
   initialYear,
   initialResults,
   availableYears,
@@ -30,7 +30,7 @@ export default function ResultList({
     // Avvia la transizione per il fetch dei dati in background
     startTransition(async () => {
       try {
-        const fetchedEvents = await getResultsByYear(newYear);
+        const fetchedEvents = await getLinksByYear(newYear);
         setEvents(fetchedEvents);
       } catch (err) {
         setEvents([]);
@@ -53,25 +53,6 @@ export default function ResultList({
         ))}
       </select>
 
-      {!!serie &&
-        <div className="w-full my-4 lg:my-8">
-          <h1 className="title">{serie.name}</h1>
-          {serie.type === 'race' &&
-            <span className="block text-xs text-gray-600">{dt(serie.date).format('DD MMMM YYYY')}</span>
-          }
-
-          <div className="mt-4">
-            <ul className="space-y-4">
-              {serie.results?.map((attachment: any, index: any) =>
-                <li key={index} className="flex space-x-2">
-                  <a href={urlForDowload(attachment.file, attachment.title)} target='_blank' className="text-lg hover:opacity-70">{attachment.title}</a>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      }
-
       {races.length > 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
           {races.map((event: any, index: any) =>
@@ -80,9 +61,9 @@ export default function ResultList({
               <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
               <div className="mt-4">
                 <ul className="space-y-4">
-                  {event.results?.map((attachment: any, index: any) =>
+                  {event.links?.map((link: any, index: any) =>
                     <li key={index} className="flex space-x-2">
-                      <a href={urlForDowload(attachment.file, attachment.title)} target='_blank' className="text-lg hover:opacity-70">{attachment.title}</a>
+                      <a href={link.url} target='_blank' className="text-lg hover:opacity-70">{link.title}</a>
                     </li>
                   )}
                 </ul>
