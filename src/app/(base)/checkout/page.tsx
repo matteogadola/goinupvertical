@@ -44,7 +44,7 @@ export default function CheckoutPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error);
+        throw new Error(data.message);
       }
 
       router.replace(data.checkoutSessionUrl)
