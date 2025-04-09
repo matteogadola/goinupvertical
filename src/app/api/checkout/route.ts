@@ -8,7 +8,6 @@ export async function POST(req: Request) {
 
   try {
     console.debug('Checkout payload', payload)
-    //const order = await invoke('order-create', payload)
     const order = await invoke<Order>('order', payload)
     console.debug('Checkout order', order)
 

@@ -1,5 +1,5 @@
-import { create, createStore, StateCreator } from 'zustand';
-
+import { create, createStore, StateCreator } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import { EntryForm } from '@/types/entries';
 /*
 interface CartState {
@@ -74,10 +74,18 @@ export const createCartStore = (
 }
 
 
-export const useCartStore = create<CartStore>((set) => ({
-  items: [],
-  paymentMethod: 'stripe',
-  addItem: (item) => set((state) => ({ items: [...state.items, item] })),
-  removeItem: (index) => set((state) => ({ items: state.items.toSpliced(index, 1) })),
-  setPaymentMethod: (paymentMethod) => set(() => ({ paymentMethod })),
-}))
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set, get) => ({
+      items: [],
+      paymentMethod: 'stripe',
+      addItem: (item) => set((state) => ({ items: [...state.items, item] })),
+      removeItem: (index) => set((state) => ({ items: state.items.toSpliced(index, 1) })),
+      setPaymentMethod: (paymentMethod) => set(() => ({ paymentMethod })),
+    }),
+    {
+      name: 'goinup-cart', // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+    },
+  )
+)
