@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import ConsoleEventTabs from './event-tabs';
 import { getClaims } from '@/utils/supabase/helpers';
 import { notFound } from 'next/navigation';
+import { Event } from '@/types/events';
 
 interface Params {
   slug: string;
@@ -60,6 +61,7 @@ const getEvent = async (slug: string) => {
     .select('*, products (id, name)')
     .eq('slug', slug)
     .single()
+    .overrideTypes<Event>()
 
   return data
 }

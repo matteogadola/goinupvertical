@@ -60,7 +60,7 @@ function ConsoleEventEntryConfirm({ entry, onClose, onConfirm }: { entry: any, o
           items: [...order.items.toSpliced(index, 1, {
             ...order.items[index],
             //status: item.status,
-            payment_status: item.payment_status,
+            payment_status: item.payment_status!,
           })]
         })
       }
@@ -177,7 +177,7 @@ const updateOrderItems = async (id: number) => {
 
 const updateOrderItem = async (id: number) => {
   const supabase = createClient()
-  const params = {
+  const params: Partial<OrderItem> = {
     status: 'confirmed',
     payment_status: 'paid',
     payment_date: dayjs.utc().format(),

@@ -1,14 +1,18 @@
 import type { Entry } from './entries';
-import { Promoter } from './promoters';
+
+export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
+export type PaymentMethod = 'stripe' | 'sepa' | 'cash';
+export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed';
 
 export interface Order {
   id: number;
-  user_id?: string | null;
-  customer_email: string;
-  customer_first_name?: string;
-  customer_last_name?: string;
+  user_id: string | null;
   date: string;
   status: string;
+  amount: number
+  customer_email: string;
+  customer_first_name: string;
+  customer_last_name: string;
   notification_id: string | null,
   notification_date: string | null;
   notification_status: string | null;
@@ -17,23 +21,23 @@ export interface Order {
   payment_method: PaymentMethod;
   payment_status: PaymentStatus;
   items: OrderItem[];
-  promoter_id?: string; // ???
-  amount: number
 }
-
-export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
-
-export type PaymentMethod = 'stripe' | 'sepa' | 'cash' | 'on-site';
-export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed';
 
 export interface OrderItem {
   id: number;
-  order_id?: number;
-  event_id?: string; // ???
-  name: string;
+  order_id: number;
+  user_id: string | null;
+  date: string;
+  status: string;
+  event_id: string | null;
+  product_id: string | null;
+  name: string | null;
+  description: string | null;
+  price: number;
   quantity: number;
-  price: number; //
-  description?: string | null;
-  payment_status: string
+  payment_id: string | null;
+  payment_date: string | null;
+  payment_method: PaymentMethod;
+  payment_status: PaymentStatus;
   entry?: Entry;
 }

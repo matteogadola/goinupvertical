@@ -21,6 +21,8 @@ export interface Event {
   closing_date?: string;
   links: any[]
   products: Product[];
+
+  results?: any[];
 }
 
 export type EventStatus = 'internal' | 'published' | 'scheduled' | 'cancelled' | 'postponed' | 'stockout';

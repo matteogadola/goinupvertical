@@ -1,74 +1,37 @@
-
-import type { NextApiRequest, NextApiResponse } from 'next';
-import Stripe from 'stripe';
-import { Order, OrderItem } from '@/types/orders'
-import { createClient } from '@/utils/supabase/server';
-
-import { dt } from '@/utils/date';
-import { FunctionsHttpError } from '@supabase/supabase-js';
-import { encodeBase64 } from '@/utils/encoding';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-});
+import { invoke } from '@/utils/supabase/functions'
+import { encodeBase64 } from '@/utils/encoding'
+import { Order } from '@/types/orders'
 
 export async function POST(req: Request) {
-  const supabase = await createClient();
-  const payload = await req.text();
+  const payload = await req.json()
   const origin = req.headers.get('origin')
 
   try {
-    console.debug(`[checkout] body: ${JSON.stringify(payload)}`);
-
-    const { data: order, error } = await supabase.functions.invoke('orders', {
-      method: 'POST',
-      body: payload
-    })
-
-    if (error instanceof FunctionsHttpError) {
-      const { message } = await error.context.json()
-      throw new Error(message)
-    } else if (error) {
-      throw new Error(error.message)
-    }
-
-    console.debug(`[checkout] order: ${JSON.stringify(order)}`);
+    console.debug('Checkout payload', payload)
+    const order = await invoke<Order>('order', payload)
+    console.debug('Checkout order', order)
 
     const q = encodeBase64(JSON.stringify(order));
 
     if (['cash', 'sepa'].includes(order.payment_method)) {
-      
-      const { data, error } = await supabase.functions.invoke('mail-legacy', {
-        method: 'POST',
-        body: order
-      })
+      await invoke('mail-checkout', order)
 
       return new Response(
-        JSON.stringify({order, checkoutSessionUrl: `${origin}/checkout/confirm?&q=${q}`}), {
-        status: 400,
+        JSON.stringify({order, checkoutSessionUrl: `${origin}/checkout/confirm?q=${q}`}), {
+        status: 200,
       })
     } else if (order.payment_method === 'stripe') {
-      const { data, error } = await supabase.functions.invoke('stripe-checkout', {
-        method: 'POST',
-        body: { order, origin, q }
-      })
+      const session = await invoke('stripe-checkout', { order, origin })
 
-      if (error instanceof FunctionsHttpError) {
-        const { message } = await error.context.json()
-        throw new Error(message)
-      } else if (error) {
-        throw new Error(error.message)
-      }
-      
       return new Response(
-        JSON.stringify({ ...order, checkoutSessionId: data.id, checkoutSessionUrl: data.url }), {
-        status: 400,
+        JSON.stringify({ ...order, checkoutSessionId: session.id, checkoutSessionUrl: session.url }), {
+        status: 200,
       })
     } else {
       throw new Error('Metodo di pagamento non supportato');
     }
   } catch (e: any) {
-    console.error(`[checkout] error: ${e.message}`);
+    console.error(`Checkout error: ${e.message}`)
     return new Response(
       JSON.stringify({ error: e.message }), {
       status: 500,

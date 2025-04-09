@@ -1,13 +1,12 @@
 import Stripe from 'stripe'
 import * as Sentry from '@sentry/node'
+import { createStripe } from '@/utils/stripe';
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
 })
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-})
+const stripe = createStripe()
 
 const createCheckoutSession = async ({ order, origin, q }: any) => {
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
