@@ -114,7 +114,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
     try {
       if (await entryExist(event.id, data.tin)) {
         // anche in questo caso meglio mostra errore generale?
-        form.setFieldError('tin', 'Corridore già iscritto alla gara');
+        form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
         return
       }
     } catch(e: any) {

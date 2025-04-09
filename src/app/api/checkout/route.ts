@@ -4,7 +4,7 @@ import { Order } from '@/types/orders'
 
 export async function POST(req: Request) {
   const payload = await req.json()
-  const origin = req.headers.get('origin')
+  const origin = req.headers.get('origin') ?? 'https://www.goinupvertical.it'
 
   try {
     console.debug('Checkout payload', payload)
