@@ -28,7 +28,7 @@ export const getUpcomingEvents = async () => {
   return client.fetch(`*[_type == "event" && type == "race" && status != "internal" && date >= "${today}"]{
     ...,
     products[]->
-  } | order(date) [0...2]`)
+  } | order(date) [0...3]`)
 }
 
 export const getEvent = async (slug: string) => {
