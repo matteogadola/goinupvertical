@@ -76,7 +76,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
   const entryExist = async (event_id: string, tin: string) => {
     // da server...
     const { data, error } = await supabase.rpc('entry_exist', {
-      _event_id: '94134137-72eb-4824-9144-e3ccefda50cb',//event._id,
+      _event_id: event._id,
       _tin: tin,
       //_first_name: entry.first_name,
       //_last_name: entry.last_name,
