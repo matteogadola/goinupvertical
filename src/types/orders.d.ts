@@ -20,7 +20,7 @@ export interface Order {
   payment_date: string | null;
   payment_method: PaymentMethod;
   payment_status: PaymentStatus;
-  items?: OrderItem[];
+  items: OrderItem[];
 }
 
 export interface OrderItem {
