@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     }
   } catch (e: any) {
     console.error(`Checkout error: ${e.message}`)
-    return new Response(JSON.stringify({ code: e.code, error: e.message }), {
+    return new Response(JSON.stringify({ code: e.code, message: e.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     })

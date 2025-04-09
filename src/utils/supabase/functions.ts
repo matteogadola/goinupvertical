@@ -13,7 +13,7 @@ export const invoke = async <T = any>(functionName: string, payload: any) => {
     const { message } = await error.context.json()
     throw new Error(message)
   } else if (error) {
-    throw new Error(error.message)
+    throw new Error(error)
   } else if (!data) {
     throw new Error('Errore in risposta')
   }
