@@ -38,6 +38,10 @@ export default function EntryNewButton({
   // il bottone loading={loading} loaderProps={{ type: 'dots' }}
   const product = event.products?.[0]
 
+  if (!product) {
+    return <></>
+  }
+
   return (
     <>
       <Button variant="outline" size="sm" onClick={open}>
