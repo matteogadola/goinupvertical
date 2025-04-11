@@ -42,6 +42,11 @@ const sponsors = [
     className: 'h-18',
     url: 'https://www.facebook.com/3passipatagonia'
   }, {
+    name: 'Vam Sport',
+    logo: 'vam-sport.webp',
+    className: 'h-18',
+    url: 'https://vamsport.it'
+  }, {
     name: 'Avis',
     logo: 'avis.webp',
     className: 'h-18',
