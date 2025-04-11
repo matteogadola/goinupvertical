@@ -26,7 +26,6 @@ export default async function ConsoleEventPage({
   const { slug } = await params
   const event = await getEvent(slug);
 
-  console.log(event)
   if (!event) {
     return notFound()
   }
