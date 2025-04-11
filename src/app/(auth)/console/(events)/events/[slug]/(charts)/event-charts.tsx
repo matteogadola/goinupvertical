@@ -18,12 +18,14 @@ export default function EventCharts({
   return (
     <Suspense fallback={<Spinner />}>
       <span className="mt-4 font-unbounded text-xl">Statistiche</span>
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center">
-        <EventChartGender entries={entries} />
-        <EventChartPayMethod entries={entries} />
-        <EventChartClub entries={entries} />
-        <EventChartOrder entries={entries} />
-      </div>
+      {entries.length > 0 &&
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center">
+          <EventChartGender entries={entries} />
+          <EventChartPayMethod entries={entries} />
+          <EventChartClub entries={entries} />
+          <EventChartOrder entries={entries} />
+        </div>
+      }
     </Suspense>
   )
 }

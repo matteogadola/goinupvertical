@@ -165,9 +165,6 @@ export function DataTable<TData, TValue>({
         <div className="flex justify-end space-x-2">
           <div className="hidden">
             <EntryNewButton event={event} onCreate={table.options.meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
-            {/*<Modal opened={opened} onClose={close} title={"NUOVA ISCRIZIONE"} withCloseButton={false} size="xl">
-              <ConsoleEventEntryCreate onClose={close} />
-            </Modal>*/}
           </div>
           <Button variant="outline" size="sm" onClick={() => exportCsv(table.getRowModel())}>
             <DownloadIcon className="size-4" aria-hidden="true" />
