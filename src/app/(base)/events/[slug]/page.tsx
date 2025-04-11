@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { dt } from '@/utils/date';
 import EventProducts from './event-products';
 import EventAttachment from './event.attachment';
+import Credits from '@/components/credits';
 
 interface Params {
   slug: string;
@@ -93,6 +94,7 @@ export default async function EventPage({
         : <EventAttachment event={event} />
       }
 
+      <Credits className="mt-16" />
     </div>
   )
 
