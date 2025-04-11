@@ -93,8 +93,6 @@ export default async function EventPage({
         ? <EventProducts event={event} />
         : <EventAttachment event={event} />
       }
-
-      <Credits className="mt-16" />
     </div>
   )
 
