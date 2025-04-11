@@ -26,6 +26,7 @@ export default async function ConsoleEventPage({
   const { slug } = await params
   const event = await getEvent(slug);
 
+  console.log(event)
   if (!event) {
     return notFound()
   }
@@ -34,7 +35,7 @@ export default async function ConsoleEventPage({
   const claims = await getClaims();
 
   return (
-    <div className="">
+    <>
       <div>
         {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{dt(event.date).format('ddd DD MMM')}</span>}
         <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
@@ -42,12 +43,7 @@ export default async function ConsoleEventPage({
       <div className="mt-4">
         <ConsoleEventTabs event={event} entries={entries} claims={claims} />
       </div>
-      {/*<div>info ecc</div>
-      <div>
-        <span>Iscrizioni</span>
-        <ConsoleEventEntries entries={entries} />
-      </div>*/}
-    </div>
+    </>
   )
 }
 
