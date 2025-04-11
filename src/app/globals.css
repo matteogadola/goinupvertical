@@ -36,11 +36,11 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
   --background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 3.9%);
 
-  /*
-  --primary-color (60%)
-  --secondary-color (30%)
-  --accent-color (10%)
+  --primary-color: #223057;/*(60%)*/
+  --secondary-color: #205BA7;/*(30%)*/
+  --accent-color: #DCCE51;/*(10%)*/
 
+  /*
   --primary-darker
   --primary-lighter
 
