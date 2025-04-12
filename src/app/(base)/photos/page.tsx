@@ -1,13 +1,13 @@
 import { dt } from '@/utils/date'
 import { getLinksByYear } from './actions'
 import PhotoList from './photo-list'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Foto",
+}
 
 export const revalidate = 3600
-
-export const metadata = {
-  title: 'Goinup | Foto',
-  description: 'Foto',
-}
 
 export default async function MediaPage() {
   const currentYear = dt().year()

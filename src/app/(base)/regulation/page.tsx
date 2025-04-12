@@ -1,5 +1,10 @@
 import { getPage } from '@/utils/sanity/queries'
 import { PortableText, PortableTextReactComponents } from '@portabletext/react'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Regolamento",
+}
 
 const components: Partial<PortableTextReactComponents> = {
   block: {

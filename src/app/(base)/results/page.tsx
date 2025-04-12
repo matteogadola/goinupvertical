@@ -5,8 +5,7 @@ import { getResultsByYear } from './actions';
 export const revalidate = 3600
 
 export const metadata = {
-  title: 'Goinup | Classifiche',
-  description: 'Classifiche',
+  title: 'Classifiche',
 }
 
 export default async function ResultsPage() {
