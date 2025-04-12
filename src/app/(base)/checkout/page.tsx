@@ -56,19 +56,16 @@ export default function CheckoutPage() {
   }
 
   return (
-    <section className="mt-8 W-full lg:w-1/2 m-auto">
+    <section className="w-full lg:w-1/2 m-auto">
       {!!items.length &&
         <div className="">
           <div className="flex h-full flex-col">
             <div className="flex-1 overflow-y-auto px-4">
-              <div className="">
-              <span className="font-unbounded px-1 bg-yellow-200">Conferma ordine</span>
-                <h2 className="font-unbounded text-2xl font-semibold uppercase">Carrello</h2>
-              </div>
+              <h1 className="title">Carrello</h1>
 
               <div className="">
                 <div className="flow-root">
-                  <ul role="list" className=" divide-y divide-gray-100">
+                  <ul className="divide-y divide-gray-100">
                     {items.map((item, index) =>
                       <li key={index} className="flex py-6">
                         <div className="flex flex-1 flex-col">
@@ -194,7 +191,7 @@ export default function CheckoutPage() {
       }
       {!items.length &&
         <div className="">
-          Nessun elemento nel carrello
+          <span>Nessun elemento nel carrello</span>
         </div>
       }
     </section>

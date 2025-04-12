@@ -62,7 +62,7 @@ export default async function EventPage({
 
 
   return (
-    <div className="content pt-6 event-grid">
+    <div className="event-grid">
       <div>
         <h1 className="title">{event.name}</h1>
         {event.date && <span className="">{dt(event.date).format('dddd D MMMM [alle] HH:mm')}</span>}

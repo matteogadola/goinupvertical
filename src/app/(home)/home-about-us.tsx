@@ -1,6 +1,10 @@
 import Image from 'next/image'
 import aboutUs from '../../../public/images/homepage/about-us.webp'
 
+type Props = {
+  className?: string
+}
+
 export default async function HomeAboutUs() {
 
   return (

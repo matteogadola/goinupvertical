@@ -8,7 +8,7 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <article className="px-4 py-8" id="privacy-body">
-        <h1 className="text-3xl font-semibold">Informativa sulla privacy di goinupvertical.it</h1>
+        <h1 className="title">Informativa sulla privacy di goinupvertical.it</h1>
 
         <section id="principles">
           La privacy degli utenti è un tema molto importante per noi.

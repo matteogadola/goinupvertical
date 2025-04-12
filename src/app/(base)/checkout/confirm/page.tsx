@@ -28,8 +28,7 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
       return (
         <>
           <section>
-            <span className="overtitle">Conferma</span>
-            <h1 className="title mt-3">Ordine n. {session.metadata?.order_id}</h1>
+            <h1 className="title">Conferma ordine n. {session.metadata?.order_id}</h1>
             <div className="text mt-2">
               <table className="border border-slate-400 mt-8">
                 <thead>
@@ -80,8 +79,7 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
     return (
       <>
         <section>
-          <span className="overtitle">Conferma</span>
-          <h1 className="title mt-3">Ordine n. {order.id}</h1>
+          <h1 className="title">Conferma ordine n. {order.id}</h1>
           <div className="text mt-2">
             <table className="border border-slate-400 mt-8">
               <thead>

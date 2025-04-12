@@ -318,8 +318,6 @@ form .field-helper > button,
   @media (width >= 80rem /* 1280px */) {
     max-width: var(--container-7xl);
   }
-
-  
 }
 
 .title {

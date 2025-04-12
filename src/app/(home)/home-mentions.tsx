@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from 'react'
 
+type Props = {
+  mentions?: Mention[]
+  className?: string
+}
+
 type Mention = {
   text: string
   source: string

@@ -14,10 +14,6 @@ deno.lock
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
 # production
 /build
 
@@ -25,22 +21,12 @@ deno.lock
 .DS_Store
 *.pem
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
 # env files
 .env*
 .temp
 
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# deps
-/sanity-studio
+/database
+/functions/checkout
+/functions/orders
+/functions/sanity-*
+/functions/stripe-webhook

@@ -25,7 +25,7 @@ export default async function RegulationPage() {
   const page = await getPage('regulation');
 
   return (
-    <div className="mt-4">
+    <div className="">
       <h1 className="title">{page.name}</h1>
 
       <section className="mt-8">
