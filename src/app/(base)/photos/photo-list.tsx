@@ -55,8 +55,8 @@ export default function PhotoList({
 
       {races.length > 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
-          {races.map((event: any, index: any) =>
-            <div key={index} className="w-full lg:w-1/2 pt-6">
+          {races.map((event) =>
+            <div key={event.id} className="w-full lg:w-1/2 pt-6">
               <h1 className="subtitle">{event.name}</h1>
               <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
               <div className="mt-4">

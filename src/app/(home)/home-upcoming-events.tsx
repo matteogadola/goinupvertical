@@ -1,20 +1,27 @@
-import EventEntryStatus from "@/components/events/entry-status";
-import { dt } from "@/utils/date";
-import { urlFor } from "@/utils/sanity";
-import clsx from "clsx";
-import Link from "next/link";
-import { CSSProperties } from "react";
+import EventEntryStatus from '@/components/events/entry-status'
+import { Event } from '@/types/sanity'
+import { dt } from '@/utils/date'
+import { urlFor } from '@/utils/sanity'
+import clsx from 'clsx'
+import Link from 'next/link'
+import { CSSProperties } from 'react'
 
-export default async function UpcomingEvents({ events }: { events: any[] }) {
+type Props = {
+  events: Event[]
+}
+
+export default async function UpcomingEvents({ events }: Readonly<Props>) {
 
   return (
-    <>
-      <ul role="list" className={clsx("upcoming-grid", {
+    <div className="flex flex-col mt-32 justify-center items-center space-y-16">
+      <span className="title">Prossimi eventi</span>
+
+      <ul className={clsx("upcoming-grid", {
         "grid-2": events.length === 2,
         "grid-3": events.length === 3
         })}>
         {events.map((event, key) =>
-          <Link href={`/events/${event.slug.current}`} role="listitem" key={key} className="upcoming-card">
+          <Link href={`/events/${event.slug.current}`} key={event.id} className="upcoming-card">
             <div className="upcoming-header" style={getBackgroudStyle(event)}>
               <div className="upcoming-header-text">
                 <h3 className={clsx("upcoming-header-title", { "nowrap": event.name.length <= 12})}>
@@ -43,9 +50,10 @@ export default async function UpcomingEvents({ events }: { events: any[] }) {
           
         )}
       </ul>
-    </>
+    </div>
   )
 }
+
 function getBackgroudStyle(event: any): CSSProperties {
   let url = '/images/default-summary.webp'
 
