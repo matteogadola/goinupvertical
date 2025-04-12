@@ -36,9 +36,6 @@ export default function AppContainer({
         collapsed: { mobile: !sidenavOpened, desktop: true },
       }}
       padding="md"
-      classNames={{
-        header: 'header'
-      }}
     >
       {children}
     </AppShell>
