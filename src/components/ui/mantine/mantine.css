@@ -1,3 +1,42 @@
+/*import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  // Controls --mantine-font-family
+  fontFamily: 'Arial, sans-serif',
+
+  // Controls --mantine-font-family-monospace
+  fontFamilyMonospace: 'Courier New, monospace',
+
+  headings: {
+    // Controls --mantine-font-family-headings
+    fontFamily: 'Georgia, serif',
+  },
+});*/
+
+.mantine-AppShell-main {
+  padding: 0;
+}
+
+.mantine-AppShell-header {
+  height: 5rem;
+  font-size: x-large;
+  font-family: var(--font-matroska);
+
+  /* new home
+  background-color: white;
+  color: var(--primary);
+  --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  */
+
+  .header-grid {
+    display: grid;
+    grid-template-columns: 192px 1fr 192px;
+    align-items: center;
+    height: 100%;
+  }
+}
+
 .mantine-Button-inner {
   font-weight: var(--font-weight-light);
 }
@@ -10,3 +49,5 @@
 .header {
   border-bottom: 0;
 }
+
+

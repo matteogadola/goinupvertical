@@ -1,22 +1,9 @@
-//import { usePathname } from 'next/navigation';
-//import NavbarBrand from './navbar-brand'
-//import NavbarLinks from './navbar-links'
-//import NavbarUser from './navbar-user'
 import Link from 'next/link';
 import NavbarBurger from './navbar-burger';
 import NavbarUserButton from './navbar-user';
 import NavbarCartButton from './navbar-cart';
 import { createClient } from '@/utils/supabase/server';
 
-//import { createClient } from '@/utils/supabase/server';
-//import NavbarLinks from './navbar-links';
-//import NavbarMobile from './navbar-mobile';
-//import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-//import { cookies } from 'next/headers';
-
-// si risolve ???
-// https://stackoverflow.com/questions/78055882/update-parts-of-the-ui-when-authenticated-with-supabase-and-nextjs-14
-// https://github.com/giuppidev/giuppi.dev/tree/main
 export default async function Navbar({
   links,
 }: {
@@ -26,12 +13,12 @@ export default async function Navbar({
   const { data: { user }, error } = await supabase.auth.getUser()
 
   return (
-    <div className="page grid grid-cols-3 items-center h-full">
+    <div className="page header-grid">
       <NavbarBurger />
 
       <div className="flex items-center justify-center md:justify-start">
         <Link href="/" className="hover:scale-105">
-          <img src="/images/logo/goinup.webp" className="h-11 object-contain" alt="Logo" />
+          <img src="/images/logo/goinup.webp" className="h-14 object-contain" alt="Logo" />
         </Link>
       </div>
 
