@@ -11,10 +11,10 @@ type Props = {
   className?: string
 }
 
-export default async function UpcomingEvents({ events }: Readonly<Props>) {
+export default async function UpcomingEvents({ events, className }: Readonly<Props>) {
 
   return (
-    <div className="flex flex-col mt-32 justify-center items-center space-y-16">
+    <div className={clsx('flex flex-col mt-32 justify-center items-center space-y-16', className)}>
       <span className="title">Prossimi eventi</span>
 
       <ul className={clsx("upcoming-grid", {

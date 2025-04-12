@@ -36,9 +36,14 @@ const theme = createTheme({
 
   .header-grid {
     display: grid;
-    grid-template-columns: 192px 1fr 192px;
+    grid-template-columns: 8rem 1fr 8rem;
     align-items: center;
     height: 100%;
+    padding: 0 16px;
+
+    @media (width >= 80rem) {
+      grid-template-columns: 12rem 1fr 12rem;
+    }
   }
 }
 

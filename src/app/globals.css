@@ -326,6 +326,9 @@ form .field-helper > button,
   line-height: var(--tw-leading, var(--text-4xl--line-height));
   color: var(--primary);
   text-transform: uppercase;
+
+  @media (width >= 80rem) {
+  }
 }
 
 .subtitle {

@@ -22,6 +22,7 @@ export default async function Home() {
       {!!serie?.flyer &&
         <HomeFlyer
           flyer={serie.flyer}
+          className="px-4"
         />
       }
 
@@ -32,7 +33,10 @@ export default async function Home() {
       }
 
       {upcomingEvents.length > 0 &&
-        <UpcomingEvents events={upcomingEvents} />
+        <UpcomingEvents
+          events={upcomingEvents}
+          className="px-4"
+        />
       }
     </>
   );

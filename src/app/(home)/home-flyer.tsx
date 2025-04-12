@@ -1,15 +1,16 @@
 import Image from 'next/image'
 import { urlFor } from '@/utils/sanity'
+import clsx from 'clsx'
 
 type Props = {
   flyer: any
   className?: string
 }
 
-export default async function HomeFlyer({ flyer }: Readonly<Props>) {
+export default async function HomeFlyer({ flyer, className }: Readonly<Props>) {
 
   return (
-    <div className="flex mt-32 justify-center items-center">
+    <div className={clsx('flex mt-32 justify-center items-center', className)}>
       <Image
         alt="Locandina"
         src={urlFor(flyer)}
