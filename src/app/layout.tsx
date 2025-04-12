@@ -4,7 +4,8 @@ import { fonts } from '@/utils/fonts'
 
 import { AppShell, MantineProvider, AppShellHeader,
   AppShellNavbar,
-  AppShellMain
+  AppShellMain,
+  createTheme,
  } from '@mantine/core';
 import AppContainer from '@/components/ui/mantine/app';
 import Navbar from '@/components/ui/mantine/navbar';
