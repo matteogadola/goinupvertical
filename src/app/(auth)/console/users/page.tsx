@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { getClaims } from '@/utils/supabase/helpers';
 import type { Event } from '@/types/events'
 import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
-import Sidebar from '@/components/ui/mantine/sidebar';
-import Navbar from '@/components/ui/mantine/navbar';
+import Sidebar from '@/components/ui/mantine_REMOVED/sidebar';
+import Navbar from '@/components/ui/mantine_REMOVED/navbar';
 //export const metadata: Metadata = {
 //  title: 'Console di amministrazione',
 //}

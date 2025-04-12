@@ -4,7 +4,7 @@ import FooterSocial from './footer-social'
 export default function Footer() {
   return (
     <footer className="mt-auto">
-      <div className="mt-8 py-4 flex items-center justify-center gap-y-2 md:space-x-12 flex-col md:flex-row">
+      <div className="mt-8 py-8 flex items-center justify-center gap-y-2 md:space-x-12 flex-col md:flex-row">
         <img src="/images/logo/goinup.webp" height={60} width={60} alt="Logo" />
 
         <div className="order-last md:order-none text-center">

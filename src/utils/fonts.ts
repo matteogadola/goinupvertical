@@ -1,5 +1,5 @@
 import localFont from 'next/font/local'
-import { Unbounded, Inter, Roboto_Mono, Poppins } from 'next/font/google'
+import { Unbounded, Inter, Roboto_Mono, Poppins, Archivo_Black } from 'next/font/google'
 
 const matroska = localFont({
   src: '../../public/fonts/matroska/matroska.ttf',
@@ -28,4 +28,10 @@ const roboto_mono = Roboto_Mono({
   variable: '--font-roboto-mono',
 })
 
-export const fonts = [unbounded, poppins, matroska]
+const archivo = Archivo_Black({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-archivo',
+})
+
+export const fonts = [unbounded, poppins, matroska, archivo]

@@ -4,12 +4,13 @@ import Link from 'next/link'
 import { dt } from '@/utils/date'
 import { redirect } from 'next/navigation';
 import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
-import Navbar from '@/components/ui/mantine/navbar';
+import Navbar from '@/components/ui/mantine_REMOVED/navbar';
 import { Event } from '@/types/events'
-import Sidebar from '@/components/ui/mantine/sidebar';
+import Sidebar from '@/components/ui/mantine_REMOVED/sidebar';
 import { getClaims } from '@/utils/supabase/helpers';
 import { hasRole } from '@/utils/supabase/auth';
 import { Role, User } from '@/types/user';
+import Header from '@/components/mantine/header';
 
 const links: { name: string, path: string, hasRole?: Role }[] = [
   { name: "Eventi", path: "/console" },
@@ -25,12 +26,7 @@ export default async function ConsoleUsersLayout({
 
   return (
     <>
-      <AppShellHeader>
-        <Navbar links={links} />
-      </AppShellHeader>
-      <AppShellNavbar p="md">
-        <Sidebar links={links} />
-      </AppShellNavbar>
+      <Header links={links} />
       <AppShellMain className="page">
         <div className="flex">
           <div className="min-w-64 pr-4 border-r-1 hidden md:flex">

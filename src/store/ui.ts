@@ -3,6 +3,7 @@ import { create, createStore, StateCreator } from 'zustand';
 type LoginProvider = 'email' | 'google' | 'facebook' | null
 
 export interface UiState {
+  navLinks: any[]
   sidenavOpened: boolean
   loginLoading: boolean
   loginProvider: LoginProvider
@@ -17,6 +18,7 @@ export type UiStore = UiState & UiActions
 
 export const initUiStore = (): UiState => {
   return {
+    navLinks: [],
     sidenavOpened: false,
     loginLoading: false,
     loginProvider: null,
@@ -24,6 +26,7 @@ export const initUiStore = (): UiState => {
 }
 
 export const defaultInitState: UiState = {
+  navLinks: [],
   sidenavOpened: false,
   loginLoading: false,
   loginProvider: null,
@@ -40,6 +43,7 @@ export const createUiStore = (
 }
 
 export const useUiStore = create<UiStore>((set) => ({
+  navLinks: [],
   sidenavOpened: false,
   loginLoading: false,
   loginProvider: null,
