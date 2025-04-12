@@ -17,7 +17,7 @@ export default async function Header({
   return (
     <>
       <AppShellHeader>
-        <div className="page header-grid">
+        <div className="content header-grid">
           <HeaderBurger />
 
           <div className="flex items-center justify-center md:justify-start">

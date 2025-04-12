@@ -154,7 +154,7 @@ export default function Credits({ className }: { className?: string }) {
   return (
     <section className={clsx(className, "text-center mx-4 space-y-8")}>
       <div className="py-4">
-        <h3 className="font-unbounded text-2xl">Sponsor</h3>
+        <h3 className="subtitle">Sponsor</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {sponsors.map((item, index) =>
             <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center h-18">
@@ -167,7 +167,7 @@ export default function Credits({ className }: { className?: string }) {
       </div>
 
       <div className="py-4">
-        <h3 className="font-unbounded text-2xl">Supporter</h3>
+        <h3 className="subtitle">Supporter</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {supporters.map((item, index) =>
             <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center h-18">
@@ -180,7 +180,7 @@ export default function Credits({ className }: { className?: string }) {
       </div>
 
       <div className="py-4">
-        <h3 className="font-unbounded text-2xl">Media partner</h3>
+        <h3 className="subtitle">Media partner</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {partners.map((item, index) =>
             <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center h-18">

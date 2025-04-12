@@ -1,5 +1,6 @@
 import { AppShellMain } from '@mantine/core'
 import Header from '@/components/mantine/header'
+import Footer from '@/components/footer';
 
 const links = [
   { name: "Home", path: "/", visible: false },
@@ -17,9 +18,10 @@ export default function BaseLayout({
   return (
     <>
       <Header links={links} />
-      <AppShellMain>
+      <AppShellMain className="page">
         {children}
       </AppShellMain>
+      <Footer />
     </>
   )
 }

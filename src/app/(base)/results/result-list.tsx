@@ -55,7 +55,7 @@ export default function ResultList({
 
       {!!serie &&
         <div className="w-full my-4 lg:my-8">
-          <h1 className="title">{serie.name}</h1>
+          <h1 className="subtitle">{serie.name}</h1>
           {serie.type === 'race' &&
             <span className="block text-xs text-gray-600">{dt(serie.date).format('DD MMMM YYYY')}</span>
           }
@@ -76,7 +76,7 @@ export default function ResultList({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
           {races.map((event: any, index: any) =>
             <div key={index} className="w-full lg:w-1/2 pt-6">
-              <h1 className="title">{event.name}</h1>
+              <h1 className="subtitle">{event.name}</h1>
               <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
               <div className="mt-4">
                 <ul className="space-y-4">

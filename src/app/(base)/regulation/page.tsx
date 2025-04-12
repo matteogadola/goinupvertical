@@ -3,7 +3,7 @@ import { PortableText, PortableTextReactComponents } from '@portabletext/react'
 
 const components: Partial<PortableTextReactComponents> = {
   block: {
-    h5: ({children}) => <h5 className="pt-2 pb-1 font-semibold">{children}</h5>,
+    h5: ({children}) => <h5 className="pt-2 pb-1 font-semibold text-primary">{children}</h5>,
   },
   list: {
     bullet: ({children}) => <ul className="my-2">{children}</ul>,
@@ -21,7 +21,7 @@ export default async function RegulationPage() {
 
   return (
     <div className="mt-4">
-      <h1 className="font-unbounded text-2xl font-semibold uppercase">{page.name}</h1>
+      <h1 className="title">{page.name}</h1>
 
       <section className="mt-8">
         <PortableText value={page.body} components={components} />

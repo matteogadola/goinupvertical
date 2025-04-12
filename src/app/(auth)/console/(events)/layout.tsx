@@ -1,12 +1,8 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
-import { dt } from '@/utils/date'
-import { redirect } from 'next/navigation';
-import { AppShellHeader, AppShellMain, AppShellNavbar } from '@mantine/core';
-import Navbar from '@/components/ui/mantine_REMOVED/navbar';
-import { Event } from '@/types/events'
-import Sidebar from '@/components/ui/mantine_REMOVED/sidebar';
+import { AppShellMain } from '@mantine/core';
+
 import { getClaims } from '@/utils/supabase/helpers';
 import { hasRole } from '@/utils/supabase/auth';
 import { Role, User } from '@/types/user';

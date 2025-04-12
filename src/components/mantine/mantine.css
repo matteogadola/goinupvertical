@@ -17,7 +17,7 @@ const theme = createTheme({
   /*padding: 0;*/
   padding-inline-start: 0;
   padding-inline-end: 0;
-  min-height: calc(100vh - 5rem - 2.5rem - var(--app-shell-padding));
+  min-height: calc(100vh - 5rem - 2.5rem - 2rem - var(--app-shell-padding));
 }
 
 .mantine-AppShell-header {
