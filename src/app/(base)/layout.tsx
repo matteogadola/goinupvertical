@@ -1,30 +1,20 @@
-import type { Metadata } from 'next'
-
-import { AppShell, MantineProvider, AppShellHeader,
+import {
+  AppShell,
+  MantineProvider,
+  AppShellHeader,
   AppShellNavbar,
   AppShellMain
- } from '@mantine/core';
-import AppContainer from '@/components/ui/mantine/app';
+} from '@mantine/core';
 import Navbar from '@/components/ui/mantine/navbar';
 import Sidebar from '@/components/ui/mantine/sidebar';
 import Footer from '@/components/footer';
 
-/*export const metadata: Metadata = {
-  title: "Goinup Vertical",
-  description: "Circuito di gare vertical a scopo benefico",
-};
-*/
 const links = [
   { name: "Home", path: "/", visible: false },
   { name: "Classifiche", path: "/results" },
-  { name: "Foto e Video", path: "/photos" },
+  { name: "Foto", path: "/photos" },
   { name: "Regolamento", path: "/regulation" },
 ]
-
-export const metadata: Metadata = {
-  title: "Goinup Vertical",
-  description: "Circuito di gare vertical a scopo benefico",
-};
 
 export default function RootLayout({
   children,
@@ -40,7 +30,7 @@ export default function RootLayout({
       <AppShellNavbar p="md">
         <Sidebar links={links} />
       </AppShellNavbar>
-      <AppShellMain className="page">
+      <AppShellMain className="page"> {/* elimina */}
         {children}
         <Footer />
       </AppShellMain>
