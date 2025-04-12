@@ -37,8 +37,6 @@ export default async function Home() {
           <UpcomingEvents events={upcomingEvents} />
         </div>
       }
-
-      <Credits className="mt-16" />
     </>
   );
 }

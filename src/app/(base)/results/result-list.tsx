@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useState, useTransition, Suspense, useMemo } from "react";
+import React, { useState, useTransition, useMemo } from "react";
 import { getResultsByYear } from "./actions";
 import { Event } from "@/types/events";
 import { urlForDowload } from "@/utils/sanity";
 import { dt } from "@/utils/date";
 
-interface PhotoDisplayProps {
+type Props = {
   initialYear: number;
   initialResults: any[];
   availableYears: number[];
@@ -16,7 +16,7 @@ export default function ResultList({
   initialYear,
   initialResults,
   availableYears,
-}: PhotoDisplayProps) {
+}: Readonly<Props>) {
   const [selectedYear, setSelectedYear] = useState<number>(initialYear)
   const [events, setEvents] = useState<Event[]>(initialResults)
   const serie = useMemo(() => events.find(event => event.type === 'serie'), [events])
@@ -74,8 +74,8 @@ export default function ResultList({
 
       {races.length > 0 ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
-          {races.map((event) =>
-            <div key={event.id} className="w-full lg:w-1/2 pt-6">
+          {races.map((event, index) =>
+            <div key={index} className="w-full lg:w-1/2 pt-6">
               <h1 className="subtitle">{event.name}</h1>
               <span className="block text-xs text-gray-600">{dt(event.date).format('DD MMMM YYYY')}</span>
               <div className="mt-4">
