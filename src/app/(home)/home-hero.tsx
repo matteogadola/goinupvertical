@@ -2,6 +2,11 @@
 
 import { CSSProperties, useEffect, useState } from 'react'
 
+type Props = {
+  images?: string[]
+  className?: string
+}
+
 const images: string[] = [
   'hero-1.webp',
   'hero-2.webp'
