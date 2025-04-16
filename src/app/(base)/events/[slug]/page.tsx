@@ -17,7 +17,7 @@ interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export const revalidate = 1800 // 30 minutes
+export const revalidate = 60//1800 // 30 minutes
 export const dynamic = 'force-static';
 export const dynamicParams = false;
 
