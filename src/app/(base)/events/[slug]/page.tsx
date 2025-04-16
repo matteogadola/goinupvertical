@@ -17,7 +17,7 @@ interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export const revalidate = 60//1800 // 30 minutes
+export const revalidate = 1800 // 30 minutes
 export const dynamic = 'force-static';
 export const dynamicParams = false;
 
@@ -64,8 +64,8 @@ export default async function EventPage({
   return (
     <div className="event-grid">
       <div>
-        {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{dt(event.date).format('ddd DD MMM')}</span>}
-        <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
+        <h1 className="title">{event.name}</h1>
+        {event.date && <span className="">{dt(event.date).format('dddd D MMMM [alle] HH:mm')}</span>}
         <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
         <div className="flex flex-col mt-8 space-y-4">
