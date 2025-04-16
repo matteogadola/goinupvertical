@@ -41,12 +41,12 @@ const sponsors = [
     logo: 'patagonia-1.png',
     className: 'h-18',
     url: 'https://www.facebook.com/3passipatagonia'
-  }, /*{
+  }, {
     name: 'Vam Sport',
     logo: 'vam-sport.webp',
-    className: 'h-18',
+    className: 'h-16',
     url: 'https://vamsport.it'
-  },*/ {
+  }, {
     name: 'Avis',
     logo: 'avis.webp',
     className: 'h-18',
@@ -54,8 +54,18 @@ const sponsors = [
   }, {
     name: 'Mobili Rumi',
     logo: 'mobili-rumi.webp',
-    className: 'h-16',
+    className: 'h-18',
     url: 'https://www.mobilirumi.it'
+  }, {
+    name: 'Ambrosini e Rossatti',
+    logo: 'ambronisierossatti.webp',
+    className: 'h-16',
+    url: 'https://www.facebook.com/p/Ambrosini-Rossatti-100068618457333/'
+  }, {
+    name: 'croma',
+    logo: 'croma.webp',
+    className: 'h-18',
+    url: 'https://www.cromasrl.eu/'
   },
 ]
 
@@ -95,19 +105,9 @@ const supporters = [
     className: 'h-14',
     url: 'https://www.k2valtellina.it/'
   }, {
-    name: 'Tiro alla Fune Valtellina',
-    logo: 'tiro-alla-fune-valtellina.webp',
-    className: 'h-16',
-    url: 'https://www.facebook.com/tiroallafuneValtellina'
-  }, {
     name: 'La voce di Daniele',
     logo: 'voce-di-daniele.png',
     className: 'h-14',
-  }, {
-    name: 'Caurga',
-    logo: 'caurga.png',
-    className: 'h-14',
-    url: 'https://www.facebook.com/prolocoforcola'
   },
 ]
 
