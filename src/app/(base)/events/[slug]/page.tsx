@@ -64,9 +64,9 @@ export default async function EventPage({
   return (
     <div className="event-grid">
       <div>
-        <h1 className="title">{event.name}</h1>
-        {event.date && <span className="">{dt(event.date).format('dddd D MMMM [alle] HH:mm')}</span>}
-        <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
+      {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{dt(event.date).format('ddd DD MMM')}</span>}
+      <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
+      <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
 
         <div className="flex flex-col mt-8 space-y-4">
           <Link href={event.regulation ?? "/regulation"}>
