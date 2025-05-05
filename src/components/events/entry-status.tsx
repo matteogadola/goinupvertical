@@ -47,7 +47,7 @@ export default function EventEntryStatus({ event }: { event: any }) {
         return (
           <div className="flex flex-col space-x-2">
             <span className="">Iscrizioni chiuse</span>
-            <span className="block text-gray-700 text-sm">disponibili da {startSaleDate.format('dddd D MMMM')} alle {startSaleDate.format('HH:mm')}</span>
+            <span className="block text-gray-700 text-sm">disponibili da {startSaleDate.tz().format('dddd D MMMM')} alle {startSaleDate.tz().format('HH:mm')}</span>
           </div>
         )
       }
@@ -55,7 +55,7 @@ export default function EventEntryStatus({ event }: { event: any }) {
       return (
         <div className="flex flex-col space-x-2">
           <span className="">Iscrizioni <span className="highlighted">aperte</span></span>
-          <span className="block text-gray-700 text-sm">fino a {endSaleDate.format('dddd D MMMM')} alle {endSaleDate.format('HH:mm')}</span>
+          <span className="block text-gray-700 text-sm">fino a {endSaleDate.tz().format('dddd D MMMM')} alle {endSaleDate.tz().format('HH:mm')}</span>
         </div>
       )
     }
