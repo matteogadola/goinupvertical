@@ -121,13 +121,14 @@ export function DataTable<TData, TValue>({
       product_type: row.original.product_type,
       payment_method: row.original.payment_method,
       payment_status: row.original.payment_status,
-      phone_number: String(row.original.phone_number),
       first_name: row.original.first_name,
       last_name: row.original.last_name,
       cf: row.original.tin,
       birth_year: row.original.birth_year,
       gender: row.original.gender,
       club: row.original.club ?? '',
+      email: row.original.email ?? '',
+      phone_number: String(row.original.phone_number),
     }))
     /*const rowData = model.rows.map((row: any) => row.original)*/
     const csv = generateCsv({ ...csvConfig, filename: `iscrizioni-${event.slug}` })(rowData)
