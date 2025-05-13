@@ -106,13 +106,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
     }
 
     try {
-      const cf = verifyTin(data.tin, data.first_name, data.last_name);
-
-      const minYear = dt().subtract(15, 'years').year();
-      if (cf.year > minYear) {
-        form.setFieldError('tin', `Anno minimo per l'iscrizione: ${minYear}`);
-        return;
-      }
+      verifyTin(data.tin, data.first_name, data.last_name);
     } catch(e: any) {
       form.setFieldError('tin', e.message);
       return

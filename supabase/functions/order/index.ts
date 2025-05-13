@@ -216,6 +216,11 @@ const verifyTin = function(tin: string, firstName: string, lastName: string) {
       throw new Error(`Corrispondenza codice fiscale non valida`);
     }
 
+    const entryYearLimit = (new Date()).getFullYear() - 15;
+    if (cf.year > entryYearLimit) {
+      throw new Error(`Anno minimo per l'iscrizione: ${entryYearLimit}`);
+    }
+
     return cf;
   } catch (e: any) {
     throw new Error(`Codice fiscale ${tin} non valido`);
