@@ -1,4 +1,4 @@
-import CodiceFiscale from "codice-fiscale-js";
+import CodiceFiscale from 'codice-fiscale-js';
 
 export const isTinValid = (tin: string) => {
   try {
@@ -14,7 +14,7 @@ export const isTinValid = (tin: string) => {
   }
 };
 
-export const verifyTin = (tin: string, firstName: string, lastName: string) => {
+export const verifyTin = (tin: string, firstName: string, lastName: string): CodiceFiscale => {
   const cf = new CodiceFiscale(tin);
 
   if (!cf.isValid()) {

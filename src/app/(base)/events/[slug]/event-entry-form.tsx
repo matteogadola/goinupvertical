@@ -16,6 +16,7 @@ import { capitalize } from "@/utils/text";
 import { FunctionsHttpError } from "@supabase/supabase-js";
 import { subscribeWithSelector } from 'zustand/middleware'
 import { isTinValid, verifyTin } from "@/utils/tin";
+import { dt } from '@/utils/date';
 
 /**
  * questa è la parte in cui in una sorta di card vengono mostrati:
@@ -105,7 +106,13 @@ export default function EventEntryForm({ event, product }: { event: any, product
     }
 
     try {
-      verifyTin(data.tin, data.first_name, data.last_name)
+      const cf = verifyTin(data.tin, data.first_name, data.last_name);
+
+      const minYear = dt().subtract(15, 'years').year();
+      if (cf.year > minYear) {
+        form.setFieldError('tin', `Anno minimo per l'iscrizione: ${minYear}`);
+        return;
+      }
     } catch(e: any) {
       form.setFieldError('tin', e.message);
       return
