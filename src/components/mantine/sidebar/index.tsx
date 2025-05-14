@@ -10,7 +10,7 @@ export default function Sidebar({
 
   return (
     <AppShellNavbar p="md">
-      <SidebarNav />
+      <SidebarNav links={links} />
     </AppShellNavbar>
   )
 }

@@ -3,9 +3,12 @@
 import { useUiStore } from '@/store/ui';
 import Link from 'next/link';
 
-export default function SidebarNav() {
+export default function SidebarNav({
+  links,
+}: {
+  links: any[]
+}) {
   const { sidenavToggle } = useUiStore()
-  const links: any[] = []
 
   return (
     <div className="">
