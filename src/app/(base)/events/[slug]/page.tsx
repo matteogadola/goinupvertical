@@ -7,6 +7,7 @@ import { dt } from '@/utils/date';
 import EventProducts from './event-products';
 import EventAttachment from './event.attachment';
 import Credits from '@/components/credits';
+import { PortableText, PortableTextReactComponents } from '@portabletext/react'
 
 interface Params {
   slug: string;
@@ -15,6 +16,30 @@ interface Params {
 interface Props {
   params: Params;
   searchParams: { [key: string]: string | string[] | undefined };
+}
+
+const components: Partial<PortableTextReactComponents> = {
+  marks: {
+    link: ({value, children}) => {
+      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
+      return (
+        <a href={value?.href} target={target} rel={target === '_blank' ? 'noindex nofollow' : ''} className='link'>
+          {children}
+        </a>
+      )
+    }},
+  list: {
+    bullet: ({children}) => <ul className="my-2">{children}</ul>,
+  },
+  listItem: {
+    bullet: ({children}) => <li style={{
+      listStyleType: 'disc',
+      listStylePosition: 'inside'
+    }}>{children}</li>,
+  },
+  block: {
+    normal: ({children}) => <p className="mb-2">{children}</p>,
+  },
 }
 
 export const revalidate = 1800 // 30 minutes
@@ -66,15 +91,24 @@ export default async function EventPage({
       <div>
         {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{dt(event.date).format('ddd DD MMM')}</span>}
         <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
-        <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
+        {(!!event.description && Array.isArray(event.description))
+          ? <div className="mt-8 text-sm md:text-base">
+              <PortableText value={event.description} components={components} />
+            </div>
+          : <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
+        }
 
         <div className="flex flex-col mt-8 space-y-4">
-          <Link href={event.regulation ?? "/regulation"}>
-            <span className="link">Consulta il regolamento</span>
-          </Link>
-          <Link href={`${slug}/entries`}>
-            <span className="link">Vedi elenco iscritti</span>
-          </Link>
+          {event.products !== null &&
+            <Link href={event.regulation ?? "/regulation"}>
+              <span className="link">Consulta il regolamento</span>
+            </Link>
+          }
+          {!!event.products?.length &&
+            <Link href={`${slug}/entries`}>
+              <span className="link">Vedi elenco iscritti</span>
+            </Link>
+          }
         </div>
       </div>
 
