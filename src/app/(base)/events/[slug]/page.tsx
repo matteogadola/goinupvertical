@@ -44,7 +44,7 @@ const components: Partial<PortableTextReactComponents> = {
 
 export const revalidate = 1800 // 30 minutes
 export const dynamic = 'force-static';
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const events = await getEvents()
