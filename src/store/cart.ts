@@ -47,6 +47,7 @@ export interface Item {
   quantity: number;
   payment_methods: string[];
   event_id: string;
+  end_sale_date: string | null;
   entry?: any;//EntryForm;
 }
 
