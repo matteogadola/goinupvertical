@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Button, Group, Switch } from '@mantine/core';
 import ErrorText from '@/components/ui/error-text';
 import { useRouter } from 'next/navigation'
+import { dt } from '@/utils/date';
 
 export default function CheckoutPage() {
   const { items, removeItem, paymentMethod, setPaymentMethod } = useCartStore();
@@ -131,7 +132,7 @@ export default function CheckoutPage() {
                   <img src="/images/logo/amex-old.svg" className="h-6" alt="amex" />
                 </div>
 }
-                
+
 {paymentMethods.includes('sepa') &&
   <div className="flex items-center pl-4 pr-2 border border-gray-200 rounded">
   <input type="radio" value="sepa" id="payment-method-sepa" checked={paymentMethod === 'sepa'} onChange={e => setPaymentMethod('sepa')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
@@ -150,7 +151,8 @@ export default function CheckoutPage() {
     <span>Contanti</span>
     {paymentMethod === 'cash' &&
       <span className="block font-normal text-xs">
-        Sarà necessario recarsi presso 3Passi Patagonia Morbegno {/*uno degli <button onClick={() => openLocations()} className="text-button">store abilitati</button>*/}
+        Da effettuare presso 3Passi Patagonia Morbegno{items[0].end_sale_date !== null && <span> entro le ore 19 di {dt(items[0].end_sale_date).format('dddd D MMMM')}</span>}
+        {/*uno degli <button onClick={() => openLocations()} className="text-button">store abilitati</button>*/}
       </span>}
   </label>
 </div>
