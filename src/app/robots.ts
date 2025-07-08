@@ -7,10 +7,10 @@ export default function robots(): MetadataRoute.Robots {
       allow: [
         '/$',
         '/favicon.ico',
-		'/sitemap.xml',
-		'/regulation',
+        '/sitemap.xml',
+        '/regulation',
         '/results',
-		'/photos',
+        '/photos',
       ],
       disallow: '/',
     },

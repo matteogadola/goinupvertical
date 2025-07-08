@@ -22,7 +22,7 @@ const links = [
 ]
 
 export const metadata: Metadata = {
-  title: "Goinup Vertical",
+  title: "GOinUP Vertical",
   description: "Circuito di gare vertical a scopo benefico",
 };
 
