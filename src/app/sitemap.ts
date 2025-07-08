@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.1,
+      images: ['https://www.goinupvertical.it/images/flyers/goinup-7-md.webp'],
     },
     {
       url: 'https://www.goinupvertical.it/regulation',
