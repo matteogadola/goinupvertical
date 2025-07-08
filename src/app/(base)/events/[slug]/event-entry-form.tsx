@@ -113,7 +113,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
     }
 
     try {
-      if (await entryExist(event.id, data.tin)) {
+      if (await entryExist(event._id, data.tin)) {
         // anche in questo caso meglio mostra errore generale?
         form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
         return
@@ -132,6 +132,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
       quantity: 1,
       payment_methods: product.payment_methods,
       event_id: event._id,
+      end_sale_date: product.date ?? event.date ? dt(event.date).subtract(2, 'days').format() : null,
       entry: {
         ...data,
         first_name: capitalize(data.first_name),

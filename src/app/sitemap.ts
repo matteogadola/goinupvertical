@@ -5,29 +5,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: 'https://www.goinupvertical.it',
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    /*{
-      url: 'https://goinupvertical.it/about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
+      changeFrequency: 'yearly',
+      priority: 0.1,
+      images: ['https://www.goinupvertical.it/images/flyers/goinup-7-md.webp'],
     },
     {
-      url: 'https://goinupvertical.it/regulation',
+      url: 'https://www.goinupvertical.it/regulation',
       lastModified: new Date(),
       changeFrequency: 'yearly',
-      priority: 0.5,
-    },*/
+      priority: 0.1,
+    },
     {
-      url: 'https://www.goinupvertical.it/photos',
+      url: 'https://www.goinupvertical.it/results',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.5,
     },
     {
-      url: 'https://www.goinupvertical.it/results',
+      url: 'https://www.goinupvertical.it/photos',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.5,

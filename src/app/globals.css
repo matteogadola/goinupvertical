@@ -126,9 +126,10 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --link: #0040D6;
-  --link-hover: #3f8efc;
 
+  --link: #193cb8;
+  --link-hover: #155dfc;
+  /*text-blue-800 hover:text-blue-600*/
 }
 
 /*
@@ -157,7 +158,7 @@ html, body {
 
   &:hover {
     @media (hover: hover) {
-      opacity: 80%;
+      color: var(--link-hover);
     }
   }
 }

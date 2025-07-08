@@ -1,6 +1,7 @@
 import { AppShellMain } from '@mantine/core'
 import Header from '@/components/mantine/header'
 import Footer from '@/components/footer';
+import { Metadata } from 'next';
 
 const links = [
   { name: "Home", path: "/", visible: false },
@@ -9,7 +10,12 @@ const links = [
   { name: "Regolamento", path: "/regulation" },
 ]
 
-export default function BaseLayout({
+export const metadata: Metadata = {
+  title: "GOinUP Vertical",
+  description: "Circuito di gare vertical a scopo benefico",
+};
+
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
