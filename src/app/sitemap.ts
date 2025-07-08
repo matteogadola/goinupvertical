@@ -9,22 +9,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: 'https://goinupvertical.it/about',
+      url: 'https://goinupvertical.it/regulation',
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 1,
+    },
+	{
+      url: 'https://www.goinupvertical.it/results',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-    /*{
-      url: 'https://goinupvertical.it/regulation',
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },*/
     {
       url: 'https://goinupvertical.it/media',
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.5,
+      priority: 0.8,
     },
   ]
 }
