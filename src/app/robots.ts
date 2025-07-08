@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
 		'/sitemap.xml',
 		'/regulation',
         '/results',
-		'/media',
+		'/photos',
       ],
       disallow: '/',
     },

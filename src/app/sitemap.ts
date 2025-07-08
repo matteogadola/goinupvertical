@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: 'https://goinupvertical.it/media',
+      url: 'https://goinupvertical.it/photos',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
