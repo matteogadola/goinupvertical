@@ -20,7 +20,7 @@ export default function EventReservation({ event, products }: { event: any, prod
       last_name: '',
       email: '',
       phone_number: '',
-      items: products.map(item => ({ quantity: 1 }))
+      items: Object.fromEntries(products.map(item => [item._id, 0]))
     },
     validate: {
       first_name: isNotEmpty('Inserisci il nome'),
@@ -29,7 +29,7 @@ export default function EventReservation({ event, products }: { event: any, prod
     },
   });
 
-  console.log(products)
+  console.log(form.getValues())
 
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
@@ -127,25 +127,23 @@ export default function EventReservation({ event, products }: { event: any, prod
         {!!products.length &&
           <div>
             <Divider my="md" />
-            <div className="flex space-y-2">
-              {products.map((item, index) => (
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
-                  <div className="lg:col-span-2">
-                    <h2 className="text-lg text-gray-800">{item.name}</h2>
-                    <p className="text-sm text-gray-600">{item.summary}</p>
-                  </div>
-                  <div>
-                    <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
-                  </div>
-                  <NumberInput
-                    placeholder="Quantità"
-                    allowNegative={false}
-                    key={form.key('phone_number')}
-                    {...form.getInputProps('phone_number')}
-                  />
+            {products.map((item, index) => (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
+                <div className="lg:col-span-2">
+                  <h2 className="text-lg text-gray-800">{item.name}</h2>
+                  <p className="text-sm text-gray-600">{item.summary}</p>
                 </div>
-              ))}
-            </div>
+                <div>
+                  <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
+                </div>
+                <NumberInput
+                  placeholder="Quantità"
+                  allowNegative={false}
+                  key={form.key('phone_number._id')}
+                  {...form.getInputProps('phone_number')}
+                />
+              </div>
+            ))}
           </div>
         }
 
