@@ -122,9 +122,8 @@ export default function EventReservation({ event, products }: { event: any, prod
         {!!products.length &&
           <div>
             <Divider my="md" />
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
               {products.map((item, index) => (
-                <div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                   <div className="lg:col-span-2">
                     <h2 className="text-xl text-gray-800">{item.name}</h2>
                     <p className="text-sm text-gray-600">{item.summary}</p>
@@ -133,14 +132,11 @@ export default function EventReservation({ event, products }: { event: any, prod
                     <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
                   </div>
                   <NumberInput
-                    label={item.name}
-                    description={item.price / 100}
-                    placeholder="Seleziona quantità"
+                    placeholder="Quantità"
                     allowNegative={false}
                   />
                 </div>
               ))}
-            </div>
           </div>
         }
 
