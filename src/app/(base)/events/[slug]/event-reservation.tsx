@@ -7,7 +7,7 @@ import EventEntryForm from "./event-entry-form";
 import EventEntryStatus from "@/components/events/entry-status";
 import { useEffect, useState } from "react";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { Button, TextInput, NumberInput } from "@mantine/core";
+import { Button, TextInput, NumberInput, Divider } from "@mantine/core";
 import { useRouter } from "next/navigation";
 
 export default function EventReservation({ event, products }: { event: any, products: any[] }) {
@@ -117,20 +117,32 @@ export default function EventReservation({ event, products }: { event: any, prod
             key={form.key('phone_number')}
             {...form.getInputProps('phone_number')}
           />
-
-          {!!products.length &&
-            products.map((item, index) => (
-              <NumberInput
-                label={item.name}
-                description={item.price / 100}
-                placeholder="Seleziona quantità"
-                className="col-span-2"
-                allowNegative={false}
-              />
-            ))
-          }
-
         </div>
+
+        {!!products.length &&
+          <div>
+            <Divider my="md" />
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {products.map((item, index) => (
+                <div>
+                  <div className="lg:col-span-2">
+                    <h2 className="text-xl text-gray-800">{item.name}</h2>
+                    <p className="text-sm text-gray-600">{item.summary}</p>
+                  </div>
+                  <div className="flex items-center md:mr-4">
+                    <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
+                  </div>
+                  <NumberInput
+                    label={item.name}
+                    description={item.price / 100}
+                    placeholder="Seleziona quantità"
+                    allowNegative={false}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        }
 
         <p className="mt-6">
           <span className="block text-xs text-gray-600 dark:text-gray-500">
