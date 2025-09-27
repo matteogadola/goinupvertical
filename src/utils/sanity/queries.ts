@@ -83,7 +83,7 @@ export const getEventLinks = async ({ year }: { year?: number } = {}) => {
   const fromDate = new Date(year, 0, 1).toISOString().split('T')[0]
   const toDate = new Date(year + 1, 0, 1).toISOString().split('T')[0]
 
-  return client.fetch<Event[]>(`*[_type == "event" && type in $types && date >= $fromDate && date < $toDate && count(links[]->url) > 0] | order(date)`, { fromDate, toDate, types: ['serie', 'race'] })
+  return client.fetch<Event[]>(`*[_type == "event" && type in $types && date >= $fromDate && date < $toDate && count(links[]->url) > 0] | order(date)`, { fromDate, toDate, types: ['serie', 'race', 'award'] })
 }
 
 
