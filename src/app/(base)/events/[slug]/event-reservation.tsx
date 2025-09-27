@@ -1,3 +1,5 @@
+'use client'
+
 import { dt } from "@/utils/date";
 import clsx from "clsx";
 import Link from "next/link";
@@ -6,7 +8,7 @@ import EventEntryStatus from "@/components/events/entry-status";
 import { useEffect, useState } from "react";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { Button, TextInput, NumberInput } from "@mantine/core";
-//import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function EventReservation({ event, products }: { event: any, products: any[] }) {
   //const router = useRouter()

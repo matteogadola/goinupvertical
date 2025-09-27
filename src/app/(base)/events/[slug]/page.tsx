@@ -129,40 +129,4 @@ export default async function EventPage({
       }
     </div>
   )
-
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-2">
-      <div>
-        {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{dt(event.date).format('ddd DD MMM')}</span>}
-        <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
-        <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
-
-        <div className="flex flex-col mt-8 space-y-4">
-          <Link href={event.regulation ?? "/regulation"}>
-            <span className="link">Consulta il regolamento</span>
-          </Link>
-          <Link href={`${slug}/entries`}>
-            <span className="link">Vedi elenco iscritti</span>
-          </Link>
-        </div>
-
-        <div className="pt-8">
-          <EventProducts event={event} />
-        </div>
-      </div>
-
-      <div className="flex lg:justify-center items-start">
-        {!!flyer &&
-          <img
-            src={urlFor(flyer)}
-            className="mt-4 lg:mt-0 aspect-auto"
-            alt="Flyer"
-            width={500}
-            height={500}
-          />
-        }
-      </div>
-
-    </div>
-  )
 }
