@@ -75,8 +75,13 @@ export default function EventReservation({ event, products }: { event: any, prod
   }, [event]);*/
 
   return (
-    <section className="mt-8">
-      <span className="overtitle my-2">Modulo di prenotazione</span>
+    <div className="px-4 py-2 bg-slate-50 shadow-sm">
+      <div className="flex space-x-4 items-baseline">
+        <h2 className ="font-unbounded text-xl">Modulo di prenotazione</h2>
+      </div>
+
+      <p className="text-gray-600 hidden">{}</p>
+
       <form className="mt-4 py-4" autoComplete="off">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         
@@ -115,27 +120,13 @@ export default function EventReservation({ event, products }: { event: any, prod
 
           {!!products.length &&
             products.map((item, index) => (
-              <div key={index} className="py-6 flex flex-wrap md:flex-nowrap">
-                <div className="flex justify-between content-between w-full">
-                  <div>
-                    <h2 className="text-xl text-gray-800">{item.name}</h2>
-                    <p className="text-sm text-gray-600">{item.summary}</p>
-                  </div>
-                  <div className="flex items-center md:mr-4">
-                    <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
-                  </div>
-                </div>
-
-                <div className="md:mr-4 items-center flex">
-                  <NumberInput
-                    label={item.name}
-                    description={item.price / 100}
-                    placeholder="Seleziona quantità"
-                    allowNegative={false}
-                  />
-                </div>
-
-              </div>
+              <NumberInput
+                label={item.name}
+                description={item.price / 100}
+                placeholder="Seleziona quantità"
+                className="col-span-2"
+                allowNegative={false}
+              />
             ))
           }
 
@@ -151,6 +142,6 @@ export default function EventReservation({ event, products }: { event: any, prod
           <Button onClick={onSubmit} variant="filled">Conferma prenotazione</Button>
         </div>
       </form>
-    </section>
+    </div>
   )
 }
