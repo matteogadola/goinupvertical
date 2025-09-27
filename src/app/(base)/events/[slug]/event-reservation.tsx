@@ -29,8 +29,6 @@ export default function EventReservation({ event, products }: { event: any, prod
     },
   });
 
-  console.log(form.getValues())
-
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
 
@@ -139,8 +137,8 @@ export default function EventReservation({ event, products }: { event: any, prod
                 <NumberInput
                   placeholder="Quantità"
                   allowNegative={false}
-                  key={form.key('phone_number._id')}
-                  {...form.getInputProps('phone_number')}
+                  key={form.key(`items.${item._id}`)}
+                  {...form.getInputProps(`items.${item._id}`)}
                 />
               </div>
             ))}
