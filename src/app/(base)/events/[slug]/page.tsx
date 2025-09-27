@@ -104,7 +104,7 @@ export default async function EventPage({
               <span className="link">Consulta il regolamento</span>
             </Link>
           }
-          {(['race', 'serie'].includes(event.type) && !!event.products?.length) &&
+          {(['race', 'serie'].includes(event.type) && event?.products?.length) &&
             <Link href={`${slug}/entries`}>
               <span className="link">Vedi elenco iscritti</span>
             </Link>
