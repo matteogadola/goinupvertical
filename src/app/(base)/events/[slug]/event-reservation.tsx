@@ -20,6 +20,7 @@ export default function EventReservation({ event, products }: { event: any, prod
       last_name: '',
       email: '',
       phone_number: '',
+      items: products.map(item => ({ quantity: 1 }))
     },
     validate: {
       first_name: isNotEmpty('Inserisci il nome'),
@@ -28,10 +29,14 @@ export default function EventReservation({ event, products }: { event: any, prod
     },
   });
 
+  console.log(products)
+
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
 
     const data = form.getValues()
+
+    console.log(data)
 
     // NO CHIAMATA
     /*addItem({
@@ -122,10 +127,11 @@ export default function EventReservation({ event, products }: { event: any, prod
         {!!products.length &&
           <div>
             <Divider my="md" />
+            <div className="flex space-y-2">
               {products.map((item, index) => (
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
                   <div className="lg:col-span-2">
-                    <h2 className="text-xl text-gray-800">{item.name}</h2>
+                    <h2 className="text-lg text-gray-800">{item.name}</h2>
                     <p className="text-sm text-gray-600">{item.summary}</p>
                   </div>
                   <div>
@@ -134,9 +140,12 @@ export default function EventReservation({ event, products }: { event: any, prod
                   <NumberInput
                     placeholder="Quantità"
                     allowNegative={false}
+                    key={form.key('phone_number')}
+                    {...form.getInputProps('phone_number')}
                   />
                 </div>
               ))}
+            </div>
           </div>
         }
 
