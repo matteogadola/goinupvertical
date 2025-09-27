@@ -123,12 +123,12 @@ export default function EventReservation({ event, products }: { event: any, prod
           <div>
             <Divider my="md" />
               {products.map((item, index) => (
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
                   <div className="lg:col-span-2">
                     <h2 className="text-xl text-gray-800">{item.name}</h2>
                     <p className="text-sm text-gray-600">{item.summary}</p>
                   </div>
-                  <div className="flex items-center md:mr-4">
+                  <div>
                     <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
                   </div>
                   <NumberInput
@@ -146,7 +146,7 @@ export default function EventReservation({ event, products }: { event: any, prod
           </span>
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+        <div className="flex justify-end mt-4">
           <Button onClick={onSubmit} variant="filled">Conferma prenotazione</Button>
         </div>
       </form>
