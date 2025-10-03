@@ -29,6 +29,21 @@ export default function EventReservation({ event, products }: { event: any, prod
     },
   });
 
+  const onItemChange = ({ target }: any) => {
+    console.log(target)
+    const { value } = target;
+
+    /*Object.values(form.getValues().items).reduce((a, v) => {
+      const product = products.find((item: any) => item._id === id)
+      a + v
+    }, 0)*/
+    //const totalAmount = Object.entries(form.getValues())
+    //form.setFieldValue('other.property.associated.with.user', fn(value)); // fn transforms the value for the associated property
+    //form.setFieldValue('accounts.user', value);
+  };
+
+  const [totalAmount, settotalAmount] = useState<number>(0);
+
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
 
@@ -183,9 +198,14 @@ export default function EventReservation({ event, products }: { event: any, prod
                   allowNegative={false}
                   key={form.key(`items.${item._id}`)}
                   {...form.getInputProps(`items.${item._id}`)}
+                  onChange={onItemChange}
                 />
               </div>
             ))}
+            <div>
+              <span className="text-gray-800 text-lg uppercase">Totale</span>
+              <span className="text-gray-800 text-lg uppercase">{totalAmount / 100}€</span>
+            </div>
           </div>
         }
 
