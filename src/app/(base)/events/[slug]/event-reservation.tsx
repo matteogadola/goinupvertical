@@ -30,19 +30,14 @@ export default function EventReservation({ event, products }: { event: any, prod
   });
 
   const onItemChange = ({ target }: any) => {
-    console.log(target)
-    const { value } = target;
-
-    /*Object.values(form.getValues().items).reduce((a, v) => {
+    const totalAmount = Object.entries(form.getValues().items).reduce((a, [id, quantity]: any) => {
       const product = products.find((item: any) => item._id === id)
-      a + v
-    }, 0)*/
-    //const totalAmount = Object.entries(form.getValues())
-    //form.setFieldValue('other.property.associated.with.user', fn(value)); // fn transforms the value for the associated property
-    //form.setFieldValue('accounts.user', value);
+      return a + (quantity * product.price);
+    }, 0);
+    setTotalAmount(totalAmount);
   };
 
-  const [totalAmount, settotalAmount] = useState<number>(0);
+  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
