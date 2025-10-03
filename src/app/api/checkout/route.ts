@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
     const q = encodeBase64(JSON.stringify(order));
 
-    if (['cash', 'sepa'].includes(order.payment_method)) {
+    if (['cash', 'sepa', 'on-site'].includes(order.payment_method)) {
       await invoke('mail-checkout', order)
 
       return new Response(JSON.stringify({order, checkoutSessionUrl: `${origin}/checkout/confirm?q=${q}`}), {

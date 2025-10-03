@@ -1,7 +1,7 @@
 import type { Entry } from './entries';
 
 export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
-export type PaymentMethod = 'stripe' | 'sepa' | 'cash';
+export type PaymentMethod = 'stripe' | 'sepa' | 'cash' | 'on-site';
 export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed';
 
 export interface Order {

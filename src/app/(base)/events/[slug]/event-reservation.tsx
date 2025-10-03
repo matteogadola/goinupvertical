@@ -1,17 +1,13 @@
 'use client'
 
-import { dt } from "@/utils/date";
-import clsx from "clsx";
-import Link from "next/link";
-import EventEntryForm from "./event-entry-form";
-import EventEntryStatus from "@/components/events/entry-status";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { Button, TextInput, NumberInput, Divider } from "@mantine/core";
-import { useRouter } from "next/navigation";
+import { dt } from "@/utils/date";
 
 export default function EventReservation({ event, products }: { event: any, products: any[] }) {
-  //const router = useRouter()
+  const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -54,7 +50,7 @@ export default function EventReservation({ event, products }: { event: any, prod
           description: '',
           price: product.price,
           quantity,
-          payment_methods: 'cash',
+          payment_methods: 'on-site',
           event_id: event._id,
           end_sale_date: product.date ?? event.date ? dt(event.date).subtract(2, 'days').format() : null,
         }
@@ -64,66 +60,34 @@ export default function EventReservation({ event, products }: { event: any, prod
       customer_email: data.email,
       customer_first_name: data.first_name,
       customer_last_name: data.last_name,
-      payment_method: 'cash',
+      payment_method: 'on-site',
       items: items
     })
-    /*
+
     try {
-      const response = await fetch('/api/checkout', {
+      const response: Response = await fetch('/api/checkout', {
         method: 'POST',
         body: JSON.stringify({
           customer_email: data.email,
           customer_first_name: data.first_name,
           customer_last_name: data.last_name,
-          payment_method: 'cash',
-          items: data.items
+          payment_method: 'on-site',
+          items: items
         }),
       })
-      const data = await response.json()
+      const responseData = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(responseData.message);
       }
 
-      router.replace(data.checkoutSessionUrl)
+      router.replace(responseData.checkoutSessionUrl)
     } catch (e: any) {
       setError(e.message)
     } finally {
       setLoading(false)
     }
-    */
-
-    // NO CHIAMATA
-    /*addItem({
-      product_id: product._id,
-      product_name: product.name,
-      description: capitalize(`${data.first_name} ${data.last_name}`),
-      price: product.price,
-      quantity: 1,
-      payment_methods: product.payment_methods,
-      event_id: event._id,
-      end_sale_date: product.date ?? event.date ? dt(event.date).subtract(2, 'days').format() : null,
-      entry: {
-        ...data,
-        first_name: capitalize(data.first_name),
-        last_name: capitalize(data.last_name),
-        tin: data.tin.toUpperCase(),
-        email: data.email.toLowerCase(),
-      },
-    })*/
   }
-
-  /*const updateQuantity = (id: number, quantity: number) => {
-    const updateItem = (items: OrderItem[]) => {
-      const originalItem = items.find(item => item.id === id)
-
-      return items.map(item =>
-        item.id === id ? { ...originalItem!, quantity } : item
-      )
-    }
-
-    setState(state => ({ ...state, items: updateItem(state.items) }))
-  }*/
 
   return (
     <div className="px-4 py-2 bg-slate-50 shadow-sm">
@@ -177,7 +141,7 @@ export default function EventReservation({ event, products }: { event: any, prod
               <div key={index} className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
                 <div className="lg:col-span-2">
                   <h2 className="">{item.name}</h2>
-                  <p className="text-sm text-gray-600">{item.summary}</p>
+                  <p className=" text-sm text-gray-600">{item.summary}</p>
                 </div>
                 <div>
                   <span className="">{item.price / 100}€</span>
