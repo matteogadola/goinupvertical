@@ -32,38 +32,17 @@ export default function EventReservation({ event, products }: { event: any, prod
     },
     onValuesChange: (values) => {
       const totalAmount = Object.entries(values.items).reduce((a, [id, quantity]: any) => {
-        console.log('id ', id)
-        console.log('quantity ', quantity)
         const product = products.find((item: any) => item._id === id)
         return a + (quantity * product.price);
       }, 0);
-      console.log(values);
       setTotalAmount(totalAmount);
     },
   });
-
-  /*form.watch('items', ({ previousValue, value, touched, dirty }) => {
-    console.log({ previousValue, value, touched, dirty });
-  });*/
-
-  /*const onItemChange = ({ target }: any) => {
-    const totalAmount = Object.entries(form.getValues().items).reduce((a, [id, quantity]: any) => {
-      console.log('id ', id)
-      console.log('quantity ', quantity)
-      const product = products.find((item: any) => item._id === id)
-      return a + (quantity * product.price);
-    }, 0);
-    console.log(totalAmount)
-    setTotalAmount(totalAmount);
-  };*/
 
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
 
     const data = form.getValues()
-
-    console.log(data)
-
     const items = Object.entries(data.items)
       .filter(([id, quantity]: any) => quantity > 0)
       .map(([id, quantity]) => {
@@ -81,7 +60,13 @@ export default function EventReservation({ event, products }: { event: any, prod
         }
       })
 
-    console.log(items)
+    console.log({
+      customer_email: data.email,
+      customer_first_name: data.first_name,
+      customer_last_name: data.last_name,
+      payment_method: 'cash',
+      items: items
+    })
     /*
     try {
       const response = await fetch('/api/checkout', {
@@ -138,16 +123,7 @@ export default function EventReservation({ event, products }: { event: any, prod
     }
 
     setState(state => ({ ...state, items: updateItem(state.items) }))
-  }
-
-  useEffect(() => {
-    const items: any[] = event.items
-      ?.sort((a, b) => a.id - b.id)
-      ?.map(item => ({ ...item, quantity: 0 }))
-      ?? []
-
-    setState(state => ({ ...state, items }))
-  }, [event]);*/
+  }*/
 
   return (
     <div className="px-4 py-2 bg-slate-50 shadow-sm">
@@ -214,7 +190,7 @@ export default function EventReservation({ event, products }: { event: any, prod
                 />
               </div>
             ))}
-            <div className="mt-8 flex justify-between">
+            <div className="mt-6 flex justify-between">
               <span className="text-lg uppercase">Totale</span>
               <span className="text-lg">{totalAmount / 100}€</span>
             </div>
