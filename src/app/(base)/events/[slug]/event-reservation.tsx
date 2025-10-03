@@ -17,7 +17,7 @@ export default function EventReservation({ event, products }: { event: any, prod
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const form = useForm({
-    mode: 'uncontrolled',
+    mode: 'controlled',
     initialValues: {
       first_name: '',
       last_name: '',
@@ -57,9 +57,6 @@ export default function EventReservation({ event, products }: { event: any, prod
     if (form.validate().hasErrors) return;
 
     const data = form.getValues()
-
-    console.log(data)
-
     const items = Object.entries(data.items)
       .filter(([id, quantity]: any) => quantity > 0)
       .map(([id, quantity]) => {
