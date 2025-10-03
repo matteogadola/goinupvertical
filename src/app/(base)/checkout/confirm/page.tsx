@@ -81,14 +81,14 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
     return (
       <>
         <section>
-          <span className="overtitle">Conferma</span>
+          <span className="font-unbounded capitalize px-1 bg-yellow-200">Conferma</span>
           <h1 className="title mt-3">Ordine n. {order.id}</h1>
           <div className="text mt-2">
             <table className="border border-slate-400 mt-8">
               <thead>
                 <tr className="bg-slate-200">
                   <td className="w-80 border-b py-2">Riferimento</td>
-                  <td className="w-60 border-b py-2">Descrizione</td>
+                  <td className="w-120 border-b py-2">Descrizione</td>
                   <td className="w-32 border-b py-2">Quantità</td>
                   <td className="w-32 border-b py-2">Prezzo</td>
                 </tr>
