@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { Button, TextInput, NumberInput, Divider } from "@mantine/core";
 import { dt } from "@/utils/date";
+import ErrorText from "@/components/ui/error-text";
 
 export default function EventReservation({ event, products }: { event: any, products: any[] }) {
   const router = useRouter()
@@ -166,6 +167,8 @@ export default function EventReservation({ event, products }: { event: any, prod
             Completando l&apos;iscrizione accetti i <a href="/legal/terms" target="_blank" className="link" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="link" rel="noopener noreferrer">informativa sulla privacy</a>
           </span>
         </p>
+
+        {!!error && <ErrorText className="mt-4">{error}</ErrorText>}
 
         <div className="flex justify-end mt-4">
           <Button onClick={onSubmit} loading={loading} variant="filled">Conferma prenotazione</Button>
