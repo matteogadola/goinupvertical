@@ -2,6 +2,7 @@ import { dt } from "@/utils/date";
 import clsx from "clsx";
 import Link from "next/link";
 import EventEntry from "./event-entry";
+import EventReservation from "./event-reservation";
 
 export default async function EventProducts({ event }: { event: any }) {
 
@@ -46,6 +47,9 @@ export default async function EventProducts({ event }: { event: any }) {
     } else {
       // son più di uno...per la gara non dovrebbe essere possibile
     }
+  } else {
+    return (
+      <EventReservation event={event} products={event.products} />
+    )
   }
-  return <></>
 }
