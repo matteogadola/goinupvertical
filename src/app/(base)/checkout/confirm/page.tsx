@@ -76,6 +76,7 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
     
   } else if (q && typeof q === 'string') {
     const order = decodeBase64<any>(q);
+    const totalAmount = order.items.reduce((a: number, v: any) => a + (v.quantity * v.price), 0);
     
     return (
       <>
@@ -99,10 +100,14 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
                       <td className="py-2">{item.name}</td>
                       <td className="py-2">{item.description}</td>
                       <td className="py-2">{item.quantity}</td>
-                      <td className="py-2">{item.price / 100}€</td>
+                      <td className="py-2">{(item.quantity * item.price) / 100}€</td>
                     </tr>
                   )
                 }
+                <tr key={-1}>
+                  <td colSpan={3} className="py-2">TOTALE</td>
+                  <td className="py-2">{totalAmount / 100}€</td>
+                </tr>
               </tbody>
             </table>
             

@@ -168,7 +168,7 @@ export default function EventReservation({ event, products }: { event: any, prod
         </p>
 
         <div className="flex justify-end mt-4">
-          <Button onClick={onSubmit} variant="filled">Conferma prenotazione</Button>
+          <Button onClick={onSubmit} loading={loading} variant="filled">Conferma prenotazione</Button>
         </div>
       </form>
     </div>
