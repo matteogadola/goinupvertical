@@ -48,7 +48,7 @@ export default function EventReservation({ event, products }: { event: any, prod
         return {
           product_id: id,
           product_name: product.name,
-          description: '',
+          description: product.summary,
           price: product.price,
           quantity,
           payment_methods: 'on-site',
