@@ -36,6 +36,50 @@ export default function EventReservation({ event, products }: { event: any, prod
 
     console.log(data)
 
+    const items = Object.entries(data.items)
+      .filter(([id, quantity]: any) => quantity > 0)
+      .map(([id, quantity]) => {
+        const product = products.find((item: any) => item._id === id)
+
+        return {
+          product_id: id,
+          product_name: product.name,
+          description: '',
+          price: product.price,
+          quantity,
+          payment_methods: 'cash',
+          event_id: event._id,
+          end_sale_date: product.date ?? event.date ? dt(event.date).subtract(2, 'days').format() : null,
+        }
+      })
+
+    console.log(items)
+    /*
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        body: JSON.stringify({
+          customer_email: data.email,
+          customer_first_name: data.first_name,
+          customer_last_name: data.last_name,
+          payment_method: 'cash',
+          items: data.items
+        }),
+      })
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+      router.replace(data.checkoutSessionUrl)
+    } catch (e: any) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+    }
+    */
+
     // NO CHIAMATA
     /*addItem({
       product_id: product._id,
@@ -126,7 +170,7 @@ export default function EventReservation({ event, products }: { event: any, prod
           <div>
             <Divider my="md" />
             {products.map((item, index) => (
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
+              <div key={index} className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
                 <div className="lg:col-span-2">
                   <h2 className="text-lg text-gray-800">{item.name}</h2>
                   <p className="text-sm text-gray-600">{item.summary}</p>
