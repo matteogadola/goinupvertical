@@ -30,16 +30,16 @@ export default function EventReservation({ event, products }: { event: any, prod
       last_name: isNotEmpty('Inserisci il cognome'),
       email: (value) => (/^[\w-+.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) ? null : 'Indirizzo mail non valido'),
     },
-    onValuesChange: (values) => {
-      const totalAmount = Object.entries(values.items).reduce((a, [id, quantity]: any) => {
-        console.log('id ', id)
-        console.log('quantity ', quantity)
-        const product = products.find((item: any) => item._id === id)
-        return a + (quantity * product.price);
-      }, 0);
-      console.log(values);
-      setTotalAmount(totalAmount);
-    },
+  });
+
+  form.watch('items', ({ value }) => {
+    const totalAmount = Object.entries(value).reduce((a, [id, quantity]: any) => {
+      console.log('id ', id)
+      console.log('quantity ', quantity)
+      const product = products.find((item: any) => item._id === id)
+      return a + (quantity * product.price);
+    }, 0);
+    setTotalAmount(totalAmount);
   });
 
   /*const onItemChange = ({ target }: any) => {
