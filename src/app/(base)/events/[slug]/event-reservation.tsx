@@ -30,9 +30,19 @@ export default function EventReservation({ event, products }: { event: any, prod
       last_name: isNotEmpty('Inserisci il cognome'),
       email: (value) => (/^[\w-+.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) ? null : 'Indirizzo mail non valido'),
     },
+    onValuesChange: (values) => {
+      const totalAmount = Object.entries(values.items).reduce((a, [id, quantity]: any) => {
+        console.log('id ', id)
+        console.log('quantity ', quantity)
+        const product = products.find((item: any) => item._id === id)
+        return a + (quantity * product.price);
+      }, 0);
+      console.log(values);
+      setTotalAmount(totalAmount);
+    },
   });
 
-  const onItemChange = ({ target }: any) => {
+  /*const onItemChange = ({ target }: any) => {
     const totalAmount = Object.entries(form.getValues().items).reduce((a, [id, quantity]: any) => {
       console.log('id ', id)
       console.log('quantity ', quantity)
@@ -41,7 +51,7 @@ export default function EventReservation({ event, products }: { event: any, prod
     }, 0);
     console.log(totalAmount)
     setTotalAmount(totalAmount);
-  };
+  };*/
 
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
@@ -190,20 +200,19 @@ export default function EventReservation({ event, products }: { event: any, prod
                   <p className="text-sm text-gray-600">{item.summary}</p>
                 </div>
                 <div>
-                  <span className="text-gray-800 text-lg uppercase">{item.price / 100}€</span>
+                  <span className="">{item.price / 100}€</span>
                 </div>
                 <NumberInput
                   placeholder="Quantità"
                   allowNegative={false}
                   key={form.key(`items.${item._id}`)}
                   {...form.getInputProps(`items.${item._id}`)}
-                  onChange={onItemChange}
                 />
               </div>
             ))}
-            <div>
-              <span className="text-gray-800 text-lg uppercase">Totale</span>
-              <span className="text-gray-800 text-lg uppercase">{totalAmount / 100}€</span>
+            <div className="mt-8 flex justify-between">
+              <span className="text-lg uppercase">Totale</span>
+              <span className="text-lg">{totalAmount / 100}€</span>
             </div>
           </div>
         }
