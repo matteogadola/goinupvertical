@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 
 export default function EventReservation({ event, products }: { event: any, products: any[] }) {
   //const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -31,13 +34,14 @@ export default function EventReservation({ event, products }: { event: any, prod
 
   const onItemChange = ({ target }: any) => {
     const totalAmount = Object.entries(form.getValues().items).reduce((a, [id, quantity]: any) => {
+      console.log('id ', id)
+      console.log('quantity ', quantity)
       const product = products.find((item: any) => item._id === id)
       return a + (quantity * product.price);
     }, 0);
+    console.log(totalAmount)
     setTotalAmount(totalAmount);
   };
-
-  const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const onSubmit = async () => {
     if (form.validate().hasErrors) return;
