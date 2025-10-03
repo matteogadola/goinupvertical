@@ -17,7 +17,7 @@ export default function EventReservation({ event, products }: { event: any, prod
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
   const form = useForm({
-    mode: 'controlled',
+    mode: 'uncontrolled',
     initialValues: {
       first_name: '',
       last_name: '',
@@ -30,17 +30,21 @@ export default function EventReservation({ event, products }: { event: any, prod
       last_name: isNotEmpty('Inserisci il cognome'),
       email: (value) => (/^[\w-+.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) ? null : 'Indirizzo mail non valido'),
     },
+    onValuesChange: (values) => {
+      const totalAmount = Object.entries(values.items).reduce((a, [id, quantity]: any) => {
+        console.log('id ', id)
+        console.log('quantity ', quantity)
+        const product = products.find((item: any) => item._id === id)
+        return a + (quantity * product.price);
+      }, 0);
+      console.log(values);
+      setTotalAmount(totalAmount);
+    },
   });
 
-  form.watch('items', ({ value }) => {
-    const totalAmount = Object.entries(value).reduce((a, [id, quantity]: any) => {
-      console.log('id ', id)
-      console.log('quantity ', quantity)
-      const product = products.find((item: any) => item._id === id)
-      return a + (quantity * product.price);
-    }, 0);
-    setTotalAmount(totalAmount);
-  });
+  /*form.watch('items', ({ previousValue, value, touched, dirty }) => {
+    console.log({ previousValue, value, touched, dirty });
+  });*/
 
   /*const onItemChange = ({ target }: any) => {
     const totalAmount = Object.entries(form.getValues().items).reduce((a, [id, quantity]: any) => {
@@ -57,6 +61,9 @@ export default function EventReservation({ event, products }: { event: any, prod
     if (form.validate().hasErrors) return;
 
     const data = form.getValues()
+
+    console.log(data)
+
     const items = Object.entries(data.items)
       .filter(([id, quantity]: any) => quantity > 0)
       .map(([id, quantity]) => {
