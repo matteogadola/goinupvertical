@@ -57,15 +57,8 @@ export default function EventReservation({ event, products }: { event: any, prod
         }
       })
 
-    console.log({
-      customer_email: data.email,
-      customer_first_name: data.first_name,
-      customer_last_name: data.last_name,
-      payment_method: 'on-site',
-      items: items
-    })
-
     try {
+      setLoading(true)
       const response: Response = await fetch('/api/checkout', {
         method: 'POST',
         body: JSON.stringify({
