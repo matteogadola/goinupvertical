@@ -172,7 +172,7 @@ export default function EventReservation({ event, products }: { event: any, prod
             {products.map((item, index) => (
               <div key={index} className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 items-center">
                 <div className="lg:col-span-2">
-                  <h2 className="text-lg text-gray-800">{item.name}</h2>
+                  <h2 className="">{item.name}</h2>
                   <p className="text-sm text-gray-600">{item.summary}</p>
                 </div>
                 <div>
