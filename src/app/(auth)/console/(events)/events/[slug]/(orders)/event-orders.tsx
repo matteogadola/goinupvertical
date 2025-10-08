@@ -1,16 +1,9 @@
 'use client';
 
 import { Suspense, useState, use, useEffect, cache, useMemo, useCallback } from 'react'
-import { dt, getDate } from '@/utils/date'
 import Spinner from '@/components/ui/spinner'
-import { DonutChart } from '@mantine/charts';
-import { DataTable } from './event-orders-table';
 import { getColumns } from './event-orders-columns';
-import { OrderItem } from '@/types/orders';
-import { Entry } from '@/types/entries';
-import { Button } from '@mantine/core';
-import { DownloadIcon } from 'lucide-react';
-import { Row } from '@tanstack/react-table';
+import { DataTable } from './event-orders-table';
 import { Event } from '@/types/events'
 
 export default function EventOrders({
@@ -20,10 +13,15 @@ export default function EventOrders({
   event: Partial<Event>,
   entries: any
 }) {
-  const [data, setData] = useState(entries)
+  const [data, setData] = useState(entries.map((e: any) => {
+    const items = entries.items.map((i: any) => {
+      const key = i.name.toLowerCase().replaceAll(' ', '_')
+      return { [key]: i.quantity }
+    })
+    return { ...e, ...items }
+  }))
 
   const columns = useMemo(() => getColumns(entries.items), [])
-  //const paidItems = useMemo(() => data.filter((i: any) => i.payment_status === 'paid').length ?? 0, [data])
 
   return (
     <Suspense fallback={<Spinner />}>
