@@ -90,6 +90,7 @@ export function DataTable<TData, TValue>({
     state: {
       //sorting,
       columnFilters,
+      columnVisibility: { email: false, phone_number: false, tin: false }
     },
     meta: {
       addRow: (entry: any) => {
@@ -134,6 +135,27 @@ export function DataTable<TData, TValue>({
           placeholder="Cognome..."
           column={table.getColumn("last_name")}
         />
+        <div className="ml-4 w-min">
+          {/*<DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Pagamento</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuCheckboxItem
+                checked={showPaymentStatusBar}
+                onCheckedChange={setShowPaymentStatus}
+              >
+                Confermato
+              </DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem
+                checked={showActivityBar}
+                onCheckedChange={setShowActivityBar}
+              >
+                NON Confermato
+              </DropdownMenuCheckboxItem>
+            </DropdownMenuContent>
+          </DropdownMenu>*/}
+        </div>
         <div className="flex justify-end space-x-2">
           <Button variant="outline" size="sm" onClick={() => exportCsv(table.getRowModel())}>
             <DownloadIcon className="size-4" aria-hidden="true" />
