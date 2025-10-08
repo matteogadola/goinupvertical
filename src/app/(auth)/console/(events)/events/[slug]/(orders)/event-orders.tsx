@@ -13,12 +13,16 @@ export default function EventOrders({
   event: Partial<Event>,
   entries: any
 }) {
+  const products = [
+    {id: '34a9cff5-5d2a-4b60-aeb9-d086db70602d', key: 'menu_1'},
+    {id: '3bc0fcd6-1940-4938-a4ae-fb1ff4cc4c7d', key: 'menu_2'},
+  ]
   const [data, setData] = useState(entries.map((e: any) => {
-    const items = e.items.map((i: any) => {
-      const key = i.name.toLowerCase().replaceAll('ù', 'u').replaceAll(' ', '_')
-      return { [key]: i.quantity }
-    })
-    return { ...e, ...items }
+    for (const product of products) {
+      const item = e.items.find((i: any) => i.id === product.id)
+      e[product.key] = item?.quantity ?? 0
+    }
+    return e
   }))
 
   console.log(data[0])
