@@ -66,10 +66,9 @@ const getEntries = async ({ id, type }: { id: string, type?: string}) => {
 
   const viewName = type === 'serie'
     ? 'v_entries_carnet'
-    : type !== undefined && ['meal', 'award-ceremony'].includes(type)
+    : type !== undefined && ['meal', 'award'].includes(type)
       ? 'v_orders'
       : 'v_entries'
-  //const viewName = 'v_entries'
 
   const { data } = await supabase
     .from(viewName)

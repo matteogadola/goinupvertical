@@ -31,7 +31,7 @@ export default function ConsoleEventTabs({
       </Tabs.List>
 
       <Tabs.Panel value="entries" pt="xs">
-        {event.type !== undefined && ['meal', 'award-ceremony'].includes(event.type)
+        {event.type !== undefined && ['meal', 'award'].includes(event.type)
           ? <EventOrders event={event} entries={entries} />
           : <EventEntries event={event} entries={entries} />
         }
