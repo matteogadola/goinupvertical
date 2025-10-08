@@ -14,12 +14,11 @@ export default function EventOrders({
   entries: any
 }) {
   const [data, setData] = useState(entries.map((e: any) => {
-    return e;
-    /*const items = entries.items.map((i: any) => {
-      const key = i.name.toLowerCase().replaceAll(' ', '_')
+    const items = e.items.map((i: any) => {
+      const key = i.name.toLowerCase().replaceAll('ù', 'u').replaceAll(' ', '_')
       return { [key]: i.quantity }
     })
-    return { ...e, ...items }*/
+    return { ...e, ...items }
   }))
 
   console.log(data[0])
