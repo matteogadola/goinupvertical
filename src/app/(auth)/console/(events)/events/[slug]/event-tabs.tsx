@@ -23,7 +23,7 @@ export default function ConsoleEventTabs({
         <Tabs.Tab value="entries">
           Iscrizioni
         </Tabs.Tab>
-        {hasRole('editor', claims) &&
+        {(hasRole('editor', claims) && event.type !== undefined && ['serie', 'race'].includes(event.type)) &&
           <Tabs.Tab value="stats">
             Statistiche
           </Tabs.Tab>

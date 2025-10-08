@@ -90,7 +90,6 @@ export function DataTable<TData, TValue>({
     state: {
       //sorting,
       columnFilters,
-      columnVisibility: { email: false, phone_number: false, tin: false }
     },
     meta: {
       addRow: (entry: any) => {

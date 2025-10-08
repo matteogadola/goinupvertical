@@ -6,6 +6,7 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { Button, TextInput, NumberInput, Divider } from "@mantine/core";
 import { dt } from "@/utils/date";
 import ErrorText from "@/components/ui/error-text";
+import { capitalize } from "@/utils/text";
 
 export default function EventReservation({ event, products }: { event: any, products: any[] }) {
   const router = useRouter()
@@ -62,9 +63,9 @@ export default function EventReservation({ event, products }: { event: any, prod
       const response: Response = await fetch('/api/checkout', {
         method: 'POST',
         body: JSON.stringify({
-          customer_email: data.email,
-          customer_first_name: data.first_name,
-          customer_last_name: data.last_name,
+          customer_email: data.email.toLowerCase(),
+          customer_first_name: capitalize(data.first_name),
+          customer_last_name: capitalize(data.last_name),
           payment_method: 'on-site',
           items: items
         }),
