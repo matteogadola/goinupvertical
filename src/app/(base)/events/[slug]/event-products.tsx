@@ -47,9 +47,31 @@ export default async function EventProducts({ event }: { event: any }) {
     } else {
       // son più di uno...per la gara non dovrebbe essere possibile
     }
-  } else {
-    return (
-      <EventReservation event={event} products={event.products} />
-    )
+  } else if (event.type === 'award') {
+    if (!event.products?.length) {
+      return <></>
+    } else {
+      const product = event.products[0]
+
+      if (product.status !== 'open') {
+        return <span className="">Iscrizioni chiuse</span>
+      }
+
+      const endSaleDate = product.end_sale_date
+        ? dt(product.end_sale_date)
+        : dt(event.date).subtract(46, 'hours')
+
+      if (dt(endSaleDate).isBefore()) {
+        return (
+          <div className="flex flex-col space-x-2">
+            <span className="">Iscrizioni chiuse</span>
+          </div>
+        )
+      }
+
+      return (
+        <EventReservation event={event} products={event.products} />
+      )
+    }
   }
 }
