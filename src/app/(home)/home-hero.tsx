@@ -1,5 +1,6 @@
 'use client'
 
+import { Box, Button, Container, Stack, Title, Text } from '@mantine/core'
 import { CSSProperties, useEffect, useState } from 'react'
 
 type Props = {
@@ -25,13 +26,39 @@ export default function HomeHero() {
   }
 
   return (
-    <div className="hero" >
-    </div>
+    <Box
+      h="100vh"
+      style={getBackgroudStyle(image)}
+          // Stile d'esempio per lo sfondo della Hero
+          //style={{
+          //  backgroundImage:
+          //    "linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.2)), url(https://www.fidal.it/upload/files/GGG/Immagini/AdobeStock_11266696-1.jpg)",
+          //  backgroundSize: "cover",
+          //  backgroundPosition: "center",
+          //}}
+    >
+      
+      <Container size="xl" h="100%">
+        <Stack justify="center" h="100%" align="left">
+          <Title order={1} c="white" fz={60} >
+            GOinUP
+          </Title>
+          <Text c="gray.2" size="xl" ta="center" maw={600}>
+            Circuito di 10 gare vertical di montagna a finalità benefica
+          </Text>
+        </Stack>
+      </Container>
+    </Box>
   );
 }
-//style={getBackgroudStyle(image)}
+
 function getBackgroudStyle(image: string): CSSProperties {
   const url = `/images/homepage/${image}`
 
-  return { background: `url("${url}") no-repeat center center` } as CSSProperties
+  return {
+    backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.0), rgba(0,0,0,0.0)), url("${url}")`,
+    //backgroundImage: `url("${url}") no-repeat center center`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }
 }

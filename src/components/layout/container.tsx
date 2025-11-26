@@ -1,16 +1,15 @@
-'use client'
+'use client';
 
 import { AppShell } from '@mantine/core';
 import { useUiStore } from '@/store/ui';
+import { ScrollProvider } from '@/contexts/scroll-context';
 
-export default function MantineContainer({
+export default function AppContainer({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode,
-}) {
+}>) {
   const { sidenavOpened } = useUiStore()
-
-  //const layout = useMemo(() => alt,[])
 
   return (
     <AppShell
@@ -20,9 +19,10 @@ export default function MantineContainer({
         breakpoint: 'sm',
         collapsed: { mobile: !sidenavOpened, desktop: true },
       }}
-      padding="md"
     >
-      {children}
+      <ScrollProvider>
+        {children}
+      </ScrollProvider>
     </AppShell>
   )
 }

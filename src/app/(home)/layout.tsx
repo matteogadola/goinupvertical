@@ -1,7 +1,10 @@
-import { AppShellMain } from '@mantine/core'
-import Header from '@/components/mantine/header'
-import Footer from '@/components/footer';
+import Header from '@/components/layout/header';
+import HomeHero from './home-hero';
+import Sidebar from '@/components/layout/sidebar';
+import { AppShellMain } from '@mantine/core';
 import Credits from '@/components/credits';
+import Footer from '@/components/footer';
+
 
 const links = [
   { name: "Home", path: "/", visible: false },
@@ -10,7 +13,7 @@ const links = [
   { name: "Regolamento", path: "/regulation" },
 ]
 
-export default function BaseLayout({
+export default function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -19,6 +22,7 @@ export default function BaseLayout({
   return (
     <>
       <Header links={links} />
+      <Sidebar links={links} />
       <AppShellMain>
         {children}
       </AppShellMain>

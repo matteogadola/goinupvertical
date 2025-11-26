@@ -6,6 +6,8 @@ import HomeAboutUs from './home-about-us'
 import HomeMentions from './home-mentions'
 import HomeHero from './home-hero'
 import HomeFlyer from './home-flyer';
+import { FadeIn } from '@/components/animations/fade-in';
+import FadeUp from '@/components/animations/fade-up';
 
 export default async function Home() {
   const upcomingEvents = await getUpcomingEvents();
@@ -14,10 +16,14 @@ export default async function Home() {
   return (
     <>
       <HomeHero />
-
-      <HomeMentions />
       
-      <HomeAboutUs />
+      <FadeIn>
+        <HomeMentions />
+      </FadeIn>
+      
+      <FadeIn>
+        <HomeAboutUs />
+      </FadeIn>
 
       {!!serie?.flyer &&
         <HomeFlyer

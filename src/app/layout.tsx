@@ -1,28 +1,30 @@
-import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next';
+import { MantineProvider } from '@mantine/core';
+import AppContainer from '@/components/layout/container';
+import { fonts } from '@/utils/fonts';
 import './globals.css'
-import { fonts } from '@/utils/fonts'
-import { MantineProvider } from '@mantine/core'
-import MantineContainer from '@/components/mantine/container'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Goinup Vertical",
-  description: "Circuito di gare vertical a scopo benefico",
+  title: 'GOinUP Vertical',
+  description: 'Circuito di gare vertical a scopo benefico',
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode,
 }>) {
 
   return (
     <html lang="it">
       <body className={`${fonts.map(font => font.variable).join(' ')} antialiased flex flex-col min-h-screen`}>
         <MantineProvider>
-          <MantineContainer>
+          <AppContainer>
             {children}
-          </MantineContainer>
+          </AppContainer>
         </MantineProvider>
+        <Analytics />
       </body>
     </html>
   );
