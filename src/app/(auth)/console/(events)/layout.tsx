@@ -6,7 +6,7 @@ import { AppShellMain } from '@mantine/core';
 import { getClaims } from '@/utils/supabase/helpers';
 import { hasRole } from '@/utils/supabase/auth';
 import { Role, User } from '@/types/user';
-import Header from '@/components/mantine/header';
+import Header from '@/components/layout/header';
 
 const links: { name: string, path: string, hasRole?: Role }[] = [
   { name: "Eventi", path: "/console" },
