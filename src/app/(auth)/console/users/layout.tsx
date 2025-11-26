@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { AppShellMain } from '@mantine/core';
 import { Role, User } from '@/types/user';
-import Header from '@/components/mantine/header';
+import Header from '@/components/layout/header';
 
 const links: { name: string, path: string, hasRole?: Role }[] = [
   { name: "Eventi", path: "/console" },
