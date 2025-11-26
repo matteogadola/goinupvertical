@@ -64,8 +64,11 @@ const getEvent = async (slug: string) => {
 const getEntries = async ({ id, type }: { id: string, type?: string}) => {
   const supabase = await createClient()
 
-  const viewName = type === 'serie' ? 'v_entries_carnet' : 'v_entries'
-  //const viewName = 'v_entries'
+  const viewName = type === 'serie'
+    ? 'v_entries_carnet'
+    : type !== undefined && ['meal', 'award'].includes(type)
+      ? 'v_orders'
+      : 'v_entries'
 
   const { data } = await supabase
     .from(viewName)

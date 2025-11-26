@@ -19,8 +19,7 @@ export default function EventEntryStatus({ event }: { event: any }) {
   if (event.status === 'close') {
     return <span className="">Iscrizioni chiuse</span>
   } else if (event.status === 'open') {
-    // per ora no supporta altri modi
-    if (event.products?.length === 1) {
+    if (event.products?.length) {
       const product = event.products[0]
 
       // poi supporta sold out ecc

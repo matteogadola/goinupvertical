@@ -3,8 +3,9 @@
 import { Tabs } from '@mantine/core'
 import EventCharts from './(charts)/event-charts'
 import EventEntries from './(entries)/event-entries'
-import { Claims, Role } from '@/types/user'
-import { Event } from '@/types/events'
+import EventOrders from './(orders)/event-orders'
+import type { Claims, Role } from '@/types/user'
+import type { Event } from '@/types/events'
 
 export default function ConsoleEventTabs({
   event,
@@ -22,7 +23,7 @@ export default function ConsoleEventTabs({
         <Tabs.Tab value="entries">
           Iscrizioni
         </Tabs.Tab>
-        {hasRole('editor', claims) &&
+        {(hasRole('editor', claims) && event.type !== undefined && ['serie', 'race'].includes(event.type)) &&
           <Tabs.Tab value="stats">
             Statistiche
           </Tabs.Tab>
@@ -30,7 +31,10 @@ export default function ConsoleEventTabs({
       </Tabs.List>
 
       <Tabs.Panel value="entries" pt="xs">
-        <EventEntries event={event} entries={entries} />
+        {event.type !== undefined && ['meal', 'award'].includes(event.type)
+          ? <EventOrders event={event} entries={entries} />
+          : <EventEntries event={event} entries={entries} />
+        }
       </Tabs.Panel>
 
       <Tabs.Panel value="stats" pt="xs">
