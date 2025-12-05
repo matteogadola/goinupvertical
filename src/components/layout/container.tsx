@@ -2,7 +2,6 @@
 
 import { AppShell } from '@mantine/core';
 import { useUiStore } from '@/store/ui';
-import { ScrollProvider } from '@/contexts/scroll-context';
 
 export default function AppContainer({
   children,
@@ -13,16 +12,14 @@ export default function AppContainer({
 
   return (
     <AppShell
-      header={{ height: 80, offset: false }}
+      header={{ height: 80, offset: true }}
       navbar={{
         width: 300,
         breakpoint: 'sm',
         collapsed: { mobile: !sidenavOpened, desktop: true },
       }}
     >
-      <ScrollProvider>
-        {children}
-      </ScrollProvider>
+      {children}
     </AppShell>
   )
 }

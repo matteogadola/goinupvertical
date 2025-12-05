@@ -3,7 +3,11 @@ import clubs from '../data/names.json'
 import municipalities from '../data/municipalities.json'
 import { Event } from '@/types/events'
 
-export const getSerie = async ({ year }: { year: number }) => {
+export const getSerie = async ({ year }: { year?: number } = {}) => {
+  if (!year) {
+    year = new Date().getFullYear()
+  }
+
   const fromDate = new Date(year, 0, 1).toISOString().split('T')[0]
   const toDate = new Date(year + 1, 0, 1).toISOString().split('T')[0]
   return client.fetch(`*[_type == "event" && type == "serie" && date >= $fromDate && date < $toDate]{
@@ -52,6 +56,10 @@ export const getResults = async ({ year }: { year: number }) => {
   return client.fetch(`*[_type == "event" && type == "race" && date >= $fromDate && date < $toDate]`, { fromDate, toDate })
 }*/
 
+export const getFeatures = async () => {
+  return client.fetch(`*[_type == "feature" && status == 'active'] | order(index)`)
+}
+
 export const getPage = async (slug: string) => {
   return client.fetch(`*[_type == "page" && slug.current == $slug][0]`, { slug })
 }
@@ -62,6 +70,24 @@ export const getClubs = (): string[] => {
 
 export const getMunicipalities = (): string[] => {
   return municipalities
+}
+
+export const getTestimonials = (): any[] => {
+  return [
+    {
+      text: 'Gara stupenda con panorami mozzafiato. Organizzazione perfetta. Da rifare assolutamente!',
+      source: 'Antonio',
+    },
+    {
+      text: 'Una realtà di volontari che riesce a creare qualcosa di meraviglioso',
+      source: 'Elisa',
+    },
+    {
+      text: 'Edizione numero 4 da record per la CechUp con nuovo record di presenze e nuovi primati cronometrici sul percorso',
+      source: 'Sportdimontagna',
+      url: 'https://www.sportdimontagna.com/mountain-running/goinup-2025-2'
+    },
+  ];
 }
 
 export const getEventResults = async ({ year }: { year?: number } = {}) => {
@@ -85,5 +111,3 @@ export const getEventLinks = async ({ year }: { year?: number } = {}) => {
 
   return client.fetch<Event[]>(`*[_type == "event" && type in $types && date >= $fromDate && date < $toDate && count(links[]->url) > 0] | order(date)`, { fromDate, toDate, types: ['serie', 'race', 'award'] })
 }
-
-

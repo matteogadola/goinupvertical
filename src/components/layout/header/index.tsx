@@ -6,6 +6,7 @@ import Link from 'next/link';
 import HeaderCartButton from './header-cart';
 import HeaderUser from './header-user';
 import { getUser } from '@/utils/user';
+import './header.css'
 
 export default async function Header({
   links,
@@ -17,7 +18,7 @@ export default async function Header({
   return (
     <AppShellHeader>
       <HeaderWrapper>
-        <div className="content header-grid">
+        <div className="header content">
           <HeaderBurger />
 
           <div className="flex items-center justify-center md:justify-start">
@@ -32,7 +33,7 @@ export default async function Header({
                 links.filter(item => item?.visible !== false).map((link, index) => (
                   <li key={index} className="inline-block">
                     <Link href={link.path}>
-                      <span className="block mt-2 md:mt-0 hover:opacity-70">{link.name}</span>
+                      <span className="block mt-2 md:mt-0 lg:text-2xl hover:underline hover:decoration-yellow-200">{link.name}</span>
                     </Link>
                   </li>
                 ))

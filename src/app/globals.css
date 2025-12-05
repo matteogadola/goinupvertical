@@ -1,13 +1,13 @@
-@import "tailwindcss";
-@plugin "tailwindcss-animate";
+@import 'tailwindcss';
+@plugin 'tailwindcss-animate';
 /*@import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);*/
 
-@import "@mantine/core/styles.css";
-@import "@mantine/dates/styles.css";
-@import "@mantine/charts/styles.css";
-@import "../components/mantine/mantine.css";
+@import '@mantine/core/styles.css';
+@import '@mantine/dates/styles.css';
+@import '@mantine/charts/styles.css';
+@import './mantine.css';
 
 /*
 https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
@@ -17,7 +17,6 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
 
 @import '@mantine/core/styles.layer.css';
 */
-
 
 @theme {
   --font-unbounded: var(--font-unbounded);
@@ -29,7 +28,7 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
 }
 
 :root {
-  --background: hsl(0 0% 100%);
+  --background: hsl(210, 20%, 98%);
   --foreground: hsl(0 0% 3.9%);
 
   --primary: #223057;/*(60%)*/
@@ -238,7 +237,7 @@ form .field-helper > button,
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210, 20%, 98%;/*0 0% 100%;*/
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -334,12 +333,10 @@ form .field-helper > button,
 .title {
   font-family: var(--font-matroska);
   font-size: var(--text-4xl);
+  font-size-adjust: inherit;
   line-height: var(--tw-leading, var(--text-4xl--line-height));
   color: var(--primary);
   text-transform: uppercase;
-
-  @media (width >= 80rem) {
-  }
 }
 
 .subtitle {
@@ -366,6 +363,48 @@ form .field-helper > button,
     &.grid-3 {
       grid-template-columns: repeat(3, 1fr);
     }
+  }
+}
+
+.feature-title {
+  font-family: var(--font-matroska);
+  font-size: var(--text-4xl);
+  line-height: var(--tw-leading, var(--text-4xl--line-height));
+  color: var(--primary);
+  text-transform: uppercase;
+
+  @media (width >= 48rem /* 768px */) {
+    font-size: var(--text-xl);
+  }
+
+  @media (width >= 60rem /* 960px */) {
+    font-size: var(--text-2xl);
+  }
+
+  @media (width >= 80rem /* 1280px */) {
+    font-size: var(--text-3xl);
+  }
+}
+
+.feature-text {
+  /*font-family: var(--font-matroska);
+  font-size: var(--text-4xl);
+  line-height: var(--tw-leading, var(--text-4xl--line-height));
+  color: var(--primary);
+  text-transform: uppercase;*/
+
+  font-size: var(--text-4xl);
+
+  @media (width >= 48rem /* 768px */) {
+    font-size: var(--text-xl);
+  }
+
+  @media (width >= 60rem /* 960px */) {
+    font-size: var(--text-2xl);
+  }
+
+  @media (width >= 80rem /* 1280px */) {
+    font-size: var(--text-3xl);
   }
 }
 
