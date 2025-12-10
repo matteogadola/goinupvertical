@@ -338,8 +338,6 @@ form .field-helper > button,
   color: var(--primary);
   text-transform: uppercase;
 
-  
-
   @media (width >= 80rem /* 1280px */) {
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
@@ -370,26 +368,6 @@ form .field-helper > button,
     &.grid-3 {
       grid-template-columns: repeat(3, 1fr);
     }
-  }
-}
-
-.feature-title {
-  font-family: var(--font-matroska);
-  font-size: var(--text-4xl);
-  line-height: var(--tw-leading, var(--text-4xl--line-height));
-  color: var(--primary);
-  text-transform: uppercase;
-
-  @media (width >= 48rem /* 768px */) {
-    font-size: var(--text-xl);
-  }
-
-  @media (width >= 60rem /* 960px */) {
-    font-size: var(--text-2xl);
-  }
-
-  @media (width >= 80rem /* 1280px */) {
-    font-size: var(--text-3xl);
   }
 }
 

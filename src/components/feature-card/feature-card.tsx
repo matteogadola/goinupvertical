@@ -58,7 +58,7 @@ const FeatureCard: React.FC<{ item: FeatureItem }> = ({ item }) => {
   return (
     <div className="relative isolate overflow-hidden h-80 flex flex-col items-center justify-center">
       <div className="relative z-10 px-4 text-center sm:px-6 lg:px-8 h-60">
-        <h2 className="feature-title">{item.title}</h2>
+        <h2 className="title">{item.title}</h2>
         
         {/* Descrizione */}
         <div className="mx-auto mt-6 max-w-2xl text-xl">
