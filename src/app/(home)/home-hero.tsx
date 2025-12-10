@@ -109,7 +109,7 @@ export default function HomeHero({ serie, className }: Readonly<{ serie: any, cl
 
       {/* --- 2. Content --- */}
       {/* Centriamo il contenuto usando flexbox e z-index per metterlo sopra l'immagine */}
-      <div className="relative z-10 flex flex-col mt-[300px] px-2 text-primary sm:px-4 lg:px-6">
+      <div className="relative z-10 flex flex-col mt-[200px] lg:mt-[300px] px-2 text-primary sm:px-4 lg:px-6">
 
         <h3 className="text-2xl font-unbounded uppercase text-white font-bold drop-shadow-md">
           Il circuito di gare vertical che fa bene al territorio

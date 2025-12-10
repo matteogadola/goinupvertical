@@ -47,7 +47,7 @@ export default function HomeMentions() {
   return (
     <div className="min-h-55 flex items-center">
       {!!mention &&
-        <div className="content flex flex-col items-center py-16">
+        <div className="flex flex-col items-center py-16">
           <p className=" text-lg italic ">{mention.text}</p>
           {mention?.url
             ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.source}</a>
