@@ -12,7 +12,7 @@ export default function AppContainer({
 
   return (
     <AppShell
-      header={{ height: 80, offset: false }}
+      header={{ height: 80, offset: true }}
       navbar={{
         width: 300,
         breakpoint: 'sm',

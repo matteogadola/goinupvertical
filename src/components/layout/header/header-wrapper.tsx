@@ -1,5 +1,6 @@
 'use client';
 
+import { useUiStore } from "@/store/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 interface HeaderWrapperProps {
@@ -8,12 +9,13 @@ interface HeaderWrapperProps {
 }
 
 export function HeaderWrapper({ children, threshold = 200 }: Readonly<HeaderWrapperProps>) {
+  const { sidenavOpened } = useUiStore()
   const { scrollY } = useScroll();
 
   const backgroundColor = useTransform(
     scrollY,
     [0, threshold],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 1)"]
+    [sidenavOpened ? "var(--background)": "rgba(255, 255, 255, 0)", "rgba(240, 238, 233, 1)"]
   );
 
   // RIVEDI
@@ -35,7 +37,7 @@ export function HeaderWrapper({ children, threshold = 200 }: Readonly<HeaderWrap
   );
 
   return (
-    <motion.div  style={{ backgroundColor, boxShadow, height: '100%', width: '100%' }}>
+    <motion.div style={{ backgroundColor, boxShadow, height: '100%', width: '100%' }}>
       {children}
     </motion.div>
   );

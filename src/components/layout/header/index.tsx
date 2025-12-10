@@ -22,7 +22,7 @@ export default async function Header({
           <HeaderBurger />
 
           <div className="flex items-center justify-center md:justify-start">
-            <Link href="/" className="hover:scale-105">
+            <Link href="/" className="hover:scale-110">
               <img src="/images/logo/goinup.webp" className="h-14 object-contain" alt="Logo" />
             </Link>
           </div>

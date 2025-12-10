@@ -3,7 +3,6 @@
 import { useUiStore } from '@/store/ui';
 import { NavLink } from '@/types/app';
 import Link from 'next/link';
-import HeaderBurger from '../header/header-burger';
 
 export default function SidebarNav({
   links,
@@ -14,7 +13,6 @@ export default function SidebarNav({
 
   return (
     <div className="">
-      <HeaderBurger />
       <ul className="w-full">
         {
           links.filter(item => item?.visible !== false).map((link, index) => (

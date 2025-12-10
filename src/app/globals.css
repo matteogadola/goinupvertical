@@ -28,7 +28,8 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
 }
 
 :root {
-  --background: hsl(210, 20%, 98%); /* pantone cloud dancer rgba(240,238,233,1.00) - #f0eee9 */
+  /*--background: hsl(210, 20%, 98%);*/ /* pantone cloud dancer rgba(240,238,233,1.00) - #f0eee9 */
+  --background: hsl(43, 19%, 93%);
   --foreground: hsl(0 0% 3.9%);
 
   --primary: #223057;/*(60%)*/

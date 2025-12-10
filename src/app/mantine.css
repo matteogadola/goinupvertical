@@ -45,6 +45,10 @@ const theme = createTheme({
   }
 }
 
+.mantine-AppShell-navbar {
+  background-color: var(--background);
+}
+
 .mantine-AppShell-footer {
   border-top: 0;
 }

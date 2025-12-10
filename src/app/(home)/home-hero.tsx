@@ -91,7 +91,7 @@ export default function HomeHero({ serie, className }: Readonly<{ serie: any, cl
 
   return (
     <Box h="100vh">
-    <section className="relative w-full h-full min-h-[600px] overflow-hidden bg-gray-900">
+    <section className="relative -top-20 w-full h-full min-h-[600px] overflow-hidden bg-gray-900">
 
       {/* --- 1. Background Image (Next/Image Best Practices) --- */}
       <div className="absolute inset-0 z-0">
@@ -100,7 +100,7 @@ export default function HomeHero({ serie, className }: Readonly<{ serie: any, cl
           alt="image alt"
           fill // Riempie il container padre (relative)
           priority // FONDAMENTALE: Questa è l'immagine LCP. Caricala immediatamente.
-          className="object-cover object-center opacity-90" // object-cover mantiene le proporzioni
+          className="object-cover object-center opacity-90 " // object-cover mantiene le proporzioni
           sizes="100vw" // Indica al browser che l'immagine occupa tutta la larghezza
         />
         {/* Un leggero overlay scuro per migliorare la leggibilità del testo */}
@@ -109,7 +109,7 @@ export default function HomeHero({ serie, className }: Readonly<{ serie: any, cl
 
       {/* --- 2. Content --- */}
       {/* Centriamo il contenuto usando flexbox e z-index per metterlo sopra l'immagine */}
-      <div className="relative z-10 flex flex-col mt-[200px] px-2 text-primary sm:px-4 lg:px-6">
+      <div className="relative z-10 flex flex-col mt-[300px] px-2 text-primary sm:px-4 lg:px-6">
 
         <h3 className="text-2xl font-unbounded uppercase text-white font-bold drop-shadow-md">
           Il circuito di gare vertical che fa bene al territorio
