@@ -28,7 +28,7 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
 }
 
 :root {
-  --background: hsl(210, 20%, 98%);
+  --background: hsl(210, 20%, 98%); /* pantone cloud dancer rgba(240,238,233,1.00) - #f0eee9 */
   --foreground: hsl(0 0% 3.9%);
 
   --primary: #223057;/*(60%)*/
@@ -332,11 +332,18 @@ form .field-helper > button,
 
 .title {
   font-family: var(--font-matroska);
-  font-size: var(--text-4xl);
-  font-size-adjust: inherit;
-  line-height: var(--tw-leading, var(--text-4xl--line-height));
+  font-size: clamp(1.25rem, -0.875rem + 8.333vw, 2.25rem);
+  font-size-adjust: inherit; /* serve ? */
+  line-height: var(--tw-leading, var(--text-xl--line-height));
   color: var(--primary);
   text-transform: uppercase;
+
+  
+
+  @media (width >= 80rem /* 1280px */) {
+    font-size: var(--text-4xl);
+    line-height: var(--tw-leading, var(--text-4xl--line-height));
+  }
 }
 
 .subtitle {
