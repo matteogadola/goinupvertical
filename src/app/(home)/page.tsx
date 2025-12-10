@@ -51,9 +51,7 @@ export default async function Home() {
           />
         }
 
-        <ScrollAnimation animation="zoom">
-          <HomeMentions />
-        </ScrollAnimation>
+        <HomeMentions />
       </div>
     </>
   );

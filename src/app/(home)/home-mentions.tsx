@@ -1,5 +1,6 @@
 'use client'
 
+import { ScrollAnimation } from '@/components/animations/scroll-animation'
 import { useEffect, useState } from 'react'
 
 type Props = {
@@ -45,16 +46,18 @@ export default function HomeMentions() {
   }
 
   return (
-    <div className="min-h-55 flex items-center">
-      {!!mention &&
-        <div className="flex flex-col items-center py-16">
-          <p className=" text-lg italic ">{mention.text}</p>
-          {mention?.url
-            ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.source}</a>
-            : <span className="mt-2 font-semibold">{mention.source}</span>
-          }
-        </div>
-      }
-    </div>
+    <ScrollAnimation animation="zoom">
+      <div className="min-h-55 flex items-center">
+        {!!mention &&
+          <div className="flex flex-col items-center py-16">
+            <p className=" text-lg italic ">{mention.text}</p>
+            {mention?.url
+              ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.source}</a>
+              : <span className="mt-2 font-semibold">{mention.source}</span>
+            }
+          </div>
+        }
+      </div>
+    </ScrollAnimation>
   )
 }
