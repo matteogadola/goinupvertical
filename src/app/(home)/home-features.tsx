@@ -55,8 +55,8 @@ const subtitle = "Ecco perché il nostro circuito è unico nel suo genere."
 export default async function HomeFeatures({ features }: Readonly<Props>) {
 
   return (
-    <section className="py-16 sm:py-24">
-      <div className="px-2 sm:px-4 lg:px-6">
+    <section className="pt-8 pb-16 lg:pt-8 lg:pb-24">
+      <div className="xs:px-2">
         
         {/* Header della sezione */}
         {/*<div className="mx-auto max-w-2xl text-center mb-16">
@@ -69,7 +69,7 @@ export default async function HomeFeatures({ features }: Readonly<Props>) {
         </div>*/}
 
         {/* Grid delle Features */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {features.map((feature, index) => (
             <ScrollAnimation key={feature._id} animation="zoom" delay={0.1 * index}>
               <FeatureCard item={feature} />

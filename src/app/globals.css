@@ -331,18 +331,23 @@ form .field-helper > button,
   }
 }
 
+.inline-container {
+  container-type: inline-size;
+  width: 100%;
+}
+
 .title {
   font-family: var(--font-matroska);
-  font-size: clamp(1.25rem, -0.875rem + 8.333vw, 2.25rem);
-  font-size-adjust: inherit; /* serve ? */
+  /*font-size: clamp(1.25rem, -0.875rem + 8.333vw, 1.875rem);*/
+  font-size: clamp(1.25rem, 8cqi, 1.875rem);
   line-height: var(--tw-leading, var(--text-xl--line-height));
   color: var(--primary);
   text-transform: uppercase;
 
-  @media (width >= 80rem /* 1280px */) {
-    font-size: var(--text-4xl);
-    line-height: var(--tw-leading, var(--text-4xl--line-height));
-  }
+  /*@media (width >= 64rem) {
+    font-size: var(--text-3xl);
+    line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }*/
 }
 
 .subtitle {

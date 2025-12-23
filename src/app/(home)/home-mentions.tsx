@@ -47,9 +47,9 @@ export default function HomeMentions() {
 
   return (
     <ScrollAnimation animation="zoom">
-      <div className="min-h-55 flex items-center">
+      <div className="min-h-55 m-auto">
         {!!mention &&
-          <div className="flex flex-col items-center py-16">
+          <div className="flex flex-col items-center pt-32 pb-16">
             <p className=" text-lg italic ">{mention.text}</p>
             {mention?.url
               ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.source}</a>

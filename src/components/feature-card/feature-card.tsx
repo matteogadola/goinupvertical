@@ -56,23 +56,23 @@ const components: Partial<PortableTextReactComponents> = {
 
 const FeatureCard: React.FC<{ item: FeatureItem }> = ({ item }) => {
   return (
-    <div className="relative isolate overflow-hidden h-80 flex flex-col items-center justify-center">
-      <div className="relative z-10 px-4 text-center sm:px-6 lg:px-8 h-60">
+    <div className="relative isolate overflow-hidden h-80 flex flex-col items-center justify-center group">
+      <div className="relative z-10 text-center min-h-60 inline-container">
         <h2 className="title">{item.title}</h2>
         
         {/* Descrizione */}
-        <div className="mx-auto mt-6 max-w-2xl text-xl">
+        <div className="mx-auto mt-6 max-w-2xl text-xl px-4 sm:px-6 lg:px-8 group-hover:font-medium">
             <PortableText value={item.description} components={components} />
         </div>
       </div>
 
-      <div className="absolute inset-0 z-0 h-80 w-80 opacity-40 top-1/2 left-1/2 -translate-1/2"> {/* grayscale */}
+      <div className="absolute inset-0 z-0 h-80 w-80 opacity-40 top-1/2 left-1/2 -translate-1/2 overflow-hidden"> {/* grayscale */}
         <div className="relative h-full w-full">
            <Image
             src={urlFor(item.image)}
             alt={'imageAlt'}
             fill
-            className="object-cover object-center" // Allinea l'immagine in alto - className="object-cover object-center""object-contain object-top"
+            className="object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105" // Allinea l'immagine in alto - className="object-cover object-center""object-contain object-top"
             sizes="(max-width: 768px) 85vw, 60vw"
             priority // Caricamento prioritario se è above-the-fold
           />
@@ -80,7 +80,7 @@ const FeatureCard: React.FC<{ item: FeatureItem }> = ({ item }) => {
              Questo gradiente bianco sfuma l'immagine verso il basso, 
              esattamente come nello screenshot.
           */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/90"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-white/30"></div>
         </div>
       </div>
     </div>
