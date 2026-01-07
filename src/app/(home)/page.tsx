@@ -31,9 +31,9 @@ export default async function Home() {
 
         {/*<BookingHero />*/}
 
-        {serie.status === 'open' &&
+        {!!serie && serie.status === 'open' &&
           <HomeBanner serie={serie}
-            className="mt-16" 
+            className="mt-16"
           />
         }
 

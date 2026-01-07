@@ -1,8 +1,8 @@
 import { AppShellMain } from '@mantine/core';
 import Header from '@/components/layout/header';
 import Sidebar from '@/components/layout/sidebar';
+import Footer from '@/components/layout/footer';
 import Credits from '@/components/credits';
-import Footer from '@/components/footer';
 
 const links = [
   { name: "Home", path: "/", visible: false },

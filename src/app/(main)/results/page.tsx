@@ -1,6 +1,6 @@
 import { dt } from '@/utils/date';
 import ResultList from './result-list';
-import { getResultsByYear } from './actions';
+import { getAvailableYears, getResultsByYear } from './actions';
 
 export const revalidate = 3600
 
@@ -9,9 +9,9 @@ export const metadata = {
 }
 
 export default async function ResultsPage() {
-  const currentYear = dt().year()
-  const availableYears = [2023, 2024, 2025]
-  const events = await getResultsByYear(currentYear)
+  const availableYears = await getAvailableYears()
+  const lastAvailableYear = Math.max(...availableYears)
+  const events = await getResultsByYear(lastAvailableYear)
 
   return (
     <>
@@ -19,7 +19,7 @@ export default async function ResultsPage() {
       <h1 className="title">Classifiche</h1>
 
       <ResultList
-        initialYear={currentYear}
+        initialYear={lastAvailableYear}
         availableYears={availableYears}
         initialResults={events}
       />

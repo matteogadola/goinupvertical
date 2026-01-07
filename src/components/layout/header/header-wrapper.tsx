@@ -8,14 +8,14 @@ interface HeaderWrapperProps {
   threshold?: number; // A quanti pixel deve diventare completamente bianco
 }
 
-export function HeaderWrapper({ children, threshold = 200 }: Readonly<HeaderWrapperProps>) {
+export function HeaderWrapper({ children, threshold = 800 }: Readonly<HeaderWrapperProps>) {
   const { sidenavOpened } = useUiStore()
   const { scrollY } = useScroll();
 
   const backgroundColor = useTransform(
     scrollY,
     [0, threshold],
-    [sidenavOpened ? "var(--background)": "rgba(255, 255, 255, 0)", "rgba(240, 238, 233, 1)"]
+    [sidenavOpened ? "var(--background)" : "rgba(255, 255, 255, 0)", "rgba(240, 238, 233, 1)"]
   );
 
   // RIVEDI
