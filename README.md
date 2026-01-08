@@ -20,9 +20,9 @@ Da qui derivano una serie di scelte architetturali che permettono di vivere inte
 ### Wordpress
 Un'obiezione che potrebbe sorgere spontanea potrebbe essere: *"Con 3€ al mese prendi un hosting Wordpress e non ci pensi più"*.
 
-La risposta breve è che essendo un progetto *pro bono* ed avendo sempre sviluppato in Angular ho colto l'occasione per studiare React, Next.js ed i servizi utilizzati.
+La risposta breve è che essendo un progetto *pro bono* ed avendo sempre sviluppato in Angular ho colto l'occasione per prendere familiarità con React, Next.js ed i servizi utilizzati.
 
-Quella lunga dovrebbe parlare di alcuni requisiti tecnici che avrebbero probabilmente richiesto l'acquisto di plugin (ho poi creato un [plugin](https://github.com/matteogadola/wp-racemate) dedicato).
+Quella lunga dovrebbe parlare di alcuni requisiti tecnici che avrebbero probabilmente richiesto l'acquisto di plugin (ho poi sviluppato un [plugin](https://github.com/matteogadola/wp-racemate) dedicato).
 
 ## Stack Tecnologico
 Next.js, TailwindCSS, Sanity, Supabase, Stripe, Brevo.
