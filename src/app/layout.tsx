@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/next';
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import AppContainer from '@/components/layout/container';
 import { fonts } from '@/utils/fonts';
 import './globals.css'
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="it">
       <body className={`${fonts.map(font => font.variable).join(' ')} antialiased flex flex-col min-h-screen`}>
         <MantineProvider>
+          <Notifications />
           <AppContainer>
             {children}
           </AppContainer>

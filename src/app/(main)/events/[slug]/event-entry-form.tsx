@@ -3,6 +3,8 @@
 import { Autocomplete, Button, Checkbox, ComboboxItem, Group, MantineProvider, Modal, OptionsFilter, Select, TextInput } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { DateInput, DateInputProps, DatesProvider } from '@mantine/dates';
+//import { Notification } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { createFormActions, isNotEmpty, useForm } from '@mantine/form';
 import { getClubs } from "@/utils/sanity/queries";
 import { useState } from "react";
@@ -107,7 +109,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
 
     try {
       verifyTin(data.tin, data.first_name, data.last_name);
-    } catch(e: any) {
+    } catch (e: any) {
       form.setFieldError('tin', e.message);
       return
     }
@@ -118,7 +120,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
         form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
         return
       }
-    } catch(e: any) {
+    } catch (e: any) {
       console.log(e.message)
       // mostra errore
       //setError(e.message)
@@ -149,18 +151,14 @@ export default function EventEntryForm({ event, product }: { event: any, product
   const onSave = async () => {
     const data = form.getValues()
 
-    await save(data)
-    /*const items = useCartStore.getState().items
-
-    if (items.length) {
-      console.log('dentro')
-      if (items.every((v: any) => v.entry.email && v.entry.email === data.email)) {
-        form.setFieldValue('email', data.email)
-      }
-      if (items.every((v: any) => v.entry.phone_number && v.entry.phone_number === data.phone_number)) {
-        form.setFieldValue('phone_number', data.phone_number)
-      }
-    }*/
+    if (await save(data)) {
+      notifications.show({
+        title: 'Salvato!',
+        message: 'Il prodotto è stato aggiunto al carrello',
+        color: 'teal',
+        autoClose: 3000,
+      })
+    }
   }
 
   // da rivedere
@@ -239,7 +237,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
           />
 
         </div>
-      
+
         <p className="mt-6">
           <span className="block text-xs text-gray-600 dark:text-gray-500">
             Completando l&apos;iscrizione accetti i <a href="/legal/terms" target="_blank" className="link" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="link" rel="noopener noreferrer">informativa sulla privacy</a>
@@ -252,7 +250,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
         </div>
 
       </form>
-    
+
       <Modal opened={isTinModalOpened} onClose={closeTinModal} title="Calcolo codice fiscale" withCloseButton={false} size={modalSize}>
         <EventEntryTinForm form={form} onClose={closeTinModal} />
       </Modal>

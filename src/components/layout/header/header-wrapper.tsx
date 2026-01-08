@@ -3,12 +3,12 @@
 import { useUiStore } from "@/store/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-interface HeaderWrapperProps {
+interface Props {
   children: React.ReactNode;
-  threshold?: number; // A quanti pixel deve diventare completamente bianco
+  threshold: number;
 }
 
-export function HeaderWrapper({ children, threshold = 800 }: Readonly<HeaderWrapperProps>) {
+export function HeaderWrapper({ children, threshold }: Readonly<Props>) {
   const { sidenavOpened } = useUiStore()
   const { scrollY } = useScroll();
 

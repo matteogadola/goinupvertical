@@ -8,16 +8,20 @@ import HeaderUser from './header-user';
 import { getUser } from '@/utils/user';
 import './header.css'
 
+interface Props {
+  links: NavLink[];
+  threshold?: number;
+}
+
 export default async function Header({
   links,
-}: Readonly<{
-  links: NavLink[],
-}>) {
+  threshold = 600,
+}: Readonly<Props>) {
   const user = await getUser()
 
   return (
     <AppShellHeader>
-      <HeaderWrapper>
+      <HeaderWrapper threshold={threshold}>
         <div className="header content">
           <HeaderBurger />
 

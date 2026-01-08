@@ -12,6 +12,7 @@ export default async function Home() {
   const serie = await getSerie();
   const features = await getFeatures();
   const upcomingEvents = await getUpcomingEvents();
+  console.log(upcomingEvents)
 
   return (
     <>

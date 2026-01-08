@@ -25,7 +25,7 @@ export default function RootLayout({
 
   return (
     <>
-      <Header links={links} />
+      <Header links={links} threshold={50} />
       <Sidebar links={links} />
       <AppShellMain className="page-layout">
         {children}

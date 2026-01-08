@@ -18,6 +18,7 @@ export default function AppContainer({
         breakpoint: 'sm',
         collapsed: { mobile: !sidenavOpened, desktop: true },
       }}
+    //styles={{ header: { position: "static" } }}
     >
       {children}
     </AppShell>

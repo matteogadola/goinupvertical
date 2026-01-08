@@ -20,25 +20,26 @@ interface Props {
 
 const components: Partial<PortableTextReactComponents> = {
   marks: {
-    link: ({value, children}) => {
+    link: ({ value, children }) => {
       const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
       return (
         <a href={value?.href} target={target} rel={target === '_blank' ? 'noindex nofollow' : ''} className='link'>
           {children}
         </a>
       )
-    }},
+    }
+  },
   list: {
-    bullet: ({children}) => <ul className="my-2">{children}</ul>,
+    bullet: ({ children }) => <ul className="my-2">{children}</ul>,
   },
   listItem: {
-    bullet: ({children}) => <li style={{
+    bullet: ({ children }) => <li style={{
       listStyleType: 'disc',
       listStylePosition: 'inside'
     }}>{children}</li>,
   },
   block: {
-    normal: ({children}) => <p className="mb-2">{children}</p>,
+    normal: ({ children }) => <p className="mb-2">{children}</p>,
   },
 }
 
@@ -77,7 +78,7 @@ export default async function EventPage({
   const { slug } = await params
   const event = await getEvent(slug);
 
-  if (event === null || event.status === 'internal') {
+  if (event === null || (process.env.DEPLOY_STAGE === 'production' && event.status === 'internal')) {
     notFound();
   }
 
@@ -93,8 +94,8 @@ export default async function EventPage({
         <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
         {(!!event.description && Array.isArray(event.description))
           ? <div className="mt-8 text-sm md:text-base">
-              <PortableText value={event.description} components={components} />
-            </div>
+            <PortableText value={event.description} components={components} />
+          </div>
           : <div className="mt-8 text-sm md:text-base" dangerouslySetInnerHTML={{ __html: event.description ?? event.summary ?? '' }} />
         }
 

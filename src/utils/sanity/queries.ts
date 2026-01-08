@@ -29,7 +29,9 @@ export const getEvents = async ({ year }: { year?: number } = {}) => {
 
 export const getUpcomingEvents = async () => {
   const today = new Date().toISOString()
-  return client.fetch(`*[_type == "event" && type != "serie" && status != "internal" && date >= $today]{
+  const statusCondition = process.env.DEPLOY_STAGE === 'production' ? '&& status != "internal"' : '';
+
+  return client.fetch(`*[_type == "event" && type != "serie" && date >= $today ${statusCondition}]{
     ...,
     products[]->
   } | order(date) [0...3]`, { today })
@@ -95,7 +97,7 @@ export async function getAvailableYears(): Promise<number[]> {
   const results = await client.fetch<{ date: string }[]>(`*[_type == "event" && type in $types]{
     date
   } | order(date desc)`, { types: ['serie', 'race', 'award'] })
-  return Array.from(new Set(results.map(({ date }) => new Date(date).getFullYear())))
+  return Array.from(new Set(results.map(({ date }: { date: string }) => new Date(date).getFullYear())))
 }
 
 export const getEventResults = async ({ year }: { year?: number } = {}) => {
