@@ -86,7 +86,7 @@ const theme = createTheme({
   color: var(--mantine-color-gray-7);
 
   &[data-active] {
-    color: var(--mantine-color-black);
+    color: var(--foreground);
   }
 
   @mixin dark {
