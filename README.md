@@ -4,7 +4,7 @@
     <i>Step behind the scenes of the <a href="https://goinupvertical.it" target="_blank">GOinUP Vertical website</a>.</i>
   </p>
   <br />
-  <img src="https://github.com/abhisheknaiidu/awesome-github-profile-readme/raw/master/assets/agpr.gif">
+  <img src="public/images/repo/browse.gif">
 </div>
 
 ---
