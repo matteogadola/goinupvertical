@@ -1,28 +1,27 @@
-import { dt } from '@/utils/date';
-import ResultList from './result-list';
 import { getAvailableYears, getResultsByYear } from './actions';
+import ResultTabs from './result-tabs';
+import { Metadata } from 'next'
 
-export const revalidate = 3600
-
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Classifiche',
 }
 
 export default async function ResultsPage() {
   const availableYears = await getAvailableYears()
-  const lastAvailableYear = Math.max(...availableYears)
-  const events = await getResultsByYear(lastAvailableYear)
+  const initialYear = Math.max(...availableYears)
+  const initialResults = await getResultsByYear(initialYear)
 
   return (
     <>
-      {/*<h3><span className="highlighted">2024</span></h3>*/}
       <h1 className="title">Classifiche</h1>
 
-      <ResultList
-        initialYear={lastAvailableYear}
-        availableYears={availableYears}
-        initialResults={events}
-      />
+      <div className="mt-6">
+        <ResultTabs
+          availableYears={availableYears}
+          initialYear={initialYear}
+          initialResults={initialResults}
+        />
+      </div>
     </>
   )
 }

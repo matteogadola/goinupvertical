@@ -1,58 +1,21 @@
 'use client'
 
-import React, { useState, useTransition, useMemo } from "react";
-import { getResultsByYear } from "./actions";
-import { Event } from "@/types/events";
-import { urlForDowload } from "@/utils/sanity";
-import { dt } from "@/utils/date";
+import React, { useMemo } from 'react';
+import { urlForDowload } from '@/utils/sanity';
+import { dt } from '@/utils/date';
 
 type Props = {
-  initialYear: number;
-  initialResults: any[];
-  availableYears: number[];
+  results: any[];
 }
 
 export default function ResultList({
-  initialYear,
-  initialResults,
-  availableYears,
+  results,
 }: Readonly<Props>) {
-  const [selectedYear, setSelectedYear] = useState<number>(initialYear)
-  const [events, setEvents] = useState<Event[]>(initialResults)
-  const serie = useMemo(() => events.find(event => event.type === 'serie'), [events])
-  const races = useMemo(() => events.filter(event => event.type === 'race'), [events])
-  const [isPending, startTransition] = useTransition();
-
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newYear = parseInt(event.target.value, 10);
-    setSelectedYear(newYear)
-
-    // Avvia la transizione per il fetch dei dati in background
-    startTransition(async () => {
-      try {
-        const fetchedEvents = await getResultsByYear(newYear);
-        setEvents(fetchedEvents);
-      } catch (err) {
-        setEvents([]);
-      }
-    });
-  };
+  const serie = useMemo(() => results.find(event => event.type === 'serie'), [results])
+  const races = useMemo(() => results.filter(event => event.type === 'race'), [results])
 
   return (
     <div className="mt-4 lg:mt-8">
-      <select
-        id="year-select"
-        value={selectedYear}
-        onChange={handleYearChange}
-        disabled={isPending} // Disabilita durante il caricamento
-      >
-        {availableYears.map((year) => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
-
       {!!serie &&
         <div className="w-full my-4 lg:my-8">
           <h1 className="subtitle">{serie.name}</h1>
@@ -91,7 +54,7 @@ export default function ResultList({
           )}
         </div>
       ) : (
-        !isPending && <p className="mt-4">Nessun dato presente per quest'anno.</p>
+        <p className="mt-4">Nessun dato presente per quest'anno.</p>
       )}
     </div>
   )

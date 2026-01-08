@@ -94,7 +94,7 @@ export const getTestimonials = (): any[] => {
 export async function getAvailableYears(): Promise<number[]> {
   const results = await client.fetch<{ date: string }[]>(`*[_type == "event" && type in $types]{
     date
-  }`, { types: ['serie', 'race', 'award'] })
+  } | order(date desc)`, { types: ['serie', 'race', 'award'] })
   return Array.from(new Set(results.map(({ date }) => new Date(date).getFullYear())))
 }
 
