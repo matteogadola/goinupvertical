@@ -34,6 +34,9 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
   /*(30%)*/
   --accent: #DCCE51;
   /*(10%)*/
+
+  --font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+  --font-weight: 300;
 }
 
 .dark {
@@ -110,8 +113,8 @@ html,
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
-  font-weight: 300;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
   width: 100%;
   margin: 0;
 }
