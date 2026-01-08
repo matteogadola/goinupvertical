@@ -94,7 +94,9 @@ export const getTestimonials = (): any[] => {
 
 
 export async function getAvailableYears(): Promise<number[]> {
-  const results = await client.fetch<{ date: string }[]>(`*[_type == "event" && type in $types]{
+  const statusCondition = process.env.DEPLOY_STAGE === 'production' ? '&& status != "internal"' : '';
+
+  const results = await client.fetch<{ date: string }[]>(`*[_type == "event" && type in $types ${statusCondition}]{
     date
   } | order(date desc)`, { types: ['serie', 'race', 'award'] })
   return Array.from(new Set(results.map(({ date }: { date: string }) => new Date(date).getFullYear())))

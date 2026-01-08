@@ -19,20 +19,14 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
 @import '@mantine/core/styles.layer.css';
 */
 
-@theme {
-  --font-unbounded: var(--font-unbounded);
-  --font-poppins: var(--font-poppins);
-  --font-matroska: var(--font-matroska);
-  --font-archivo: var(--font-archivo);
-
-  --color-terra: #ebc08d;
-}
-
 :root {
-  /*--background: hsl(210, 20%, 98%);*/
-  /* pantone cloud dancer rgba(240,238,233,1.00) - #f0eee9 */
+  /* #F0EEE9 - cloud dancer rgba(240,238,233,1.00) */
   --background: hsl(43, 19%, 93%);
-  --foreground: hsl(0 0% 3.9%);
+  /* #223057 */
+  --foreground: hsl(224 43.8% 23.7%);
+
+  /*--background: hsl(43, 19%, 93%);
+  --foreground: hsl(0 0% 3.9%);*/
 
   --primary: #223057;
   /*(60%)*/
@@ -40,55 +34,20 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
   /*(30%)*/
   --accent: #DCCE51;
   /*(10%)*/
-
-  /*
-  --primary-darker
-  --primary-lighter
-
-  --success-color
-  --warning-color
-  --error-color
-  --info-color*/
-
-  /*
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-  */
 }
 
 .dark {
   --background: hsl(0 0% 3.9%);
   --foreground: hsl(0 0% 98%);
+}
+
+@theme {
+  --font-unbounded: var(--font-unbounded);
+  --font-poppins: var(--font-poppins);
+  --font-matroska: var(--font-matroska);
+  --font-archivo: var(--font-archivo);
+
+  --color-terra: #ebc08d;
 }
 
 @theme inline {

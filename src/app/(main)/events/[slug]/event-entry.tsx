@@ -23,10 +23,10 @@ import EventEntryStatus from "@/components/events/entry-status";
 export default function EventEntry({ event, product }: { event: any, product: any }) {
 
   return (
-    <div className="px-4 py-2 bg-slate-50 shadow-sm">
+    <div className="px-4 py-2 bg-stone-200 shadow-sm">
       <div className="flex space-x-4 items-baseline">
-        <h2 className ="font-unbounded text-xl">{product.name}</h2>
-        <span className ="font-unbounded font-light px-1 bg-yellow-200">{product.price / 100}€</span>
+        <h2 className="font-unbounded text-xl">{product.name}</h2>
+        <span className="font-unbounded font-light px-1 bg-yellow-200">{product.price / 100}€</span>
       </div>
 
       <p className="text-gray-600">{product.summary}</p>
