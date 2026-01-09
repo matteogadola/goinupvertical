@@ -14,19 +14,19 @@ type Props = {
 export default async function UpcomingEvents({ events, className }: Readonly<Props>) {
 
   return (
-    <div className={clsx('flex flex-col mt-32 justify-center items-center space-y-16', className)}>
+    <div id="upcoming-events" className={clsx('flex flex-col mt-32 justify-center items-center space-y-16', className)}>
       <span className="title">Prossimi eventi</span>
 
       <ul className={clsx("upcoming-grid", {
         "grid-2": events.length === 2,
         "grid-3": events.length === 3
-        })}>
+      })}>
         {events.map((event, index) =>
           <Link href={`/events/${event.slug.current}`} key={index} className="upcoming-card">
             <div className="upcoming-header" style={getBackgroudStyle(event)}>
               <div className="upcoming-header-text">
-                <h3 className={clsx("upcoming-header-title", { "nowrap": event.name.length <= 12})}>
-                {event.name}
+                <h3 className={clsx("upcoming-header-title", { "nowrap": event.name.length <= 12 })}>
+                  {event.name}
                 </h3>
 
                 <div className="upcoming-header-badges">
@@ -45,10 +45,10 @@ export default async function UpcomingEvents({ events, className }: Readonly<Pro
             <div className="px-2 py-4">
               <EventEntryStatus event={event} />
             </div>
-            
-            
+
+
           </Link>
-          
+
         )}
       </ul>
     </div>

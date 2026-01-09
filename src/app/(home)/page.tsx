@@ -16,7 +16,9 @@ export default async function Home() {
 
   return (
     <>
-      <HomeHero serie={serie} />
+      <HomeHero
+        showCta={upcomingEvents.length > 0}
+      />
 
       <div className="content">
         {features.length > 0 &&

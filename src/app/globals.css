@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@plugin 'tailwindcss-animate';
+/*@plugin 'tailwindcss-animate';*/
 /*@import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);*/
@@ -37,6 +37,8 @@ https://github.com/orgs/mantinedev/discussions/1672#discussioncomment-7561382
 
   --font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
   --font-weight: 300;
+
+  --navbar-height: 80px;
 }
 
 .dark {
@@ -560,3 +562,37 @@ form .field-helper > button,
 }
 
 .header {}
+
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  top: -calc(var(--navbar-height));
+  width: 100%;
+  height: 100%;
+  background-color: #111827;
+}
+
+.hero>.hero-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+
+  &>Image {
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.9;
+  }
+}
+
+.hero>.hero-content {
+  position: relative;
+  overflow: hidden;
+  top: -calc(var(--navbar-height));
+  width: 100%;
+  height: 100%;
+  background-color: #111827;
+}
