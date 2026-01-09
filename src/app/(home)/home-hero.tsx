@@ -44,7 +44,7 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
           <div className="absolute inset-0 bg-linear-to-b from-trasparent to-white/20" aria-hidden="true"></div>
         </div>
 
-        <div className="relative z-10 flex flex-col mt-[100px] lg:mt-[150px] px-2 text-primary font-archivo sm:px-4 lg:px-6 max-w-6xl mx-auto">
+        <div className="relative z-10 flex flex-col mt-[150px] px-2 text-primary font-archivo sm:px-4 lg:px-6 max-w-6xl mx-auto">
           <h1 className="flex flex-col text-center uppercase">
             <ScrollAnimation animation="slide-left" delay={0.08}>
               <span className="text-4xl lg:text-5xl">
@@ -58,7 +58,7 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
             </ScrollAnimation>
           </h1>
 
-          <p className="mt-8 max-w-3xl mx-auto font-semibold text-center">
+          <p className="hidden mt-8 max-w-3xl mx-auto font-semibold text-center">
             Circuito di 10 gare vertical di montagna a finalità benefica coordinato
             da un gruppo di associazioni con lo scopo di riuscire a donare il maggior numero
             di attrezzature e servizi a diverse organizzazioni benefiche nel mandamento di Morbegno
@@ -66,7 +66,10 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
 
           {showCta === true && (
             <div className="mt-8 mx-auto">
-              <CtaButton />
+              <CtaButton
+                text="Scopri le gare"
+                anchor="upcoming-events"
+              />
             </div>
           )}
         </div>
