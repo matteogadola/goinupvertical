@@ -1,11 +1,9 @@
 'use client'
 
-import { Box, Button, Container, Stack, Title, Text } from '@mantine/core'
 import { CSSProperties, useEffect, useState } from 'react'
 import Image from 'next/image';
-import Link from 'next/link';
+import { Box, Button, Container, Stack, Title, Text } from '@mantine/core'
 import { ScrollAnimation } from '@/components/animations/scroll-animation';
-import { HeroCTA } from './home-hero-cta';
 import { CtaButton } from '@/components/cta-button';
 
 type Props = {
