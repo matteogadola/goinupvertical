@@ -37,7 +37,7 @@ export default async function UpcomingEvents({ events, className }: Readonly<Pro
             </div>
 
             <div className="flex items-center px-2">
-              <span className="font-unbounded text-xl uppercase">{dt(event.date).format('ddd DD MMM')}</span>
+              <span className="text-xl uppercase">{dt(event.date).format('ddd DD MMM')}</span>
             </div>
             <div className="px-2">
               <span className="">{event.summary}</span>

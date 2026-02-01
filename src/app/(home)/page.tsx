@@ -12,7 +12,6 @@ export default async function Home() {
   const serie = await getSerie();
   const features = await getFeatures();
   const upcomingEvents = await getUpcomingEvents();
-  console.log(upcomingEvents)
 
   return (
     <>
@@ -21,7 +20,7 @@ export default async function Home() {
       />
 
       <div className="content">
-        {features.length > 0 &&
+        {(features.length > 0 && false) &&
           <HomeFeatures
             features={features}
             className="px-4"
