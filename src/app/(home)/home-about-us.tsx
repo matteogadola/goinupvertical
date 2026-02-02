@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from 'next/image'
-import aboutUs from '../../../public/images/homepage/mission.jpg'
-import aboutUsMask from '../../../public/images/homepage/mission-mask.png'
-import traona from '../../../public/images/homepage/traona-541.jpg'
-import traonaMask from '../../../public/images/homepage/traona-541-mask.webp'
+import jolette from '../../../public/images/homepage/jolette-unmask.webp'
+import joletteMask from '../../../public/images/homepage/jolette-mask.webp'
+import trail from '../../../public/images/homepage/trail-unmask.webp'
+import trailMask from '../../../public/images/homepage/trail-mask.webp'
 import gusto from '../../../public/images/homepage/gusto.webp'
 import gustoMask from '../../../public/images/homepage/gusto-mask.webp'
 import { ReactNode } from 'react'
@@ -28,53 +28,24 @@ export default async function HomeAboutUs() {
         <div className="justify-items-end">
           <div className="h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="h-full w-256px ">
-              {/*<FullFillImage
-                alt="Mission"
-                src={aboutUs}
-                className="rounded-4xl"
-              />*/}
-
-              <ImageCard src={traona} mask={traonaMask} alt="Foto trail running">
-
-                {/* Usiamo Flexbox per spingere tutto in basso */}
+              <ImageCard src={trail} mask={trailMask} alt="Foto trail running">
                 <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-6xl">Beneficenza</h3>
-
               </ImageCard>
 
             </div>
             <div className="h-full grid grid-cols-1 justify-items-end gap-4">
-
-
               <div className="bg-yellow-200 rounded-4xl w-4/5 group">
-                <ImageCard src={aboutUs} mask={aboutUsMask} alt="Foto jolette">
-
-                  {/* Usiamo Flexbox per spingere tutto in basso */}
-                  <div className="mx-auto mt-2 max-w-2xl sm:px-6group-hover:font-medium text-background">
-                    <h3 className="uppercase text-shadow-lg font-archivo text-center text-5xl">Inclusività</h3>
-                  </div>
-
+                <ImageCard src={jolette} mask={joletteMask} alt="Foto jolette">
+<h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-5xl">Inclusività</h3>
                 </ImageCard>
               </div>
               <div className="bg-blue-200 w-4/5 rounded-4xl">
               <ImageCard src={gusto} mask={gustoMask} alt="Foto birra">
-                  <div className="mx-auto max-w-2xl font-medium text-background">
-                    <h3 className="uppercase text-shadow-lg font-archivo text-center text-5xl">Gusto</h3>
-                  </div>
+                  <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-5xl">Gusto</h3>
                 </ImageCard>
               </div>
             </div>
-
           </div>
-          
-          {/*<Image
-            alt="Mission"
-            src={aboutUs}
-            sizes="100vw"
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
-          />*/}
         </div>
       </div>
       {/*Box pos="relative" w={400}>
@@ -186,7 +157,7 @@ export function ImageCard({
 
       {/* 3. IL CONTENUTO (TESTO) */}
       {/* h-full permette di usare flexbox per posizionare il testo (es. in basso) */}
-      <div className="relative z-10 h-full mx-auto w-full px-2 py-4 wrap-anywhere group-hover:scale-110 transition-transform duration-700">
+      <div className="relative z-5 h-full mx-auto w-full px-2 py-4 wrap-anywhere group-hover:scale-110 transition-transform duration-700">
         {children}
       </div>
       {mask && (
