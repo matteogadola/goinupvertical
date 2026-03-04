@@ -132,7 +132,7 @@ export default function CheckoutPage() {
 
 {paymentMethods.includes('sepa') &&
   <div className="flex items-center pl-4 pr-2 border border-gray-200 rounded">
-  <input type="radio" value="sepa" id="payment-method-sepa" checked={paymentMethod === 'sepa'} onChange={e => setPaymentMethod('sepa')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
+  <input type="radio" value="sepa" id="payment-method-sepa" disabled={loading} checked={paymentMethod === 'sepa'} onChange={e => setPaymentMethod('sepa')} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300" />
   <label htmlFor="payment-method-sepa" className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
     <span>Bonifico Bancario</span>
     {paymentMethod === 'sepa' && <span className="block font-normal text-xs">Riceverai le coordinate via mail</span>}
