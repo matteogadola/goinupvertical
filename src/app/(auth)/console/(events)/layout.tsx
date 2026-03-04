@@ -7,31 +7,37 @@ import { getClaims } from '@/utils/supabase/helpers';
 import { hasRole } from '@/utils/supabase/auth';
 import { Role, User } from '@/types/user';
 import Header from '@/components/layout/header';
+import { dt } from '@/utils/date';
 
 const links: { name: string, path: string, hasRole?: Role }[] = [
   { name: "Eventi", path: "/console" },
   { name: "Utenti", path: "/console/users", hasRole: "admin" },
 ]
 
-export default async function ConsoleUsersLayout({
+export default async function ConsoleEventsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const events = await getUsers()
+  const events = await getEvents()
+
+  const sidenavLinks = events.map((event) => ({
+    name: event.name,
+    path: `/console/events/${event.slug}`
+  }))
 
   return (
     <>
       <Header links={links} />
       <AppShellMain className="page">
         <div className="flex">
-          <div className="min-w-64 pr-4 border-r-1 hidden md:flex">
+          <div className="min-w-64 pr-4 border-r hidden md:flex">
             <div className="mt-4">
               <span className="font-unbounded text-xl">Eventi</span>
               <ul className="separator mt-4">
-                {events?.map((item: any, index) =>
+                {sidenavLinks?.map((item: any, index) =>
                   <li key={index} className="py-2 whitespace-nowrap">
-                    <Link href={'/console/events/' + item.slug}>{item.name}</Link>
+                    <Link href={item.path}>{item.name}</Link>
                   </li>
                 )}
               </ul>
@@ -45,12 +51,15 @@ export default async function ConsoleUsersLayout({
   );
 }
 
-const getUsers = async () => {
+const getEvents = async () => {
   const supabase = await createClient()
 
   const { data } = await supabase
-    .from('users')
-    .select();
+    .from('events')
+    .select()
+    .gte('date', dt().startOf('year').format())
+    .order('date', { ascending: true })
+    .overrideTypes<Event[]>();
   
   return data ?? []
 }
