@@ -21,7 +21,7 @@ export default async function ConsoleUsersLayout({
       <Header links={links} />
       <AppShellMain className="page">
         <div className="flex">
-          <div className="min-w-64 pr-4 border-r-1 hidden md:flex">
+          <div className="min-w-64 pr-4 border-r hidden md:flex">
             <div className="mt-4">
               <span className="font-unbounded text-xl">Eventi</span>
               <ul className="separator mt-4">
