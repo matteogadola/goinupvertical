@@ -1,6 +1,7 @@
 'use client'
 
 import { ScrollAnimation } from '@/components/animations/scroll-animation'
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 type Props = {
@@ -30,7 +31,7 @@ const mentions: Mention[] = [
   },
 ]
 
-export default function HomeMentions() {
+export default function HomeMentions({ className }: { className?: string }) {
   const [mention, setMention] = useState<Mention | undefined>()
 
   useEffect(() => {
@@ -47,10 +48,10 @@ export default function HomeMentions() {
 
   return (
     <ScrollAnimation animation="zoom">
-      <div className="min-h-55 m-auto font-poppins">
+      <div className={clsx("min-h-48 m-auto", className)}>
         {!!mention &&
-          <div className="flex flex-col items-center pt-32 pb-16">
-            <p className="text-lg italic">{mention.text}</p>
+          <div className="flex flex-col items-center pt-32 pb-8 lg:pb-16">
+            <p className="text-lg text-center italic">{mention.text}</p>
             {mention?.url
               ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.source}</a>
               : <span className="mt-2 font-semibold">{mention.source}</span>

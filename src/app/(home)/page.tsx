@@ -55,7 +55,7 @@ export default async function Home() {
           />
         }
 
-        <HomeMentions />
+        <HomeMentions className="px-4" />
       </div>
     </>
   );
