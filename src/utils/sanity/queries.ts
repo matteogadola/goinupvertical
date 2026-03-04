@@ -29,7 +29,7 @@ export const getEvents = async ({ year }: { year?: number } = {}) => {
 
 export const getUpcomingEvents = async () => {
   const today = new Date().toISOString()
-  const statusCondition = process.env.DEPLOY_STAGE === 'production' ? '&& status != "internal"' : '';
+  const statusCondition = process.env.DEPLOY_STAGE === 'development' ? '' : '&& status != "internal"';
 
   return client.fetch(`*[_type == "event" && type != "serie" && date >= $today ${statusCondition}]{
     ...,

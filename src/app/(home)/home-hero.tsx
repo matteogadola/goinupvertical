@@ -42,7 +42,7 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
               alt="image alt"
               fill
               priority // FONDAMENTALE: Questa è l'immagine LCP. Caricala immediatamente.
-            className="object-fit object-center opacity-90 " // object-cover mantiene le proporzioni
+            className="object-cover object-center opacity-90 " // object-cover mantiene le proporzioni
             sizes="100vw"
             />
           <div className="absolute inset-0 bg-linear-to-b from-trasparent to-white/20" aria-hidden="true"></div>
@@ -61,12 +61,6 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
               </span>
             </ScrollAnimation>
           </h1>
-
-          <p className="hidden mt-8 max-w-3xl mx-auto font-semibold text-center">
-            Circuito di 10 gare vertical di montagna a finalità benefica coordinato
-            da un gruppo di associazioni con lo scopo di riuscire a donare il maggior numero
-            di attrezzature e servizi a diverse organizzazioni benefiche nel mandamento di Morbegno
-          </p>
 
           {showCta === true && (
             <div className="mt-8 mx-auto">

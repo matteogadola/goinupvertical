@@ -16,32 +16,32 @@ export default async function HomeAboutUs() {
 
   // flex min-h-[512px] justify-center items-center
   return (
-    <div className="my-16">
+    <div className="my-8 lg:my-16">
       <div className="content grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="px-8 py-24 text-primary">
+        <div className="px-8 pt-4 pb-18 lg:py-24 text-primary">
           <h1 className="text-5xl lg:text-7xl font-matroska">GOin<span className="text-accent">UP</span></h1>
-          <h2 className="mb-4 text-lg font-poppins">Circuito di 10 gare vertical di montagna a <span className="font-normal">finalità benefica</span>.</h2>
-          <p className="mt-8 text-xl font-poppins">
+          <h2 className="mb-4 text-lg">Circuito di 10 gare vertical di montagna a <span className="font-normal">finalità benefica</span>.</h2>
+          <p className="mt-8 text-xl">
             GOinUP è un gruppo di associazioni che coordina e promuove l&apos;omonimo circuito di gare di montagna. Il nostro obbiettivo è quello di riuscire a donare il maggior numero di attrezzature e servizi a diverse associazioni benefiche nel mandamento di Morbegno
           </p>
         </div>
         <div className="justify-items-end">
-          <div className="h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="h-full w-256px ">
+          <div className="px-4 lg:px-0 h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="h-full min-h-48 w-256px">
               <ImageCard src={trail} mask={trailMask} alt="Foto trail running">
-                <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-6xl">Beneficenza</h3>
+                <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-5xl lg:text-6xl">Beneficenza</h3>
               </ImageCard>
 
             </div>
             <div className="h-full grid grid-cols-1 justify-items-end gap-4">
-              <div className="bg-yellow-200 rounded-4xl w-4/5 group">
+              <div className="min-h-48 w-full lg:w-4/5 rounded-4xl group">
                 <ImageCard src={jolette} mask={joletteMask} alt="Foto jolette">
-<h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-5xl">Inclusività</h3>
+<h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-6xl lg:text-5xl">Inclusività</h3>
                 </ImageCard>
               </div>
-              <div className="bg-blue-200 w-4/5 rounded-4xl">
-              <ImageCard src={gusto} mask={gustoMask} alt="Foto birra">
-                  <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-5xl">Gusto</h3>
+              <div className="min-h-48 w-full lg:w-4/5 rounded-4xl group">
+                <ImageCard src={gusto} mask={gustoMask} alt="Foto birra">
+                  <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-6xl lg:text-5xl">Gusto</h3>
                 </ImageCard>
               </div>
             </div>

@@ -17,48 +17,48 @@ const supabase = createClient(
 
 const carnetItems = [
   {
-    product_id: '39bc184c-c9e4-4557-9fbb-40907b391b8a',
-    event_id: '6aa979c2-622d-4d06-996a-596568e6e18d'
+    event_id: "03880c1e-c287-455f-ad71-0d4fd388a940",
+    product_id: "778e1a0d-306a-4534-ae1b-28823886437a"
   },
   {
-    product_id: '06fc0294-c4f3-4998-ab84-5c72ba6afef2',
-    event_id: 'b56fbb8a-5c49-4811-8bb7-b992c2544303'
+    event_id: "9844257d-7120-4842-9248-73a7f4b1f031",
+    product_id: "f773adeb-fcc3-4955-8a98-054ee93d4397"
   },
   {
-    product_id: '504e6532-09b6-4b98-9eba-20c067911915',
-    event_id: '241de043-8f32-4d3a-b9ac-b1731fe8ce48'
+    event_id: "1cf3ef49-469d-47aa-8023-a5c9d65acb03",
+    product_id: "591cebfd-c685-45ec-90f7-082c83c1af92"
   },
   {
-    product_id: 'dec0d443-c380-41f7-acb8-a23e696a296b',
-    event_id: 'dbfdfef0-c7e8-4cb0-9e70-3872cdf15929'
+    event_id: "d5a9b24c-c35b-476e-9511-0ef4a02d3e2b",
+    product_id: "5611d405-d09c-41af-8de2-b24576bcbd42"
   },
   {
-    product_id: '2702b42d-1986-4196-9929-e2ae19755f5e',
-    event_id: 'b0061698-9762-4849-8ce0-d907ff1d9743'
+    event_id: "aab2bd71-f10a-40fe-a790-31066d11b02a",
+    product_id: "4431da74-101e-4f15-958c-080e01867d6d"
   },
   {
-    product_id: '9e946616-9335-4faa-a66e-0a6344352b2b',
-    event_id: 'c514bdcb-3ef7-4415-b5de-d4ba79aa4d52'
+    event_id: "26bb178c-f5a3-406e-aa3d-405d34d69509",
+    product_id: "18a7e6cf-f086-4e38-93cd-97aa65450deb"
   },
   {
-    product_id: '461c382b-6f12-4799-862c-7f54730117be',
-    event_id: 'a96a093e-56e5-40ba-be5a-8d978fb562a8'
+    event_id: "0ce456d6-b055-4ae4-b30e-7f87d627489c",
+    product_id: "a2d26b8a-2627-4c69-979e-2dac02b0844d"
   },
   {
-    product_id: '41d92792-d914-4cc6-9337-9f7dcfd5f34d',
-    event_id: 'd1242f0d-acb6-4cc7-a268-e970cd1ac8fe'
+    event_id: "f9fd4322-faf7-4d30-8201-4bae9dc65535",
+    product_id: "0111de9a-d070-4b2e-9376-527b99630e0e"
   },
   {
-    product_id: '600d7cce-c9e2-4e89-8a40-9e2bca8b3622',
-    event_id: '751be1a5-9cd9-4bab-94f8-d3d568e56187'
+    event_id: "cedc834c-a574-45a4-abf0-617745651d52",
+    product_id: "c85e7b2a-5b29-451b-927a-d21771074a51"
   },
   {
-    product_id: 'bc265e0f-71b4-48bd-b3b2-35c2eb9727fc',
-    event_id: '5d2b6463-d0ea-44c9-b8ec-fdebd0e8814f'
+    event_id: "d563b568-11b5-4f54-b185-eb58531e205a",
+    product_id: "0420d7bb-7c6b-42a5-a33c-8f3845273cbd"
   },
   {
-    product_id: '6d769257-7022-468e-a0fd-0a38cf0628c2',
-    event_id: '94134137-72eb-4824-9144-e3ccefda50cb'
+    event_id: "b6cc0ecd-9afe-43d9-bca6-504a05911f6e",
+    product_id: "20f7e9aa-59fb-4bde-bd63-ac015c6c88a2"
   }
 ];
 

@@ -25,14 +25,14 @@ Deno.serve(async (req) => {
 
     const details = order.items.map((item : any) => `
       <tr>
-        <td style="padding: 0.5rem 0;">${item.name}</td>
+        <td style="padding: 0.5rem 0.5rem;">${item.name}</td>
         <td style="padding: 0.5rem 0;">${item.description ?? ''}</td>
         <td style="padding: 0.5rem 0;">${item.quantity}</td>
-        <td style="padding: 0.5rem 0;">${item.price / 100}€</td>
+        <td style="padding: 0.5rem 0;">${(item.quantity * item.price) / 100}€</td>
       </tr>`
     );
 
-    const totalPrice = order.items.reduce((a: any, v: any) => a + v.price / 100, 0);
+    const totalPrice = order.items.reduce((a: any, v: any) => a + (v.quantity * v.price) / 100, 0);
 
     let paymentDetail = order.payment_method === 'cash'
       ? `Per confermare la prenotazione è necessario completare il pagamento presso:<br /><br />
@@ -57,9 +57,9 @@ Deno.serve(async (req) => {
     if (order.promoter_id === 'team-valtellina' && order.items[0].name === 'Iscrizione 1^ Vertical Frasnedo') {
       paymentDetail += '<br /><br /><span>Si prega di inviare copia del certificato medico, prima della gara, via mail a iscrizioni@teamvaltellina.com oppure consegnarlo presso il negozio 3Passi Patagonia</span>'
     }
-
-    if (order.payment_method === 'cash' && order.items.length > 1) {
-      paymentDetail += `<br /><br /><span>N.B. l'ordine dovrà essere saldato nella sua totalità; non saranno accettati pagamenti parziali</span>`
+    // da riattivare finiti carnet
+    if (order.payment_method === 'cash') {
+      //paymentDetail += '<br /><br /><span>È necessario completare il pagamento entro le ore 19 del lunedì antecedente la gara. In caso contrario dovrà essere saldata al momento del ritiro del pettorale al costo di 15€.</span>';
     }
 
     const { data, error } = await supabaseClient.functions.invoke('mail', {
@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
             <table style="border-width: 1px; border-color: #94A3B8;">
               <thead>
                 <tr style="background-color: #E2E8F0;">
-                  <td style="width: 15rem; border-bottom-width: 1px; padding: 0.5rem 0;">Riferimento</td>
+                  <td style="width: 15rem; border-bottom-width: 1px; padding: 0.5rem 0.5rem;">Riferimento</td>
                   <td style="width: 10rem; border-bottom-width: 1px; padding: 0.5rem 0;">Descrizione</td>
                   <td style="width: 5rem; border-bottom-width: 1px; padding: 0.5rem 0;">Quantità</td>
                   <td style="width: 5rem; border-bottom-width: 1px; padding: 0.5rem 0;">Prezzo</td>
@@ -99,6 +99,10 @@ Deno.serve(async (req) => {
               </thead>
               <tbody>
                 ${details.join('')}
+                <tr>
+                  <td colspan=3 style="padding: 0.5rem 0;">TOTALE</td>
+                  <td style="padding: 0.5rem 0;">${totalPrice}€</td>
+                </tr>
               </tbody>
             </table>
 
