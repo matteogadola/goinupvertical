@@ -26,9 +26,9 @@ Deno.serve(async (req) => {
     const details = order.items.map((item : any) => `
       <tr>
         <td style="padding: 0.5rem 0.5rem;">${item.name}</td>
-        <td style="padding: 0.5rem 0;">${item.description ?? ''}</td>
-        <td style="padding: 0.5rem 0;">${item.quantity}</td>
-        <td style="padding: 0.5rem 0;">${(item.quantity * item.price) / 100}€</td>
+        <td style="padding: 0.5rem 0.5rem;">${item.description ?? ''}</td>
+        <td style="padding: 0.5rem 0.5rem;">${item.quantity}</td>
+        <td style="padding: 0.5rem 0.5rem;">${(item.quantity * item.price) / 100}€</td>
       </tr>`
     );
 
@@ -92,16 +92,16 @@ Deno.serve(async (req) => {
               <thead>
                 <tr style="background-color: #E2E8F0;">
                   <td style="width: 15rem; border-bottom-width: 1px; padding: 0.5rem 0.5rem;">Riferimento</td>
-                  <td style="width: 10rem; border-bottom-width: 1px; padding: 0.5rem 0;">Descrizione</td>
-                  <td style="width: 5rem; border-bottom-width: 1px; padding: 0.5rem 0;">Quantità</td>
-                  <td style="width: 5rem; border-bottom-width: 1px; padding: 0.5rem 0;">Prezzo</td>
+                  <td style="width: 10rem; border-bottom-width: 1px; padding: 0.5rem 0.5rem;">Descrizione</td>
+                  <td style="width: 5rem; border-bottom-width: 1px; padding: 0.5rem 0.5rem;">Quantità</td>
+                  <td style="width: 5rem; border-bottom-width: 1px; padding: 0.5rem 0.5rem;">Prezzo</td>
                 </tr>
               </thead>
               <tbody>
                 ${details.join('')}
                 <tr>
-                  <td colspan=3 style="padding: 0.5rem 0;">TOTALE</td>
-                  <td style="padding: 0.5rem 0;">${totalPrice}€</td>
+                  <td colspan=3 style="padding: 0.5rem 0.5rem;">TOTALE</td>
+                  <td style="padding: 0.5rem 0.5rem;">${totalPrice}€</td>
                 </tr>
               </tbody>
             </table>
