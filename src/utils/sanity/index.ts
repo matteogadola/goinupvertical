@@ -1,7 +1,7 @@
 import { client } from './client'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
-const builder = imageUrlBuilder(client)
+const builder = createImageUrlBuilder(client)
 
 type Source = string | { asset: { _ref: string } }
 

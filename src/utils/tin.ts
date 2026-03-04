@@ -36,5 +36,10 @@ export const verifyTin = (tin: string, firstName: string, lastName: string): Cod
     throw new Error(`Corrispondenza codice fiscale non valida`);
   }
 
+  const entryYearLimit = (new Date()).getFullYear() - 15;
+  if (cf.year > entryYearLimit) {
+    throw new Error(`Anno minimo per l'iscrizione: ${entryYearLimit}`);
+  }
+
   return cf;
 };

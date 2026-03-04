@@ -1,9 +1,9 @@
 import localFont from 'next/font/local'
-import { Unbounded, Inter, Roboto_Mono, Poppins } from 'next/font/google'
+import { Unbounded, Inter, Roboto_Mono, Poppins, Archivo_Black } from 'next/font/google'
 
-const stretch_pro = localFont({
-  src: '../../public/fonts/stretch-pro/stretch-pro.otf',
-  variable: '--font-stretch-pro',
+const matroska = localFont({
+  src: '../../public/fonts/matroska/matroska.ttf',
+  variable: '--font-matroska',
 })
 
 const unbounded = Unbounded({
@@ -14,7 +14,7 @@ const unbounded = Unbounded({
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400'],
+  weight: ['300', '400'],
   variable: '--font-poppins',
 })
 
@@ -28,4 +28,10 @@ const roboto_mono = Roboto_Mono({
   variable: '--font-roboto-mono',
 })
 
-export const fonts = [unbounded, poppins, stretch_pro]
+const archivo = Archivo_Black({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-archivo',
+})
+
+export const fonts = [unbounded, poppins, matroska, archivo]

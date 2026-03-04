@@ -32,12 +32,20 @@ export default function EventEntryStatus({ event }: { event: any }) {
         : dt(event.date).subtract(46, 'hours')
 
       if (dt(endSaleDate).isBefore()) {
-        return (
-          <div className="flex flex-col space-x-2">
-            <span className="">Iscrizioni chiuse</span>
-            <span className="block text-gray-700 text-sm">disponibili alla partenza</span>
-          </div>
-        )
+        if (event.type === 'race') {
+          return (
+            <div className="flex flex-col space-x-2">
+              <span className="">Iscrizioni chiuse</span>
+              <span className="block text-gray-700 text-sm">disponibili alla partenza</span>
+            </div>
+          )
+        } else {
+          return (
+            <div className="flex flex-col space-x-2">
+              <span className="">Iscrizioni chiuse</span>
+            </div>
+          )
+        }
       }
 
       if (!!product.start_sale_date && dt(product.start_sale_date).isAfter()) {

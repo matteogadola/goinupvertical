@@ -126,7 +126,7 @@ const partners = [
     name: 'Andrea Mazzoni',
     logo: 'andrea-mazzoni.webp',
     className: 'h-18',
-    url: 'https://it.linkedin.com/in/andrea-mazzoni-705113274'
+    url: 'https://mazzoniandrea.it/'
   }, {
     name: 'Radio Tsn',
     logo: 'radio-tsn.webp',
@@ -154,12 +154,12 @@ export default function Credits({ className }: { className?: string }) {
   return (
     <section className={clsx(className, "text-center mx-4 space-y-8")}>
       <div className="py-4">
-        <h3 className="font-unbounded text-2xl">Sponsor</h3>
+        <h3 className="title">Sponsor</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {sponsors.map((item, index) =>
-            <div key={index} className="flex flex-grow w-1/2 lg:w-1/3 justify-center items-center h-18">
-              <a href={item.url} target="_blank" rel="noopener noreferrer" className={clsx({"col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
-                <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain")} alt={item.name} />
+            <div key={index} className="flex grow w-1/2 lg:w-1/3 justify-center items-center h-18">
+              <a href={item.url} target="_blank" rel="noopener noreferrer" className={clsx({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
+                <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain hover:scale-105")} alt={item.name} />
               </a>
             </div>
           )}
@@ -167,12 +167,12 @@ export default function Credits({ className }: { className?: string }) {
       </div>
 
       <div className="py-4">
-        <h3 className="font-unbounded text-2xl">Supporter</h3>
+        <h3 className="title">Supporter</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {supporters.map((item, index) =>
-            <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center h-18">
+            <div key={index} className="flex grow w-1/2 lg:w-1/4 justify-center items-center h-18">
               <a href={item.url} target="_blank" rel="noopener noreferrer" className={clsx({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
-                <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain")} alt={item.name} />
+                <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain hover:scale-105")} alt={item.name} />
               </a>
             </div>
           )}
@@ -180,12 +180,12 @@ export default function Credits({ className }: { className?: string }) {
       </div>
 
       <div className="py-4">
-        <h3 className="font-unbounded text-2xl">Media partner</h3>
+        <h3 className="title">Media partner</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {partners.map((item, index) =>
-            <div key={index} className="flex flex-grow w-1/2 lg:w-1/4 justify-center items-center h-18">
+            <div key={index} className="flex grow w-1/2 lg:w-1/4 justify-center items-center h-18">
               <a href={item.url} target="_blank" rel="noopener noreferrer" className={clsx({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
-                <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain")} alt={item.name} />
+                <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain hover:scale-105")} alt={item.name} />
               </a>
             </div>
           )}

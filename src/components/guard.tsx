@@ -1,7 +1,7 @@
 'use server'
 
-import { Role } from '@/types/user';
 import { getClaims } from '@/utils/supabase/helpers';
+import type { Role } from '@/types/user';
 
 const roles = ['admin', 'manager', 'editor', 'owner', 'viewer']
 
