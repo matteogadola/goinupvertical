@@ -148,7 +148,8 @@ export default function CheckoutPage() {
     <span>Contanti</span>
     {paymentMethod === 'cash' &&
       <span className="block font-normal text-xs">
-        Da effettuare presso 3Passi Patagonia Morbegno{items[0].end_sale_date !== null && <span> entro le ore 19 di {dt(items[0].end_sale_date).format('dddd D MMMM')}</span>}
+        {/* Da effettuare presso 3Passi Patagonia Morbegno{items[0].end_sale_date !== null && <span> entro le ore 19 di {dt(items[0].end_sale_date).format('dddd D MMMM')}</span>} */}
+        Da effettuare presso 3Passi Patagonia Morbegno
         {/*uno degli <button onClick={() => openLocations()} className="text-button">store abilitati</button>*/}
       </span>}
   </label>

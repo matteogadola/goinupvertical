@@ -25,7 +25,7 @@ export default async function HomeAboutUs() {
             GOinUP è un gruppo di associazioni che coordina e promuove l&apos;omonimo circuito di gare di montagna. Il nostro obbiettivo è quello di riuscire a donare il maggior numero di attrezzature e servizi a diverse associazioni benefiche nel mandamento di Morbegno
           </p>
         </div>
-        <div className="justify-items-end">
+        <div className="hidden lg:flex justify-items-end">
           <div className="px-4 lg:px-0 h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="h-full min-h-48 w-256px">
               <ImageCard src={trail} mask={trailMask} alt="Foto trail running">

@@ -406,7 +406,7 @@ form .field-helper > button,
     }
   }
 
-  background-color: white;
+  background-color: var(--color-gray-100);
 
   &:hover {
     @media (hover: hover) {

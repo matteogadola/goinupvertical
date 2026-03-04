@@ -34,9 +34,11 @@ export default async function Home() {
         {/*<BookingHero />*/}
 
         {(!!serie && serie.status === 'open') &&
-          <HomeBanner serie={serie}
-            className="pt-36 pb-24"
-          />
+          <ScrollAnimation>
+            <HomeBanner serie={serie}
+              className="px-4 lg:px-0 lg:pt-36 lg:pb-24"
+            />
+          </ScrollAnimation>
         }
 
         {upcomingEvents.length > 0 &&
