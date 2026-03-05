@@ -37,15 +37,31 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
     <Box h="100vh">
       <section className="relative -top-20 w-full h-full min-h-[600px] overflow-hidden bg-gray-900">
         <div className="absolute inset-0 z-0">
-          <Image
-              src={`/images/homepage/${image}`}
-              alt="image alt"
-              fill
-              priority // FONDAMENTALE: Questa è l'immagine LCP. Caricala immediatamente.
-            className="object-cover object-center opacity-90 " // object-cover mantiene le proporzioni
-            sizes="100vw"
-            />
-          <div className="absolute inset-0 bg-linear-to-b from-trasparent to-white/20" aria-hidden="true"></div>
+          {media === 'video'
+            ? <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              >
+                <source src="/videos/goinup.mp4" type="video/mp4" />
+              </video>
+            : <Image
+                src={`/images/homepage/${image}`}
+                alt="image alt"
+                fill
+                priority
+                className="object-cover object-center opacity-90"
+                sizes="100vw"
+              />
+          }
+          
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-white/20" aria-hidden="true" />
+          
+          {/* Gradiente dal basso */}
+          <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-transparent to-transparent opacity-80" aria-hidden="true" />
         </div>
 
         <div className="relative z-10 flex flex-col mt-[150px] lg:mt-[250px] px-2 text-primary font-archivo sm:px-4 lg:px-6 max-w-6xl mx-auto">
