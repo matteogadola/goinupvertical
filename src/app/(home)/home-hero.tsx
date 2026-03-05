@@ -45,7 +45,7 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover object-center"
               >
-                <source src="/videos/goinup.mp4" type="video/mp4" />
+                <source src="/videos/goinup.webm" type="video/webm" />
               </video>
             : <Image
                 src={`/images/homepage/${image}`}
