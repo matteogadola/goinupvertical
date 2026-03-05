@@ -2,12 +2,10 @@
 
 import { CSSProperties, useEffect, useState } from 'react'
 import Image from 'next/image';
-import ReactPlayer from 'react-player'
 import { Box, Button, Container, Stack, Title, Text } from '@mantine/core'
 import { ScrollAnimation } from '@/components/animations/scroll-animation';
 import { CtaButton } from '@/components/cta-button';
-import Video from 'next-video';
-import BackgroundVideo from 'next-video/background-video';
+import { MuxBackgroundVideo } from '@mux/mux-background-video/react';
 
 type Props = {
   className?: string;
@@ -19,34 +17,25 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
   const [image, setImage] = useState<string>('hero-3.webp')
   const [media, setMedia] = useState<'video' | 'image'>('video')
 
-  // https://www.npmjs.com/package/react-player
-  // https://www.npmjs.com/package/@mux/mux-player-react
-  /*
-  <ReactPlayer src='https://player.vimeo.com/video/1154353577?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1'
-              playing={true}
-              muted={true}
-              className="object-cover object-center opacity-90"
-              width="100%"
-              height="100%"
-              style={{
-                overflow: 'hidden'
-              }}
-            />
-            */
-  return (
-    <Box h="100vh">
-      <section className="relative -top-20 w-full h-full min-h-[600px] overflow-hidden bg-gray-900">
-        <div className="absolute inset-0 z-0">
-          {media === 'video'
-            ? <video
+            /*
+            <video
                 autoPlay
                 muted
                 loop
                 playsInline
                 className="absolute inset-0 w-full h-full object-cover object-center"
               >
-                <source src="/videos/goinup.webm" type="video/webm" />
+                <source src="https://stream.mux.com/rR8P8mSaKDzz02TsftugTUdI00cQPJX00oy.m3u8" type="video/webm" />
               </video>
+              */
+  return (
+    <Box h="100vh">
+      <section className="relative -top-20 w-full h-full min-h-[600px] overflow-hidden bg-gray-900">
+        <div className="absolute inset-0 z-0">
+          {media === 'video'
+            ? <MuxBackgroundVideo src="https://stream.mux.com/x02sgAt1kis5icZ1UwlHO0201psFkTW800entlPPgAwF4To.m3u8">
+                {/*<img src="https://image.mux.com/x02sgAt1kis5icZ1UwlHO0201psFkTW800entlPPgAwF4To/thumbnail.webp?time=0" alt="Mux Background Video" />*/}
+              </MuxBackgroundVideo>
             : <Image
                 src={`/images/homepage/${image}`}
                 alt="image alt"
