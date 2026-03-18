@@ -9,12 +9,12 @@ import { getUser } from '@/utils/user';
 import './header.css'
 
 interface Props {
-  links: NavLink[];
+  links?: NavLink[];
   threshold?: number;
 }
 
 export default async function Header({
-  links,
+  links = [],
   threshold = 600,
 }: Readonly<Props>) {
   const user = await getUser()

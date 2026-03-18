@@ -15,7 +15,7 @@ type Props = {
 
 export default function HomeHero({ className, showCta, onClickCta }: Readonly<Props>) {
   const [image, setImage] = useState<string>('hero-3.webp')
-  const [media, setMedia] = useState<'video' | 'image'>('video')
+  const [media, setMedia] = useState<'video' | 'image'>('image')
 
             /*
             <video
