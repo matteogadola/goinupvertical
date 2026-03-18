@@ -2,12 +2,10 @@
 
 import { CSSProperties, useEffect, useState } from 'react'
 import Image from 'next/image';
-import ReactPlayer from 'react-player'
 import { Box, Button, Container, Stack, Title, Text } from '@mantine/core'
 import { ScrollAnimation } from '@/components/animations/scroll-animation';
 import { CtaButton } from '@/components/cta-button';
-import Video from 'next-video';
-import BackgroundVideo from 'next-video/background-video';
+import { MuxBackgroundVideo } from '@mux/mux-background-video/react';
 
 type Props = {
   className?: string;
@@ -17,35 +15,42 @@ type Props = {
 
 export default function HomeHero({ className, showCta, onClickCta }: Readonly<Props>) {
   const [image, setImage] = useState<string>('hero-3.webp')
-  const [media, setMedia] = useState<'video' | 'image'>('video')
+  const [media, setMedia] = useState<'video' | 'image'>('image')
 
-  // https://www.npmjs.com/package/react-player
-  // https://www.npmjs.com/package/@mux/mux-player-react
-  /*
-  <ReactPlayer src='https://player.vimeo.com/video/1154353577?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1'
-              playing={true}
-              muted={true}
-              className="object-cover object-center opacity-90"
-              width="100%"
-              height="100%"
-              style={{
-                overflow: 'hidden'
-              }}
-            />
-            */
+            /*
+            <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              >
+                <source src="https://stream.mux.com/rR8P8mSaKDzz02TsftugTUdI00cQPJX00oy.m3u8" type="video/webm" />
+              </video>
+              */
   return (
     <Box h="100vh">
       <section className="relative -top-20 w-full h-full min-h-[600px] overflow-hidden bg-gray-900">
         <div className="absolute inset-0 z-0">
-          <Image
-              src={`/images/homepage/${image}`}
-              alt="image alt"
-              fill
-              priority // FONDAMENTALE: Questa è l'immagine LCP. Caricala immediatamente.
-            className="object-cover object-center opacity-90 " // object-cover mantiene le proporzioni
-            sizes="100vw"
-            />
-          <div className="absolute inset-0 bg-linear-to-b from-trasparent to-white/20" aria-hidden="true"></div>
+          {media === 'video'
+            ? <MuxBackgroundVideo src="https://stream.mux.com/x02sgAt1kis5icZ1UwlHO0201psFkTW800entlPPgAwF4To.m3u8">
+                {/*<img src="https://image.mux.com/x02sgAt1kis5icZ1UwlHO0201psFkTW800entlPPgAwF4To/thumbnail.webp?time=0" alt="Mux Background Video" />*/}
+              </MuxBackgroundVideo>
+            : <Image
+                src={`/images/homepage/${image}`}
+                alt="image alt"
+                fill
+                priority
+                className="object-cover object-center opacity-90"
+                sizes="100vw"
+              />
+          }
+          
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-white/20" aria-hidden="true" />
+          
+          {/* Gradiente dal basso */}
+          <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-transparent to-transparent opacity-80" aria-hidden="true" />
         </div>
 
         <div className="relative z-10 flex flex-col mt-[150px] lg:mt-[250px] px-2 text-primary font-archivo sm:px-4 lg:px-6 max-w-6xl mx-auto">

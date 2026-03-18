@@ -1,10 +1,19 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { SignInWithPasswordCredentials } from '@supabase/supabase-js'
 import { getClaims } from '@/utils/supabase/helpers'
+
+async function getOrigin() {
+  const headersList = await headers()
+  const origin = headersList.get('origin') || headersList.get('x-forwarded-host') || 'https://www.goinupvertical.it'
+  // origin header already includes protocol; x-forwarded-host does not
+  if (origin.startsWith('http')) return origin
+  return `https://${origin}`
+}
 
 export const handleSubmit = async (event: any) => {
   event.preventDefault();
@@ -42,7 +51,7 @@ export async function register(formData: { email: string, password: string, firs
     email: formData.email,
     password: formData.password,
     options: {
-      emailRedirectTo: `https://www.goinupvertical.it/auth/callback`,
+      emailRedirectTo: `${await getOrigin()}/auth/callback`,
       data: {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -81,7 +90,7 @@ export async function loginWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'https://www.goinupvertical.it/auth/callback',
+      redirectTo: `${await getOrigin()}/auth/callback`,
     },
   })
 
@@ -100,7 +109,7 @@ export async function loginWithFacebook() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'facebook',
     options: {
-      redirectTo: 'https://www.goinupvertical.it/auth/callback',
+      redirectTo: `${await getOrigin()}/auth/callback`,
     },
   })
 

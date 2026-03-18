@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
-import { AppShellMain } from '@mantine/core';
+import { AppShellMain, AppShellNavbar, Tabs } from '@mantine/core';
 
 import { getClaims } from '@/utils/supabase/helpers';
 import { hasRole } from '@/utils/supabase/auth';
 import { Role, User } from '@/types/user';
 import Header from '@/components/layout/header';
 import { dt } from '@/utils/date';
+import Sidebar from '@/components/layout/sidebar';
 
 const links: { name: string, path: string, hasRole?: Role }[] = [
   { name: "Eventi", path: "/console" },
@@ -28,7 +29,8 @@ export default async function ConsoleEventsLayout({
 
   return (
     <>
-      <Header links={links} />
+      <Header />
+      <Sidebar links={sidenavLinks} />
       <AppShellMain className="page">
         <div className="flex">
           <div className="min-w-64 pr-4 border-r hidden md:flex">
