@@ -1,15 +1,18 @@
 import { invoke } from '@/utils/supabase/functions'
 import { encodeBase64 } from '@/utils/encoding'
 import { Order } from '@/types/orders'
+import * as Sentry from "@sentry/nextjs";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const payload = await req.json()
   const origin = req.headers.get('origin') ?? 'https://www.goinupvertical.it'
 
   try {
-    console.debug('Checkout payload', payload)
+    Sentry.logger.debug('Checkout payload', { payload })
     const order = await invoke<Order>('order', payload)
-    console.debug('Checkout order', order)
+    Sentry.logger.debug('Checkout order', { order })
 
     const q = encodeBase64(JSON.stringify(order));
 
@@ -31,7 +34,7 @@ export async function POST(req: Request) {
       throw new Error('Metodo di pagamento non supportato');
     }
   } catch (e: any) {
-    console.error(`Checkout error: ${e.message}`)
+    Sentry.logger.error(`Checkout error: ${e.message}`, { error: e })
     return new Response(JSON.stringify({ code: e.code, message: e.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
