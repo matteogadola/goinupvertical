@@ -18,6 +18,7 @@ import { FunctionsHttpError } from "@supabase/supabase-js";
 import { subscribeWithSelector } from 'zustand/middleware'
 import { isTinValid, verifyTin } from "@/utils/tin";
 import { dt } from '@/utils/date';
+import * as Sentry from "@sentry/nextjs";
 
 /**
  * questa è la parte in cui in una sorta di card vengono mostrati:
@@ -121,10 +122,10 @@ export default function EventEntryForm({ event, product }: { event: any, product
       }
     } catch (e: any) {
       // qui sicuramente errore generale...ma per ora...
-      console.log(e.message)
+      Sentry.logger.warn('Errore durante il controllo del codice fiscale', { error: e });
     }
 
-    addItem({
+    const item = {
       product_id: product._id,
       product_name: product.name,
       description: capitalize(`${data.first_name} ${data.last_name}`),
@@ -140,14 +141,17 @@ export default function EventEntryForm({ event, product }: { event: any, product
         tin: data.tin.toUpperCase(),
         email: data.email.toLowerCase(),
       },
-    })
+    }
+
+    addItem(item)
+    Sentry.logger.debug(`Item ${item.product_name} added to cart`, { item });
 
     form.reset()
     return true
   }
 
   const onSave = async () => {
-    const data = form.getValues()
+    const data = form.getValues();
 
     if (await save(data)) {
       notifications.show({
@@ -155,7 +159,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
         message: 'Il prodotto è stato aggiunto al carrello',
         color: 'teal',
         autoClose: 3000,
-      })
+      });
     }
   }
 
