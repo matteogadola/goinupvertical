@@ -144,7 +144,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
     }
 
     addItem(item)
-    Sentry.logger.debug(`Item ${item.product_name} added to cart`, { item });
+    Sentry.logger.info(`Item ${item.product_name} added to cart`, { item });
 
     form.reset()
     return true
