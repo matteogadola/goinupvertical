@@ -10,9 +10,9 @@ export async function POST(req: Request) {
   const origin = req.headers.get('origin') ?? 'https://www.goinupvertical.it'
 
   try {
-    Sentry.logger.debug('Checkout payload', { payload })
+    Sentry.logger.info('Checkout payload', { payload })
     const order = await invoke<Order>('order', payload)
-    Sentry.logger.debug('Checkout order', { order })
+    Sentry.logger.info('Checkout order', { order })
 
     const q = encodeBase64(JSON.stringify(order));
 

@@ -125,7 +125,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
       Sentry.logger.warn('Errore durante il controllo del codice fiscale', { error: e });
     }
 
-    const item = {
+    addItem({
       product_id: product._id,
       product_name: product.name,
       description: capitalize(`${data.first_name} ${data.last_name}`),
@@ -141,10 +141,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
         tin: data.tin.toUpperCase(),
         email: data.email.toLowerCase(),
       },
-    }
-
-    addItem(item)
-    Sentry.logger.info(`Item ${item.product_name} added to cart`, { item });
+    })
 
     form.reset()
     return true
