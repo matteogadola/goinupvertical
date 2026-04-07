@@ -151,7 +151,6 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
           club: data.club ? data.club.trim().toUpperCase() : null,
         },
       })
-      console.log("SBREM", entry)
       onCreate(entry)
       onClose()
     } catch (e: any) {
@@ -159,56 +158,6 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
     } finally {
       setLoading(false)
     }
-
-    
-
-    /**/
-    //onCreate(data)
-    /*try {
-      verifyTin(data.tin, data.first_name, data.last_name)
-    } catch(e: any) {
-      form.setFieldError('tin', e.message);
-      return
-    }*/
-    /*
-    try {
-      if (await entryExist(event.id, data.tin)) {
-        form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
-        return
-      }
-    } catch(e: any) {
-      console.log(e.message)
-      // mostra errore
-    }
-
-    if (await save(data)) {
-      router.push('/checkout')
-    } else if (!form.isDirty()) {
-      const items = useCartStore.getState().items
-
-      if (items.length) {
-        form.clearErrors()
-        router.push('/checkout')
-      }
-    }
-
-    addItem({
-      product_id: product._id,
-      product_name: product.name,
-      description: capitalize(`${data.first_name} ${data.last_name}`),
-      price: product.price,
-      quantity: 1,
-      payment_methods: product.payment_methods,
-      event_id: event._id,
-      entry: {
-        ...data,
-        first_name: capitalize(data.first_name),
-        last_name: capitalize(data.last_name),
-        tin: data.tin.toUpperCase(),
-        email: data.email.toLowerCase(),
-      },
-    })*/
-
   }
 
   return (
@@ -240,14 +189,6 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
           key={form.key('tin')}
           {...form.getInputProps('tin')}
         />
-
-        {/*<YearPickerInput
-          withAsterisk
-          label="Anno di nascita"
-          className="col-span-2"
-          key={form.key('birth_year')}
-          {...form.getInputProps('birth_year')}
-        />*/}
 
         <Autocomplete
           label="Società"
@@ -304,8 +245,6 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
 const createEntry = async (item: any) => {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-
-  console.log('sbrem', item)
 
   const response = await fetch('/api/checkout', {
     method: 'POST',
