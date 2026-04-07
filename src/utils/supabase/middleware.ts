@@ -40,7 +40,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   } else if (!user && ['account', 'console'].includes(nextRoute)) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    //url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 

@@ -6,6 +6,7 @@ import EventEntries from './(entries)/event-entries'
 import EventOrders from './(orders)/event-orders'
 import type { Claims, Role } from '@/types/user'
 import type { Event } from '@/types/events'
+import { hasRole } from '@/utils/supabase/auth'
 
 export default function ConsoleEventTabs({
   event,
@@ -33,7 +34,7 @@ export default function ConsoleEventTabs({
       <Tabs.Panel value="entries" pt="xs">
         {event.type !== undefined && ['meal', 'award'].includes(event.type)
           ? <EventOrders event={event} entries={entries} />
-          : <EventEntries event={event} entries={entries} />
+          : <EventEntries event={event} entries={entries} claims={claims} />
         }
       </Tabs.Panel>
 
@@ -42,14 +43,4 @@ export default function ConsoleEventTabs({
       </Tabs.Panel>
     </Tabs>
   )
-}
-
-const hasRole = (role: Role, claims?: Claims | null) => {
-  const roles = ['viewer', 'editor', 'manager', 'admin', 'owner']
-  if (!claims || !claims.user_role) return false
-
-  if (roles.indexOf(claims.user_role) >= roles.indexOf(role)) {
-    return true
-  }
-  return false
 }

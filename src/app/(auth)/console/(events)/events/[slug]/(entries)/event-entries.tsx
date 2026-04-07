@@ -12,39 +12,39 @@ import { Button } from '@mantine/core';
 import { DownloadIcon } from 'lucide-react';
 import { Row } from '@tanstack/react-table';
 import { Event } from '@/types/events'
+import { Claims } from '@/types/user'
 
 export default function EventEntries({
   event,
   entries,
+  claims,
 }: {
   event: Partial<Event>,
-  entries: any
+  entries: any,
+  claims?: Claims | null,
 }) {
   const [data, setData] = useState(entries)
 
   const onConfirm = useCallback((items: Partial<OrderItem>[]) => {
     const confirmedIds = items.map(i => i.id)
-    const newEntries = data.map((entry: any) => confirmedIds.includes(entry.order_item_id)
+    setData((prevData: any[]) => prevData.map((entry: any) => confirmedIds.includes(entry.order_item_id)
       ? ({ ...entry, payment_status: 'paid' })
       : entry
-    )
-    setData(newEntries)
+    ))
   }, [])
 
   const onCreate = useCallback((updatedEntry: Partial<Entry>) => {
-    const newEntries = data.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
+    setData((prevData: any[]) => prevData.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
       ? ({ ...entry, ...updatedEntry })
       : entry
-    )
-    setData(newEntries)
+    ))
   }, [])
 
   const onUpdate = useCallback((updatedEntry: Partial<Entry>) => {
-    const newEntries = data.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
+    setData((prevData: any[]) => prevData.map((entry: any) => entry.order_item_id === updatedEntry.order_item_id
       ? ({ ...entry, ...updatedEntry })
       : entry
-    )
-    setData(newEntries)
+    ))
   }, [])
 
   const columns = useMemo(() => getColumns({ onUpdate, onConfirm }), [])
@@ -62,7 +62,7 @@ export default function EventEntries({
         }
       </div>
       <div className="mt-8">
-        <DataTable event={event} columns={columns} data={data} />
+        <DataTable event={event} columns={columns} data={data} claims={claims} setData={setData} />
       </div>
     </Suspense>
   )
