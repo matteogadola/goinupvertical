@@ -32,6 +32,8 @@ export default function HeaderUserMenu({ user, className }: { user: User | null,
     router.refresh();
   }
 
+  console.log(user)
+
   if (!user) return <></>
 
   return (
