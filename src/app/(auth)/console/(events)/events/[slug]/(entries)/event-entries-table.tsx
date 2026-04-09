@@ -41,13 +41,16 @@ import { mkConfig, generateCsv, download } from 'export-to-csv'
 //import ConsoleEventEntryCreate from "./event-entry-update"
 import { Event } from '@/types/events'
 import EntryNewButton from "./event-entry-new"
+import { Claims } from "@/types/user"
+import { hasRole } from "@/utils/supabase/auth"
+import { dt } from "@/utils/date"
 
 interface DataTableProps<TData, TValue> {
   event: Partial<Event>
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  //onCreate: (entry: any) => void,
-  //meta: any
+  claims?: Claims | null,
+  setData?: React.Dispatch<React.SetStateAction<TData[]>>
 }
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
@@ -76,11 +79,10 @@ export function DataTable<TData, TValue>({
   event,
   columns,
   data,
-  //onCreate,
+  claims,
+  setData,
 }: DataTableProps<TData, TValue>) {
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data,
@@ -94,17 +96,20 @@ export function DataTable<TData, TValue>({
       columnVisibility: { email: false, phone_number: false, tin: false }
     },
     meta: {
-      addRow: (entry: any) => {
-        console.log('lolle', entry)
-        /*const newRow: Student = {
-          studentId: Math.floor(Math.random() * 10000),
-          name: "",
-          dateOfBirth: "",
-          major: "",
-        };
-        const setFunc = (old: Student[]) => [...old, newRow];
-        setData(setFunc);
-        setOriginalData(setFunc);*/
+      addRow: (newDataRaw: any) => {
+        const entry = newDataRaw.order.entries[0]
+        const order_item = newDataRaw.order.items[0]
+        const newData = {
+          ...entry,
+          birth_year: dt(entry.birth_date).year(),
+          payment_status: order_item.payment_status,
+          payment_method: order_item.payment_method,
+          product_type: 'entry',
+        }
+
+        if (setData) {
+          setData((old) => [newData as TData, ...old]);
+        }
       },
     }
   })
@@ -164,9 +169,11 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>*/}
         </div>
         <div className="flex justify-end space-x-2">
-          <div className="hidden">
-            <EntryNewButton event={event} onCreate={table.options.meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
-          </div>
+          {hasRole('manager', claims) &&
+            <div className="">
+              <EntryNewButton event={event} onCreate={table.options.meta?.addRow}>Aggiungi iscrizione</EntryNewButton>
+            </div>
+          }
           <Button variant="outline" size="sm" onClick={() => exportCsv(table.getRowModel())}>
             <DownloadIcon className="size-4" aria-hidden="true" />
           </Button>
