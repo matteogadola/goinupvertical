@@ -246,3 +246,7 @@ const verifyTin = function(tin: string, firstName: string, lastName: string) {
     throw new Error(`Codice fiscale ${tin} non valido`);
   }
 };
+
+const hasRole = function(user: any) {
+  return ['admin'].includes(user.app_metadata?.role ?? '')
+};

@@ -2,55 +2,55 @@ import clsx from 'clsx'
 
 const sponsors = [
   {
-    name: 'Popso',
-    logo: 'popso.png',
-    className: 'h-12',
-    url: 'https://www.popso.it'
+    name: 'Bper',
+    logo: 'bper.svg',
+    className: 'h-26',
+    url: 'https://www.bper.it'
   }, {
     name: 'Latteria Sociale Valtellina',
     logo: 'latteria-valtellina.webp',
     className: 'h-20',
     url: 'https://www.latteriavaltellina.it'
   }, {
-    name: 'Birrificio Valtellinese',
-    logo: 'birrificio-valtellinese.png',
-    className: 'h-16',
-    url: 'https://www.birrificiovaltellinese.com'
+    name: 'Siderval',
+    logo: 'siderval.webp',
+    className: 'h-12',
+    url: 'https://www.siderval.com'
   }, {
-    name: 'Lnc Life',
-    logo: 'lnc-life.svg',
-    className: 'h-10',
-    url: 'https://www.lnclife.it'
+    name: 'Avis',
+    logo: 'avis.webp',
+    className: 'h-18',
+    url: 'https://www.avis.it/it'
   }, {
-    name: 'Mat Food',
-    logo: 'mat-food.png',
-    className: 'h-20',
-    url: 'http//www.mat-food.it',
-  }, {
-    name: 'Leon',
-    logo: 'leon.webp',
+    name: 'Vam Sport',
+    logo: 'vam-sport.webp',
     className: 'h-14',
-    url: 'https://www.leonbellessere.com/'
-  }, {
+    url: 'https://vamsport.it'
+  },  {
     name: 'Officina Fiorelli',
     logo: 'officina-fiorelli.png',
     className: 'h-11',
     url: 'https://www.facebook.com/people/Officina-Autorizzata-Ford-di-Fiorelli-Matteo/100066566109924'
+  }, {
+    name: 'Croma',
+    logo: 'croma.webp',
+    className: 'h-18',
+    url: 'https://www.cromasrl.eu/'
   }, {
     name: 'Patagonia',
     logo: 'patagonia-1.png',
     className: 'h-18',
     url: 'https://www.facebook.com/3passipatagonia'
   }, {
-    name: 'Vam Sport',
-    logo: 'vam-sport.webp',
-    className: 'h-16',
-    url: 'https://vamsport.it'
+    name: 'Leon',
+    logo: 'leon.webp',
+    className: 'h-14',
+    url: 'https://www.leonbellessere.com'
   }, {
-    name: 'Avis',
-    logo: 'avis.webp',
-    className: 'h-18',
-    url: 'https://www.avis.it/it'
+    name: 'eRemind',
+    logo: 'eremind.webp',
+    className: 'h-16',
+    url: 'https://www.linkedin.com/company/eremind'
   }, {
     name: 'Mobili Rumi',
     logo: 'mobili-rumi.webp',
@@ -60,21 +60,22 @@ const sponsors = [
     name: 'Ambrosini e Rossatti',
     logo: 'ambronisierossatti.webp',
     className: 'h-16',
-    url: 'https://www.facebook.com/p/Ambrosini-Rossatti-100068618457333/'
+    url: 'https://www.facebook.com/p/Ambrosini-Rossatti-100068618457333'
   }, {
-    name: 'croma',
-    logo: 'croma.webp',
+    name: 'Mat Food',
+    logo: 'mat-food.png',
+    className: 'h-20',
+    url: 'http//www.mat-food.it',
+  }, {
+    name: 'Peretti',
+    logo: 'peretti.webp',
     className: 'h-18',
-    url: 'https://www.cromasrl.eu/'
-  },
+    url: 'https://www.onoranzefunebriperetti.it',
+  }, 
 ]
 
 const supporters = [
   {
-    name: 'Consorzio Traona',
-    logo: 'consorzio-prati-bioggio.webp',
-    className: 'h-14',
-  }, {
     name: 'Team Valtellina',
     logo: 'team-valtellina.webp',
     className: 'h-14',
@@ -85,28 +86,37 @@ const supporters = [
     className: 'h-16',
     url: 'https://www.facebook.com/SportRaceValtellina/',
   }, {
-    name: 'Pro Loco Gerola',
-    logo: 'proloco-gerola.png',
-    className: 'h-16',
-    url: 'https://www.facebook.com/ProLocoGerola'
+    name: 'La voce di Daniele',
+    logo: 'voce-di-daniele.png',
+    className: 'h-14',
   }, {
     name: 'Pro Loco Bema',
     logo: 'proloco-bema.jpg',
     className: 'h-14',
     url: 'https://www.prolocobema.it'
   }, {
-    name: 'Insieme per Sacco',
-    logo: 'insieme-per-sacco.webp',
-    className: 'h-16',
-    url: 'https://www.insiemepersacco.it'
-  }, {
     name: 'K2 Valtellina',
     logo: 'k2v.png',
     className: 'h-14',
     url: 'https://www.k2valtellina.it/'
   }, {
-    name: 'La voce di Daniele',
-    logo: 'voce-di-daniele.png',
+    name: 'Alpini Cercino',
+    logo: 'alpini-cercino.webp',
+    className: 'h-18',
+    url: 'https://www.anavaltellinese.it/i-nostri-gruppi/cercino'
+  }, {
+    name: 'Visit Albaredo',
+    logo: 'albaredo-promotion.webp',
+    className: 'h-16',
+    url: 'https://www.visitalbaredo.it'
+  }, {
+    name: 'Pro Loco Gerola',
+    logo: 'proloco-gerola.png',
+    className: 'h-16',
+    url: 'https://www.facebook.com/ProLocoGerola'
+  }, {
+    name: 'Consorzio Traona',
+    logo: 'consorzio-prati-bioggio.webp',
     className: 'h-14',
   },
 ]
@@ -118,6 +128,26 @@ const partners = [
     className: 'h-18',
     url: 'https://www.sportdimontagna.com',
   }, {
+    name: 'Centrovalle',
+    logo: 'centro-valle-netweek.webp',
+    className: 'h-16',
+    url: 'https://netweek.it/testate/giornale-di-sondrio-centro-valle/',
+  }, {
+    name: 'Radio Tsn',
+    logo: 'radio-tsn.webp',
+    className: 'h-12',
+    url: 'https://radiotsn.tv/'
+  }, {
+    name: 'La Provincia di Sondrio',
+    logo: 'la-provincia-unica.webp',
+    className: 'h-12',
+    url: 'https://www.laprovinciadisondrio.it'
+  }, {
+    name: 'Speed Time Production',
+    logo: 'speedtime.png',
+    className: 'h-12',
+    url: 'https://www.facebook.com/speedtimeproduction'
+  }, {
     name: 'Fotorun Valtellina',
     logo: 'fotorun-valtellina.png',
     className: 'h-20',
@@ -127,26 +157,6 @@ const partners = [
     logo: 'andrea-mazzoni.webp',
     className: 'h-18',
     url: 'https://mazzoniandrea.it/'
-  }, {
-    name: 'Radio Tsn',
-    logo: 'radio-tsn.webp',
-    className: 'h-12',
-    url: 'https://radiotsn.tv/'
-  }, {
-    name: 'Speed Time Production',
-    logo: 'speedtime.png',
-    className: 'h-12',
-    url: 'https://www.facebook.com/speedtimeproduction'
-  }, {
-    name: 'Centrovalle',
-    logo: 'centro-valle-netweek.webp',
-    className: 'h-16',
-    url: 'https://netweek.it/testate/giornale-di-sondrio-centro-valle/',
-  }, {
-    name: 'La Provincia di Sondrio',
-    logo: 'la-provincia-unica.webp',
-    className: 'h-12',
-    url: 'https://www.laprovinciadisondrio.it'
   },
 ]
 
@@ -157,7 +167,7 @@ export default function Credits({ className }: { className?: string }) {
         <h3 className="title">Sponsor</h3>
         <div className="flex flex-wrap space-y-8 mt-8">
           {sponsors.map((item, index) =>
-            <div key={index} className="flex grow w-1/2 lg:w-1/3 justify-center items-center h-18">
+            <div key={index} className="flex grow w-1/2 lg:w-1/4 justify-center items-center h-18">
               <a href={item.url} target="_blank" rel="noopener noreferrer" className={clsx({ "col-span-2 lg:col-span-3": index === sponsors.length - 1 })}>
                 <img src={`/images/credits/${item.logo}`} className={clsx(item.className, "object-contain hover:scale-105")} alt={item.name} />
               </a>

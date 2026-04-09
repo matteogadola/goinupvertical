@@ -14,8 +14,9 @@ export default async function HomeFlyer({ flyer, className }: Readonly<Props>) {
       <Image
         alt="Locandina"
         src={urlFor(flyer)}
-        width={800}
+        width={432}
         height={800}
+        style={{ width: 'auto', height: 'auto' }}
       />
     </div>
   )
