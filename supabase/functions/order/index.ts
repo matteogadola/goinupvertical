@@ -64,6 +64,26 @@ const carnetItems = [
 
 Deno.serve(async (req) => {
   const body: any = await req.json()
+  const authHeader = req.headers.get('Authorization');
+  if (authHeader) {
+    console.log('authHeader', authHeader.replace('Bearer ', ''))
+    /*const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      {
+        global: {
+          headers: { Authorization: authHeader },
+        },
+      }
+    );*/
+  }
+
+    supabase.auth.
+
+  const { data: { user }, error } = await supabaseClient.auth.getUser();
+  if (error || !user) {
+    return new Response(JSON.stringify({ error: 'Unauthorized', details: error }), { status: 401 });
+  }
 
   try {
     if (!body.items?.length) {
@@ -225,4 +245,8 @@ const verifyTin = function(tin: string, firstName: string, lastName: string) {
   } catch (e: any) {
     throw new Error(`Codice fiscale ${tin} non valido`);
   }
+};
+
+const hasRole = function(user: any) {
+  return ['admin'].includes(user.app_metadata?.role ?? '')
 };
