@@ -22,7 +22,7 @@ export default async function UpcomingEvents({ events, className }: Readonly<Pro
         "grid-3": events.length === 3
       })}>
         {events.map((event, index) =>
-          <Link href={`/events/${event.slug.current}`} key={index} className="upcoming-card">
+          <Link href={`/events/${event.slug.current}`} prefetch={false} key={index} className="upcoming-card">
             <div className="upcoming-header" style={getBackgroudStyle(event)}>
               <div className="upcoming-header-text">
                 <h3 className={clsx("upcoming-header-title", { "nowrap": event.name.length <= 12 })}>
