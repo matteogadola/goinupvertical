@@ -26,7 +26,7 @@ export default async function Header({
           <HeaderBurger />
 
           <div className="flex items-center justify-center md:justify-start">
-            <Link href="/" className="hover:scale-110">
+            <Link href="/" prefetch={false} className="hover:scale-110">
               <img src="/images/logo/goinup.webp" className="h-14 object-contain" alt="Logo" />
             </Link>
           </div>
@@ -36,7 +36,7 @@ export default async function Header({
               {
                 links.filter(item => item?.visible !== false).map((link, index) => (
                   <li key={index} className="inline-block">
-                    <Link href={link.path}>
+                    <Link href={link.path} prefetch={false}>
                       <span className="block mt-2 md:mt-0 lg:text-2xl hover:underline hover:decoration-yellow-200">{link.name}</span>
                     </Link>
                   </li>

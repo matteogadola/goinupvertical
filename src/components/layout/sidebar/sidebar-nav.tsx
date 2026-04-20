@@ -17,7 +17,7 @@ export default function SidebarNav({
         {
           links.filter(item => item?.visible !== false).map((link, index) => (
             <li key={index}>
-              <Link href={link.path} onClick={sidenavToggle}>
+              <Link href={link.path} prefetch={false} onClick={sidenavToggle}>
                 <span className="block px-2 py-4 hover:opacity-70">{link.name}</span>
               </Link>
             </li>

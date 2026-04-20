@@ -8,7 +8,6 @@ import { notifications } from '@mantine/notifications';
 import { createFormActions, isNotEmpty, useForm } from '@mantine/form';
 import { getClubs } from "@/utils/sanity/queries";
 import { useState } from "react";
-//import { useForm, SubmitHandler } from 'react-hook-form'
 import { createClient } from '@/utils/supabase/client';
 import EventEntryTinForm from "./event-entry-tin-form";
 import { useCartStore } from "@/store/cart";
@@ -19,6 +18,7 @@ import { FunctionsHttpError } from "@supabase/supabase-js";
 import { subscribeWithSelector } from 'zustand/middleware'
 import { isTinValid, verifyTin } from "@/utils/tin";
 import { dt } from '@/utils/date';
+import * as Sentry from "@sentry/nextjs";
 
 /**
  * questa è la parte in cui in una sorta di card vengono mostrati:
@@ -121,9 +121,8 @@ export default function EventEntryForm({ event, product }: { event: any, product
         return
       }
     } catch (e: any) {
-      console.log(e.message)
-      // mostra errore
-      //setError(e.message)
+      // qui sicuramente errore generale...ma per ora...
+      Sentry.logger.warn('Errore durante il controllo del codice fiscale', { error: e });
     }
 
     addItem({
@@ -149,7 +148,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
   }
 
   const onSave = async () => {
-    const data = form.getValues()
+    const data = form.getValues();
 
     if (await save(data)) {
       notifications.show({
@@ -157,7 +156,7 @@ export default function EventEntryForm({ event, product }: { event: any, product
         message: 'Il prodotto è stato aggiunto al carrello',
         color: 'teal',
         autoClose: 3000,
-      })
+      });
     }
   }
 
@@ -243,6 +242,12 @@ export default function EventEntryForm({ event, product }: { event: any, product
             Completando l&apos;iscrizione accetti i <a href="/legal/terms" target="_blank" className="link" rel="noopener noreferrer">Termini e condizioni</a> e l&apos;<a href="/legal/privacy-policy" target="_blank" className="link" rel="noopener noreferrer">informativa sulla privacy</a>
           </span>
         </p>
+
+        {Object.values(form.errors).length > 0 &&
+          <p className="text-red-500">
+            {Object.values(form.errors).join(', ')}
+          </p>
+        }
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
           <Button onClick={onSave} variant="outline">Iscrivi altro partecipante</Button>

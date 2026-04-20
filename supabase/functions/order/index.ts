@@ -1,7 +1,7 @@
 import { createClient, FunctionsHttpError } from 'jsr:@supabase/supabase-js@2'
-import CodiceFiscale from 'npm:codice-fiscale-js@2.3.22'
+import CodiceFiscale from 'npm:codice-fiscale-js@2.3.23'
 import dayjs from 'npm:dayjs@1.11.7'
-import * as Sentry from 'https://deno.land/x/sentry/index.mjs'
+import * as Sentry from 'npm:@sentry/deno';
 
 Sentry.init({
   dsn: Deno.env.get('SENTRY_DSN'),

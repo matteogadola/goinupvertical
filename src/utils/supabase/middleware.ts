@@ -28,15 +28,19 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const {
+  const { data } = await supabase.auth.getClaims()
+  const user = data?.claims
+
+  /*const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getUser()*/
 
   const nextRoute = request.nextUrl.pathname.match(/^\/([^\/]+)/)?.[1] ?? ''
 
   if (user && ['login', 'register'].includes(nextRoute)) {
     const url = request.nextUrl.clone()
-    url.pathname = (await getClaims())?.user_role ? '/console' : '/' // '/account'
+    //url.pathname = (await getClaims())?.user_role ? '/console' : '/' // '/account'
+    url.pathname = data?.claims.user_role ? '/console' : '/' // '/account'
     return NextResponse.redirect(url)
   } else if (!user && ['account', 'console'].includes(nextRoute)) {
     const url = request.nextUrl.clone()

@@ -39,7 +39,7 @@ export default async function ConsoleEventsLayout({
               <ul className="separator mt-4">
                 {sidenavLinks?.map((item: any, index) =>
                   <li key={index} className="py-2 whitespace-nowrap">
-                    <Link href={item.path}>{item.name}</Link>
+                    <Link href={item.path} prefetch={false}>{item.name}</Link>
                   </li>
                 )}
               </ul>

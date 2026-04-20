@@ -28,7 +28,7 @@ export default function CartItems({ className }: any) {
                             <div className="flex justify-between text-base text-gray-900">
                               <p className="mt-1 text-sm text-gray-500">{item.description}</p>
                               <div className="flex">
-                                <button type="button" className="hidden md:flex" onClick={() => removeItem(index)}>
+                                <button type="button" className="hidden md:flex cursor-pointer" onClick={() => removeItem(index)}>
                                   Rimuovi
                                 </button>
                               </div>
