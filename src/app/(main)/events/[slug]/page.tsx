@@ -101,12 +101,12 @@ export default async function EventPage({
 
         <div className="flex flex-col mt-8 space-y-4">
           {event.products !== null &&
-            <Link href={event.regulation ?? "/regulation"}>
+            <Link href={event.regulation ?? "/regulation"} prefetch={false}>
               <span className="link">Consulta il regolamento</span>
             </Link>
           }
           {(['race', 'award'].includes(event.type) && event.products?.length) &&
-            <Link href={`${slug}/entries`}>
+            <Link href={`${slug}/entries`} prefetch={false}>
               <span className="link">Vedi elenco iscritti</span>
             </Link>
           }
