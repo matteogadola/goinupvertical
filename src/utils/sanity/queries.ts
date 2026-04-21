@@ -3,6 +3,7 @@ import clubs from '../data/names.json'
 import municipalities from '../data/municipalities.json'
 import { Event } from '@/types/events'
 import { LogoGroup } from '@/types/logo'
+import { MentionItem } from '@/types/sanity'
 
 export const getSerie = async ({ year }: { year?: number } = {}) => {
   if (!year) {
@@ -123,6 +124,14 @@ export const getEventLinks = async ({ year }: { year?: number } = {}) => {
   const toDate = new Date(year + 1, 0, 1).toISOString().split('T')[0]
 
   return client.fetch<Event[]>(`*[_type == "event" && type in $types && date >= $fromDate && date < $toDate && count(links[]->url) > 0] | order(date)`, { fromDate, toDate, types: ['serie', 'race', 'award'] })
+}
+
+export const getMentions = async () => {
+  return client.fetch<MentionItem[]>(`*[_type == "component" && type == "list" && slug.current == "mentions"][0].mentions`);
+
+  //text: 'Edizione numero 4 da record per la CechUp con nuovo record di presenze e nuovi primati cronometrici sul percorso',
+  //source: 'Sportdimontagna',
+  //url: 'https://www.sportdimontagna.com/mountain-running/goinup-2025-2'
 }
 
 export const getCredits = async () => {

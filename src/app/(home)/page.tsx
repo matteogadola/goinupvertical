@@ -1,5 +1,5 @@
 import UpcomingEvents from './home-upcoming-events'
-import { getSerie, getFeatures, getUpcomingEvents } from '@/utils/sanity/queries'
+import { getSerie, getFeatures, getUpcomingEvents, getMentions } from '@/utils/sanity/queries'
 import HomeAboutUs from './home-about-us'
 import HomeMentions from './home-mentions'
 import HomeHero from './home-hero'
@@ -12,6 +12,7 @@ export default async function Home() {
   const serie = await getSerie();
   const features = await getFeatures();
   const upcomingEvents = await getUpcomingEvents();
+  const mentions = await getMentions();
 
   return (
     <>
@@ -55,7 +56,7 @@ export default async function Home() {
           />
         }
 
-        <HomeMentions className="px-4" />
+        <HomeMentions mentions={mentions} className="px-4" />
       </div>
     </>
   );

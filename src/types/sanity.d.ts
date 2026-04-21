@@ -32,3 +32,10 @@ export interface EventDetail {
   start_line: string
   finish_line: string
 }
+
+
+export interface MentionItem {
+  name: string
+  text: string
+  url?: string
+}
