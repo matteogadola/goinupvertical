@@ -1,38 +1,17 @@
 'use client'
 
 import { ScrollAnimation } from '@/components/animations/scroll-animation'
+import { MentionItem } from '@/types/sanity'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 type Props = {
-  mentions?: Mention[]
+  mentions?: MentionItem[]
   className?: string
 }
 
-type Mention = {
-  text: string
-  source: string
-  url?: string
-}
-
-const mentions: Mention[] = [
-  {
-    text: 'Gara stupenda con panorami mozzafiato. Organizzazione perfetta. Da rifare assolutamente!',
-    source: 'Antonio',
-  },
-  {
-    text: 'Una realtà di volontari che riesce a creare qualcosa di meraviglioso',
-    source: 'Elisa',
-  },
-  {
-    text: 'Edizione numero 4 da record per la CechUp con nuovo record di presenze e nuovi primati cronometrici sul percorso',
-    source: 'Sportdimontagna',
-    url: 'https://www.sportdimontagna.com/mountain-running/goinup-2025-2'
-  },
-]
-
-export default function HomeMentions({ className }: { className?: string }) {
-  const [mention, setMention] = useState<Mention | undefined>()
+export default function HomeMentions({ mentions, className }: { mentions: MentionItem[], className?: string }) {
+  const [mention, setMention] = useState<MentionItem | undefined>()
 
   useEffect(() => {
     setRandomMention()
@@ -53,8 +32,8 @@ export default function HomeMentions({ className }: { className?: string }) {
           <div className="flex flex-col items-center pt-32 pb-8 lg:pb-16">
             <p className="text-lg text-center italic">{mention.text}</p>
             {mention?.url
-              ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.source}</a>
-              : <span className="mt-2 font-semibold">{mention.source}</span>
+              ? <a href={mention.url} target="_blank" className="mt-2 font-semibold">{mention.name}</a>
+              : <span className="mt-2 font-semibold">{mention.name}</span>
             }
           </div>
         }
