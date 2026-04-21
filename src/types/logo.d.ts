@@ -12,5 +12,7 @@ export interface LogoItem {
   name: string;
   url: string;
   imageUrl: string;
-  cssClass: string;
+  size: LogoSize;
 }
+
+type LogoSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
