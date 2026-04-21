@@ -76,25 +76,6 @@ export const getMunicipalities = (): string[] => {
   return municipalities
 }
 
-export const getTestimonials = (): any[] => {
-  return [
-    {
-      text: 'Gara stupenda con panorami mozzafiato. Organizzazione perfetta. Da rifare assolutamente!',
-      source: 'Antonio',
-    },
-    {
-      text: 'Una realtà di volontari che riesce a creare qualcosa di meraviglioso',
-      source: 'Elisa',
-    },
-    {
-      text: 'Edizione numero 4 da record per la CechUp con nuovo record di presenze e nuovi primati cronometrici sul percorso',
-      source: 'Sportdimontagna',
-      url: 'https://www.sportdimontagna.com/mountain-running/goinup-2025-2'
-    },
-  ];
-}
-
-
 export async function getAvailableYears(): Promise<number[]> {
   const statusCondition = process.env.DEPLOY_STAGE === 'production' ? '&& status != "internal"' : '';
 
