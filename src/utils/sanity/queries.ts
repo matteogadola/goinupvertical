@@ -2,6 +2,7 @@ import { client } from './client'
 import clubs from '../data/names.json'
 import municipalities from '../data/municipalities.json'
 import { Event } from '@/types/events'
+import { LogoGroup } from '@/types/logo'
 
 export const getSerie = async ({ year }: { year?: number } = {}) => {
   if (!year) {
@@ -122,4 +123,8 @@ export const getEventLinks = async ({ year }: { year?: number } = {}) => {
   const toDate = new Date(year + 1, 0, 1).toISOString().split('T')[0]
 
   return client.fetch<Event[]>(`*[_type == "event" && type in $types && date >= $fromDate && date < $toDate && count(links[]->url) > 0] | order(date)`, { fromDate, toDate, types: ['serie', 'race', 'award'] })
+}
+
+export const getCredits = async () => {
+  return client.fetch<LogoGroup[]>(`*[_type == "component" && type == "logos"][0].logoGroups`);
 }
