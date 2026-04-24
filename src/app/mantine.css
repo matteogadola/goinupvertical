@@ -13,6 +13,16 @@ const theme = createTheme({
   },
 });*/
 
+
+:root[data-mantine-color-scheme="light"] {
+  --mantine-color-body: var(--background);
+}
+
+/* For dark mode */
+:root[data-mantine-color-scheme="dark"] {
+  --mantine-color-body: var(--background);
+}
+
 .mantine-AppShell-main {
   /*padding: 0;*/
   padding-inline-start: 0;
