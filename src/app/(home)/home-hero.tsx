@@ -55,12 +55,12 @@ export default function HomeHero({ className, showCta, onClickCta }: Readonly<Pr
 
         <div className="relative z-10 flex flex-col mt-[150px] lg:mt-[250px] px-2 text-primary font-archivo sm:px-4 lg:px-6 max-w-6xl mx-auto">
           <h1 className="flex flex-col text-center uppercase">
-            <ScrollAnimation animation="slide-left" delay={0.08}>
+            <ScrollAnimation animation="slide-left" delay={0.08} width='100%'>
               <span className="text-4xl lg:text-5xl">
                 Il circuito di gare vertical
               </span>
             </ScrollAnimation>
-            <ScrollAnimation animation="slide-left" delay={0.12}>
+            <ScrollAnimation animation="slide-left" delay={0.12} width='100%'>
               <span className=" text-5xl lg:text-6xl">
                 che fa bene al territorio
               </span>

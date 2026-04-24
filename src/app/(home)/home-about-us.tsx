@@ -6,7 +6,7 @@ import trailMask from '../../../public/images/homepage/trail-mask.webp'
 import gusto from '../../../public/images/homepage/gusto.webp'
 import gustoMask from '../../../public/images/homepage/gusto-mask.webp'
 import { ReactNode } from 'react'
-import { Stack, Text, Overlay, Box } from '@mantine/core'
+import { ScrollAnimation } from '@/components/animations/scroll-animation'
 
 type Props = {
   className?: string
@@ -19,21 +19,32 @@ export default async function HomeAboutUs() {
     <div className="my-8 lg:my-16">
       <div className="content grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="px-8 pt-4 pb-18 lg:py-24 text-primary">
-          <h1 className="text-5xl lg:text-7xl font-matroska">GOin<span className="text-accent">UP</span></h1>
-          <h2 className="mb-4 text-lg">Circuito di 10 gare vertical di montagna a <span className="font-normal">finalità benefica</span>.</h2>
-          <p className="mt-8 text-xl">
-            GOinUP è un gruppo di associazioni che coordina e promuove l&apos;omonimo circuito di gare di montagna. Il nostro obbiettivo è quello di riuscire a donare il maggior numero di attrezzature e servizi a diverse associazioni benefiche nel mandamento di Morbegno
-          </p>
+          <h1 className="flex text-5xl lg:text-7xl font-matroska">
+            <ScrollAnimation animation="zoom" delay={0}><span>GO</span></ScrollAnimation>
+            <ScrollAnimation animation="zoom" delay={0.05}><span>in</span></ScrollAnimation>
+            <ScrollAnimation animation="zoom" delay={0.1}><span className="text-accent">UP</span></ScrollAnimation>
+          </h1>
+          {/*<h1 className="text-5xl lg:text-7xl font-matroska">GOin<span className="text-accent">UP</span></h1>*/}
+          <ScrollAnimation animation="zoom" delay={0.2}>
+            <h2 className="mb-4 text-lg">Circuito di 10 gare vertical di montagna a <span className="font-normal">finalità benefica</span>.</h2>
+            <p className="mt-8 text-xl">
+              GOinUP è un gruppo di associazioni che coordina e promuove l&apos;omonimo circuito di gare di montagna. Il nostro obbiettivo è quello di riuscire a donare il maggior numero di attrezzature e servizi a diverse associazioni benefiche nel mandamento di Morbegno
+            </p>
+          </ScrollAnimation>
         </div>
         <div className="hidden lg:flex justify-items-end">
           <div className="px-4 lg:px-0 h-full w-full grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <ScrollAnimation animation="zoom" delay={0.2}>
             <div className="h-full min-h-48 w-256px">
               <ImageCard src={trail} mask={trailMask} alt="Foto trail running">
                 <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-5xl lg:text-6xl">Beneficenza</h3>
               </ImageCard>
 
             </div>
+            </ScrollAnimation>
+            <ScrollAnimation animation="zoom" delay={0.3}>
             <div className="h-full grid grid-cols-1 justify-items-end gap-4">
+              
               <div className="min-h-48 w-full lg:w-4/5 rounded-4xl group">
                 <ImageCard src={jolette} mask={joletteMask} alt="Foto jolette">
 <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-6xl lg:text-5xl">Inclusività</h3>
@@ -44,7 +55,9 @@ export default async function HomeAboutUs() {
                   <h3 className="uppercase font-archivo text-shadow-lg text-background text-center text-6xl lg:text-5xl">Gusto</h3>
                 </ImageCard>
               </div>
+              
             </div>
+            </ScrollAnimation>
           </div>
         </div>
       </div>

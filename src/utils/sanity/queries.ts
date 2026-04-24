@@ -64,10 +64,6 @@ export const getFeatures = async () => {
   return client.fetch(`*[_type == "feature" && status == 'active'] | order(index)`)
 }
 
-export const getPage = async (slug: string) => {
-  return client.fetch(`*[_type == "page" && slug.current == $slug][0]`, { slug })
-}
-
 export const getClubs = (): string[] => {
   return clubs
 }
@@ -105,6 +101,10 @@ export const getEventLinks = async ({ year }: { year?: number } = {}) => {
   const toDate = new Date(year + 1, 0, 1).toISOString().split('T')[0]
 
   return client.fetch<Event[]>(`*[_type == "event" && type in $types && date >= $fromDate && date < $toDate && count(links[]->url) > 0] | order(date)`, { fromDate, toDate, types: ['serie', 'race', 'award'] })
+}
+
+export const getPage = async (slug: string) => {
+  return client.fetch(`*[_type == "component" && type == "page" && slug.current == $slug][0]`, { slug })
 }
 
 export const getMentions = async () => {
