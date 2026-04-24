@@ -53,7 +53,7 @@ const createCheckoutSession = async ({ order, origin, q }: any) => {
     cancel_url: `${origin}/checkout`,
   };
 
-  console.log(params)
+  //console.log(params)
 
   return stripe.checkout.sessions.create(params);
 };
