@@ -97,11 +97,11 @@ export default function EventEntryForm({ event, product }: { event: any, product
   }
 
   const save = async (data: any) => {
-    if (form.validate().hasErrors) return;
+    if ((await form.validate()).hasErrors) return;
 
     const { data: { user }, error } = await supabase.auth.getUser()
 
-    // ATTENZIONE PERCHE NON SEMPRE C'è TIN eh
+    // ATTENZIONE PERCHE NON SEMPRE C'È TIN eh
     if (items.find(item => item.entry?.tin === data.tin)) {
       form.setFieldError('tin', 'Codice fiscale già presente in carrello');
       return
