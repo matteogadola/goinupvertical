@@ -1,22 +1,12 @@
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link';
 import { getEvent, getEvents } from '@/utils/sanity/queries';
 import { urlFor } from '@/utils/sanity';
 import { notFound } from 'next/navigation';
-import { dt } from '@/utils/date';
+import { formatEventDate, toEventDateTime } from '@/utils/events/entry-availability';
 import EventProducts from './event-products';
 import EventAttachment from './event.attachment';
-import Credits from '@/components/credits';
 import { PortableText, PortableTextReactComponents } from '@portabletext/react'
-
-interface Params {
-  slug: string;
-}
-
-interface Props {
-  params: Params;
-  searchParams: { [key: string]: string | string[] | undefined };
-}
 
 const components: Partial<PortableTextReactComponents> = {
   marks: {
@@ -90,7 +80,7 @@ export default async function EventPage({
   return (
     <div className="event-grid">
       <div>
-        {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{dt(event.date).format('ddd DD MMM')}</span>}
+        {event.date && <span className="font-unbounded capitalize px-1 bg-yellow-200">{formatEventDate(event.date, 'ddd DD MMM')}</span>}
         <h1 className="font-unbounded text-2xl font-semibold uppercase">{event.name}</h1>
         {(!!event.description && Array.isArray(event.description))
           ? <div className="mt-8 text-sm md:text-base">
@@ -124,7 +114,7 @@ export default async function EventPage({
         }
       </div>
 
-      {dt(event.date).isAfter()
+      {toEventDateTime(event.date).isAfter()
         ? <EventProducts event={event} />
         : <EventAttachment event={event} />
       }
