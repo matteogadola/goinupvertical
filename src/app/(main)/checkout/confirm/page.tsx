@@ -24,7 +24,7 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
       const session = await stripe.checkout.sessions.retrieve(session_id, {
         expand: ['line_items.data.price.product'],
       })
-      if (session.payment_status !== 'paid') notFound()
+      //if (session.payment_status !== 'paid') notFound()
       const items = session.line_items?.data ?? []
 
       return (

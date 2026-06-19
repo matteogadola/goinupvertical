@@ -1,15 +1,17 @@
+import * as Sentry from '@sentry/nextjs';
 import { invoke } from '@/utils/supabase/functions'
-import { Order } from '@/types/orders'
-import * as Sentry from "@sentry/nextjs";
+import type { Order } from '@/types/orders'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   const payload = await req.json()
   const origin = new URL(req.url).origin
 
   try {
-    const order = await invoke<Order>('order', payload)
+    Sentry.logger.info('Checkout payload', { payload });
+    const order = await invoke<Order>('order', payload);
+    Sentry.logger.info('Checkout order', { order });
 
     if (['cash', 'sepa', 'on-site'].includes(order.payment_method)) {
       try {
