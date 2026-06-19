@@ -69,9 +69,13 @@ function ConsoleEventEntryConfirm({ entry, onClose, onConfirm }: { entry: any, o
     }
   }
 
-  const confirmItems = async (id: number) => {
+  const confirmItems = async () => {
     try {
-      const item = await updateOrderItems(id)
+      await updateOrderItems(
+        order!.id,
+        order!.payment_method,
+        unpaidItems.map((orderItem) => orderItem.id),
+      )
       onConfirm(order!.items)
       onClose()
     } catch (e: any) {
@@ -114,7 +118,7 @@ function ConsoleEventEntryConfirm({ entry, onClose, onConfirm }: { entry: any, o
         {order.items.map((item, index) =>
         <tr key={index}><td className="py-4">{item.name}</td><td>{item.description}</td><td>{item.payment_status}</td>
         <td className="w-22">
-          {order.items.length > 1
+          {order.payment_method === 'cash' && order.items.length > 1
             ? <Button onClick={() => confirmItem(item.id)} disabled={item.payment_status !== 'pending'} variant="light" color="teal" fullWidth>
                 {item.payment_status === 'pending'
                   ? <span>Conferma<span className="ml-1 text-xs font-light">({item.price / 100}€)</span></span>
@@ -134,7 +138,7 @@ function ConsoleEventEntryConfirm({ entry, onClose, onConfirm }: { entry: any, o
         }
         <div className="flex items-center justify-end mt-6 pt-4 px-4 border-t border-solid border-slate-200 rounded-b space-x-6">
           <Button onClick={handleClose} variant="subtle" color="gray">Chiudi</Button>
-          <Button onClick={() => confirmItems(order.id)} variant="filled" color="teal">Conferma tutto<span className="ml-1 items-center text-xs font-light">({unpaidItems.reduce((a, v) => a + v.price, 0) / 100}€)</span></Button>
+          <Button onClick={confirmItems} disabled={!unpaidItems.length} variant="filled" color="teal">Conferma tutto<span className="ml-1 items-center text-xs font-light">({unpaidItems.reduce((a, v) => a + v.price, 0) / 100}€)</span></Button>
         </div>
 
     </>
@@ -155,42 +159,41 @@ const getOrder = async (id: string) => {
   return data
 }
 
-const updateOrderItems = async (id: number) => {
+const updateOrderItems = async (orderId: number, paymentMethod: string, ids: number[]) => {
   const supabase = createClient()
-  const params = {
-    status: 'confirmed',
-    payment_status: 'paid',
-    payment_date: dayjs.utc().format(),
-  }
-
-  const { data, error } = await supabase
-    .from('order_items')
-    .update(params)
-    .eq('order_id', id);
+  const { data, error } = paymentMethod === 'cash'
+    ? await (supabase as any).rpc('record_cash_payment', {
+        _order_item_ids: ids,
+        _paid_at: dayjs.utc().format(),
+        _payment_reference: null,
+      })
+    : await (supabase as any).rpc('record_manual_order_payment', {
+        _order_id: orderId,
+        _paid_at: dayjs.utc().format(),
+        _payment_reference: null,
+      });
 
   if (error) {
     throw new Error(error.message)
   }
 
-  return { ...params, order_id: id }
+  return data
 }
 
 const updateOrderItem = async (id: number) => {
   const supabase = createClient()
-  const params: Partial<OrderItem> = {
-    status: 'confirmed',
-    payment_status: 'paid',
-    payment_date: dayjs.utc().format(),
-  }
-
-  const { data, error } = await supabase
-    .from('order_items')
-    .update(params)
-    .eq('id', id);
+  const { data, error } = await (supabase as any)
+    .rpc('record_cash_payment', {
+      _order_item_ids: [id],
+      _paid_at: dayjs.utc().format(),
+      _payment_reference: null,
+    });
 
   if (error) {
     throw new Error(error.message)
   }
 
-  return { ...params, id }
+  const item = data?.items?.find((orderItem: OrderItem) => orderItem.id === id)
+  if (!item) throw new Error('Riga ordine non restituita')
+  return item
 }

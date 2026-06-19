@@ -69,7 +69,7 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
       price: product.price,
       quantity: 1,
       payment_method: 'cash',
-      payment_status: 'pending',
+      paid: true,
       end_sale_date: product.date ?? event.date ? dt(event.date).subtract(2, 'days').format() : null,
 
       first_name: '',
@@ -90,7 +90,7 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
       club: '',
       email: '',
       phone_number: '',
-      payment_status: 'pending',
+      paid: true,
     },
     validate: {
       //first_name: isNotEmpty('Inserisci il nome'),
@@ -137,7 +137,6 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
         price: product.price,
         quantity: 1,
         payment_method: 'cash',
-        payment_status: data.payment_status,
         end_sale_date: product.date ?? event.date ? dt(event.date).subtract(2, 'days').format() : null,
         description: capitalize(`${data.first_name} ${data.last_name}`),
         entry: {
@@ -150,7 +149,7 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
           email: data.email.toLowerCase(),
           club: data.club ? data.club.trim().toUpperCase() : null,
         },
-      })
+      }, data.paid)
       onCreate(entry)
       onClose()
     } catch (e: any) {
@@ -222,8 +221,8 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
           color="green"
           labelPosition="left"
           label="Pagato?"
-          key={form.key('payment_status')}
-          {...form.getInputProps('payment_status')}
+          key={form.key('paid')}
+          {...form.getInputProps('paid', { type: 'checkbox' })}
         />
 
       </div>
@@ -242,9 +241,8 @@ function ConsoleEventEntryNew({ event, onClose, onCreate }: { event: Partial<Eve
 }
 
 
-const createEntry = async (item: any) => {
+const createEntry = async (item: any, paid: boolean) => {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
 
   const response = await fetch('/api/checkout', {
     method: 'POST',
@@ -252,7 +250,6 @@ const createEntry = async (item: any) => {
       customer_email: item.entry?.email,
       customer_first_name: item.entry?.first_name,
       customer_last_name: item.entry?.last_name,
-      user_id: user?.id,
       payment_method: item.payment_method,
       items: [item]
     }),
@@ -263,5 +260,17 @@ const createEntry = async (item: any) => {
     throw new Error(data.message);
   }
 
-  return data
+  let order = data.order
+  if (paid) {
+    const { data: paidOrder, error } = await (supabase as any).rpc('record_cash_payment', {
+      _order_item_ids: order.items.map((orderItem: any) => orderItem.id),
+      _paid_at: dayjs.utc().format(),
+      _payment_reference: null,
+    })
+
+    if (error) throw new Error(error.message)
+    order = paidOrder
+  }
+
+  return order
 }

@@ -1,5 +1,6 @@
 export interface Entry {
   id: number;
+  status: 'checkout_pending' | 'reserved' | 'confirmed' | 'requires_review' | 'expired' | 'cancelled';
   order_item_id: number | null;
   order_id: number | null;
   product_id: number | null;

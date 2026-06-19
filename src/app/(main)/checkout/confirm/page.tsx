@@ -1,12 +1,13 @@
-import { GetServerSideProps, Metadata, NextPage } from 'next'
+import { Metadata } from 'next'
 import DaEliminare from './da-eliminare';
-import { decodeBase64 } from '@/utils/encoding';
 import { notFound } from 'next/navigation';
 import { createStripe } from '@/utils/stripe';
+import { createClient } from '@/utils/supabase/admin';
 
 interface SearchParams {
   session_id: string;
-  q: string;
+  order_id: string;
+  token: string;
 }
 
 interface Props {
@@ -16,13 +17,14 @@ interface Props {
 const stripe = createStripe()
 
 export default async function CheckoutConfirmPage({ searchParams }: Props) {
-  const { session_id, q } = await searchParams
+  const { session_id, order_id, token } = await searchParams
 
   if (session_id && typeof session_id === 'string') {
     try {
       const session = await stripe.checkout.sessions.retrieve(session_id, {
         expand: ['line_items.data.price.product'],
       })
+      if (session.payment_status !== 'paid') notFound()
       const items = session.line_items?.data ?? []
 
       return (
@@ -73,8 +75,17 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
       )
     }
     
-  } else if (q && typeof q === 'string') {
-    const order = decodeBase64<any>(q);
+  } else if (order_id && token) {
+    const supabase = createClient()
+    const { data: order } = await (supabase as any)
+      .from('orders')
+      .select('id, payment_method, items:order_items(id, name, description, quantity, price)')
+      .eq('id', Number(order_id))
+      .eq('checkout_token', token)
+      .single()
+
+    if (!order) notFound()
+
     const totalAmount = order.items.reduce((a: number, v: any) => a + (v.quantity * v.price), 0);
     
     return (

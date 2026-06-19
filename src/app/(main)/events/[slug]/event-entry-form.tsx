@@ -97,32 +97,37 @@ export default function EventEntryForm({ event, product }: { event: any, product
   }
 
   const save = async (data: any) => {
-    if ((await form.validate()).hasErrors) return;
+    if (form.validate().hasErrors) return;
 
     const { data: { user }, error } = await supabase.auth.getUser()
 
-    // ATTENZIONE PERCHE NON SEMPRE C'È TIN eh
+    // Verifico se c'è lo stesso atleta nel carrello
     if (items.find(item => item.entry?.tin === data.tin)) {
       form.setFieldError('tin', 'Codice fiscale già presente in carrello');
-      return
+      return;
     }
 
+    // Verifico che il codice fiscale sia valido
     try {
       verifyTin(data.tin, data.first_name, data.last_name);
     } catch (e: any) {
       form.setFieldError('tin', e.message);
-      return
+      return;
     }
 
+    // Verifico che l'atleta non sia già iscritto alla gara
     try {
       if (await entryExist(event._id, data.tin)) {
+        setError(`${data.first_name} ${data.last_name} risulta già iscritto alla gara`);
         // anche in questo caso meglio mostra errore generale?
-        form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
-        return
+        //form.setFieldError('tin', 'Codice fiscale già iscritto alla gara');
+        return;
       }
     } catch (e: any) {
+      setError('Errore durante il controllo del codice fiscale');
       // qui sicuramente errore generale...ma per ora...
       Sentry.logger.warn('Errore durante il controllo del codice fiscale', { error: e });
+      return;
     }
 
     addItem({
@@ -243,7 +248,13 @@ export default function EventEntryForm({ event, product }: { event: any, product
           </span>
         </p>
 
-        {Object.values(form.errors).length > 0 &&
+        {/*Object.values(form.errors).length > 0 &&
+          <p className="text-red-500">
+            {Object.values(form.errors).join(', ')}
+          </p>
+        */}
+
+        {!!error &&
           <p className="text-red-500">
             {Object.values(form.errors).join(', ')}
           </p>

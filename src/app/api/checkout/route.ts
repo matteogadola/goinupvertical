@@ -1,5 +1,4 @@
 import { invoke } from '@/utils/supabase/functions'
-import { encodeBase64 } from '@/utils/encoding'
 import { Order } from '@/types/orders'
 import * as Sentry from "@sentry/nextjs";
 
@@ -7,19 +6,23 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const payload = await req.json()
-  const origin = req.headers.get('origin') ?? 'https://www.goinupvertical.it'
+  const origin = new URL(req.url).origin
 
   try {
-    Sentry.logger.info('Checkout payload', { payload })
     const order = await invoke<Order>('order', payload)
-    Sentry.logger.info('Checkout order', { order })
-
-    const q = encodeBase64(JSON.stringify(order));
 
     if (['cash', 'sepa', 'on-site'].includes(order.payment_method)) {
-      await invoke('mail-checkout', order)
+      try {
+        await invoke('mail-checkout', order)
+      } catch (mailError) {
+        Sentry.captureException(mailError, { tags: { order_id: String(order.id) } })
+      }
 
-      return new Response(JSON.stringify({order, checkoutSessionUrl: `${origin}/checkout/confirm?q=${q}`}), {
+      const confirmUrl = new URL('/checkout/confirm', origin)
+      confirmUrl.searchParams.set('order_id', String(order.id))
+      confirmUrl.searchParams.set('token', order.checkout_token)
+
+      return new Response(JSON.stringify({order, checkoutSessionUrl: confirmUrl.toString()}), {
         status: 200,
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
       })
