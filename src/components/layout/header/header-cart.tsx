@@ -11,14 +11,19 @@ import CartItems from '@/components/cart/cart-items';
 import { ShoppingCart } from 'lucide-react';
 
 export default function HeaderCartButton() {
-  const { items } = useCartStore();
+  const { items, clearItems } = useCartStore();
   const [opened, { open, close }] = useDisclosure(false);
   const router = useRouter()
   const pathname = usePathname()
 
+  const handleClear = () => {
+    close();
+    clearItems();
+  }
+
   const handleClick = () => {
-    close()
-    router.push('/checkout')
+    close();
+    router.push('/checkout');
   }
 
   return (
@@ -37,11 +42,21 @@ export default function HeaderCartButton() {
           <div>
             <div className="text-xs text-gray-900 mt-4">
               Il totale verrà mostrato nella schermata successiva
-              </div>
-            <div className="mt-4">
-                <Button onClick={handleClick} variant="filled" fullWidth classNames={{label: 'light'}}>
-                  Vai al pagamento
-                </Button>
+            </div>
+            <div className="flex justify-between mt-4">
+              <Button
+                variant="transparent"
+                styles={{ root: { padding: 0 } }}
+                onClick={handleClear}
+              >
+                Svuota il carrelo
+              </Button>
+
+              <Button
+                onClick={handleClick}
+              >
+                Vai al pagamento
+              </Button>
             </div>
           </div>
         }
