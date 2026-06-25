@@ -25,8 +25,6 @@ export default function EventOrders({
     return e
   }))
 
-  console.log(data[0])
-
   const columns = useMemo(() => getColumns(entries.items), [])
 
   return (

@@ -38,7 +38,7 @@ export default function EventReservation({ event, products }: { event: any, prod
   });
 
   const onSubmit = async () => {
-    if (form.validate().hasErrors) return;
+    if ((await form.validate()).hasErrors) return;
 
     const data = form.getValues()
     const items = Object.entries(data.items)

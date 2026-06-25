@@ -26,7 +26,7 @@ export default function HomeMentions({ mentions, className }: { mentions: Mentio
   }
 
   return (
-    <ScrollAnimation animation="zoom">
+    <ScrollAnimation animation="zoom" width='100%'>
       <div className={clsx("min-h-48 m-auto", className)}>
         {!!mention &&
           <div className="flex flex-col items-center pt-32 pb-8 lg:pb-16">

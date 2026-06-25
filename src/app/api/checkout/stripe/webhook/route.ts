@@ -1,152 +1,172 @@
 import Stripe from 'stripe'
-import { Order, OrderItem } from '@/types/orders'
-import { createClient } from '@/utils/supabase/admin'
+import * as Sentry from '@sentry/nextjs'
 
-import { dt } from '@/utils/date'
+import type { Order, OrderItem } from '@/types/orders'
 import { sendCheckoutMail } from '@/utils/mailer'
+import { createClient } from '@/utils/supabase/admin'
 import { createStripe } from '@/utils/stripe'
 
 const stripe = createStripe()
 
 export async function POST(req: Request) {
   const signature = req.headers.get('stripe-signature')
-  const payload = await req.text()
-  let receivedEvent
+  if (!signature) return new Response('Missing Stripe signature', { status: 400 })
+
+  let event: Stripe.Event
+  try {
+    event = await stripe.webhooks.constructEventAsync(
+      await req.text(),
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!,
+    )
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Invalid webhook'
+    return new Response(`Webhook error: ${message}`, { status: 400 })
+  }
 
   try {
-    receivedEvent = await stripe.webhooks.constructEventAsync(
-      payload,
-      signature!,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    )
-  } catch (e: any) {
-    console.error(`Webhook Error: ${e.message}`)
-    return new Response(`Webhook error: ${e.message}`, {
-      status: 400,
+    switch (event.type) {
+      case 'checkout.session.completed':
+      case 'checkout.session.async_payment_succeeded':
+        await handleSuccessfulCheckout(event)
+        break
+
+      case 'checkout.session.expired':
+        await handleExpiredCheckout(event)
+        break
+
+      case 'payment_intent.canceled':
+      case 'payment_intent.payment_failed':
+        await handleFailedPayment(event)
+        break
+
+      default:
+        break
+    }
+
+    return new Response('Success', { status: 200 })
+  } catch (error) {
+    Sentry.captureException(error, {
+      tags: { stripe_event_id: event.id, stripe_event_type: event.type },
     })
+    return new Response('Webhook processing failed', { status: 500 })
+  }
+}
+
+async function handleSuccessfulCheckout(
+  event: Stripe.CheckoutSessionCompletedEvent | Stripe.CheckoutSessionAsyncPaymentSucceededEvent,
+) {
+  const session = event.data.object
+  if (session.payment_status !== 'paid') return
+
+  const orderId = parseOrderId(session.metadata?.order_id)
+  const paymentId = getStripeId(session.payment_intent)
+  if (!paymentId || session.amount_total === null || !session.currency) {
+    throw new Error(`Sessione Stripe incompleta per ordine ${orderId}`)
   }
 
-  if (receivedEvent.livemode !== true) {
-    return new Response(`webhook is for live only`, {
-      status: 200,
+  const supabase = createClient()
+  const { data: result, error } = await (supabase as any).rpc('finalize_stripe_order', {
+    _stripe_event_id: event.id,
+    _event_type: event.type,
+    _order_id: orderId,
+    _payment_id: paymentId,
+    _paid_at: new Date(event.created * 1000).toISOString(),
+    _amount: session.amount_total,
+    _currency: session.currency,
+  })
+
+  if (error) throw new Error(error.message)
+
+  if (result?.outcome === 'requires_review') {
+    Sentry.captureMessage('Pagamento Stripe da revisionare', {
+      level: 'error',
+      tags: { order_id: String(orderId), payment_id: paymentId },
     })
+    return
   }
- 
-  let order_id: number;
-  switch (receivedEvent.type) {
-    case 'payment_intent.canceled':
-    case 'payment_intent.payment_failed':
-      const payment = receivedEvent.data.object as Stripe.PaymentIntent;
-      order_id = Number(payment.metadata?.order_id);
 
-      console.warn(`Pagamento fallito per ${order_id}`);
-
-      if (payment.id && !isNaN(order_id)) {
-        await updateOrder(order_id, {
-          payment_id: payment.id,
-          payment_status: 'failed',
-          payment_date: dt.unix(payment.created).utc().format(),
-        });
-
-        /*await deleteEntries(order_id, {
-          payment_id: payment.id,
-          payment_status: 'failed',
-          payment_date: dt.unix(payment.created).utc().format(),
-        });*/
-      }
-      //await sendPaymentErrorMail();
-      break;
-    case 'checkout.session.expired':
-      const sessionExp = receivedEvent.data.object as Stripe.Checkout.Session;
-      order_id = Number(sessionExp.metadata?.order_id);
-
-      console.info(`Checkout expired per ${order_id}`);
-
-      if (sessionExp.payment_intent && !isNaN(order_id)) {
-        await updateOrder(order_id, {
-          payment_id: sessionExp.payment_intent as string,
-          payment_status: 'failed',
-          payment_date: dt.unix(sessionExp.created).utc().format(),
-        });
-      }
-      break;
-    case 'checkout.session.completed':
-      const session = receivedEvent.data.object as Stripe.Checkout.Session;
-      order_id = Number(session.metadata?.order_id);
-
-      console.info(`Checkout completed per ${order_id}`);
-      //const items = JSON.parse(base64.encode(session.metadata?.items));
-      //const order = JSON.parse(base64.encode(session.metadata?.q)) as Order;
-
-      if (session.payment_intent && !isNaN(order_id)) {
-        const order = await getOrder(order_id);
-
-        if (order === null) {
-          console.error(`Checkout completed in errore durante il recupero dell'ordine: ${JSON.stringify(session)}`);
-          return new Response(``, {
-            status: 400,
-          })
-        }
-
-        // verifica che session.payment_status === 'paid' ? 'paid' : 'awaiting',
-        await updateOrder(order_id, {
-          status: 'confirmed',
-          payment_id: session.payment_intent as string,
-          payment_status: 'paid',
-          payment_date: dt.unix(session.created).utc().format(),
-        });
-
-        //const supabase = createClient()
-        //const { data, error } = await supabase.functions.invoke('mail-legacy', {
-        //  method: 'POST',
-        //  body: order
-        //})
-        await sendCheckoutMail(order);
-      } else {
-        console.error(`Checkout completed terminato in errore: ${JSON.stringify(session)}`);
-      }
-      break;
-    default:
-      console.debug(`Arrivato evento non gestito: ${receivedEvent.type}`);
-      break;
+  if (result?.outcome === 'confirmed') {
+    await sendConfirmationIfNeeded(orderId)
   }
-  return new Response('Success!', {
-    status: 200,
+}
+
+async function handleExpiredCheckout(event: Stripe.CheckoutSessionExpiredEvent) {
+  const session = event.data.object
+  await failStripeOrder({
+    event,
+    orderId: parseOrderId(session.metadata?.order_id),
+    paymentId: getStripeId(session.payment_intent),
+    status: 'expired',
   })
 }
 
-const getOrder = async (id: number) => {
+async function handleFailedPayment(
+  event: Stripe.PaymentIntentCanceledEvent | Stripe.PaymentIntentPaymentFailedEvent,
+) {
+  const payment = event.data.object
+  await failStripeOrder({
+    event,
+    orderId: parseOrderId(payment.metadata?.order_id),
+    paymentId: payment.id,
+    status: 'failed',
+  })
+}
+
+async function failStripeOrder({
+  event,
+  orderId,
+  paymentId,
+  status,
+}: {
+  event: Stripe.Event
+  orderId: number
+  paymentId: string | null
+  status: 'failed' | 'expired'
+}) {
   const supabase = createClient()
-  const { data } = await supabase.from('orders').select().eq('id', id).returns<Order[]>().single();
+  const { error } = await (supabase as any).rpc('fail_stripe_order', {
+    _stripe_event_id: event.id,
+    _event_type: event.type,
+    _order_id: orderId,
+    _payment_id: paymentId,
+    _failure_status: status,
+  })
 
-  if (data !== null) {
-    const { data: items } = await supabase.from('order_items').select().eq('order_id', id).returns<OrderItem[]>();
-    data.items = items ?? [];
-  }
+  if (error) throw new Error(error.message)
+}
 
-  return data;
-};
-
-const updateOrder = async (id: number, params: Partial<any>) => {
+async function sendConfirmationIfNeeded(orderId: number) {
   const supabase = createClient()
-  try {
-    const { data, error } = await supabase.from('orders').update(params).eq('id', id);
+  const { data: order, error } = await supabase
+    .from('orders')
+    .select('*, items:order_items(*)')
+    .eq('id', orderId)
+    .single()
 
-    if (error) {
-      console.warn(`[updateOrder] error: ${error.message}`);
-      throw new Error(error.message);
-    }
+  if (error || !order) throw new Error(error?.message || `Ordine ${orderId} non trovato`)
+  if (order.notification_status && !['failed', 'error'].includes(order.notification_status)) return
 
-    const { data: lolle, error: errorDue } = await supabase.from('order_items').update(params).eq('order_id', id);
+  await sendCheckoutMail(order as Order & { items: OrderItem[] })
 
-    if (errorDue) {
-      console.warn(`[updateOrder] error: ${errorDue.message}`);
-      throw new Error(errorDue.message);
-    }
+  const { error: updateError } = await supabase
+    .from('orders')
+    .update({
+      notification_status: 'sent',
+      notification_date: new Date().toISOString(),
+    })
+    .eq('id', orderId)
 
-    return data;
-  } catch (e: any) {
-    console.warn(`[updateOrder] exception: ${e.message}`);
-    throw e;
-  }
-};
+  if (updateError) throw new Error(updateError.message)
+}
+
+function parseOrderId(value: string | undefined) {
+  const orderId = Number(value)
+  if (!Number.isInteger(orderId) || orderId <= 0) throw new Error('order_id Stripe non valido')
+  return orderId
+}
+
+function getStripeId(value: string | { id: string } | null) {
+  if (!value) return null
+  return typeof value === 'string' ? value : value.id
+}

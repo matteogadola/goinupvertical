@@ -1,77 +1,39 @@
-import { dt } from "@/utils/date";
-import clsx from "clsx";
-import Link from "next/link";
-import EventEntry from "./event-entry";
-import EventReservation from "./event-reservation";
+import EventEntryStatus from '@/components/events/entry-status';
+import { getEntryAvailability } from '@/utils/events/entry-availability';
+import type { EntryAvailabilityEvent } from '@/utils/events/entry-availability';
+import EventEntry from './event-entry';
+import EventReservation from './event-reservation';
 
-export default async function EventProducts({ event }: { event: any }) {
+type EventProduct = NonNullable<EntryAvailabilityEvent['products']>[number] & Record<string, unknown>;
 
-  if (['race', 'serie'].includes(event.type)) {
-    if (!event.products?.length) {
-      return <></>
-    } else if (event.products?.length === 1) {
-      const product = event.products[0]
+type Props = {
+  event: EntryAvailabilityEvent & {
+    products?: EventProduct[] | null;
+  };
+};
 
-      if (product.status !== 'open') {
-        return <span className="">Iscrizioni chiuse</span>
-      }
+export default async function EventProducts({ event }: Props) {
+  const availability = getEntryAvailability(event);
 
-      const endSaleDate = product.end_sale_date
-        ? dt(product.end_sale_date)
-        : dt(event.date).subtract(46, 'hours')
-
-      if (dt(endSaleDate).isBefore()) {
-        return (
-          <div className="flex flex-col space-x-2">
-            <span className="">Iscrizioni chiuse</span>
-            <span className="block text-gray-700 text-sm">disponibili alla partenza</span>
-          </div>
-        )
-      }
-
-      if (!!product.start_sale_date && dt(product.start_sale_date).isAfter()) {
-        const startSaleDate = dt(product.start_sale_date)
-
-        return (
-          <div className="flex flex-col space-x-2">
-            <span className="">Iscrizioni chiuse</span>
-            <span className="block text-gray-700 text-sm">disponibili da {startSaleDate.format('dddd D MMMM')} alle {startSaleDate.format('HH:mm')}</span>
-          </div>
-        )
-      }
-
-      return (
-        <EventEntry event={event} product={event.products[0]} />
-      )
-
-    } else {
-      // son più di uno...per la gara non dovrebbe essere possibile
-    }
-  } else if (event.type === 'award') {
-    if (!event.products?.length) {
-      return <></>
-    } else {
-      const product = event.products[0]
-
-      if (product.status !== 'open') {
-        return <span className="">Iscrizioni chiuse</span>
-      }
-
-      const endSaleDate = product.end_sale_date
-        ? dt(product.end_sale_date)
-        : dt(event.date).subtract(46, 'hours')
-
-      if (dt(endSaleDate).isBefore()) {
-        return (
-          <div className="flex flex-col space-x-2">
-            <span className="">Iscrizioni chiuse</span>
-          </div>
-        )
-      }
-
-      return (
-        <EventReservation event={event} products={event.products} />
-      )
-    }
+  if (availability.status !== 'open') {
+    return <EventEntryStatus event={event} />;
   }
+
+  if (['race', 'serie'].includes(event.type ?? '')) {
+    if (event.products?.length !== 1) {
+      return null;
+    }
+
+    return <EventEntry event={event} product={event.products[0]} />;
+  }
+
+  if (event.type === 'award') {
+    if (!event.products?.length) {
+      return null;
+    }
+
+    return <EventReservation event={event} products={event.products} />;
+  }
+
+  return null;
 }

@@ -3,7 +3,7 @@
 import React, { useState, useTransition, useMemo } from 'react';
 import { FloatingIndicator, Tabs } from '@mantine/core';
 import ResultList from './result-list';
-import { getLinksByYear } from '../photos/actions';
+import { getLinksByYear } from '../../(main)/photos/actions';
 import type { Event } from '@/types/events';
 import { getResultsByYear } from './actions';
 import Spinner from '@/components/ui/spinner';
@@ -45,7 +45,7 @@ export default function ResultTabs({
 
   return (
     <Tabs variant="none" value={selectedYear} onChange={handleTabChange}>
-      <Tabs.List ref={setRootRef} className="list">
+      <Tabs.List ref={setRootRef} className="list" justify="center">
         {availableYears.map((year, index) =>
           <Tabs.Tab
             key={index}
@@ -72,7 +72,7 @@ export default function ResultTabs({
         >
           {isPending === true
             ? <Spinner size="lg" />
-            : <ResultList results={results} />
+            : <ResultList results={results} className="content" />
           }
         </Tabs.Panel>
       )}

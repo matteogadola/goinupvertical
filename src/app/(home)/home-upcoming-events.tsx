@@ -1,6 +1,6 @@
 import EventEntryStatus from '@/components/events/entry-status'
 import { Event } from '@/types/sanity'
-import { dt } from '@/utils/date'
+import { formatEventDate } from '@/utils/events/entry-availability'
 import { urlFor } from '@/utils/sanity'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -37,7 +37,7 @@ export default async function UpcomingEvents({ events, className }: Readonly<Pro
             </div>
 
             <div className="flex items-center px-4">
-              <span className="font-semibold text-xl uppercase">{dt(event.date).format('ddd DD MMM')}</span>
+              <span className="font-semibold text-xl uppercase">{formatEventDate(event.date, 'ddd DD MMM')}</span>
             </div>
             <div className="px-4">
               <span className="">{event.summary}</span>
