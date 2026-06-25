@@ -74,6 +74,7 @@ export default function CheckoutPage() {
                               <div className="flex">
                                 <Button
                                   variant="transparent"
+                                  styles={{ root: { padding: 0 } }}
                                   disabled={loading}
                                   onClick={() => removeItem(index)}
                                 >
