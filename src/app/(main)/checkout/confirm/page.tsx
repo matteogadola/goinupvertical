@@ -1,13 +1,17 @@
 import { Metadata } from 'next'
 import DaEliminare from './da-eliminare';
 import { notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
 import { createStripe } from '@/utils/stripe';
 import { createClient } from '@/utils/supabase/admin';
+import {
+  ORDER_CONFIRMATION_COOKIE,
+  verifyOrderConfirmationToken,
+} from '@/utils/order-confirmation-token';
 
 interface SearchParams {
   session_id: string;
-  order_id: string;
-  token: string;
+  error: string;
 }
 
 interface Props {
@@ -17,7 +21,7 @@ interface Props {
 const stripe = createStripe()
 
 export default async function CheckoutConfirmPage({ searchParams }: Props) {
-  const { session_id, order_id, token } = await searchParams
+  const { session_id, error } = await searchParams
 
   if (session_id && typeof session_id === 'string') {
     try {
@@ -75,13 +79,27 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
       )
     }
     
-  } else if (order_id && token) {
+  } else {
+    if (error === 'invalid-token') return <InvalidConfirmationLink />
+
+    const cookieStore = await cookies()
+    const token = cookieStore.get(ORDER_CONFIRMATION_COOKIE)?.value
+    if (!token) notFound()
+
+    let orderId: number
+    try {
+      orderId = verifyOrderConfirmationToken(token).order_id
+    } catch {
+      return <InvalidConfirmationLink />
+    }
+
     const supabase = createClient()
     const { data: order } = await (supabase as any)
       .from('orders')
-      .select('id, payment_method, items:order_items(id, name, description, quantity, price)')
-      .eq('id', Number(order_id))
-      .eq('checkout_token', token)
+      .select('id, status, payment_method, items:order_items(id, name, description, quantity, price)')
+      .eq('id', orderId)
+      .in('payment_method', ['cash', 'sepa', 'on-site'])
+      .neq('status', 'cancelled')
       .single()
 
     if (!order) notFound()
@@ -144,9 +162,23 @@ export default async function CheckoutConfirmPage({ searchParams }: Props) {
     )
   }
 
-  notFound();
 }
+
+function InvalidConfirmationLink() {
+  return (
+    <section>
+      <span className="overtitle">Conferma</span>
+      <div className="text mt-2">
+        Il link di conferma non è valido oppure è scaduto.
+      </div>
+    </section>
+  )
+}
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Goinup | Conferma ordine',
+  robots: { index: false, follow: false },
+  referrer: 'no-referrer',
 }

@@ -6,7 +6,6 @@ export type PaymentStatus = 'intent' | 'pending' | 'partially_paid' | 'paid' | '
 
 export interface Order {
   id: number;
-  checkout_token: string;
   user_id: string | null;
   date: string;
   status: OrderStatus;
