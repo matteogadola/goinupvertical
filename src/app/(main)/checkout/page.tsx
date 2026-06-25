@@ -150,7 +150,7 @@ export default function CheckoutPage() {
 
                   <div className="flex justify-end gap-4 mt-8">
                     <Button
-                      variant="outline"
+                      variant="transparent"
                       disabled={loading}
                       onClick={() => clearItems()}
                     >
