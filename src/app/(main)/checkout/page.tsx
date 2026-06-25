@@ -74,6 +74,7 @@ export default function CheckoutPage() {
                               <div className="flex">
                                 <Button
                                   variant="transparent"
+                                  styles={{ root: { padding: 0 } }}
                                   disabled={loading}
                                   onClick={() => removeItem(index)}
                                 >
@@ -148,9 +149,15 @@ export default function CheckoutPage() {
 
                   {!!error && <ErrorText className="mt-4">{error}</ErrorText>}
 
+<<<<<<< HEAD
                   <div className="mt-4">
                     <Button
                       variant="subtle"
+=======
+                  <div className="flex justify-end gap-4 mt-8">
+                    <Button
+                      variant="transparent"
+>>>>>>> origin
                       disabled={loading}
                       onClick={() => clearItems()}
                     >
@@ -177,4 +184,8 @@ export default function CheckoutPage() {
       }
     </section>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin
