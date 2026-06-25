@@ -18,26 +18,18 @@ export const useCartStore = create<CartState>()((set) => ({
 }))*/
 
 export interface CartState {
-  items: Item[]
-  paymentMethod: string
+  items: Item[];
+  paymentMethod: string;
 }
 
 export type CartActions = {
   addItem: (item: Item) => void
   removeItem: (index: number) => void
+  clearItems: () => void
   setPaymentMethod: (paymentMethod: string) => void
 }
 
 export type CartStore = CartState & CartActions
-
-/*export interface CartStore {
-  //isEmpty: boolean
-  items: Item[]
-  paymentMethod: string
-  addItem: (item: Item) => void
-  removeItem: (index: number) => void
-  setPaymentMethod: (paymentMethod: string) => void
-}*/
 
 export interface Item {
   product_id: string;
@@ -51,17 +43,12 @@ export interface Item {
   entry?: any;//EntryForm;
 }
 
-export const initCartStore = (): CartState => {
-  return {
-    items: [],
-    paymentMethod: 'stripe',
-  }
-}
-
 export const defaultInitState: CartState = {
   items: [],
   paymentMethod: 'stripe',
 }
+
+export const initCartStore = (): CartState => defaultInitState;
 
 export const createCartStore = (
   initState: CartState = defaultInitState,
@@ -70,18 +57,18 @@ export const createCartStore = (
     ...initState,
     addItem: (item) => set((state) => ({ items: [...state.items, item] })),
     removeItem: (index) => set((state) => ({ items: state.items.toSpliced(index, 1) })),
+    clearItems: () => set(() => ({ items: [] })),
     setPaymentMethod: (paymentMethod) => set(() => ({ paymentMethod })),
   }))
 }
 
-
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
-      items: [],
-      paymentMethod: 'stripe',
+      ...defaultInitState,
       addItem: (item) => set((state) => ({ items: [...state.items, item] })),
       removeItem: (index) => set((state) => ({ items: state.items.toSpliced(index, 1) })),
+      clearItems: () => set(() => ({ items: [] })),
       setPaymentMethod: (paymentMethod) => set(() => ({ paymentMethod })),
     }),
     {
