@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'GOinUP Vertical',
   description: 'Circuito di gare vertical a scopo benefico',
 };
-
+//  className="page-layout"
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +27,7 @@ export default function RootLayout({
     <>
       <Header links={links} threshold={50} />
       <Sidebar links={links} />
-      <AppShellMain className="page-layout">
+      <AppShellMain>
         {children}
       </AppShellMain>
       <Credits className="mt-16" />

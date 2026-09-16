@@ -7,12 +7,13 @@ import EventReservation from './event-reservation';
 type EventProduct = NonNullable<EntryAvailabilityEvent['products']>[number] & Record<string, unknown>;
 
 type Props = {
+  className?: string;
   event: EntryAvailabilityEvent & {
     products?: EventProduct[] | null;
   };
 };
 
-export default async function EventProducts({ event }: Props) {
+export default async function EventProducts({ className, event }: Props) {
   const availability = getEntryAvailability(event);
 
   if (availability.status !== 'open') {
@@ -24,7 +25,7 @@ export default async function EventProducts({ event }: Props) {
       return null;
     }
 
-    return <EventEntry event={event} product={event.products[0]} />;
+    return <div className={className}><EventEntry event={event} product={event.products[0]} /></div>;
   }
 
   if (event.type === 'award') {

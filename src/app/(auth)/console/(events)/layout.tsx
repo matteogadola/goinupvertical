@@ -29,7 +29,6 @@ export default async function ConsoleEventsLayout({
 
   return (
     <>
-      <Header />
       <Sidebar links={sidenavLinks} />
       <AppShellMain className="page">
         <div className="flex">
