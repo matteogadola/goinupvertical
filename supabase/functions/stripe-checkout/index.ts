@@ -23,10 +23,8 @@ Deno.serve(async (req) => {
           currency: 'eur',
           product_data: {
             name: item.name,
-            description: item?.description ?? undefined,
             metadata: {
               order_item_id: item.id,
-              item_id: item.id,
             },
           },
           unit_amount: item.price,
@@ -58,16 +56,16 @@ Deno.serve(async (req) => {
       cancel_url: `${origin}/checkout`,
     };
 
-    console.debug("Stripe session params", params)
-    const session = await stripe.checkout.sessions.create(params);
-    console.info("Stripe session created", session)
+    const session = await stripe.checkout.sessions.create(params, {
+      idempotencyKey: `checkout-order-${order.id}`,
+    });
 
-    return new Response(JSON.stringify(session), {
+    return new Response(JSON.stringify({ id: session.id, url: session.url }), {
       status: 200,
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     })
   } catch (e: any) {
-    Sentry.captureException(e, { fingerprint: [order.customer_email] })
+    Sentry.captureException(e, { tags: { order_id: String(order.id) } })
     return new Response(JSON.stringify({ code: e.code, message: e.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json; charset=utf-8' },

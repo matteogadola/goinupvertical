@@ -1,28 +1,47 @@
+import * as Sentry from '@sentry/nextjs';
+import { NextResponse } from 'next/server'
 import { invoke } from '@/utils/supabase/functions'
-import { encodeBase64 } from '@/utils/encoding'
-import { Order } from '@/types/orders'
-import * as Sentry from "@sentry/nextjs";
+import type { Order } from '@/types/orders'
+import {
+  assertOrderConfirmationSecret,
+  createOrderConfirmationToken,
+  ORDER_CONFIRMATION_COOKIE,
+  ORDER_CONFIRMATION_TTL_SECONDS,
+} from '@/utils/order-confirmation-token'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
   const payload = await req.json()
-  const origin = req.headers.get('origin') ?? 'https://www.goinupvertical.it'
+  const origin = new URL(req.url).origin
+  const isManualPayment = ['cash', 'sepa', 'on-site'].includes(payload.payment_method)
 
   try {
-    Sentry.logger.info('Checkout payload', { payload })
-    const order = await invoke<Order>('order', payload)
-    Sentry.logger.info('Checkout order', { order })
+    if (isManualPayment) assertOrderConfirmationSecret()
 
-    const q = encodeBase64(JSON.stringify(order));
+    const order = await invoke<Order>('order', payload);
 
-    if (['cash', 'sepa', 'on-site'].includes(order.payment_method)) {
-      await invoke('mail-checkout', order)
+    if (isManualPayment) {
+      try {
+        await invoke('mail-checkout', order)
+      } catch (mailError) {
+        Sentry.captureException(mailError, { tags: { order_id: String(order.id) } })
+      }
 
-      return new Response(JSON.stringify({order, checkoutSessionUrl: `${origin}/checkout/confirm?q=${q}`}), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      const response = NextResponse.json({
+        order,
+        checkoutSessionUrl: new URL('/checkout/confirm', origin).toString(),
       })
+      response.cookies.set(ORDER_CONFIRMATION_COOKIE, createOrderConfirmationToken(order.id), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        path: '/checkout/confirm',
+        maxAge: ORDER_CONFIRMATION_TTL_SECONDS,
+        priority: 'high',
+      })
+      response.headers.set('Cache-Control', 'private, no-store, max-age=0')
+      return response
     } else if (order.payment_method === 'stripe') {
       const session = await invoke('stripe-checkout', { order, origin })
 

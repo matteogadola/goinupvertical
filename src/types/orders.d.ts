@@ -1,14 +1,14 @@
 import type { Entry } from './entries';
 
-export type OrderStatus = 'created' | 'cancelled' | 'error' | 'confirmed';
+export type OrderStatus = 'pending' | 'partially_confirmed' | 'confirmed' | 'requires_review' | 'cancelled';
 export type PaymentMethod = 'stripe' | 'sepa' | 'cash' | 'on-site';
-export type PaymentStatus = 'intent' | 'pending' | 'awaiting' | 'paid' | 'failed';
+export type PaymentStatus = 'intent' | 'pending' | 'partially_paid' | 'paid' | 'failed' | 'expired' | 'cancelled';
 
 export interface Order {
   id: number;
   user_id: string | null;
   date: string;
-  status: string;
+  status: OrderStatus;
   amount: number
   customer_email: string;
   customer_first_name: string;
@@ -26,9 +26,7 @@ export interface Order {
 export interface OrderItem {
   id: number;
   order_id: number;
-  user_id: string | null;
   date: string;
-  status: string;
   event_id: string | null;
   product_id: string | null;
   name: string | null;
@@ -39,5 +37,6 @@ export interface OrderItem {
   payment_date: string | null;
   payment_method: PaymentMethod;
   payment_status: PaymentStatus;
+  payment_recorded_by: string | null;
   entry?: Entry;
 }

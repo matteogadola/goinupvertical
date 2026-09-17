@@ -7,6 +7,7 @@ export type AnimationType = "fade-up" | "slide-left" | "slide-right" | "zoom" | 
 
 interface ScrollAnimationProps {
   children: React.ReactNode;
+  animate?: boolean;
   width?: "fit-content" | "100%";
   delay?: number;
   duration?: number;
@@ -14,9 +15,10 @@ interface ScrollAnimationProps {
 }
 
 export function ScrollAnimation({ 
-  children, 
-  //width = "fit-content",
-  width = "100%",
+  children,
+  animate = true,
+  width = "fit-content",
+  //width = "100%",
   delay = 0, 
   duration = 0.5,
   animation = "fade-up" // Default
@@ -49,6 +51,10 @@ export function ScrollAnimation({
       visible: { opacity: 1, rotate: 0, scale: 1 },
     }
   };
+
+  if (animate === false) {
+    return children
+  }
 
   return (
     <motion.div

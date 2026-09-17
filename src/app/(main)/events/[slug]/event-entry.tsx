@@ -1,8 +1,4 @@
-import { dt } from "@/utils/date";
-import clsx from "clsx";
-import Link from "next/link";
 import EventEntryForm from "./event-entry-form";
-import EventEntryStatus from "@/components/events/entry-status";
 
 /**
  * questa è la parte in cui in una sorta di card vengono mostrati:
@@ -30,9 +26,6 @@ export default function EventEntry({ event, product }: { event: any, product: an
       </div>
 
       <p className="text-gray-600">{product.summary}</p>
-      <div className="hidden">
-        <EventEntryStatus event={event} />
-      </div>
       <EventEntryForm event={event} product={product} />
     </div>
   )

@@ -131,7 +131,7 @@ Deno.serve(async (req) => {
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
     })
   } catch (e: any) {
-    Sentry.captureException(e, { fingerprint: [order.customer_email] })
+    Sentry.captureException(e, { tags: { order_id: String(order.id) } })
     return new Response(JSON.stringify({ code: e.code, message: e.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json; charset=utf-8' },

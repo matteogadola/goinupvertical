@@ -1,23 +1,28 @@
 'use client'
 
-import React, { useMemo } from 'react';
-import { urlForDowload } from '@/utils/sanity';
+import React, { CSSProperties, useMemo } from 'react';
+import { urlFor, urlForDowload } from '@/utils/sanity';
 import { dt } from '@/utils/date';
+import clsx from 'clsx';
+import { formatEventDate } from '@/utils/events/entry-availability';
+import { Button } from '@mantine/core';
 
 type Props = {
   results: any[];
+  className?: string;
 }
 
 export default function ResultList({
   results,
+  className
 }: Readonly<Props>) {
   const serie = useMemo(() => results.find(event => event.type === 'serie'), [results])
   const races = useMemo(() => results.filter(event => event.type === 'race'), [results])
 
   return (
-    <div className="mt-4 lg:mt-8">
+    <div className={clsx(className)}>
       {!!serie &&
-        <div className="w-full my-4 lg:my-8">
+        <div className="w-full my-4 lg:my-8 border border-gray-300 rounded-lg p-4 lg:p-6 bg-gray-100">
           <h1 className="subtitle">{serie.name}</h1>
           {serie.type === 'race' &&
             <span className="block text-xs text-gray-600">{dt(serie.date).format('DD MMMM YYYY')}</span>
@@ -58,4 +63,14 @@ export default function ResultList({
       )}
     </div>
   )
+}
+
+function getBackgroudStyle(event: any): CSSProperties {
+  let url = '/images/default-summary.webp'
+
+  if (event.summary_image) {
+    url = urlFor(event.summary_image) ?? url
+  }
+
+  return { backgroundImage: `url("${url}")`, borderRadius: '1rem 1rem 0 0' } as CSSProperties
 }

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'GOinUP Vertical',
   description: 'Circuito di gare vertical a scopo benefico',
 };
-//  className="page-layout"
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -1,7 +1,9 @@
-import { createClient, FunctionsHttpError } from 'jsr:@supabase/supabase-js@2'
+import { createClient, type User } from 'jsr:@supabase/supabase-js@2'
 import CodiceFiscale from 'npm:codice-fiscale-js@2.3.23'
-import dayjs from 'npm:dayjs@1.11.7'
-import * as Sentry from 'npm:@sentry/deno';
+import { z } from 'npm:zod@4.3.6'
+import * as Sentry from 'https://deno.land/x/sentry/index.mjs'
+
+const CodiceFiscaleClass = CodiceFiscale as unknown as new (input: string | Record<string, unknown>) => any
 
 Sentry.init({
   dsn: Deno.env.get('SENTRY_DSN'),
@@ -10,243 +12,248 @@ Sentry.setTag('region', Deno.env.get('SB_REGION'))
 Sentry.setTag('execution_id', Deno.env.get('SB_EXECUTION_ID'))
 Sentry.setTag('function', 'createOrder')
 
-const supabase = createClient(
-  Deno.env.get('SUPABASE_URL') ?? '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-)
+const paymentMethods = ['stripe', 'cash', 'sepa', 'on-site'] as const
 
-const carnetItems = [
-  {
-    event_id: "03880c1e-c287-455f-ad71-0d4fd388a940",
-    product_id: "778e1a0d-306a-4534-ae1b-28823886437a"
-  },
-  {
-    event_id: "9844257d-7120-4842-9248-73a7f4b1f031",
-    product_id: "f773adeb-fcc3-4955-8a98-054ee93d4397"
-  },
-  {
-    event_id: "1cf3ef49-469d-47aa-8023-a5c9d65acb03",
-    product_id: "591cebfd-c685-45ec-90f7-082c83c1af92"
-  },
-  {
-    event_id: "d5a9b24c-c35b-476e-9511-0ef4a02d3e2b",
-    product_id: "5611d405-d09c-41af-8de2-b24576bcbd42"
-  },
-  {
-    event_id: "aab2bd71-f10a-40fe-a790-31066d11b02a",
-    product_id: "4431da74-101e-4f15-958c-080e01867d6d"
-  },
-  {
-    event_id: "26bb178c-f5a3-406e-aa3d-405d34d69509",
-    product_id: "18a7e6cf-f086-4e38-93cd-97aa65450deb"
-  },
-  {
-    event_id: "0ce456d6-b055-4ae4-b30e-7f87d627489c",
-    product_id: "a2d26b8a-2627-4c69-979e-2dac02b0844d"
-  },
-  {
-    event_id: "f9fd4322-faf7-4d30-8201-4bae9dc65535",
-    product_id: "0111de9a-d070-4b2e-9376-527b99630e0e"
-  },
-  {
-    event_id: "cedc834c-a574-45a4-abf0-617745651d52",
-    product_id: "c85e7b2a-5b29-451b-927a-d21771074a51"
-  },
-  {
-    event_id: "d563b568-11b5-4f54-b185-eb58531e205a",
-    product_id: "0420d7bb-7c6b-42a5-a33c-8f3845273cbd"
-  },
-  {
-    event_id: "b6cc0ecd-9afe-43d9-bca6-504a05911f6e",
-    product_id: "20f7e9aa-59fb-4bde-bd63-ac015c6c88a2"
+const entrySchema = z.object({
+  first_name: z.string().trim().min(1),
+  last_name: z.string().trim().min(1),
+  tin: z.string().trim().min(1),
+  birth_date: z.string().trim().optional(),
+  birth_place: z.string().trim().optional(),
+  gender: z.string().trim().optional(),
+  country: z.string().trim().optional(),
+  club: z.string().trim().optional(),
+  email: z.string().trim().email().optional(),
+  phone_number: z.string().trim().optional(),
+  fidal_card: z.string().trim().optional(),
+})
+
+const itemSchema = z.object({
+  event_id: z.string().uuid().nullable().optional(),
+  product_id: z.string().uuid(),
+  description: z.string().trim().optional(),
+  quantity: z.coerce.number().int().positive().optional().default(1),
+  entry: entrySchema.optional(),
+})
+
+const checkoutSchema = z.object({
+  customer_email: z.string().trim().email().optional(),
+  customer_first_name: z.string().trim().optional(),
+  customer_last_name: z.string().trim().optional(),
+  payment_method: z.enum(paymentMethods),
+  items: z.array(itemSchema).min(1),
+})
+
+type EntryInput = z.infer<typeof entrySchema>
+
+class RequestError extends Error {
+  constructor(message: string, readonly status: number) {
+    super(message)
   }
-];
+}
 
 Deno.serve(async (req) => {
-  const body: any = await req.json()
-  const authHeader = req.headers.get('Authorization');
-  if (authHeader) {
-    console.log('authHeader', authHeader.replace('Bearer ', ''))
-    /*const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: authHeader },
-        },
-      }
-    );*/
+  if (req.method !== 'POST') {
+    return jsonResponse({ message: 'Metodo non consentito' }, 405)
   }
 
-    supabase.auth.
-
-  const { data: { user }, error } = await supabaseClient.auth.getUser();
-  if (error || !user) {
-    return new Response(JSON.stringify({ error: 'Unauthorized', details: error }), { status: 401 });
-  }
+  let paymentMethod = 'unknown'
+  let itemCount = 0
 
   try {
-    if (!body.items?.length) {
-      throw new Error('Nessun prodotto selezionato')
-    }
+    const payload = checkoutSchema.parse(await req.json())
+    paymentMethod = payload.payment_method
+    itemCount = payload.items.length
 
-    const sanitizedItems = []
-    for (const item of body.items) {
-      let event = null
-      if (item.event_id) {
-        const { data } = await supabase
-          .from('events')
-          .select()
-          .eq('id', item.event_id)
-          .single()
-        event = data
+    const supabaseUrl = requiredEnv('SUPABASE_URL')
+    const anonKey = requiredEnv('SUPABASE_ANON_KEY')
+    const serviceRoleKey = requiredEnv('SUPABASE_SERVICE_ROLE_KEY')
+    const authHeader = req.headers.get('Authorization')
+
+    const authClient = createClient(supabaseUrl, anonKey, {
+      global: authHeader ? { headers: { Authorization: authHeader } } : undefined,
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+    })
+    const adminClient = createClient(supabaseUrl, serviceRoleKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+      },
+    })
+
+    const { data: authData, error: authError } = await authClient.auth.getUser()
+    const user = authError ? null : authData.user
+    const role = user && authHeader ? getVerifiedRole(user, authHeader) : null
+    const allowClosedSales = role !== null && ['manager', 'admin', 'owner'].includes(role)
+
+    const sanitizedItems = payload.items.map((item) => {
+      if (!item.entry) {
+        return {
+          event_id: item.event_id ?? null,
+          product_id: item.product_id,
+          description: item.description || null,
+          quantity: item.quantity,
+        }
       }
-      if (item.product_id) {
-        const { data: product } = await supabase
-          .from('products')
-          .select()
-          .eq('id', item.product_id)
-          .single()
 
-        if (!product) {
-          console.warn(`[createOrder] Prodotto non trovato: ${JSON.stringify(item)}`)
-          throw new Error('Prodotto non trovato')
-        }
-        if (product.status !== 'open') {
-          console.warn(`[createOrder] item non abilitato: ${JSON.stringify(item)}`)
-          throw new Error('Iscrizione non disponibile')
-        }
-        if (product.end_sale_date && dayjs(product.end_sale_date).isBefore()) {
-          console.warn(`[createOrder] end_sale_date passata: ${JSON.stringify(item)}`)
-          throw new Error('Iscrizione non più disponibile')
-        } else if (!product.end_sale_date && event && dayjs(event.date).subtract(46, 'hours').isBefore()) {
-          throw new Error('Iscrizione non più disponibile')
-        }
-        if (product.start_sale_date && dayjs(product.start_sale_date).isAfter()) {
-          console.warn(`[createOrder] start_sale_date futura: ${JSON.stringify(item)}`)
-          throw new Error('Iscrizione non ancora disponibile')
-        }
-
-        let tempItem: any = {
-          event_id: item.event_id,
-          product_id: product.id,
-          product_type: item.product_type,
-          name: product.name,
-          description: item.description ? capitalize(item.description) : null,
-          price: product.price,
-          quantity: item.quantity
-        };
-
-        if (item?.entry && Object.keys(item.entry).length) {
-          const tin = verifyTin(item.entry.tin, item.entry.first_name, item.entry.last_name);
-
-          tempItem['entry'] = {
-            ...item.entry,
-            first_name: capitalize(item.entry.first_name),
-            last_name: capitalize(item.entry.last_name),
-            birth_date: item.entry.birth_date || `${tin.year}-${String(tin.month).padStart(2, '0')}-${String(tin.day).padStart(2, '0')}`,
-            birth_place: item.entry.birth_place || tin.birthplace.nome,
-            gender: item.entry.gender || tin.gender,
-            country: item.entry.country || 'ITA',
-            tin: item.entry.tin.toUpperCase(),
-            email: item.entry.email.toLowerCase(),
-            club: item.entry.club ? item.entry.club.trim().toUpperCase() : null
-          };
-        }
-        sanitizedItems.push(tempItem);
+      const entry = sanitizeEntry(item.entry)
+      return {
+        event_id: item.event_id ?? null,
+        product_id: item.product_id,
+        description: `${entry.first_name} ${entry.last_name}`,
+        quantity: 1,
+        entry,
       }
-    }
-
-    if (body.payment_method === 'stripe') {
-      const tax = calcStripeFee(sanitizedItems);
-      sanitizedItems.push({ name: 'Commissioni di servizio', price: tax, quantity: 1 })
-    }
-    const totalAmount = calcTotalAmount(sanitizedItems)
-
-    const { data: order, error } = await supabase.rpc('create_order', {
-      user_id: body.user_id || null,
-      amount: totalAmount,
-      customer_email: body.customer_email ?? sanitizedItems[0].entry?.email,
-      customer_first_name: body.customer_first_name ?? sanitizedItems[0].entry?.first_name,
-      customer_last_name: body.customer_last_name ?? sanitizedItems[0].entry?.last_name,
-      payment_method: body.payment_method,
-      payment_status: body.payment_method === 'stripe' ? 'intent' : 'pending',
-      items: sanitizedItems,
     })
 
-    if (error instanceof FunctionsHttpError) {
-      const { message } = await error.context.json()
-      throw new Error(message)
-    } else if (error) {
-      throw new Error(error.message)
+    assertNoDuplicateEntries(sanitizedItems)
+
+    const firstEntry = sanitizedItems.find((item) => 'entry' in item)?.entry
+    const customerEmail = payload.customer_email || firstEntry?.email
+    if (!customerEmail) throw new RequestError('Email cliente obbligatoria', 400)
+
+    const { data: order, error } = await adminClient.rpc('create_order_v2', {
+      _user_id: user?.id ?? null,
+      _customer_email: customerEmail,
+      _customer_first_name: payload.customer_first_name || firstEntry?.first_name || null,
+      _customer_last_name: payload.customer_last_name || firstEntry?.last_name || null,
+      _payment_method: payload.payment_method,
+      _items: sanitizedItems,
+      _allow_closed_sales: allowClosedSales,
+    })
+
+    if (error) {
+      const conflict = error.code === '23505' || /già iscritt|due volte/i.test(error.message)
+      throw new RequestError(error.message, conflict ? 409 : 400)
     }
 
-    return new Response(JSON.stringify(order), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
-  } catch (e: any) {
-    Sentry.captureException(e, { fingerprint: [body.customer_email] })
-    return new Response(JSON.stringify({ code: e.code, message: e.message }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    })
+    return jsonResponse(order, 200)
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return jsonResponse({ message: 'Dati checkout non validi', issues: error.issues }, 400)
+    }
+
+    const status = error instanceof RequestError ? error.status : 500
+    const message = error instanceof Error ? error.message : 'Errore durante la creazione dell’ordine'
+
+    if (status >= 500) {
+      Sentry.captureException(error, {
+        tags: {
+          payment_method: paymentMethod,
+          item_count: String(itemCount),
+        },
+      })
+    }
+
+    return jsonResponse({ message }, status)
   }
 })
 
-const capitalize = function(input: string) {
-  if (!input) return input
-  const wordArray = input.trim().replace(/\s\s+/g, ' ').split(' ');
-  const output = wordArray.map(word => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`);
+function sanitizeEntry(entry: EntryInput) {
+  const tin = verifyTin(entry.tin, entry.first_name, entry.last_name)
 
-  return output.join(' ');
-};
+  return {
+    first_name: capitalize(entry.first_name),
+    last_name: capitalize(entry.last_name),
+    tin: entry.tin.trim().toUpperCase(),
+    birth_date: entry.birth_date || `${tin.year}-${String(tin.month).padStart(2, '0')}-${String(tin.day).padStart(2, '0')}`,
+    birth_place: entry.birth_place || tin.birthplace.nome,
+    gender: entry.gender || tin.gender,
+    country: entry.country?.toUpperCase() || 'ITA',
+    club: entry.club ? entry.club.trim().toUpperCase() : null,
+    email: entry.email ? entry.email.toLowerCase() : null,
+    phone_number: entry.phone_number || null,
+    fidal_card: entry.fidal_card || null,
+  }
+}
 
-const calcTotalAmount = function(items: any[]) {
-  return items.reduce((a: any, c: any) => a + (c.price * c.quantity), 0);
-};
-
-const calcStripeFee = function(items: any[]) {
-  const totalAmount = calcTotalAmount(items);
-  const stripeTax = 25 + Math.round(totalAmount * 0.015);
-  const stripeTaxIva = Math.round(stripeTax * 0.22);
-  return Math.ceil((stripeTax + stripeTaxIva) / 50) * 50;
-};
-
-const verifyTin = function(tin: string, firstName: string, lastName: string) {
+function verifyTin(tin: string, firstName: string, lastName: string) {
   try {
-    const cf = new CodiceFiscale(tin);
+    const parsedTin = new CodiceFiscaleClass(tin.trim().toUpperCase())
+    if (!parsedTin.isValid()) throw new Error('invalid tin')
 
-    if (!cf.isValid()) {
-      throw new Error(`Codice fiscale ${tin} non valido`);
-    }
-  
-    const checkTin = new CodiceFiscale({
+    const calculatedTin = new CodiceFiscaleClass({
       name: firstName,
       surname: lastName,
-      gender: cf.gender,
-      day: cf.day,
-      month: cf.month,
-      year: cf.year,
-      birthplace: cf.birthplace.nome,
+      gender: parsedTin.gender,
+      day: parsedTin.day,
+      month: parsedTin.month,
+      year: parsedTin.year,
+      birthplace: parsedTin.birthplace.nome,
       birthplaceProvincia: '',
-    });
-  
-    if (checkTin.toString() !== cf.cf) {
-      throw new Error(`Corrispondenza codice fiscale non valida`);
-    }
+    })
 
-    const entryYearLimit = (new Date()).getFullYear() - 15;
-    if (cf.year > entryYearLimit) {
-      throw new Error(`Anno minimo per l'iscrizione: ${entryYearLimit}`);
-    }
+    if (calculatedTin.toString() !== parsedTin.cf) throw new Error('tin mismatch')
 
-    return cf;
-  } catch (e: any) {
-    throw new Error(`Codice fiscale ${tin} non valido`);
+    const minimumBirthYear = new Date().getFullYear() - 15
+    if (parsedTin.year > minimumBirthYear) throw new Error('minimum age')
+
+    return parsedTin
+  } catch {
+    throw new RequestError(`Codice fiscale ${tin.trim().toUpperCase()} non valido`, 400)
   }
-};
+}
 
-const hasRole = function(user: any) {
-  return ['admin'].includes(user.app_metadata?.role ?? '')
-};
+function assertNoDuplicateEntries(items: Array<Record<string, unknown>>) {
+  const entries = new Set<string>()
+
+  for (const item of items) {
+    const entry = item.entry as { tin?: string } | undefined
+    if (!entry?.tin) continue
+
+    const key = `${item.event_id ?? ''}:${entry.tin.trim().toUpperCase()}`
+    if (entries.has(key)) {
+      throw new RequestError('Lo stesso atleta non può essere inserito due volte nella stessa gara', 409)
+    }
+    entries.add(key)
+  }
+}
+
+function getVerifiedRole(user: User, authHeader: string): string | null {
+  const jwtRole = parseJwtPayload(authHeader.replace(/^Bearer\s+/i, ''))?.user_role
+  const metadataRole = user.app_metadata?.role
+  return typeof jwtRole === 'string'
+    ? jwtRole
+    : typeof metadataRole === 'string'
+      ? metadataRole
+      : null
+}
+
+function parseJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const payload = token.split('.')[1]
+    if (!payload) return null
+    const normalized = payload.replace(/-/g, '+').replace(/_/g, '/')
+    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=')
+    return JSON.parse(atob(padded))
+  } catch {
+    return null
+  }
+}
+
+function capitalize(input: string) {
+  return input
+    .trim()
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .map((word) => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`)
+    .join(' ')
+}
+
+function requiredEnv(name: string) {
+  const value = Deno.env.get(name)
+  if (!value) throw new Error(`Configurazione mancante: ${name}`)
+  return value
+}
+
+function jsonResponse(body: unknown, status: number) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+  })
+}

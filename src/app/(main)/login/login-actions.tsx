@@ -17,7 +17,7 @@ async function getOrigin() {
 
 export const handleSubmit = async (event: any) => {
   event.preventDefault();
-  console.log(event.target)
+  //console.log(event.target)
 }
 
 // https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations

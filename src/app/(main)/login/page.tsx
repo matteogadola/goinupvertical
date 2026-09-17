@@ -6,8 +6,8 @@ import EmailLoginForm from '@/components/ui/login-buttons/email';
 import { loginWithFacebook, loginWithGoogle, loginWithPassword, register } from './login-actions';
 
 export default function LoginPage() {
-  console.log(process.env.NEXT_PUBLIC_BASE_URL)
-  console.log(process.env.NEXT_PUBLIC_VERCEL_URL)
+  //console.log(process.env.NEXT_PUBLIC_BASE_URL)
+  //console.log(process.env.NEXT_PUBLIC_VERCEL_URL)
 
   return (
     <div className="flex grow justify-center items-center">
